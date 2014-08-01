@@ -13,7 +13,7 @@ import com.visa.common.constant.YshkStatusEnum;
 /**
  * Velocity Tool Box Util.
  * 
- * @author zhangzp
+ * @author user
  */
 public class VelocityToolbox {
 

@@ -1,7 +1,7 @@
 package com.visa.common.constant;
 
 /**
- * @author zhangzp
+ * @author user
  */
 public final class Constant {
     /**

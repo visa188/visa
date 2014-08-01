@@ -76,12 +76,29 @@
                 </li>
 				#if($userRoleId==${fn.getAdminRoleId()})
     				<li class="client_mng#if($topNav==5) open#end">
-                        <a class="client_mng_tab" href="/country/list.do"><span class="ico_setting"></span><span class="sidenav_text">国家管理</span><span class="ico_fold"></span></a>
+                        <a class="client_mng_tab" href="/country/list.do"><span class="ico_setting"></span><span class="sidenav_text">签证国家管理</span><span class="ico_fold"></span></a>
                         <dl>
                             <dd#if($secNav==51) class="on"#end><a href="/country/list.do">国家信息管理</a></dd>
                             <dd#if($secNav==52) class="on"#end><a href="/country/add.do">新增国家信息</a></dd>
                         </dl>                   
                     </li>
+                    
+                    <li class="client_mng#if($topNav==7) open#end">
+                        <a class="client_mng_tab" href="/linecountry/list.do"><span class="ico_setting"></span><span class="sidenav_text">线路国家管理</span><span class="ico_fold"></span></a>
+                        <dl>
+                            <dd#if($secNav==71) class="on"#end><a href="/linecountry/list.do">国家信息管理</a></dd>
+                            <dd#if($secNav==72) class="on"#end><a href="/linecountry/add.do">新增国家信息</a></dd>
+                        </dl>                   
+                    </li>
+                    
+                    <li class="client_mng#if($topNav==8) open#end">
+                        <a class="client_mng_tab" href="/airline/list.do"><span class="ico_setting"></span><span class="sidenav_text">航空公司管理</span><span class="ico_fold"></span></a>
+                        <dl>
+                            <dd#if($secNav==81) class="on"#end><a href="/airline/list.do">航空公司管理</a></dd>
+                            <dd#if($secNav==82) class="on"#end><a href="/airline/add.do">新增航空公司信息</a></dd>
+                        </dl>                   
+                    </li>
+                    
     				<li class="client_mng#if($topNav==6) open#end">
                         <a class="client_mng_tab" href="/area/list.do"><span class="ico_setting"></span><span class="sidenav_text">领区管理</span><span class="ico_fold"></span></a>
                         <dl>
@@ -90,6 +107,7 @@
                         </dl>                   
                     </li>
 				#end
+                
                 <li class="client_mng#if($topNav==4) open#end">
                     <a class="client_mng_tab" href="#if($userRoleId==${fn.getAdminRoleId()}) /user/list.do #else /user/changepwd.do #end"><span class="ico_setting"></span><span class="sidenav_text">系统管理</span><span class="ico_fold"></span></a>
                     <dl>

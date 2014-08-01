@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.visa.dao.AirlineDao">
+
+	<select id="selectAllCount" resultType="java.lang.Integer">
+		select count(*) from airline
+		where 1=1
+		<if test="airlineName != null">and airlineName like
+			CONCAT('%',#{airlineName,jdbcType=VARCHAR},'%')</if>
+		order by postDt desc
+	</select>
+
+	<select id="selectAll" resultType="Airline">
+		select *
+		from airline
+		where 1=1
+		<if test="airline.airlineName != null">and airlineName like
+			CONCAT('%',#{airline.airlineName,jdbcType=VARCHAR},'%')</if>
+		order by postDt desc
+		limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByPrimaryKey" resultType="Airline">
+		select
+		*
+		from airline
+		where airlineId = #{airlineId,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey">
+		delete from airline
+		where airlineId = #{airlineId,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert">
+		insert into airline (airlineName,  postDt)
+		values (#{airlineName,jdbcType=VARCHAR}, 
+		now())
+	</insert>
+
+	<update id="updateByPrimaryKey">
+		update airline
+		set airlineName = #{airlineName,jdbcType=VARCHAR}
+		where airlineId = #{airlineId,jdbcType=INTEGER}
+	</update>
+</mapper>

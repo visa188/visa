@@ -17,7 +17,7 @@ import com.visa.dao.UserDao;
 import com.visa.po.User;
 
 /**
- * @author zhangzp
+ * @author user
  */
 @Controller
 @RequestMapping("/*")

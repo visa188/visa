@@ -17,7 +17,7 @@ import com.visa.dao.ProductDao;
 import com.visa.po.Area;
 
 /**
- * @author zhangzp
+ * @author user
  */
 @Controller
 @RequestMapping("/area/*")

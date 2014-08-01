@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.visa.common.constant.Constant;
 import com.visa.common.util.PagingUtil;
-import com.visa.dao.CountryDao;
+import com.visa.dao.LineCountryDao;
 import com.visa.dao.ProductDao;
 import com.visa.po.Country;
 
@@ -21,11 +21,11 @@ import com.visa.po.Country;
  * @author user
  */
 @Controller
-@RequestMapping("/country/*")
+@RequestMapping("/linecountry/*")
 @SessionAttributes(Constant.SESSION_USER)
-public class CountryController {
+public class LineCountryController {
     @Resource
-    private CountryDao countryDao;
+    private LineCountryDao lineCountryDao;
     @Resource
     private ProductDao productDao;
 
@@ -39,10 +39,10 @@ public class CountryController {
     @RequestMapping
     public void list(Country country, Integer page, ModelMap model) {
         List<Country> countryList = new ArrayList<Country>();
-        Integer recordCount = countryDao.selectAllCount(country);
+        Integer recordCount = lineCountryDao.selectAllCount(country);
         int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page,
                 Constant.PAGE_OFFSET, model);
-        countryList = countryDao.selectAll(recordRange[0], Constant.PAGE_COUNT, country);
+        countryList = lineCountryDao.selectAll(recordRange[0], Constant.PAGE_COUNT, country);
         model.put("countryList", countryList);
     }
 
@@ -67,7 +67,7 @@ public class CountryController {
      */
     @RequestMapping
     public String insert(Country country) {
-        countryDao.insert(country);
+        lineCountryDao.insert(country);
         return "redirect:list.do";
     }
 
@@ -81,7 +81,7 @@ public class CountryController {
      */
     @RequestMapping
     public String edit(Integer countryId, Integer page, ModelMap model) {
-        Country country = countryDao.selectByPrimaryKey(countryId);
+        Country country = lineCountryDao.selectByPrimaryKey(countryId);
         model.put("country", country);
         model.put("topNav", 2);
         model.put("secNav", 22);
@@ -100,7 +100,7 @@ public class CountryController {
      */
     @RequestMapping
     public String update(Country country, Integer page) {
-        countryDao.updateByPrimaryKey(country);
+        lineCountryDao.updateByPrimaryKey(country);
         return "redirect:list.do?page=" + page;
     }
 
@@ -116,7 +116,7 @@ public class CountryController {
     public String delete(Integer countryId, Integer page, ModelMap model) {
         int count = productDao.selectByCountryIdCount(countryId);
         if (count == 0) {
-            countryDao.deleteByPrimaryKey(countryId);
+            lineCountryDao.deleteByPrimaryKey(countryId);
             return "redirect:list.do?page=" + page;
         } else {
             model.put("msg", "产品中用到此国家信息，不能删除！");
@@ -138,6 +138,6 @@ public class CountryController {
     @RequestMapping
     @ResponseBody
     public List<Country> listByContinentId(Integer continentId) {
-        return countryDao.selectByContinentId(continentId);
+        return lineCountryDao.selectByContinentId(continentId);
     }
 }

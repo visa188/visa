@@ -3,7 +3,7 @@ package com.visa.vo;
 import java.io.Serializable;
 
 /**
- * @author zhangzp yrwang
+ * @author user yrwang
  */
 public class OrderSearchBean implements Serializable {
 	private static final long serialVersionUID = 1L;

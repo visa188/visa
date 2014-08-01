@@ -34,7 +34,7 @@ import com.visa.po.User;
 import com.visa.vo.CustomerVo;
 
 /**
- * @author zhangzp
+ * @author user
  */
 @Controller
 @RequestMapping("/customer/*")

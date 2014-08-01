@@ -13,37 +13,37 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.visa.common.constant.Constant;
 import com.visa.common.util.PagingUtil;
-import com.visa.dao.CountryDao;
+import com.visa.dao.AirlineDao;
 import com.visa.dao.ProductDao;
-import com.visa.po.Country;
+import com.visa.po.Airline;
 
 /**
  * @author user
  */
 @Controller
-@RequestMapping("/country/*")
+@RequestMapping("/airline/*")
 @SessionAttributes(Constant.SESSION_USER)
-public class CountryController {
+public class AirlineController {
     @Resource
-    private CountryDao countryDao;
+    private AirlineDao airlineDao;
     @Resource
     private ProductDao productDao;
 
     /**
      * 列出所有的国家
      * 
-     * @param country country
+     * @param Airline Airline
      * @param page page
      * @param model model
      */
     @RequestMapping
-    public void list(Country country, Integer page, ModelMap model) {
-        List<Country> countryList = new ArrayList<Country>();
-        Integer recordCount = countryDao.selectAllCount(country);
-        int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page,
-                Constant.PAGE_OFFSET, model);
-        countryList = countryDao.selectAll(recordRange[0], Constant.PAGE_COUNT, country);
-        model.put("countryList", countryList);
+    public void list(Airline Airline, Integer page, ModelMap model) {
+        List<Airline> airlineList = new ArrayList<Airline>();
+        Integer recordCount = airlineDao.selectAllCount(Airline);
+        int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page, Constant.PAGE_OFFSET,
+                model);
+        airlineList = airlineDao.selectAll(recordRange[0], Constant.PAGE_COUNT, Airline);
+        model.put("airlineList", airlineList);
     }
 
     /**
@@ -53,78 +53,78 @@ public class CountryController {
      */
     @RequestMapping
     public void add(ModelMap model) {
-        model.put("topNav", 5);
-        model.put("secNav", 52);
-        model.put("title", "新增国家信息");
+        model.put("topNav", 8);
+        model.put("secNav", 82);
+        model.put("title", "新增航空公司信息");
         model.put("action", "insert");
     }
 
     /**
      * 增加一个国家
      * 
-     * @param country country
+     * @param Airline Airline
      * @return String
      */
     @RequestMapping
-    public String insert(Country country) {
-        countryDao.insert(country);
+    public String insert(Airline Airline) {
+        airlineDao.insert(Airline);
         return "redirect:list.do";
     }
 
     /**
      * 编辑一个国家
      * 
-     * @param countryId countryId
+     * @param airlineId airlineId
      * @param page page
      * @param model model
      * @return String
      */
     @RequestMapping
-    public String edit(Integer countryId, Integer page, ModelMap model) {
-        Country country = countryDao.selectByPrimaryKey(countryId);
-        model.put("country", country);
+    public String edit(Integer airlineId, Integer page, ModelMap model) {
+        Airline Airline = airlineDao.selectByPrimaryKey(airlineId);
+        model.put("airline", Airline);
         model.put("topNav", 2);
         model.put("secNav", 22);
-        model.put("title", "修改国家信息");
+        model.put("title", "修改航空公司信息");
         model.put("action", "update");
         model.put("page", page);
-        return "country/add";
+        return "airline/add";
     }
 
     /**
      * 提交修改的country
      * 
-     * @param country country
+     * @param Airline Airline
      * @param page page
      * @return String
      */
     @RequestMapping
-    public String update(Country country, Integer page) {
-        countryDao.updateByPrimaryKey(country);
+    public String update(Airline Airline, Integer page) {
+        airlineDao.updateByPrimaryKey(Airline);
         return "redirect:list.do?page=" + page;
     }
 
     /**
      * 删除一个country
      * 
-     * @param countryId countryId
+     * @param airlineId airlineId
      * @param page page
      * @param model model
      * @return String
      */
     @RequestMapping
-    public String delete(Integer countryId, Integer page, ModelMap model) {
-        int count = productDao.selectByCountryIdCount(countryId);
+    public String delete(Integer airlineId, Integer page, ModelMap model) {
+        int count = productDao.selectByCountryIdCount(airlineId);
         if (count == 0) {
-            countryDao.deleteByPrimaryKey(countryId);
+            airlineDao.deleteByPrimaryKey(airlineId);
             return "redirect:list.do?page=" + page;
         } else {
-            model.put("msg", "产品中用到此国家信息，不能删除！");
+            model.put("msg", "产品中用到此航空公司信息，不能删除！");
             model.put("code", 404);
-            model.put("topNav", 5);
-            model.put("secNav", 51);
-            model.put("title", "国家信息删除");
-            model.put("href", "/country/list.do?page=" + page);
+            model.put("topNav", 8);
+            model.put("secNav", 81);
+            model.put("title", "航空公司信息删除");
+            model.put("href", "/Airline/list.do?page=" + page);
             return "result";
         }
     }
@@ -133,11 +133,11 @@ public class CountryController {
      * 根据地区查询国家
      * 
      * @param continentId continentId
-     * @return List<Country>
+     * @return List<Airline>
      */
     @RequestMapping
     @ResponseBody
-    public List<Country> listByContinentId(Integer continentId) {
-        return countryDao.selectByContinentId(continentId);
+    public List<Airline> listByContinentId(Integer continentId) {
+        return airlineDao.selectByContinentId(continentId);
     }
 }
