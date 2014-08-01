@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- 定时任务工厂 -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="configLocation" value="classpath:/conf/quartz.properties" />
+		<property name="triggers">
+			<list>
+				<!-- 1M 分钟 -->
+				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
+					<property name="cronExpression" value="0 */1 * * * ?" />
+					<property name="jobDetail">
+						<bean
+							class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+							<property name="targetObject" ref="job1m" />
+							<property name="targetMethod" value="execute" />
+						</bean>
+					</property>
+				</bean>
+				<!-- 3M 分钟 -->
+				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
+					<property name="cronExpression" value="5 */3 * * * ?" />
+					<property name="jobDetail">
+						<bean
+							class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+							<property name="targetObject" ref="job3m" />
+							<property name="targetMethod" value="execute" />
+						</bean>
+					</property>
+				</bean>
+				<!-- 5M 分钟 -->
+				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
+					<property name="cronExpression" value="10 */5 * * * ?" />
+					<property name="jobDetail">
+						<bean
+							class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+							<property name="targetObject" ref="job5m" />
+							<property name="targetMethod" value="execute" />
+						</bean>
+					</property>
+				</bean>
+				<!-- 10M 分钟 -->
+				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
+					<property name="cronExpression" value="15 */10 * * * ?" />
+					<property name="jobDetail">
+						<bean
+							class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+							<property name="targetObject" ref="job10m" />
+							<property name="targetMethod" value="execute" />
+						</bean>
+					</property>
+				</bean>
+				<!-- 30M 分钟 -->
+				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
+					<property name="cronExpression" value="20 */30 * * * ?" />
+					<property name="jobDetail">
+						<bean
+							class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+							<property name="targetObject" ref="job30m" />
+							<property name="targetMethod" value="execute" />
+						</bean>
+					</property>
+				</bean>
+				<!-- 1H 分钟 -->
+				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
+					<property name="cronExpression" value="25 1 */1 * * ?" />
+					<property name="jobDetail">
+						<bean
+							class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+							<property name="targetObject" ref="job1h" />
+							<property name="targetMethod" value="execute" />
+						</bean>
+					</property>
+				</bean>
+				<!-- 4H 分钟 -->
+				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
+					<property name="cronExpression" value="30 3 */4 * * ?" />
+					<property name="jobDetail">
+						<bean
+							class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+							<property name="targetObject" ref="job4h" />
+							<property name="targetMethod" value="execute" />
+						</bean>
+					</property>
+				</bean>
+				<!-- 1d 分钟 -->
+				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
+					<property name="cronExpression" value="0 0 0 */1 * ?" />
+					<property name="jobDetail">
+						<bean
+							class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+							<property name="targetObject" ref="job1d" />
+							<property name="targetMethod" value="execute" />
+						</bean>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="User" type="com.visa.po.User" />
+		<typeAlias alias="Orders" type="com.visa.po.Orders" />
+		<typeAlias alias="Product" type="com.visa.po.Product" />
+		<typeAlias alias="Customer" type="com.visa.po.Customer" />
+		<typeAlias alias="Area" type="com.visa.po.Area" />
+		<typeAlias alias="Country" type="com.visa.po.Country" />
+		
+		<typeAlias alias="UserVo" type="com.visa.vo.UserVo" />
+		<typeAlias alias="CustomerVo" type="com.visa.vo.CustomerVo" />
+		<typeAlias alias="ProductVo" type="com.visa.vo.ProductVo" />
+	</typeAliases>
+</configuration>

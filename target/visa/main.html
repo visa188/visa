@@ -1,0 +1,136 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>网易酒香后台管理系统</title>
+<meta http-equiv="content-Type" content="text/html;charset=utf-8" />
+<link href="/style/admin.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="js/zTree/css/zTreeStyle.css" type="text/css">
+</head>
+<body>
+  <table height="100%" width="100%" cellpadding="0" cellspacing="0">
+    <tr id="admin_top">
+      <td colspan="3">
+        <table height="100%" width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td class="system_title">网易酒香后台管理系统</td>
+            <td class="user_info"><a href="logout.do">退出</a></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td id="admin_left_td">
+        <div id="admin_left">
+          <div class="zTreeDemoBackground">
+            <ul id="tree" class="ztree" style="width: 100%; overflow: auto;"></ul>
+          </div>
+          <div class="left_menu">
+            <h1>品牌管理</h1>
+            <ul>
+              <!-- li><a href="/brand/list.do?flag=0" target="main">列表</a></li -->
+              <li><a href="/brand/add.do?category=1" target="main">添加</a></li>
+              <li><a href="/brand/recoverlist.do?flag=1" target="main">回收站</a></li>
+            </ul>
+          </div>
+          <div class="left_menu">
+            <h1>代理商管理</h1>
+            <ul>
+              <li><a href="/agent/list.do" target="main">代理商列表</a></li>
+              <li><a href="/agent/add.do" target="main">添加代理商</a></li>
+              <li><a href="/agent/recoverlist.do" target="main">代理商回收站</a></li>
+            </ul>
+          </div>
+          <div class="left_menu">
+            <h1>经销商管理</h1>
+            <ul>
+              <li><a href="/dealer/list.do" target="main">经销商列表</a></li>
+              <li><a href="/dealer/add.do" target="main">添加经销商</a></li>
+              <li><a href="/dealerprice/list.do?status=0" target="main">经销商酒品价格审核</a></li>
+              <li><a href="/dealer/recoverlist.do" target="main">经销商回收站</a></li>
+            </ul>
+          </div>
+          <div class="left_menu">
+            <h1>
+              <a href="/featured/list.do" target="main">年度畅销白酒推荐</a>
+            </h1>
+          </div>
+          <div class="left_menu">
+            <h1>
+              <a href="/userproduct/list.do" target="main">外部来源酒品管理</a>
+            </h1>
+          </div>
+          <div class="left_menu">
+            <h1>
+              <a href="/usersug/list.do" target="main">网友纠错管理</a>
+            </h1>
+          </div>
+          <div class="left_menu">
+            <h1>
+              <a href="/tool/productlist.do" target="main">统计-酒品查询</a>
+            </h1>
+          </div>
+          <div class="left_menu">
+            <h1>
+              <a href="/tool/report.do" target="main">统计-运营数据报表</a>
+            </h1>
+          </div>
+          <div class="left_menu">
+            <h1>
+              <a href="/tool/cmsArticleList.do" target="main">关键词搜索发布器文章</a>
+            </h1>
+          </div>
+          <div class="left_menu">
+            <h1>
+              <a href="/attr/list.do?categoryId=1" target="main">白酒属性配置管理</a>
+            </h1>
+          </div>
+          <div class="left_menu">
+            <h1>
+              <a href="/adminuser/list.do" target="main">用户管理</a>
+            </h1>
+          </div>
+          <div class="left_menu">
+            <h1>
+              <a href="/brandlogo/list.do" target="main">品牌LOGO聚集页</a>
+            </h1>
+          </div>
+          <div class="left_menu">
+            <h1>
+              <a href="/lucene/createIndex.do" target="main">生成LUCENE索引</a>
+            </h1>
+          </div>
+          <div class="left_menu">
+            <h1>
+              <a href="/tool/init.do" target="main">刷新初始化页面</a>
+            </h1>
+          </div>
+          <!-- div class="left_menu">
+            <h1><a href="/tree/refresh.do" target="main">树形导航数据刷新</a></h1>
+        </div -->
+        </div>
+      </td>
+      <td id="admin_resize_box"><img src="/style/arrow_left.gif" id="clickbox"
+        onClick="javascript:switchLeftWidth();" /></td>
+      <td style="width: 100%;"><iframe name="main"
+          style="z-index: 1; visibility: inherit; width: 100%; height: 100%" src=""
+          frameBorder="0" scrolling="auto"> </iframe>
+      </td>
+    </tr>
+  </table>
+  <script type="text/javascript">
+var isDisplayLeft = true;
+function switchLeftWidth() {
+    var left = document.getElementById("admin_left");
+    var clickbox = document.getElementById("clickbox");
+    if (isDisplayLeft) {
+        left.style.display = 'none';
+        clickbox.src = 'style/arrow_right.gif';
+        isDisplayLeft = false;
+    } else {
+        left.style.display = '';
+        clickbox.src = 'style/arrow_left.gif';
+        isDisplayLeft = true;
+    }
+}
+</script>
+</body>
+</html>

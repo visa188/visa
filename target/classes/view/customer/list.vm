@@ -1,0 +1,62 @@
+#header(2,21,"客户信息管理")
+	<div class="miancon">
+		<div class="maincon_title">
+			<span class="ico_order_w"></span><h2>客户信息管理</h2>
+			<div class="right"><a class="ico_order_add" title="新增客户信息" href="add.do">+</a></div>
+		</div>
+		<div class="maincon_fluid">
+            <div class="searchbox">
+                <form id="form1" name="form1" action="/customer/list.do" method="post">
+                    <input type="hidden" id="page" name="page" value="1">
+					#if($userRoleId==${fn.getAdminRoleId()}||$userRoleId==${fn.getFinanceRoleId()})
+        				<label for="s_client">所属销售：
+        					<select name="salesmanId" id="salesmanId" class="text" onchange="conditionSearch(1)">
+        						<option value="" selected="selected">全部</option>
+        						#foreach($one in $salesmanList)
+        							<option value="$one.userId"$fn.selected(${customer.salesmanId}, $one.userId)>$one.userName</option>
+                                #end
+        					</select>
+        				</label>
+					#end
+                    <label for="s_client">客户姓名：<input value="$!{customer.customerName}" id="s_client" type="text" class="s_client searchtx" name="customerName" placeholder="客户姓名" /></label>         
+                    <label for="s_guest">客户电话：<input value="$!{customer.telephone}" id="s_guest" type="text" class="s_guest searchtx" name="telephone" placeholder="客户电话" /></label>    
+                    <label for="searchbtn"><input onclick="conditionSearch(1);" id="searchbtn" type="button" name="" class="searchbtn" value="搜索" /></label>  
+                </form>
+            </div>
+            <hr class="hr_a" />
+			<div class="widget_mng_box">
+				<table cellpadding="0" cellspacing="0" width="100%" class="table_data tcenter">
+	                <thead>
+	                    <tr>
+	                        <th width="">客户姓名</th>
+	                        <th width="">公司</th>
+	                        <th width="">电话</th>
+	                        <th width="">地址</th>
+                            <th width="">所属销售</th>
+                            <th width="">备注</th>
+	                        <th width="">添加日期</th>
+	                        <th width="">修改</th>
+	                        #if($userRoleId==${fn.getAdminRoleId()})<th width="">删除</th>#end
+	                    </tr>
+	                </thead>
+	                <tbody>
+                        #foreach($one in $customerList)
+	                    <tr>
+	                        <td>$one.customerName</td>
+	                        <td>$one.company</td>
+	                        <td>$one.telephone</td>
+	                        <td>$one.address</td>
+                            <td>$one.salesmanName</td>
+                            <td>$one.des</td>
+	                        <td>$fn.format($one.postDt,"yyyy-MM-dd")</td>
+	                        <td><a class="ico_edit_g" href="edit.do?customerId=${one.customerId}&page=$page"></a></td>
+	                        #if($userRoleId==${fn.getAdminRoleId()})<td><a class="ico_delete_r" onclick="return confirm('是否将此客户信息删除?')" href="delete.do?customerId=${one.customerId}&page=$page"></a></td>#end
+	                    </tr>
+                        #end	 
+	                </tbody>
+	            </table>
+	        </div>
+			#generatePage()
+		</div>
+	</div>
+#footer()

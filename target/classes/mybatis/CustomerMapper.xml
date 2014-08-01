@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.visa.dao.CustomerDao" >
+  <select id="selectByTelephoneCount" resultType="java.lang.Integer">
+    select count(*) from customer 
+    where telephone = #{telephone,jdbcType=VARCHAR} 
+    <if test="customerId != null">and customerId != #{customerId,jdbcType=INTEGER}</if>
+  </select>
+
+  <select id="selectBySalesmanIdCount" resultType="java.lang.Integer">
+    select count(*) from customer 
+    where salesmanId = #{salesmanId,jdbcType=VARCHAR} 
+    <if test="customer.customerName != null">and customerName like CONCAT('%',#{customer.customerName,jdbcType=VARCHAR},'%')</if>
+    <if test="customer.telephone != null">and telephone like CONCAT('%',#{customer.telephone,jdbcType=VARCHAR},'%')</if>
+  </select>
+  
+  <select id="searchCustomer"  resultType="Customer">
+    select * from customer 
+    where 1=1
+    <if test="customerName != null">and customerName like CONCAT('%',#{customerName,jdbcType=VARCHAR},'%')</if>
+    <if test="userId != null">and salesmanId = #{userId,jdbcType=VARCHAR}</if>
+  </select>
+  
+  <select id="selectBySalesmanId" resultType="CustomerVo">
+    select c.*,u.userName AS salesmanName 
+    from customer c 
+    LEFT JOIN user u ON c.salesmanId = u.userId
+    where c.salesmanId = #{salesmanId,jdbcType=VARCHAR}
+    <if test="customer.customerName != null">and customerName like CONCAT('%',#{customer.customerName,jdbcType=VARCHAR},'%')</if>
+    <if test="customer.telephone != null">and telephone like CONCAT('%',#{customer.telephone,jdbcType=VARCHAR},'%')</if>
+    limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAllBySalesmanId" resultType="Customer">
+    select * from customer 
+    where salesmanId = #{salesmanId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectAllCustomer" resultType="Customer">
+    select * from customer 
+  </select>
+  
+  <select id="selectAllCount" resultType="java.lang.Integer">
+    select count(*) from customer 
+    where 1=1
+    <if test="customerName != null and customerName != null">and customerName like CONCAT('%',#{customerName,jdbcType=VARCHAR},'%')</if>
+    <if test="telephone != null and telephone != ''">and telephone like CONCAT('%',#{telephone,jdbcType=VARCHAR},'%')</if>
+    <if test="salesmanId != null and salesmanId != ''">and salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
+    order by postDt desc 
+  </select>
+  
+  <select id="selectAll" resultType="CustomerVo">
+    select c.*,u.userName AS salesmanName 
+    from customer c 
+    LEFT JOIN user u ON c.salesmanId = u.userId
+    where 1=1
+    <if test="customer.customerName != null and customer.customerName != ''">and customerName like CONCAT('%',#{customer.customerName,jdbcType=VARCHAR},'%')</if>
+    <if test="customer.telephone != null and customer.telephone != ''">and telephone like CONCAT('%',#{customer.telephone,jdbcType=VARCHAR},'%')</if>
+    <if test="customer.salesmanId != null and customer.salesmanId != ''">and salesmanId=#{customer.salesmanId,jdbcType=VARCHAR}</if>
+    order by postDt desc 
+    limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultType="Customer">
+    select 
+    *
+    from customer
+    where customerId = #{customerId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey">
+    delete from customer
+    where customerId = #{customerId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert">
+    insert into customer (customerName, company, 
+      telephone, salesmanId, des, 
+      address, postDt)
+    values (#{customerName,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{salesmanId,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARBINARY}, now())
+  </insert>
+  
+  <update id="updateByPrimaryKey">
+    update customer
+    set customerName = #{customerName,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      salesmanId = #{salesmanId,jdbcType=VARCHAR},
+      des = #{des,jdbcType=VARCHAR}
+    where customerId = #{customerId,jdbcType=INTEGER}
+  </update>
+</mapper>

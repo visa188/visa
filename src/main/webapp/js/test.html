@@ -1,0 +1,149 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>网易酒香后台管理系统</title>
+<meta http-equiv="content-Type" content="text/html;charset=utf-8" />
+<link href="/eefc5b2d/style/admin.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="/eefc5b2d/js/zTree/css/zTreeStyle.css" type="text/css">
+</head>
+<body>
+  <table height="100%" width="100%" cellpadding="0" cellspacing="0">
+    <tr id="admin_top">
+      <td colspan="3">
+        <table height="100%" width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td class="system_title">网易酒香后台管理系统</td>
+            <td class="user_info"><a href="logout.do">退出</a></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td id="admin_left_td">
+        <div id="admin_left">
+          <div class="zTreeDemoBackground">
+            <ul id="tree" class="ztree" style="width: 100%; overflow: auto;"></ul>
+          </div>
+          <div class="left_menu">
+            <h1>品牌管理</h1>
+            <ul>
+              <li><a href="/eefc5b2d/brand/list.do?flag=0" target="main">列表</a></li>
+              <li><a href="/eefc5b2d/brand/add.do?category=1" target="main">添加</a></li>
+              <li><a href="/eefc5b2d/brand/recoverlist.do?flag=1" target="main">回收站</a></li>
+            </ul>
+          </div>
+          <div class="left_menu">
+            <h1>代理商管理</h1>
+            <ul>
+              <li><a href="/eefc5b2d/agent/list.do" target="main">列表</a></li>
+              <li><a href="/eefc5b2d/agent/add.do" target="main">添加</a></li>
+              <li><a href="/eefc5b2d/agent/recoverlist.do" target="main">回收站</a></li>
+            </ul>
+          </div>
+          <div class="left_menu">
+            <h1>经销商管理</h1>
+            <ul>
+              <li><a href="/eefc5b2d/dealer/list.do" target="main">经销商列表</a></li>
+              <li><a href="/eefc5b2d/dealer/add.do" target="main">添加经销商</a></li>
+              <li><a href="/eefc5b2d/dealerprice/list.do" target="main">经销商酒品价格</a></li>
+              <li><a href="/eefc5b2d/dealer/recoverlist.do" target="main">经销商回收站</a></li>
+            </ul>
+          </div>
+          <div class="left_menu">
+            <h1>网友提交酒品管理</h1>
+            <ul>
+              <li><a href="/eefc5b2d/userproduct/list.do" target="main">列表</a></li>
+            </ul>
+          </div>
+          <div class="left_menu">
+            <h1>网友纠错管理</h1>
+            <ul>
+              <li><a href="/eefc5b2d/usersug/list.do" target="main">列表</a></li>
+            </ul>
+          </div>
+          <div class="left_menu">
+            <h1>属性配置管理</h1>
+            <ul>
+              <li><a href="/eefc5b2d/attr/list.do?categoryId=1" target="main">白酒属性</a></li>
+            </ul>
+          </div>
+          <div class="left_menu">
+            <h1>管理员管理</h1>
+            <ul>
+              <li><a href="/eefc5b2d/adminuser/list.do" target="main">用户管理</a></li>
+            </ul>
+          </div>
+          <div class="left_menu">
+            <h1>树形导航数据刷新</h1>
+            <ul>
+              <li><a href="/eefc5b2d/tree/refresh.do" target="main">树形导航数据刷新</a></li>
+            </ul>
+          </div>
+        </div>
+      </td>
+      <td id="admin_resize_box"><img src="/eefc5b2d/style/arrow_left.gif" id="clickbox"
+        onClick="javascript:switchLeftWidth();" /></td>
+      <td style="width: 100%;"><iframe name="main"
+          style="z-index: 1; visibility: inherit; width: 100%; height: 100%" src="list2.html"
+          frameBorder="0" scrolling="auto"> </iframe>
+      </td>
+    </tr>
+  </table>
+  <script type="text/javascript">
+var isDisplayLeft = true;
+function switchLeftWidth() {
+    var left = document.getElementById("admin_left");
+    var clickbox = document.getElementById("clickbox");
+    if (isDisplayLeft) {
+        left.style.display = 'none';
+        clickbox.src = 'style/arrow_right.gif';
+        isDisplayLeft = false;
+    } else {
+        left.style.display = '';
+        clickbox.src = 'style/arrow_left.gif';
+        isDisplayLeft = true;
+    }
+}
+</script>
+
+  <script type="text/javascript" src="/eefc5b2d/js/jquery.js"></script>
+  <script type="text/javascript" src="/eefc5b2d/js/zTree/nodes.js"></script>
+  <script type="text/javascript" src="/eefc5b2d/js/zTree/jquery.ztree.core-3.5.js"></script>
+  <script type="text/javascript">
+var setting = {
+      data: {
+        simpleData: {
+          enable: true,
+          
+        }
+      },
+      view:{
+        showIcon : false
+      },
+      callback: {
+        beforeExpand: beforeExpand
+      }
+    };
+function beforeExpand(treeId, treeNode) {
+    singlePath(treeNode);
+}
+function singlePath(currNode) {
+    var cLevel = currNode.level;
+    //这里假设id是唯一的
+    var cId = currNode.id;
+    //此对象可以保存起来，没有必要每次查找
+    var treeObj = jQuery.fn.zTree.getZTreeObj("tree");
+    //展开的所有节点，这是从父节点开始查找（也可以全文查找）
+    var expandedNodes = treeObj.getNodesByParam("open", true, currNode.getParentNode());
+    for(var i = expandedNodes.length - 1; i >= 0; i--){
+        var node = expandedNodes[i];
+        var level = node.level;
+        var id = node.id;
+        if (cId != id && level == cLevel) {
+            treeObj.expandNode(node, false);
+        }
+    }
+}
+var zTree = jQuery.fn.zTree.init(jQuery("#tree"),setting, zNodes);
+</script>
+</body>
+</html>
