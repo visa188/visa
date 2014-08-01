@@ -4,7 +4,7 @@
   
   <select id="selectAll" resultType="Orders" parameterType="java.util.Map" >
     select tmp1.*,user.userName operatorName 
-		from (select orders.*,product.productName,customer.customerName,user1.userName salesmanName,country.countryName
+		from (select orders.*,product.productName,customer.customerName,customer.company,user1.userName salesmanName,country.countryName
 			from orders,product,customer,user user1,country
 			where orders.productId=product.productId 
 				and orders.customerId=customer.customerId 
@@ -70,6 +70,8 @@
 	  <if test="yshkStatus != null">and orders.yshkStatus = #{yshkStatus,jdbcType=INTEGER}</if>
 	  <if test="salesmanForSearch != null">and orders.salesmanId=#{salesmanForSearch,jdbcType=VARCHAR}</if>
 	  <if test="operatorForSearch != null">and orders.operatorId=#{operatorForSearch,jdbcType=VARCHAR}</if>
+	  <if test="orderSeq != null">and orders.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
+	  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
 	  <if test="startDate != null">
 	  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 	  </if>
@@ -83,7 +85,7 @@
 	
 	<select id="selectByPage" parameterType="java.util.Map" resultType="Orders">
         	select tmp1.*,user.userName operatorName 
-			from (select orders.*,product.productName,customer.customerName,user1.userName salesmanName,country.countryName
+			from (select orders.*,product.productName,customer.customerName,user1.userName salesmanName,country.countryName,customer.company customerCompany
 				from orders,product,customer,user user1,country
 				where orders.productId=product.productId 
 					and orders.customerId=customer.customerId 
@@ -101,7 +103,9 @@
 			  <if test="yshkStatus != null">and orders.yshkStatus = #{yshkStatus,jdbcType=INTEGER}</if>
 			  <if test="salesmanForSearch != null">and orders.salesmanId=#{salesmanForSearch,jdbcType=VARCHAR}</if>
 			  <if test="operatorForSearch != null">and orders.operatorId=#{operatorForSearch,jdbcType=VARCHAR}</if>
-			  <if test="startDate != null">
+	  		  <if test="orderSeq != null">and orders.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
+	  		  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
+	  		  <if test="startDate != null">
 			  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 			  </if>
 			  <if test="endDate != null">
@@ -143,7 +147,8 @@
       	<if test="operatorDes != null">operatorDes,</if>
       	<if test="yshkStatus != null">yshkStatus,</if>
       	<if test="priceYshk != null">priceYshk,</if>
-      	ptTime)
+      	<if test="orderSeq != null">orderSeq,</if>
+      		ptTime)
     values (
     	<if test="orderDate != null">#{orderDate,jdbcType=DATE}, </if>
     	<if test="customerId != null">#{customerId,jdbcType=INTEGER}, </if>
@@ -166,8 +171,9 @@
       <if test="des != null">#{des,jdbcType=VARCHAR}, </if>
       <if test="operatorDes != null">#{operatorDes,jdbcType=VARCHAR}, </if>
       <if test="yshkStatus != null">#{yshkStatus,jdbcType=INTEGER},</if>
-      	<if test="priceYshk != null">#{priceYshk,jdbcType=DECIMAL},</if>
-      now())
+      <if test="priceYshk != null">#{priceYshk,jdbcType=DECIMAL},</if>
+      <if test="orderSeq != null">#{orderSeq,jdbcType=VARCHAR},</if>
+      	now())
   </insert>
   
   <update id="updateByPrimaryKey" parameterType="Orders" >
@@ -195,7 +201,44 @@
       <if test="priceYshk != null">priceYshk = #{priceYshk,jdbcType=DECIMAL},</if>
       <if test="des != null">des = #{des,jdbcType=VARCHAR},</if>
       <if test="operatorDes != null">operatorDes = #{operatorDes,jdbcType=VARCHAR},</if>
+      <if test="operatorRemark != null">operatorRemark = #{operatorRemark,jdbcType=VARCHAR},</if>
+      <if test="yshkRemark != null">yshkRemark = #{yshkRemark,jdbcType=VARCHAR},</if>
+      <if test="yfhkRemark != null">yfhkRemark = #{yfhkRemark,jdbcType=VARCHAR},</if>
       ptTime=now()
     where orderId = #{orderId,jdbcType=INTEGER}
   </update>
+
+    <select id="sumPrice" parameterType="java.util.Map" resultType="java.util.Map">
+      select sum(priceZjys) sumzjys,sum(priceZjyf) sumzjyf
+		from (select orders.*,product.productName,customer.customerName,user1.userName salesmanName,country.countryName
+			from orders,product,customer,user user1,country
+			where orders.productId=product.productId 
+				and orders.customerId=customer.customerId 
+				and product.countryId=country.countryId
+				and user1.userId=orders.salesmanId 
+      <if test="salesmanId != null">and orders.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
+	  <if test="managerId != null">and orders.salesmanId in (select userId from user where managerId=#{managerId,jdbcType=VARCHAR})</if>
+	  <if test="operatorId != null">and orders.operatorId = #{operatorId,jdbcType=VARCHAR}</if>
+	  <if test="countryName != null">and country.countryName ${operator} #{countryName,jdbcType=VARCHAR}</if>
+	  <if test="customerName != null">and customer.customerName ${operator} #{customerName,jdbcType=VARCHAR}</if>
+	  <if test="companyName != null">and customer.company ${operator} #{companyName,jdbcType=VARCHAR}</if>
+	  <if test="nameList != null">and orders.nameList ${operator} #{nameList,jdbcType=VARCHAR}</if>
+	  <if test="status != null">and orders.status = #{status,jdbcType=INTEGER}</if>
+	  <if test="yfhkStatus != null">and orders.yfhkStatus = #{yfhkStatus,jdbcType=INTEGER}</if>
+	  <if test="yshkStatus != null">and orders.yshkStatus = #{yshkStatus,jdbcType=INTEGER}</if>
+	  <if test="salesmanForSearch != null">and orders.salesmanId=#{salesmanForSearch,jdbcType=VARCHAR}</if>
+	  <if test="operatorForSearch != null">and orders.operatorId=#{operatorForSearch,jdbcType=VARCHAR}</if>
+	  <if test="orderSeq != null">and orders.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
+	  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
+	  <if test="startDate != null">
+	  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
+	  </if>
+	  <if test="endDate != null">
+	  	<![CDATA[
+		and orders.orderDate <= #{endDate,jdbcType=VARCHAR}
+		]]>
+	  </if>
+	  ) tmp1 left OUTER join user on( tmp1.operatorId = user.userId)
+	</select>
+  
 </mapper>

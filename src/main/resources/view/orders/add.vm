@@ -193,17 +193,22 @@
 					
 					<div class="control_group">
 	        			<label class="control_label"><span class="ico_must">*</span>客人信息:</label>
-						<div class="controls">
+						<div class="controls" id="customTab">
 		               		<div class="client_operate js_client_operate">
 			               		<table cellpadding="0" cellspacing="0" class="client_table_data table_data">
 					                <thead>
 					                    <tr>
-					                        <th>客人姓名</th>
+					                        <th>客人信息</th>
 					                    </tr>
 					                </thead>
 					                <tbody>
 					                    <tr>
-					                        <td><input type="text" name="tempName" class="tb_text" value="" placeholder="点击此处修改" /><span class="client_delete" title="删除行">-</span></td>
+											<td>
+												姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:20%;"/>
+												联系方式:<input type="text" class="tb_text" name="tempContact" value="" placeholder="联系方式" style="width:30%;"/>
+												住址:<input type="text" class="tb_text" name="tempAddr" value="" placeholder="住址" style="width:40%;"/>
+												<span name="delName" class="client_delete" title="删除行">-</span>
+											</td>
 					                    </tr>           
 					                </tbody>
 					            </table><span class="form_item"><input type="hidden" class="js_non_empty" id="nameList" name="nameList" value="" placeholder="客人信息"></span>
@@ -290,5 +295,7 @@
         }).bind("change",function(e){
             changeProduct();
         });	
+        
+        
 	</script>
 #footer()

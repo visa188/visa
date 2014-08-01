@@ -68,9 +68,39 @@
                         </div>                          
                     </div>
                     <div class="control_group">
+                        <label class="control_label">联系人:</label>
+                        <div class="controls">
+                            <input class="text1" name="relatePeople" id="" placeholder="联系人" maxlength="20" size="8" value="$!{product.relatePeople}" />
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label">联系电话:</label>
+                        <div class="controls">
+                            <input class="text1" name="relateTel" id=""  placeholder="联系电话" maxlength="50" size="8" value="$!{product.relateTel}" />
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label">联系QQ:</label>
+                        <div class="controls">
+                            <input class="text1" name="relateQq" id="" placeholder="联系QQ" maxlength="20" size="8" value="$!{product.relateQq}" />
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label">公司名称:</label>
+                        <div class="controls">
+                            <input class="text1" name="relateCompany" id=""  placeholder="公司名称" maxlength="20" size="8" value="$!{product.relateCompany}" />
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label">公司地址:</label>
+                        <div class="controls">
+                            <input class="text1" name="relateAddr" id=""  placeholder="地址" maxlength="20" size="8" value="$!{product.relateAddr}" />
+                        </div>                          
+                    </div>
+                    <div class="control_group">
                         <label class="control_label">备注:</label>
                         <div class="controls">
-                            <textarea class="text3" name="des" id="" cols="80" rows="8" placeholder="备注" maxlength="1000" size="1000">$!{product.des}</textarea>
+                            <textarea class="text3" name="des" id="" cols="80" rows="8" placeholder="备注" maxlength="20" size="8">$!{product.des}</textarea>
                         </div>                          
                     </div>
 		        </div>

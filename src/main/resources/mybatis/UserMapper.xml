@@ -55,9 +55,9 @@
   
   <insert id="insert" parameterType="User" >
     insert into user (userId, userName, roleId, 
-      pwd, managerId, postDt)
+      pwd, managerId, postDt, deptId)
     values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, 
-      '123456', #{managerId,jdbcType=INTEGER}, now())
+      '123456', #{managerId,jdbcType=INTEGER}, now(),#{deptId,jdbcType=VARCHAR})
   </insert>
   
   <update id="updateByPrimaryKey" parameterType="User" >
@@ -65,6 +65,7 @@
     set userName = #{userName,jdbcType=VARCHAR},
       roleId = #{roleId,jdbcType=INTEGER},
       managerId = #{managerId,jdbcType=INTEGER}
+      ,deptId = #{deptId,jdbcType=VARCHAR}
     where userId = #{userId,jdbcType=VARCHAR}
   </update>
   

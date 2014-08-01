@@ -3,84 +3,94 @@ package com.visa.po;
 import java.util.Date;
 
 public class Customer {
-    private Integer customerId;
+	private Integer customerId;
 
-    private String customerName;
+	private String customerName;
 
-    private String company;
+	private String company;
 
-    private String telephone;
+	private String telephone;
 
-    private String salesmanId;
+	private String salesmanId;
 
-    private String des;
+	private String des;
 
-    private String address;
+	private String address;
 
-    private Date postDt;
+	private Date postDt;
 
-    public Integer getCustomerId() {
-        return customerId;
-    }
+	private String qq;
 
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
-    }
+	public String getQq() {
+		return qq;
+	}
 
-    public String getCustomerName() {
-        return customerName;
-    }
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
+	public Integer getCustomerId() {
+		return customerId;
+	}
 
-    public String getCompany() {
-        return company;
-    }
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
+	}
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
+	public String getCustomerName() {
+		return customerName;
+	}
 
-    public String getTelephone() {
-        return telephone;
-    }
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
+	public String getCompany() {
+		return company;
+	}
 
-    public String getSalesmanId() {
-        return salesmanId;
-    }
+	public void setCompany(String company) {
+		this.company = company;
+	}
 
-    public void setSalesmanId(String salesmanId) {
-        this.salesmanId = salesmanId;
-    }
+	public String getTelephone() {
+		return telephone;
+	}
 
-    public String getDes() {
-        return des;
-    }
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 
-    public void setDes(String des) {
-        this.des = des;
-    }
+	public String getSalesmanId() {
+		return salesmanId;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public void setSalesmanId(String salesmanId) {
+		this.salesmanId = salesmanId;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public String getDes() {
+		return des;
+	}
 
-    public Date getPostDt() {
-        return postDt;
-    }
+	public void setDes(String des) {
+		this.des = des;
+	}
 
-    public void setPostDt(Date postDt) {
-        this.postDt = postDt;
-    }
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Date getPostDt() {
+		return postDt;
+	}
+
+	public void setPostDt(Date postDt) {
+		this.postDt = postDt;
+	}
 
 }

@@ -34,6 +34,7 @@
                         </select>
                     </label> 
         			<label for="searchbtn"><input onclick="conditionSearch(1);" id="searchbtn" type="button" name="" class="searchbtn" value="搜索" ></label>	
+        			<label for="searchbtn"><input onclick="exportData();" id="exportbtn" type="button" name="exportbtn" class="searchbtn" value="导出excel" ></label>	
         		</div>
 			</form>
 			<hr class="hr_a">
@@ -47,6 +48,11 @@
 	                        <th width="">国家</th>
 	                        <th width="">产品类型</th>
                             <th width="">成本价格</th>
+                            <th width="">联系人</th>
+                            <th width="">联系电话</th>
+                            <th width="">联系QQ</th>
+                            <th width="">公司名称</th>
+                            <th width="">公司地址</th>
                             <th width="">备注</th>
 	                        <th width="">添加日期</th>
 	                        <th width="">修改</th>
@@ -62,6 +68,11 @@
 	                        <td>$one.countryName</td>
 	                        <td>$one.productType</td>
                             <td>$one.price</td>
+                            <td>$!{one.relatePeople}</td>
+                            <td>$!{one.relateTel}</td>
+                            <td>$!{one.relateQq}</td>
+                            <td>$!{one.relateAddr}</td>
+                            <td>$!{one.relateCompany}</td>
                             <td>$one.des</td>
 	                        <td>$fn.format($one.postDt,"yyyy-MM-dd")</td>
 	                        <td><a class="ico_edit_g" href="edit.do?productId=${one.productId}&page=$page"></a></td>
@@ -99,6 +110,11 @@
                }
             });
         }
+    }
+    function exportData(){
+    	jQuery("#form1").attr("action","/product/export.do");
+    	jQuery("#form1").submit();
+    	jQuery("#form1").attr("action","/product/list.do");
     }
     </script>
 #footer()

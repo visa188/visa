@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/travel/!svn/ver/98/visa/trunk/src/main/java/com/visa/vo
+END
+AjaxResult.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/travel/!svn/ver/6/visa/trunk/src/main/java/com/visa/vo/AjaxResult.java
+END
+UserVo.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/travel/!svn/ver/6/visa/trunk/src/main/java/com/visa/vo/UserVo.java
+END
+Department.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/travel/!svn/ver/94/visa/trunk/src/main/java/com/visa/vo/Department.java
+END
+ProductVo.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/travel/!svn/ver/6/visa/trunk/src/main/java/com/visa/vo/ProductVo.java
+END
+CustomerVo.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/travel/!svn/ver/6/visa/trunk/src/main/java/com/visa/vo/CustomerVo.java
+END
+OrderSearchBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/travel/!svn/ver/98/visa/trunk/src/main/java/com/visa/vo/OrderSearchBean.java
+END

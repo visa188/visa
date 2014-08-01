@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * 付款状态的可枚举类型
  * 
- * @author user
+ * @author zhangzp
  */
 public enum PriceStatusEnum {
 

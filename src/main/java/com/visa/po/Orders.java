@@ -7,293 +7,343 @@ import java.util.Date;
  * @author bjyrwang
  */
 public class Orders {
-    private Integer orderId;
+	private Integer orderId;
 
-    private Date orderDate;
+	private Date orderDate;
 
-    private Integer customerId;
+	private Integer customerId;
 
-    private String customerName;
+	private String customerName;
 
-    private Integer productId;
+	private String customerCompany;
 
-    private String productName;
+	private Integer productId;
 
-    private String nameList;
+	private String productName;
 
-    private int nameListSize;
+	private String nameList;
 
-    private int status;
+	private int nameListSize;
 
-    private String salesmanId;
+	private int status;
 
-    private String salesmanName;
+	private String salesmanId;
 
-    private String operatorId;
+	private String salesmanName;
 
-    private String operatorName;
+	private String operatorId;
 
-    private Date signDate;
+	private String operatorName;
 
-    private String signOperatorName;
+	private Date signDate;
 
-    private BigDecimal priceYsdj;
+	private String signOperatorName;
 
-    private BigDecimal priceQtys;
+	private BigDecimal priceYsdj;
 
-    private BigDecimal priceQtzc;
+	private BigDecimal priceQtys;
 
-    private BigDecimal priceZjys;
+	private BigDecimal priceQtzc;
 
-    private BigDecimal priceZjyf;
+	private BigDecimal priceZjys;
 
-    private BigDecimal priceYfhk;
+	private BigDecimal priceZjyf;
 
-    private BigDecimal grossProfit;
+	private BigDecimal priceYfhk;
 
-    private int yfhkStatus;
+	private BigDecimal grossProfit;
 
-    private String des;
+	private int yfhkStatus;
 
-    private String operatorDes;
+	private String des;
 
-    private Date ptTime;
+	private String operatorDes;
 
-    private String countryName;
+	private Date ptTime;
 
-    private int yshkStatus;
+	private String countryName;
 
-    private BigDecimal priceYshk;
+	private int yshkStatus;
 
-    public int getYshkStatus() {
-        return yshkStatus;
-    }
+	private BigDecimal priceYshk;
 
-    public void setYshkStatus(int yshkStatus) {
-        this.yshkStatus = yshkStatus;
-    }
+	private String orderSeq;
 
-    public BigDecimal getPriceYshk() {
-        return priceYshk;
-    }
+	private String operatorRemark;
 
-    public void setPriceYshk(BigDecimal priceYshk) {
-        this.priceYshk = priceYshk;
-    }
+	private String yshkRemark;
 
-    public String getCountryName() {
-        return countryName;
-    }
+	private String yfhkRemark;
 
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
-    }
+	public String getYshkRemark() {
+		return yshkRemark;
+	}
 
-    public int getNameListSize() {
-        return nameListSize;
-    }
+	public void setYshkRemark(String yshkRemark) {
+		this.yshkRemark = yshkRemark;
+	}
 
-    public void setNameListSize(int nameListSize) {
-        this.nameListSize = nameListSize;
-    }
+	public String getYfhkRemark() {
+		return yfhkRemark;
+	}
 
-    public Date getPtTime() {
-        return ptTime;
-    }
+	public void setYfhkRemark(String yfhkRemark) {
+		this.yfhkRemark = yfhkRemark;
+	}
 
-    public void setPtTime(Date ptTime) {
-        this.ptTime = ptTime;
-    }
+	public String getOperatorRemark() {
+		return operatorRemark;
+	}
 
-    public String getOperatorDes() {
-        return operatorDes;
-    }
-
-    public void setOperatorDes(String operatorDes) {
-        this.operatorDes = operatorDes;
-    }
-
-    public BigDecimal getPriceYfhk() {
-        return priceYfhk;
-    }
-
-    public void setPriceYfhk(BigDecimal priceYfhk) {
-        this.priceYfhk = priceYfhk;
-    }
-
-    public Integer getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
-
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public Integer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getNameList() {
-        return nameList;
-    }
-
-    public void setNameList(String nameList) {
-        this.nameList = nameList;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getSalesmanId() {
-        return salesmanId;
-    }
-
-    public void setSalesmanId(String salesmanId) {
-        this.salesmanId = salesmanId;
-    }
-
-    public String getSalesmanName() {
-        return salesmanName;
-    }
-
-    public void setSalesmanName(String salesmanName) {
-        this.salesmanName = salesmanName;
-    }
-
-    public String getOperatorId() {
-        return operatorId;
-    }
-
-    public void setOperatorId(String operatorId) {
-        this.operatorId = operatorId;
-    }
-
-    public String getOperatorName() {
-        return operatorName;
-    }
-
-    public void setOperatorName(String operatorName) {
-        this.operatorName = operatorName;
-    }
-
-    public Date getSignDate() {
-        return signDate;
-    }
-
-    public void setSignDate(Date signDate) {
-        this.signDate = signDate;
-    }
-
-    public String getSignOperatorName() {
-        return signOperatorName;
-    }
-
-    public void setSignOperatorName(String signOperatorName) {
-        this.signOperatorName = signOperatorName;
-    }
-
-    public BigDecimal getPriceYsdj() {
-        return priceYsdj;
-    }
-
-    public void setPriceYsdj(BigDecimal priceYsdj) {
-        this.priceYsdj = priceYsdj;
-    }
-
-    public BigDecimal getPriceQtys() {
-        return priceQtys;
-    }
-
-    public void setPriceQtys(BigDecimal priceQtys) {
-        this.priceQtys = priceQtys;
-    }
-
-    public BigDecimal getPriceQtzc() {
-        return priceQtzc;
-    }
-
-    public void setPriceQtzc(BigDecimal priceQtzc) {
-        this.priceQtzc = priceQtzc;
-    }
-
-    public BigDecimal getPriceZjys() {
-        return priceZjys;
-    }
-
-    public void setPriceZjys(BigDecimal priceZjys) {
-        this.priceZjys = priceZjys;
-    }
-
-    public BigDecimal getPriceZjyf() {
-        return priceZjyf;
-    }
-
-    public void setPriceZjyf(BigDecimal priceZjyf) {
-        this.priceZjyf = priceZjyf;
-    }
-
-    public BigDecimal getGrossProfit() {
-        return grossProfit;
-    }
-
-    public void setGrossProfit(BigDecimal grossProfit) {
-        this.grossProfit = grossProfit;
-    }
-
-    public int getYfhkStatus() {
-        return yfhkStatus;
-    }
-
-    public void setYfhkStatus(int yfhkStatus) {
-        this.yfhkStatus = yfhkStatus;
-    }
-
-    public String getDes() {
-        return des;
-    }
-
-    public void setDes(String des) {
-        this.des = des;
-    }
+	public void setOperatorRemark(String operatorRemark) {
+		this.operatorRemark = operatorRemark;
+	}
+
+	public String getOrderSeq() {
+		return orderSeq;
+	}
+
+	public void setOrderSeq(String orderSeq) {
+		this.orderSeq = orderSeq;
+	}
+
+	public String getCustomerCompany() {
+		return customerCompany;
+	}
+
+	public void setCustomerCompany(String customerCompany) {
+		this.customerCompany = customerCompany;
+	}
+
+	public int getYshkStatus() {
+		return yshkStatus;
+	}
+
+	public void setYshkStatus(int yshkStatus) {
+		this.yshkStatus = yshkStatus;
+	}
+
+	public BigDecimal getPriceYshk() {
+		return priceYshk;
+	}
+
+	public void setPriceYshk(BigDecimal priceYshk) {
+		this.priceYshk = priceYshk;
+	}
+
+	public String getCountryName() {
+		return countryName;
+	}
+
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}
+
+	public int getNameListSize() {
+		return nameListSize;
+	}
+
+	public void setNameListSize(int nameListSize) {
+		this.nameListSize = nameListSize;
+	}
+
+	public Date getPtTime() {
+		return ptTime;
+	}
+
+	public void setPtTime(Date ptTime) {
+		this.ptTime = ptTime;
+	}
+
+	public String getOperatorDes() {
+		return operatorDes;
+	}
+
+	public void setOperatorDes(String operatorDes) {
+		this.operatorDes = operatorDes;
+	}
+
+	public BigDecimal getPriceYfhk() {
+		return priceYfhk;
+	}
+
+	public void setPriceYfhk(BigDecimal priceYfhk) {
+		this.priceYfhk = priceYfhk;
+	}
+
+	public Integer getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
+
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public Integer getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getNameList() {
+		return nameList;
+	}
+
+	public void setNameList(String nameList) {
+		this.nameList = nameList;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public String getSalesmanId() {
+		return salesmanId;
+	}
+
+	public void setSalesmanId(String salesmanId) {
+		this.salesmanId = salesmanId;
+	}
+
+	public String getSalesmanName() {
+		return salesmanName;
+	}
+
+	public void setSalesmanName(String salesmanName) {
+		this.salesmanName = salesmanName;
+	}
+
+	public String getOperatorId() {
+		return operatorId;
+	}
+
+	public void setOperatorId(String operatorId) {
+		this.operatorId = operatorId;
+	}
+
+	public String getOperatorName() {
+		return operatorName;
+	}
+
+	public void setOperatorName(String operatorName) {
+		this.operatorName = operatorName;
+	}
+
+	public Date getSignDate() {
+		return signDate;
+	}
+
+	public void setSignDate(Date signDate) {
+		this.signDate = signDate;
+	}
+
+	public String getSignOperatorName() {
+		return signOperatorName;
+	}
+
+	public void setSignOperatorName(String signOperatorName) {
+		this.signOperatorName = signOperatorName;
+	}
+
+	public BigDecimal getPriceYsdj() {
+		return priceYsdj;
+	}
+
+	public void setPriceYsdj(BigDecimal priceYsdj) {
+		this.priceYsdj = priceYsdj;
+	}
+
+	public BigDecimal getPriceQtys() {
+		return priceQtys;
+	}
+
+	public void setPriceQtys(BigDecimal priceQtys) {
+		this.priceQtys = priceQtys;
+	}
+
+	public BigDecimal getPriceQtzc() {
+		return priceQtzc;
+	}
+
+	public void setPriceQtzc(BigDecimal priceQtzc) {
+		this.priceQtzc = priceQtzc;
+	}
+
+	public BigDecimal getPriceZjys() {
+		return priceZjys;
+	}
+
+	public void setPriceZjys(BigDecimal priceZjys) {
+		this.priceZjys = priceZjys;
+	}
+
+	public BigDecimal getPriceZjyf() {
+		return priceZjyf;
+	}
+
+	public void setPriceZjyf(BigDecimal priceZjyf) {
+		this.priceZjyf = priceZjyf;
+	}
+
+	public BigDecimal getGrossProfit() {
+		return grossProfit;
+	}
+
+	public void setGrossProfit(BigDecimal grossProfit) {
+		this.grossProfit = grossProfit;
+	}
+
+	public int getYfhkStatus() {
+		return yfhkStatus;
+	}
+
+	public void setYfhkStatus(int yfhkStatus) {
+		this.yfhkStatus = yfhkStatus;
+	}
+
+	public String getDes() {
+		return des;
+	}
+
+	public void setDes(String des) {
+		this.des = des;
+	}
 }

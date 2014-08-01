@@ -237,16 +237,25 @@
 			               		<table cellpadding="0" cellspacing="0" class="client_table_data table_data">
 					                <thead>
 					                    <tr>
-					                        <th>客人姓名</th>
+					                        <th>客人信息</th>
 					                    </tr>
 					                </thead>
 					                <tbody>
-										#foreach($name in $nameList)
+										#foreach($custom in $customList)
 					                    <tr>
-											#if($userRoleId==${fn.getSalesmanRoleId()}||$userRoleId==${fn.getAdminRoleId()})
-												<td><input type="text" class="tb_text" name="tempName" value="$!name" placeholder="点击此处修改" /><span name="delName" class="client_delete" title="删除行">-</span></td>
+											#if($userRoleId==${fn.getSalesmanRoleId()}||$userRoleId==${fn.getAdminRoleId()}||$userRoleId==${fn.getFinanceRoleId()})
+												<td>
+													姓名:<input type="text" class="tb_text" name="tempName" value="$!{custom.name}" placeholder="客户姓名" style="width:20%;"/>
+													联系方式:<input type="text" class="tb_text" name="tempContact" value="$!{custom.contact}" placeholder="联系方式" style="width:30%;"/>
+													住址:<input type="text" class="tb_text" name="tempAddr" value="$!{custom.addr}" placeholder="住址" style="width:40%;"/>
+													<span name="delName" class="client_delete" title="删除行">-</span>
+												</td>
 											#else
-												<td><input type="text" class="tb_text" name="tempName" value="$!name" readonly /></td>
+												<td>
+													姓名:<input type="text" class="tb_text" name="tempName" value="$!{custom.name}" style="width:20%;" readonly />
+													联系方式:<input type="text" class="tb_text" name="tempContact" value="$!{custom.contact}" style="width:30%;" readonly />
+													住址:<input type="text" class="tb_text" name="tempAddr" value="$!{custom.addr}" style="width:40%;" readonly />
+												</td>
 											#end
 										</tr>    
 										#end
@@ -280,7 +289,7 @@
     		            </div>  
 					</div>
 				#end
-				#if($userRoleId==${fn.getOperatorRoleId()}||$userRoleId==${fn.getAdminRoleId()})
+				##if($userRoleId==${fn.getOperatorRoleId()}||$userRoleId==${fn.getAdminRoleId()})
     				<div class="widget_title">
     		        	<span class="ico_static_r"></span>
     		        	<h3>送签信息</h3>
@@ -304,8 +313,14 @@
     		               <span class="form_item"><input type="text" class="text1" maxlength="30" size="30" placeholder="目前状态" name="operatorDes" id="operatorDes" value="$!{orders.operatorDes}"></span>
     		              </div>
     		            </div> 
+    					<div class="control_group">
+    		              <label class="control_label"><span class="ico_must">&nbsp;</span>送签备注:</label>
+    		              <div class="controls">
+    		               <span class="form_item"><input type="text" class="text1" maxlength="50" size="30" placeholder="送签备注" name="operatorRemark" id="operatorRemark" value="$!{orders.operatorRemark}"></span>
+    		              </div>
+    		            </div> 
     				</div>	
-				#end
+				##end
 				#if($userRoleId==${fn.getSalesmanRoleId()}||$userRoleId==${fn.getAdminRoleId()}||$userRoleId==${fn.getFinanceRoleId()})
 		        <div class="widget_title">
 		        	<span class="ico_static_r"></span>
@@ -390,6 +405,10 @@
 						<div class="controls">
 							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="priceYfhk" name="priceYfhk" placeholder="已付货款" value="$!{orders.priceYfhk}"></span>
 		              	</div>	
+	        			<label class="control_label">付款备注:</label>
+						<div class="controls">
+		               		<span class="form_item"><input type="text" class="text1" maxlength="50" size="20" id="yfhkRemark" name="yfhkRemark" placeholder="付款备注" value="$!{orders.yfhkRemark}""></span>
+		              	</div>		
 						<label class="control_label"><span class="ico_must">*</span>收款状态:</label>
 						<div class="controls">
 		               		<span class="form_item"><select name="yshkStatus" id="yshkStatus" class="text2 js_non_empty" placeholder="收款状态" onchange="processYshk()">
@@ -398,7 +417,7 @@
 								<option value="2" #if($orders.yshkStatus=='2') selected #end>部分收款</option>
 								<option value="3" #if($orders.yshkStatus=='3') selected #end>已收全款</option>
 							</select></span>
-		              	</div>		
+		              	</div>
 						<script>
 							function processYshk(){
 								var yshkStatus=jQuery("#yshkStatus").val();
@@ -411,13 +430,17 @@
 									jQuery("#priceYshk").removeAttr("readonly");
 								}
 							}
-							
 						</script>
 						<label class="control_label"><span class="ico_must">*</span>已收货款:</label>
 						<div class="controls">
 							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="priceYshk" name="priceYshk" placeholder="已收货款" value="$!{orders.priceYshk}"></span>
 		              	</div>	
 		        	</div>
+	        			<label class="control_label">收款备注:</label>
+						<div class="controls">
+		               		<span class="form_item"><input type="text" class="text1" maxlength="50" size="20" id="yshkRemark" name="yshkRemark" placeholder="收款备注" value="$!{orders.yshkRemark}""></span>
+		              	</div>		
+		        	
 					#end
 		        	<div class="control_group">
 	        			<label class="control_label">备注:</label>
@@ -457,12 +480,12 @@
     		jQuery("#productId").attr("disabled", "disabled");
     		jQuery("#orderDate").attr("disabled", "disabled");
     		jQuery("#nameListSize").attr("disabled", "disabled");
-			
+        	
 			if(userRole=='5'){
-        		jQuery("#priceYsdj").attr("disabled", "disabled");
-        		jQuery("#priceQtys").attr("disabled", "disabled");
-        		jQuery("#priceQtzc").attr("disabled", "disabled");
-        		jQuery("#priceZjys").attr("disabled", "disabled");
+        		//jQuery("#priceYsdj").attr("disabled", "disabled");
+        		//jQuery("#priceQtys").attr("disabled", "disabled");
+        		//jQuery("#priceQtzc").attr("disabled", "disabled");
+        		//jQuery("#priceZjys").attr("disabled", "disabled");
         		//jQuery("#priceZjyf").attr("disabled", "disabled");
         		//jQuery("#grossProfit").attr("disabled", "disabled");
         	}

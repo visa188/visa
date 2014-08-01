@@ -3,64 +3,74 @@ package com.visa.po;
 import java.util.Date;
 
 public class User {
-    private String userId;
+	private String userId;
 
-    private String userName;
+	private String userName;
 
-    private Integer roleId;
+	private Integer roleId;
 
-    private String pwd;
+	private String pwd;
 
-    private String managerId;
+	private String managerId;
 
-    private Date postDt;
+	private Date postDt;
 
-    public String getUserId() {
-        return userId;
-    }
+	private String deptId;
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+	public String getDeptId() {
+		return deptId;
+	}
 
-    public String getUserName() {
-        return userName;
-    }
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
+	}
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+	public String getUserId() {
+		return userId;
+	}
 
-    public Integer getRoleId() {
-        return roleId;
-    }
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public String getPwd() {
-        return pwd;
-    }
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
+	public Integer getRoleId() {
+		return roleId;
+	}
 
-    public String getManagerId() {
-        return managerId;
-    }
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
 
-    public void setManagerId(String managerId) {
-        this.managerId = managerId;
-    }
+	public String getPwd() {
+		return pwd;
+	}
 
-    public Date getPostDt() {
-        return postDt;
-    }
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
 
-    public void setPostDt(Date postDt) {
-        this.postDt = postDt;
-    }
+	public String getManagerId() {
+		return managerId;
+	}
+
+	public void setManagerId(String managerId) {
+		this.managerId = managerId;
+	}
+
+	public Date getPostDt() {
+		return postDt;
+	}
+
+	public void setPostDt(Date postDt) {
+		this.postDt = postDt;
+	}
 
 }

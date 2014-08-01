@@ -76,10 +76,10 @@
   <insert id="insert">
     insert into customer (customerName, company, 
       telephone, salesmanId, des, 
-      address, postDt)
+      address, postDt,qq)
     values (#{customerName,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
       #{telephone,jdbcType=VARCHAR}, #{salesmanId,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARBINARY}, now())
+      #{address,jdbcType=VARBINARY}, now(),#{qq,jdbcType=VARCHAR})
   </insert>
   
   <update id="updateByPrimaryKey">

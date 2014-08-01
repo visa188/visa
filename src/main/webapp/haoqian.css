@@ -452,7 +452,7 @@ a:hover {
 }
 .miancon {
   margin-left: 220px;
-  min-width: 640px;
+  min-width: 1680px;
   background: url(images/maincon_bg.jpg) repeat 0 0;
   _margin-left: 0;
   _float: left;
@@ -595,7 +595,7 @@ a:hover {
   font-size: 12px;
 }
 .form_horizontal .text3 {
-  width: 100%;
+  width: 400px;
   _width: auto;
   padding: 0 4px;
   font-size: 12px;
@@ -647,7 +647,7 @@ a:hover {
 }
 .form_horizontal .form_actions {
   padding: 20px 40px 10px 200px;
-  text-align: right;
+  text-align: left;
   border-top: 1px solid #ffffff;
   border-bottom: 1px solid #eeeeee;
 }
@@ -769,6 +769,7 @@ a:hover {
 .table_data {
   border-top: 1px solid #DFDFDF;
   border-right: 1px solid #DFDFDF;
+  white-space: nowrap;
 }
 .table_data tbody tr {
   border-top: 1px solid #DFDFDF;

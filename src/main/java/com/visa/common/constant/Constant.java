@@ -1,6 +1,7 @@
 package com.visa.common.constant;
 
 /**
+ * @author zhangzp
  */
 public final class Constant {
     /**
@@ -30,9 +31,11 @@ public final class Constant {
     /**
      * PAGE_COUNT
      */
-    public static final int PAGE_COUNT = 4;
+    public static final int PAGE_COUNT = 20;
     /**
      * PAGE_OFFSET
      */
-    public static final int PAGE_OFFSET = 3;
+    public static final int PAGE_OFFSET = 10;
+    
+    public static final String ORDER_PREFIX_BJ = "BJ";
 }

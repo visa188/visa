@@ -51,15 +51,29 @@
                             </select></span>
                         </div>                          
                     </div>
+                    <div class="control_group">
+                        <label class="control_label"><span class="ico_must">*</span>所属部门:</label>
+                        <div class="controls">
+                            <span class="form_item"><select name="deptSel" id="deptSel" class="text2" placeholder="部门列表" style="width:100px;">
+                                <option value="">无</option>
+                                #foreach($one in $deptList)
+                                <option value="$one.name" $fn.selected(${user.deptId}, $one.name)>$one.name</option>
+                                #end
+                            </select>
+                            <input id="deptId" type="text" name="deptId" class="text1 js_non_empty" placeholder="所属部门"  style="width:200px;" value="$!{user.deptId}">
+                            </span>
+                        </div>                          
+                    </div>
 		        </div>
 		      </div>
                 <div class="form_actions">
     				<button type="reset" class="btn btn_reset">重置</button>
                   	<button type="submit" class="btn btn_save">保存</button>
-                </div>			      
+                </div>
 		  	</form>
 		</div>
 	</div>
+	
     <script>
     jQuery("#roleId").bind("blur",function(e){
         changeClass();
@@ -74,5 +88,11 @@
             jQuery("#managerId").removeClass('js_non_empty');
         }
     }
+    jQuery("#deptSel").bind("change",function(e){
+        var val = $(this).val();
+        if(val != ''){
+        	jQuery("#deptId").val(val);
+        }
+    })
     </script>
 #footer()

@@ -29,9 +29,15 @@
 		              	</div>		        			
 		        	</div>
                     <div class="control_group">
-                        <label class="control_label"><span class="ico_must">*</span>电话:</label>
+                        <label class="control_label"><span class="ico_must">*</span>电话(手机\固话):</label>
                         <div class="controls">
-                            <span class="form_item"><input value="$!{customer.telephone}" type="text" class="text1 js_phone js_non_empty" id="telephone" name="telephone" placeholder="电话" maxlength="11" size="11"/></span>
+                            <span class="form_item"><input value="$!{customer.telephone}" type="text" class="text1 js_non_empty" id="telephone" name="telephone" placeholder="电话" maxlength="50" size="11"/></span>
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label">QQ:</label>
+                        <div class="controls">
+                            <span class="form_item"><input value="$!{customer.qq}" type="text" class="text1" id="qq" name="qq" placeholder="QQ" maxlength="20" size="11"/></span>
                         </div>                          
                     </div>
                     <div class="control_group">

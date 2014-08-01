@@ -21,6 +21,7 @@
                     <label for="s_client">客户姓名：<input value="$!{customer.customerName}" id="s_client" type="text" class="s_client searchtx" name="customerName" placeholder="客户姓名" /></label>         
                     <label for="s_guest">客户电话：<input value="$!{customer.telephone}" id="s_guest" type="text" class="s_guest searchtx" name="telephone" placeholder="客户电话" /></label>    
                     <label for="searchbtn"><input onclick="conditionSearch(1);" id="searchbtn" type="button" name="" class="searchbtn" value="搜索" /></label>  
+                    <label for="searchbtn"><input onclick="exportData();" id="exportbtn" type="button" name="exportbtn" class="searchbtn" value="导出excel" /></label>
                 </form>
             </div>
             <hr class="hr_a" />
@@ -31,6 +32,7 @@
 	                        <th width="">客户姓名</th>
 	                        <th width="">公司</th>
 	                        <th width="">电话</th>
+	                        <th width="">QQ</th>
 	                        <th width="">地址</th>
                             <th width="">所属销售</th>
                             <th width="">备注</th>
@@ -45,6 +47,7 @@
 	                        <td>$one.customerName</td>
 	                        <td>$one.company</td>
 	                        <td>$one.telephone</td>
+	                        <td>$!{one.qq}</td>
 	                        <td>$one.address</td>
                             <td>$one.salesmanName</td>
                             <td>$one.des</td>
@@ -59,4 +62,13 @@
 			#generatePage()
 		</div>
 	</div>
+	<script>
+		// 导出数据为excel
+		function exportData(){
+			jQuery("#form1").attr("action","/customer/export.do");
+			jQuery("#form1").submit();
+			// 导出之后恢复action
+			jQuery("#form1").attr("action","/customer/list.do");
+		}
+	</script>
 #footer()

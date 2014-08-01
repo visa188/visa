@@ -136,7 +136,10 @@ GLB.clientOpr = function(node,addBtn,delBtn){
 
 	function createTr(){
 		var t_tr = document.createElement("tr");
-		$(t_tr).html('<td><input type="text" class="tb_text" name="tempName" value="" placeholder="点击此处修改" /><span class="client_delete" title="删除行" onclick="delTempRow(this)">-</span></td>');
+		$(t_tr).html('<td>姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="姓名" style="width:20%;"/>' +
+				'联系方式:<input type="text" class="tb_text" name="tempContact" value="" placeholder="联系方式" style="width:30%;"/>' +
+				'地址:<input type="text" class="tb_text" name="tempAddr" value="" placeholder="地址" style="width:40%;"/>' +
+				'<span class="client_delete" title="删除行" onclick="delTempRow(this)">-</span></td>');
 		return t_tr;
 	}
 }
@@ -219,15 +222,22 @@ $(function() {
 		var thisForm = this;
 		var submitBtn = $(".btn_save",thisForm);
 		submitBtn.bind("click",function(e){
+			$(this).attr("disabled",　true);
+			GLB.vari.submit_flag = true;
 			setClientValue();
 			e.preventDefault();
-			GLB.vari.submit_flag = true;
 			$(".controls").each(function(){
 				var formItem_wrap = this;
 				var nan_flag = false;
 				var nonEmpty_flag = false;
 				var repeat_flag = false;
 				var phone_flag = false;
+				
+				if($(".ico_error",formItem_wrap).length>1){
+		    		$(".ico_error",formItem_wrap).remove();
+		    		$(".error_tip",formItem_wrap).remove();
+		    	}
+				
 				if($(".js_phone",formItem_wrap)[0]){
 					phone_flag = true;
 				}
@@ -237,10 +247,11 @@ $(function() {
 				if($(".js_nan",formItem_wrap)[0]){
 					nan_flag = true;
 				}
-				if($(".js_non_empty",formItem_wrap)[0]){
-					nonEmpty_flag = true;
-				}
-				if(phone_flag || repeat_flag || nan_flag || nonEmpty_flag){
+				$(".js_non_empty",formItem_wrap).each(function(){
+					GLB.nonEmpty(this,formItem_wrap);
+				})
+				
+				if(phone_flag || repeat_flag || nan_flag){
 					var formItem = nan_flag ? $(".js_nan",formItem_wrap)[0] : $(".js_non_empty",formItem_wrap)[0];
 					if(repeat_flag){
 						formItem = repeat_flag ? $(".js_repeat",formItem_wrap)[0] : $(".js_non_empty",formItem_wrap)[0];
@@ -267,9 +278,13 @@ $(function() {
 				}					
 			})	
 			if (GLB.vari.submit_flag) {
-				thisForm.submit();
-			};
-			
+				if(confirm("确认提交?")){
+					thisForm.submit();	
+				}
+				$(this).attr("disabled",　false);
+			}else{
+				$(this).attr("disabled",　false);
+			}
 		});
 	})
 
@@ -282,10 +297,41 @@ $(function() {
 	}
 	
 	function setClientValue(){
+		var continentId = $("#continentId")[0];
+		var checkNotEmpty = false;
+		if (continentId && continentId.value!=4 && continentId.value!=5){
+			checkNotEmpty = true;
+		}
+		
 		var names=document.getElementsByName("tempName");
+		var contacts=document.getElementsByName("tempContact");
+		var addrs=document.getElementsByName("tempAddr");
 		var result="";
+		
+		if(checkNotEmpty){
+			$(names).each(function(){
+				$(this).addClass("js_non_empty");
+			});
+			$(contacts).each(function(){
+				$(this).addClass("js_non_empty");
+			});
+			$(addrs).each(function(){
+				$(this).addClass("js_non_empty");
+			});
+		}else{
+			$(names).each(function(){
+				$(this).removeClass("js_non_empty");
+			});
+			$(contacts).each(function(){
+				$(this).removeClass("js_non_empty");
+			});
+			$(addrs).each(function(){
+				$(this).removeClass("js_non_empty");
+			});
+		}
+		
 		$(names).each(function(i){
-			result+=$(names)[i].value+",";
+			result+=$(names)[i].value+"_"+$(contacts)[i].value+"_"+$(addrs)[i].value+",";
 		});
 		if(result&&result.length>0){
 			result=result.substring(0, result.length-1);

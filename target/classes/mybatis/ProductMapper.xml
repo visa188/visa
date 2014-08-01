@@ -57,11 +57,14 @@
   <insert id="insert" parameterType="Product" >
     insert into product (productName, 
       productType, districtPlace, 
-      price, des, postDt, areaId, continentId, countryId)
+      price, des, postDt, areaId, continentId, countryId, relatePeople, relateTel, relateQq, relateAddr,relateCompany)
     values (#{productName,jdbcType=VARCHAR},
       #{productType,jdbcType=VARCHAR}, #{districtPlace,jdbcType=VARCHAR}, 
       #{price,jdbcType=DECIMAL}, #{des,jdbcType=VARCHAR}, now(), 
-      #{areaId,jdbcType=DECIMAL}, #{continentId,jdbcType=DECIMAL}, #{countryId,jdbcType=DECIMAL})
+      #{areaId,jdbcType=DECIMAL}, #{continentId,jdbcType=DECIMAL}, #{countryId,jdbcType=DECIMAL}
+      ,#{relatePeople,jdbcType=VARCHAR},#{relateTel,jdbcType=VARCHAR}
+      ,#{relateQq,jdbcType=VARCHAR},#{relateAddr,jdbcType=VARCHAR}
+      ,#{relateCompany,jdbcType=VARCHAR})
   </insert>
   
   <update id="updateByPrimaryKey" parameterType="Product" >
@@ -74,6 +77,11 @@
       areaId = #{areaId,jdbcType=DECIMAL},
       continentId = #{continentId,jdbcType=DECIMAL},
       countryId = #{countryId,jdbcType=DECIMAL}
+      ,relatePeople = #{relatePeople,jdbcType=VARCHAR}
+      ,relateTel = #{relateTel,jdbcType=VARCHAR}
+      ,relateQq = #{relateQq,jdbcType=VARCHAR}
+      ,relateAddr = #{relateAddr,jdbcType=VARCHAR}
+      ,relateCompany = #{relateCompany,jdbcType=VARCHAR}
     where productId = #{productId,jdbcType=INTEGER}
   </update>
 </mapper>

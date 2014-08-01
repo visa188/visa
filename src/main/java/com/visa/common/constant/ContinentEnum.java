@@ -5,6 +5,8 @@ import java.util.Map;
 
 /**
  * 大洲枚举
+ * 
+ * @author zhangzp
  */
 public enum ContinentEnum {
 

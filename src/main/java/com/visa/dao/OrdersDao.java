@@ -32,4 +32,7 @@ public interface OrdersDao {
     int selectByCustomerIdCount(Integer customerId);
 
     int selectByUserIdCount(String userId);
+    
+    Map<String, Object> sumPrice(Map<String, Object> paraMap);
+    
 }
