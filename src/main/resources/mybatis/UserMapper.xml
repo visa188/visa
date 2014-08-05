@@ -6,6 +6,7 @@
     where managerId = #{managerId,jdbcType=VARCHAR} 
     <if test="user.userName != null">and userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and roleId = #{user.roleId,jdbcType=INTEGER}</if>
+    and enable = 1
   </select>
   
   <select id="selectByManagerId" resultType="UserVo">
@@ -15,6 +16,7 @@
     where u1.managerId = #{managerId,jdbcType=VARCHAR} 
     <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
+    and enable = 1
     limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
   </select>
   
@@ -33,7 +35,7 @@
     where 1=1
     <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
-    order by postDt desc 
+    order by  enable desc,postDt desc 
     limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
   </select>
   
@@ -41,15 +43,23 @@
     select *  
     FROM user 
     where roleId = #{roleId,jdbcType=INTEGER} 
+    order by userName
+    and enable = 1
   </select>
   
   <select id="selectByPrimaryKey" resultType="User" parameterType="java.lang.String" >
     select * from user 
     where userId = #{userId,jdbcType=VARCHAR}
+    and enable = 1
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from user 
+    update user set enable = 0
+    where userId = #{userId,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="activeByPrimaryKey" parameterType="java.lang.String" >
+    update user set enable = 1
     where userId = #{userId,jdbcType=VARCHAR}
   </delete>
   
@@ -64,8 +74,9 @@
     update user
     set userName = #{userName,jdbcType=VARCHAR},
       roleId = #{roleId,jdbcType=INTEGER},
-      managerId = #{managerId,jdbcType=INTEGER}
-      ,deptId = #{deptId,jdbcType=VARCHAR}
+      managerId = #{managerId,jdbcType=INTEGER},
+      <if test="pwd != null">pwd = #{pwd,jdbcType=VARCHAR},</if>
+      deptId = #{deptId,jdbcType=VARCHAR}
     where userId = #{userId,jdbcType=VARCHAR}
   </update>
   

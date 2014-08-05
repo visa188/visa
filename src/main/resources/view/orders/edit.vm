@@ -1,8 +1,15 @@
 #header(3,31,"修改订单信息")
 
 <script>
+    function setBxyf(){
+        var priceBxys=jQuery("#priceBxys").val()==''?0:jQuery("#priceBxys").val();
+        jQuery("#priceBxyf").val(priceBxys);
+    }
+    
 	function calculate(){
 		var priceYsdj=jQuery("#priceYsdj").val()==''?0:jQuery("#priceYsdj").val();
+		var priceBxys=jQuery("#priceBxys").val()==''?0:jQuery("#priceBxys").val();
+        var priceBxyf=jQuery("#priceBxyf").val()==''?0:jQuery("#priceBxyf").val();
 		var priceQtys=jQuery("#priceQtys").val()==''?0:jQuery("#priceQtys").val();
 		var priceQtzc=jQuery("#priceQtzc").val()==''?0:jQuery("#priceQtzc").val();
 		var nameListSize=jQuery("#nameListSize").val()==''?0:jQuery("#nameListSize").val();
@@ -13,8 +20,8 @@
 		var grossProfit = 0.0;
 		
 		if(priceYsdj&&priceQtys&&priceQtzc&&nameListSize){
-			priceZjys = Math.round(parseFloat(priceYsdj*100*nameListSize+priceQtys*100))/100;
-			priceZjyf = Math.round(parseFloat(productPrice*100 * nameListSize+priceQtzc*100))/100;
+			priceZjys = Math.round(parseFloat(priceYsdj*100*nameListSize+priceQtys*100+priceBxys*100))/100;
+            priceZjyf = Math.round(parseFloat(productPrice*100 * nameListSize+priceQtzc*100+priceBxyf*100))/100;
 			grossProfit = Math.round(parseFloat(priceZjys*100 - priceZjyf*100))/100;
 		}
 		
@@ -310,7 +317,15 @@
     					<div class="control_group">
     		              <label class="control_label"><span class="ico_must">&nbsp;</span>目前状态:</label>
     		              <div class="controls">
-    		               <span class="form_item"><input type="text" class="text1" maxlength="30" size="30" placeholder="目前状态" name="operatorDes" id="operatorDes" value="$!{orders.operatorDes}"></span>
+    		                <span class="form_item"><select name="operatorDes" id="operatorDes" class="text2" placeholder="目前状态">
+                                <option value="" selected="selected">请选择</option>
+                                <option value="等待材料补充" #if($!{orders.operatorDes}=="等待材料补充") selected #end>等待材料补充</option>
+                                <option value="待进使馆/面试" #if($!{orders.operatorDes}=="待进使馆/面试") selected #end>待进使馆/面试</option>
+                                <option value="已进使馆/面试" #if($!{orders.operatorDes}=="已进使馆/面试") selected #end>已进使馆/面试</option>
+                                <option value="签证出签" #if($!{orders.operatorDes}=="签证出签") selected #end>签证出签</option>
+                                <option value="签证拒签" #if($!{orders.operatorDes}=="签证拒签") selected #end>签证拒签</option>
+                                <option value="订单取消" #if($!{orders.operatorDes}=="订单取消") selected #end>订单取消</option>
+                            </select></span>
     		              </div>
     		            </div> 
     					<div class="control_group">
@@ -321,28 +336,43 @@
     		            </div> 
     				</div>	
 				##end
-				#if($userRoleId==${fn.getSalesmanRoleId()}||$userRoleId==${fn.getAdminRoleId()}||$userRoleId==${fn.getFinanceRoleId()})
+				#if($userRoleId==${fn.getSalesmanRoleId()}||$userRoleId==${fn.getAdminRoleId()}||$userRoleId==${fn.getFinanceRoleId()}||$userRoleId==${fn.getOperatorRoleId()})
 		        <div class="widget_title">
 		        	<span class="ico_static_r"></span>
 		        	<h3>费用计算</h3>
 		        </div>
 		        <div class="widget_content">
+		            #if($userRoleId==${fn.getSalesmanRoleId()}||$userRoleId==${fn.getAdminRoleId()}||$userRoleId==${fn.getFinanceRoleId()})
 		        	<div class="control_group">
 	        			<label class="control_label"><span class="ico_must">*</span>应收单价:</label>
 						<div class="controls">
 		               		<span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceYsdj" name="priceYsdj" placeholder="应收单价" value="$!{orders.priceYsdj}" onchange="calculate()"></span>
 		              	</div>		        			
 		        	</div>
+		        	#end
+		        	<div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>保险应收款:</label>
+                      <div class="controls">
+                       <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxys" name="priceBxys" placeholder="保险应收款" value="$!{orders.priceBxys}" onchange="setBxyf();calculate()" #if($userRoleId!=${fn.getOperatorRoleId()}) readonly #end></span>
+                      </div>
+                    </div>
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>保险应付款:</label>
+                      <div class="controls">
+                       <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxyf" name="priceBxyf" placeholder="保险应付款" value="#if(${orders.priceBxyf})${orders.priceBxyf}#else 0.00 #end" onchange="calculate()"  #if($userRoleId!=${fn.getOperatorRoleId()}) readonly #end></span>
+                      </div>
+                    </div>
+                    #if($userRoleId==${fn.getSalesmanRoleId()}||$userRoleId==${fn.getAdminRoleId()}||$userRoleId==${fn.getFinanceRoleId()})
 		            <div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>其他应收款:</label>
 		              <div class="controls">
-		               <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceQtys" name="priceQtys" placeholder="其他应收款" value="$!{orders.priceQtys}" onchange="calculate()"></span>
+		               <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceQtys" name="priceQtys" placeholder="其他应收款" value="$!{orders.priceQtys}" onchange="calculate()"> <input type="text" class="text1" maxlength="100" size="20" id="priceQtysBz" name="priceQtysBz" value="$!{orders.priceQtysBz}" placeholder="其他应收款备注" ></span>
 		              </div>
 		            </div>
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>其他应付款:</label>
 		              <div class="controls">
-		               <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceQtzc" name="priceQtzc" placeholder="其他应付款" value="$!{orders.priceQtzc}" onchange="calculate()"></span>
+		               <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceQtzc" name="priceQtzc" placeholder="其他应付款" value="$!{orders.priceQtzc}" onchange="calculate()"> <input type="text" class="text1" maxlength="100" size="20" id="priceQtzcBz" name="priceQtzcBz" value="$!{orders.priceQtzcBz}" placeholder="其他应付款备注" ></span>
 		              </div>
 		            </div>
 					<div class="control_group">
@@ -368,7 +398,8 @@
 						<div class="controls">
 		               		<span class="form_item"><input type="text" class="text1" maxlength="10" size="10" id="grossProfit" name="grossProfit" placeholder="毛利" value="$!{orders.grossProfit}" readonly></span>
 		              	</div>		        			
-		        	</div>		            
+		        	</div>
+		        	#end		            
 		        </div>	  
 				#end
 		        <div class="widget_title">
@@ -443,11 +474,17 @@
 		        	
 					#end
 		        	<div class="control_group">
-	        			<label class="control_label">备注:</label>
+	        			<label class="control_label">销售备注:</label>
 						<div class="controls">
-							<textarea class="text3" id="des" name="des" cols="80" rows="8" placeholder="备注" maxlength="300">$!{orders.des}</textarea>
+							<textarea class="text3" id="des" name="des" cols="80" rows="8" placeholder="销售备注" maxlength="300">$!{orders.des}</textarea>
 		              	</div>		        			
 		        	</div>
+		        	<div class="control_group">
+                        <label class="control_label">操作备注:</label>
+                        <div class="controls">
+                            <textarea class="text3" id="czdes" name="czdes" cols="80" rows="8" placeholder="操作备注" maxlength="300">$!{orders.czdes}</textarea>
+                        </div>                          
+                    </div>
 		        </div>
 		      </div>
 				<div class="form_actions">

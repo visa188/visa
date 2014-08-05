@@ -13,19 +13,17 @@ public interface CustomerDao {
 
     int insert(Customer record);
 
-    Integer selectBySalesmanIdCount(@Param("salesmanId") String salesmanId,
-            @Param("customer") Customer customer);
+    Integer selectBySalesmanIdCount(@Param("salesmanId") String salesmanId, @Param("customer") Customer customer);
 
-    List<CustomerVo> selectBySalesmanId(@Param("salesmanId") String salesmanId,
-            @Param("start") Integer start, @Param("pageCount") Integer pageCount,
-            @Param("customer") Customer customer);
+    List<CustomerVo> selectBySalesmanId(@Param("salesmanId") String salesmanId, @Param("start") Integer start,
+            @Param("pageCount") Integer pageCount, @Param("customer") Customer customer);
 
     List<Customer> selectAllBySalesmanId(String salesmanId);
 
     Integer selectAllCount(Customer customer);
 
-    List<CustomerVo> selectAll(@Param("start") Integer start,
-            @Param("pageCount") Integer pageCount, @Param("customer") Customer customer);
+    List<CustomerVo> selectAll(@Param("start") Integer start, @Param("pageCount") Integer pageCount,
+            @Param("customer") Customer customer);
 
     List<Customer> selectAllCustomer();
 
@@ -33,9 +31,9 @@ public interface CustomerDao {
 
     int updateByPrimaryKey(Customer record);
 
-    int selectByTelephoneCount(@Param("telephone") String telephone,
-            @Param("customerId") Integer customerId);
+    int selectByTelephoneCount(@Param("telephone") String telephone, @Param("customerId") Integer customerId);
 
-    List<Customer> searchCustomer(@Param("customerName") String customerName,
-            @Param("userId") String userId);
+    List<Customer> searchCustomer(@Param("customerName") String customerName, @Param("userId") String userId);
+
+    List<String> selectCompany();
 }

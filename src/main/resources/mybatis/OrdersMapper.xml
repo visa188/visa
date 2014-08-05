@@ -12,6 +12,9 @@
 				and user1.userId=orders.salesmanId 
 				and orders.orderDate like #{date,jdbcType=VARCHAR}
 		<if test="salesmanId != null">and orders.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
+		<if test="customerId != null">and orders.customerId=#{customerId,jdbcType=VARCHAR}</if>
+		<if test="operatorId != null">and orders.operatorId=#{operatorId,jdbcType=VARCHAR}</if>
+		<if test="company != null">and customer.company=#{company,jdbcType=VARCHAR}</if>
 		<if test="yfhkStatus != null">and orders.yfhkStatus=#{yfhkStatus,jdbcType=VARCHAR}</if>
 		<if test="yshkStatus != null">and orders.yshkStatus=#{yshkStatus,jdbcType=VARCHAR}</if>
 		) tmp1 left OUTER join user on( tmp1.operatorId = user.userId)
@@ -136,14 +139,19 @@
       	<if test="signDate != null">signDate, </if>
      	<if test="signOperatorName != null">signOperatorName, </if>
       	<if test="priceYsdj != null">priceYsdj, </if>
+      	<if test="priceBxys != null">priceBxys, </if>
+        <if test="priceBxyf != null">priceBxyf, </if>
       	<if test="priceQtys != null">priceQtys, </if>
       	<if test="priceQtzc != null">priceQtzc, </if>
+      	<if test="priceQtysBz != null">priceQtysBz, </if>
+        <if test="priceQtzcBz != null">priceQtzcBz, </if>
       	<if test="priceZjys != null">priceZjys, </if>
       	<if test="priceZjyf != null">priceZjyf,</if>
       	<if test="priceYfhk != null">priceYfhk, </if>
       	<if test="grossProfit != null">grossProfit, </if>
       	<if test="yfhkStatus != null">yfhkStatus, </if>
       	<if test="des != null">des,</if>
+      	<if test="czdes != null">czdes,</if>
       	<if test="operatorDes != null">operatorDes,</if>
       	<if test="yshkStatus != null">yshkStatus,</if>
       	<if test="priceYshk != null">priceYshk,</if>
@@ -161,14 +169,19 @@
       <if test="signDate != null">#{signDate,jdbcType=DATE}, </if>
       <if test="signOperatorName != null">#{signOperatorName,jdbcType=VARCHAR}, </if>
       <if test="priceYsdj != null">#{priceYsdj,jdbcType=DECIMAL}, </if>
+      <if test="priceBxys != null">#{priceBxys,jdbcType=DECIMAL}, </if>
+      <if test="priceBxyf != null">#{priceBxyf,jdbcType=DECIMAL}, </if>
       <if test="priceQtys != null">#{priceQtys,jdbcType=DECIMAL}, </if>
       <if test="priceQtzc != null">#{priceQtzc,jdbcType=DECIMAL}, </if>
+      <if test="priceQtysBz != null">#{priceQtysBz,jdbcType=DECIMAL}, </if>
+      <if test="priceQtzcBz != null">#{priceQtzcBz,jdbcType=DECIMAL}, </if>
       <if test="priceZjys != null">#{priceZjys,jdbcType=DECIMAL}, </if>
       <if test="priceZjyf != null">#{priceZjyf,jdbcType=DECIMAL}, </if>
       <if test="priceYfhk != null">#{priceYfhk,jdbcType=DECIMAL}, </if>
       <if test="grossProfit != null">#{grossProfit,jdbcType=DECIMAL}, </if>
       <if test="yfhkStatus != null">#{yfhkStatus,jdbcType=INTEGER}, </if>
       <if test="des != null">#{des,jdbcType=VARCHAR}, </if>
+      <if test="czdes != null">#{czdes,jdbcType=VARCHAR}, </if>
       <if test="operatorDes != null">#{operatorDes,jdbcType=VARCHAR}, </if>
       <if test="yshkStatus != null">#{yshkStatus,jdbcType=INTEGER},</if>
       <if test="priceYshk != null">#{priceYshk,jdbcType=DECIMAL},</if>
@@ -190,8 +203,12 @@
       <if test="signDate != null">signDate = #{signDate,jdbcType=DATE},</if>
       <if test="signOperatorName != null">signOperatorName = #{signOperatorName,jdbcType=VARCHAR},</if>
       <if test="priceYsdj != null">priceYsdj = #{priceYsdj,jdbcType=DECIMAL},</if>
+      <if test="priceBxys != null">priceBxys = #{priceBxys,jdbcType=DECIMAL},</if>
+      <if test="priceBxyf != null">priceBxyf = #{priceBxyf,jdbcType=DECIMAL},</if>
       <if test="priceQtys != null">priceQtys = #{priceQtys,jdbcType=DECIMAL},</if>
       <if test="priceQtzc != null">priceQtzc = #{priceQtzc,jdbcType=DECIMAL},</if>
+      <if test="priceQtysBz != null">priceQtysBz = #{priceQtysBz,jdbcType=DECIMAL},</if>
+      <if test="priceQtzcBz != null">priceQtzcBz = #{priceQtzcBz,jdbcType=DECIMAL},</if>
       <if test="priceZjys != null">priceZjys = #{priceZjys,jdbcType=DECIMAL},</if>
       <if test="priceZjyf != null">priceZjyf = #{priceZjyf,jdbcType=DECIMAL},</if>
       <if test="priceYfhk != null">priceYfhk = #{priceYfhk,jdbcType=DECIMAL},</if>
@@ -200,6 +217,7 @@
       <if test="yshkStatus != null">yshkStatus = #{yshkStatus,jdbcType=INTEGER},</if>
       <if test="priceYshk != null">priceYshk = #{priceYshk,jdbcType=DECIMAL},</if>
       <if test="des != null">des = #{des,jdbcType=VARCHAR},</if>
+      <if test="czdes != null">czdes = #{czdes,jdbcType=VARCHAR},</if>
       <if test="operatorDes != null">operatorDes = #{operatorDes,jdbcType=VARCHAR},</if>
       <if test="operatorRemark != null">operatorRemark = #{operatorRemark,jdbcType=VARCHAR},</if>
       <if test="yshkRemark != null">yshkRemark = #{yshkRemark,jdbcType=VARCHAR},</if>
@@ -209,8 +227,8 @@
   </update>
 
     <select id="sumPrice" parameterType="java.util.Map" resultType="java.util.Map">
-      select sum(priceZjys) sumzjys,sum(priceZjyf) sumzjyf
-		from (select orders.*,product.productName,customer.customerName,user1.userName salesmanName,country.countryName
+      select sum(priceZjys) sumzjys,sum(priceZjyf) sumzjyf,sum(priceYshk1) sumyshk
+		from (select orders.*,IFNULL(orders.priceYshk,0) AS priceYshk1,product.productName,customer.customerName,user1.userName salesmanName,country.countryName
 			from orders,product,customer,user user1,country
 			where orders.productId=product.productId 
 				and orders.customerId=customer.customerId 

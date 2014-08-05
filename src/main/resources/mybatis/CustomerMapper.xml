@@ -37,7 +37,7 @@
   </select>
   
   <select id="selectAllCustomer" resultType="Customer">
-    select * from customer 
+    select * from customer  ORDER BY customerName
   </select>
   
   <select id="selectAllCount" resultType="java.lang.Integer">
@@ -66,6 +66,10 @@
     *
     from customer
     where customerId = #{customerId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectCompany" resultType="java.lang.String">
+    SELECT company FROM customer GROUP BY company
   </select>
   
   <delete id="deleteByPrimaryKey">

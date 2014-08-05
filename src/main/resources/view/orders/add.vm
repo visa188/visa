@@ -1,7 +1,13 @@
 #header(3,32,"新增订单信息")
 <script>
+    function setBxyf(){
+        var priceBxys=jQuery("#priceBxys").val()==''?0:jQuery("#priceBxys").val();
+        jQuery("#priceBxyf").val(priceBxys);
+    }
 	function calculate(){
 		var priceYsdj=jQuery("#priceYsdj").val()==''?0:jQuery("#priceYsdj").val();
+		var priceBxys=jQuery("#priceBxys").val()==''?0:jQuery("#priceBxys").val();
+        var priceBxyf=jQuery("#priceBxyf").val()==''?0:jQuery("#priceBxyf").val();
 		var priceQtys=jQuery("#priceQtys").val()==''?0:jQuery("#priceQtys").val();
 		var priceQtzc=jQuery("#priceQtzc").val()==''?0:jQuery("#priceQtzc").val();
 		var nameListSize=jQuery("#nameListSize").val()==''?0:jQuery("#nameListSize").val();
@@ -11,9 +17,9 @@
 		var priceZjyf = 0.0;
 		var grossProfit = 0.0;
 		
-		if(priceYsdj&&priceQtys&&priceQtzc&&nameListSize){
-			priceZjys = Math.round(parseFloat(priceYsdj*100*nameListSize+priceQtys*100))/100;
-			priceZjyf = Math.round(parseFloat(productPrice*100 * nameListSize+priceQtzc*100))/100;
+		if(priceYsdj&&priceBxys&&priceBxyf&&priceQtys&&priceQtzc&&nameListSize){
+			priceZjys = Math.round(parseFloat(priceYsdj*100*nameListSize+priceQtys*100+priceBxys*100))/100;
+			priceZjyf = Math.round(parseFloat(productPrice*100 * nameListSize+priceQtzc*100+priceBxyf*100))/100;
 			grossProfit = Math.round(parseFloat(priceZjys*100 - priceZjyf*100))/100;
 		}
 		
@@ -232,16 +238,28 @@
 		               		<span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceYsdj" name="priceYsdj" value="0" placeholder="应收单价" onchange="calculate()"></span>
 		              	</div>		        			
 		        	</div>
+		        	<div class="control_group">
+                      <label class="control_label">保险应收款:</label>
+                      <div class="controls">
+                       <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxys" name="priceBxys" value="0" placeholder="保险应收款" onchange="setBxyf();calculate()" readonly></span>
+                      </div>
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label">保险应付款:</label>
+                        <div class="controls">
+                            <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxyf" name="priceBxyf" value="0" placeholder="保险应付款" onchange="calculate()" readonly></span>
+                        </div>                          
+                    </div>
 		            <div class="control_group">
 		              <label class="control_label">其他应收款:</label>
 		              <div class="controls">
-		               <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceQtys" name="priceQtys" value="0" placeholder="其他应收款" onchange="calculate()"></span>
+		               <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceQtys" name="priceQtys" value="0" placeholder="其他应收款" onchange="calculate()"> <input type="text" class="text1" maxlength="100" size="20" id="priceQtysBz" name="priceQtysBz" value="" placeholder="其他应收款备注" ></span>
 		              </div>
 		            </div>
 					<div class="control_group">
 	        			<label class="control_label">其他应付款:</label>
 						<div class="controls">
-		               		<span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceQtzc" name="priceQtzc" value="0" placeholder="其他应付款" onchange="calculate()"></span>
+		               		<span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceQtzc" name="priceQtzc" value="0" placeholder="其他应付款" onchange="calculate()"> <input type="text" class="text1" maxlength="100" size="20" id="priceQtzcBz" name="priceQtzcBz" value="" placeholder="其他应付款备注" ></span>
 		              	</div>		        			
 		        	</div>
 					<div class="control_group">
@@ -269,12 +287,20 @@
 		        </div>
 		        <div class="widget_content">
 		        	<div class="control_group">
-	        			<label class="control_label">备注:</label>
+	        			<label class="control_label">销售备注:</label>
 						<div class="controls">
-							<textarea class="text3" name="des" id="des" cols="80" rows="8" maxlength="300" placeholder="备注"></textarea>
+							<textarea class="text3" name="des" id="des" cols="80" rows="8" maxlength="300" placeholder="销售备注"></textarea>
 		              	</div>		        			
 		        	</div>
 		        </div>
+		        <div class="widget_content">
+                    <div class="control_group">
+                        <label class="control_label">操作备注:</label>
+                        <div class="controls">
+                            <textarea class="text3" name="czdes" id="czdes" cols="80" rows="8" maxlength="300" placeholder="操作备注"></textarea>
+                        </div>                          
+                    </div>
+                </div>
 		      </div>
 				<div class="form_actions">
 					<button type="reset" class="btn btn_reset">重置</button>

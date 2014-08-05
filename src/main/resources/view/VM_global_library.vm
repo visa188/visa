@@ -106,6 +106,14 @@
                             <dd#if($secNav==62) class="on"#end><a href="/area/add.do">新增领区信息</a></dd>
                         </dl>                   
                     </li>
+                    
+                    <li class="client_mng#if($topNav==9) open#end">
+                        <a class="client_mng_tab" href="/department/list.do"><span class="ico_setting"></span><span class="sidenav_text">部门管理</span><span class="ico_fold"></span></a>
+                        <dl>
+                            <dd#if($secNav==91) class="on"#end><a href="/department/list.do">部门信息管理</a></dd>
+                            <dd#if($secNav==92) class="on"#end><a href="/department/add.do">新增部门信息</a></dd>
+                        </dl>                   
+                    </li>
 				#end
                 
                 <li class="client_mng#if($topNav==4) open#end">

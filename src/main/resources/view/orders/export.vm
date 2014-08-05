@@ -67,6 +67,39 @@
     						</select></span>
 						</div>
 		        	</div>
+		        	<div class="control_group">
+                        <label class="control_label"><span class="ico_must">&nbsp;</span>客户名称:</label>
+                        <div class="controls">
+                            <span class="form_item"><select name="customerId" id="customerId" class="text2" placeholder="客户名称">
+                                <option value="" selected="selected">请选择</option>
+                                #foreach($customer in $customerList)
+                                    <option value="$!customer.customerId">$!customer.customerName</option>
+                                #end
+                            </select></span>
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label"><span class="ico_must">&nbsp;</span>客户公司:</label>
+                        <div class="controls">
+                            <span class="form_item"><select name="company" id="company" class="text2" placeholder="客户公司">
+                                <option value="" selected="selected">请选择</option>
+                                #foreach($company in $companyList)
+                                    <option value="$!company">$!company</option>
+                                #end
+                            </select></span>
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label"><span class="ico_must">&nbsp;</span>操作员:</label>
+                        <div class="controls">
+                            <span class="form_item"><select name="operatorId" id="operatorId" class="text2" placeholder="操作员">
+                                <option value="" selected="selected">请选择</option>
+                                #foreach($operator in $operatorList)
+                                    <option value="$!operator.userId">$!operator.userName</option>
+                                #end
+                            </select></span>
+                        </div>                          
+                    </div>
 		        </div>
 		       
 		      </div>

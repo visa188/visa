@@ -86,6 +86,7 @@
 	            		<td>总计应收:</td><td>$!{sumPrice.sumzjys}</td>
 	            		<td>总计应付:</td><td>$!{sumPrice.sumzjyf}</td>
 	            		<td>毛利:</td><td>$!{sumPrice.sumlr}</td>
+	            		<td>总计未收:</td><td>$!{sumPrice.sumwshk}</td>
 	            	</tr>
 	            </tbody>
 			</table>
@@ -98,7 +99,7 @@
 	                <thead>
 	                    <tr>
 							<th width="">订单号</th>
-							<th width="">所属销售员</th>
+							<!--th width="">所属销售员</th-->
 	                        <th width="">客户姓名</th>
 							<th width="">客户公司</th>
 							<th width="">客人数量</th>
@@ -121,7 +122,7 @@
 						#foreach($order in $orderList)
     	                    <tr>
 								<td>$!{order.orderSeq}</td>
-								<td>$!{order.salesmanName}</td>
+								<!--td>$!{order.salesmanName}</td-->
     	                        <td>$!{order.customerName}</td>
     	                        <td title="$!{order.customerCompany}">${fn.shortenStr(${order.customerCompany},8)}</td>
 								<td>$!{order.nameListSize}人</td>

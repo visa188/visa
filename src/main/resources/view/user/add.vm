@@ -64,6 +64,14 @@
                             </span>
                         </div>                          
                     </div>
+                    #if("$action"=="update")
+                    <div class="control_group">
+                        <label class="control_label"><span class="ico_must">*</span>重置密码:</label>
+                        <div class="controls">
+                            <span class="form_item"><input value="" type="text" class="text1" name="pwd" placeholder="重置密码" maxlength="20" size="20"/></span>
+                        </div>                          
+                    </div>
+                    #end
 		        </div>
 		      </div>
                 <div class="form_actions">

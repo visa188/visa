@@ -11,6 +11,8 @@ public interface UserDao {
 
     Integer deleteByPrimaryKey(String userId);
 
+    Integer activeByPrimaryKey(String userId);
+
     Integer insert(User record);
 
     Integer selectByManagerIdCount(@Param("managerId") String managerId, @Param("user") User user);
