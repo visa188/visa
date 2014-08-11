@@ -222,7 +222,7 @@ $(function() {
 		var thisForm = this;
 		var submitBtn = $(".btn_save",thisForm);
 		submitBtn.bind("click",function(e){
-			$(this).attr("disabled",　true);
+			$(this).attr("disabled",true);
 			GLB.vari.submit_flag = true;
 			setClientValue();
 			e.preventDefault();
@@ -276,14 +276,14 @@ $(function() {
 			    		GLB.phone(formItem,formItem_wrap);
 			    	}
 				}					
-			})	
+			})
 			if (GLB.vari.submit_flag) {
 				if(confirm("确认提交?")){
 					thisForm.submit();	
 				}
-				$(this).attr("disabled",　false);
+				$(this).attr("disabled",false);
 			}else{
-				$(this).attr("disabled",　false);
+				$(this).attr("disabled",false);
 			}
 		});
 	})
