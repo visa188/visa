@@ -16,6 +16,8 @@ public class LineNameList {
      * @pdOid 7a6408d4-54d9-4445-8eb7-d7d3802c268b
      */
     public int id;
+
+    public int lineOrderId;
     /**
      * 客人名字
      * 
@@ -60,6 +62,14 @@ public class LineNameList {
     public String comment;
     /** @pdOid 1ed4bc3e-9d97-4bd8-9d5d-07a80b3c55b7 */
     public Date postTime;
+
+    public int getLineOrderId() {
+        return lineOrderId;
+    }
+
+    public void setLineOrderId(int lineOrderId) {
+        this.lineOrderId = lineOrderId;
+    }
 
     public int getId() {
         return id;

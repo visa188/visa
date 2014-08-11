@@ -1,48 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.visa.dao.AreaDao" >
-  <select id="selectAllArea" resultType="Area">
+<mapper namespace="com.visa.dao.line.LinesSrviceDao" >
+  <select id="selectAllLinesSrvice" resultType="LinesSrvice">
     select * 
-    from area
-    order by postDt desc 
+    from linessrvice
   </select>
   
-  <select id="selectAllCount" resultType="java.lang.Integer">
-    select count(*) from area 
-    where 1=1
-    <if test="areaName != null">and areaName like CONCAT('%',#{areaName,jdbcType=VARCHAR},'%')</if>
-    order by postDt desc 
-  </select>
-  
-  <select id="selectAll" resultType="Area">
-    select * 
-    from area
-    where 1=1
-    <if test="area.areaName != null">and areaName like CONCAT('%',#{area.areaName,jdbcType=VARCHAR},'%')</if>
-    order by postDt desc 
-    limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
-  </select>
-  
-  <select id="selectByPrimaryKey" resultType="Area">
+  <select id="selectByPrimaryKey" resultType="LinesSrvice">
     select 
     *
-    from area
-    where areaId = #{areaId,jdbcType=INTEGER}
+    from linessrvice
+    where serviceId = #{serviceId,jdbcType=INTEGER}
   </select>
   
   <delete id="deleteByPrimaryKey">
-    delete from area
-    where areaId = #{areaId,jdbcType=INTEGER}
+    delete from linessrvice
+    where serviceId = #{serviceId,jdbcType=INTEGER}
   </delete>
   
   <insert id="insert">
-    insert into area (areaName, postDt)
-    values (#{areaName,jdbcType=VARCHAR}, now())
+    insert into linessrvice (orderId,serviceName,serviceType,servicePrice,serviceOperator,serviceItem1,serviceItem2,serviceItem3,serviceItem4,
+    serviceItem5,specialComment,priceSum,alreadyPaid,needPaid,paidBank,paidDate,alreadyGot,needGot,gotBank,gotDate,feeComment, postDt)
+    values (#{orderId,jdbcType=INTEGER},#{serviceName,jdbcType=VARCHAR},#{serviceType,jdbcType=VARCHAR},
+    #{servicePrice,jdbcType=DECIMAL},#{serviceOperator,jdbcType=VARCHAR},#{serviceItem1,jdbcType=VARCHAR},#{serviceItem2,jdbcType=VARCHAR},
+    #{serviceItem3,jdbcType=VARCHAR},#{serviceItem4,jdbcType=VARCHAR},#{serviceItem5,jdbcType=VARCHAR},#{specialComment,jdbcType=VARCHAR},
+    #{priceSum,jdbcType=DECIMAL},#{alreadyPaid,jdbcType=DECIMAL},#{needPaid,jdbcType=DECIMAL},#{paidBank,jdbcType=VARCHAR},
+    #{paidDate,jdbcType=DATE},#{alreadyGot,jdbcType=DECIMAL},#{needGot,jdbcType=DECIMAL},#{gotBank,jdbcType=VARCHAR},
+    #{gotDate,jdbcType=DATE},#{feeComment,jdbcType=VARCHAR}, now())
   </insert>
   
   <update id="updateByPrimaryKey">
-    update area
-    set areaName = #{areaName,jdbcType=VARCHAR}
-    where areaId = #{areaId,jdbcType=INTEGER}
+    update linessrvice
+    set orderId = #{orderId,jdbcType=INTEGER},
+    set serviceName = #{serviceName,jdbcType=VARCHAR},
+    set serviceType = #{serviceType,jdbcType=INTEGER},
+    set servicePrice = #{servicePrice,jdbcType=DECIMAL},
+    set serviceOperator = #{serviceOperator,jdbcType=VARCHAR},
+    set serviceItem1 = #{serviceItem1,jdbcType=VARCHAR},
+    set serviceItem2 = #{serviceItem2,jdbcType=VARCHAR},
+    set serviceItem3 = #{serviceItem3,jdbcType=VARCHAR},
+    set serviceItem4 = #{serviceItem4,jdbcType=VARCHAR},
+    set serviceItem5 = #{serviceItem5,jdbcType=VARCHAR},
+    set specialComment = #{specialComment,jdbcType=VARCHAR},
+    set priceSum = #{priceSum,jdbcType=DECIMAL},
+    set alreadyPaid = #{alreadyPaid,jdbcType=DECIMAL},
+    set needPaid = #{needPaid,jdbcType=DECIMAL},
+    set paidBank = #{paidBank,jdbcType=VARCHAR},
+    set paidDate = #{paidDate,jdbcType=DATE},
+    set alreadyGot = #{alreadyGot,jdbcType=DECIMAL},
+    set needGot = #{needGot,jdbcType=DECIMAL},
+    set gotBank = #{gotBank,jdbcType=VARCHAR},
+    set gotDate = #{gotDate,jdbcType=DATE},
+    set feeComment = #{feeComment,jdbcType=VARCHAR},
+    set postTime = now()
+    where serviceId = #{serviceId,jdbcType=INTEGER}
   </update>
 </mapper>

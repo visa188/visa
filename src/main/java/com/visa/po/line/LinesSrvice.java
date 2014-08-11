@@ -36,7 +36,7 @@ public class LinesSrvice {
      */
     public BigDecimal servicePrice;
     /** @pdOid 3cdd0ad2-2585-421d-83e7-ffd0ced86acb */
-    public int serviceOperator;
+    public String serviceOperator;
     /** @pdOid 0f5b9a45-8109-4205-8433-67e09ac2c675 */
     public String serviceItem1;
     /** @pdOid 3a7f2917-f525-4942-a300-5b9fe6751539 */
@@ -152,11 +152,11 @@ public class LinesSrvice {
         this.servicePrice = servicePrice;
     }
 
-    public int getServiceOperator() {
+    public String getServiceOperator() {
         return serviceOperator;
     }
 
-    public void setServiceOperator(int serviceOperator) {
+    public void setServiceOperator(String serviceOperator) {
         this.serviceOperator = serviceOperator;
     }
 

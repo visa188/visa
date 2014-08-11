@@ -13,5 +13,11 @@
 		<typeAlias alias="CustomerVo" type="com.visa.vo.CustomerVo" />
 		<typeAlias alias="ProductVo" type="com.visa.vo.ProductVo" />
 		<typeAlias alias="Department" type="com.visa.vo.Department" />
+		<typeAlias alias="LineNameList" type="com.visa.po.line.LineNameList" />
+		<typeAlias alias="LineOrder" type="com.visa.po.line.LineOrder" />
+		<typeAlias alias="LineProduct" type="com.visa.po.line.LineProduct" />
+		<typeAlias alias="LinesSrvice" type="com.visa.po.line.LinesSrvice" />
+		<typeAlias alias="OperateLog" type="com.visa.po.line.OperateLog" />
+		<typeAlias alias="OperatorCountry" type="com.visa.po.line.OperatorCountry" />
 	</typeAliases>
 </configuration>

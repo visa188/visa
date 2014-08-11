@@ -1,48 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.visa.dao.AreaDao" >
-  <select id="selectAllArea" resultType="Area">
+<mapper namespace="com.visa.dao.line.LineProductDao" >
+  <select id="selectAllLineProduct" resultType="LineProduct">
     select * 
-    from area
-    order by postDt desc 
+    from lineproduct
   </select>
   
-  <select id="selectAllCount" resultType="java.lang.Integer">
-    select count(*) from area 
-    where 1=1
-    <if test="areaName != null">and areaName like CONCAT('%',#{areaName,jdbcType=VARCHAR},'%')</if>
-    order by postDt desc 
-  </select>
-  
-  <select id="selectAll" resultType="Area">
-    select * 
-    from area
-    where 1=1
-    <if test="area.areaName != null">and areaName like CONCAT('%',#{area.areaName,jdbcType=VARCHAR},'%')</if>
-    order by postDt desc 
-    limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
-  </select>
-  
-  <select id="selectByPrimaryKey" resultType="Area">
+  <select id="selectByPrimaryKey" resultType="LineProduct">
     select 
     *
-    from area
-    where areaId = #{areaId,jdbcType=INTEGER}
+    from lineproduct
+    where lineProductId = #{lineProductId,jdbcType=INTEGER}
   </select>
   
   <delete id="deleteByPrimaryKey">
-    delete from area
-    where areaId = #{areaId,jdbcType=INTEGER}
+    delete from lineproduct
+    where lineProductId = #{lineProductId,jdbcType=INTEGER}
   </delete>
   
   <insert id="insert">
-    insert into area (areaName, postDt)
-    values (#{areaName,jdbcType=VARCHAR}, now())
+    insert into lineproduct (lineCountryId,lineProductName,groupLeader,aircorpId,depositLimitDate,printTicketLimitDate,seatNum,leftSeatNum,price,des)
+    values (#{lineCountryId,jdbcType=INTEGER},
+    #{lineProductName,jdbcType=VARCHAR},#{groupLeader,jdbcType=VARCHAR},#{aircorpId,jdbcType=VARCHAR},
+    #{depositLimitDate,jdbcType=DATE},#{printTicketLimitDate,jdbcType=DATE},#{seatNum,jdbcType=INTEGER},#{leftSeatNum,jdbcType=INTEGER},
+    #{price,jdbcType=DECIMAL},#{des,jdbcType=VARCHAR})
   </insert>
   
   <update id="updateByPrimaryKey">
-    update area
-    set areaName = #{areaName,jdbcType=VARCHAR}
-    where areaId = #{areaId,jdbcType=INTEGER}
+    update lineproduct
+    set lineCountryId = #{lineCountryId,jdbcType=INTEGER},
+    set lineProductName = #{lineProductName,jdbcType=VARCHAR},
+    set groupLeader = #{groupLeader,jdbcType=VARCHAR},
+    set aircorpId = #{aircorpId,jdbcType=INTEGER},
+    set depositLimitDate = #{depositLimitDate,jdbcType=DATE},
+    set printTicketLimitDate = #{printTicketLimitDate,jdbcType=DATE},
+    set seatNum = #{seatNum,jdbcType=INTEGER},
+    set leftSeatNum = #{leftSeatNum,jdbcType=INTEGER},
+    set price = #{price,jdbcType=DECIMAL},
+    set des = #{des,jdbcType=DATE}
+    where lineProductId = #{lineProductId,jdbcType=INTEGER}
   </update>
 </mapper>

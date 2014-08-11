@@ -13,7 +13,7 @@ public class OperateLog {
     /** @pdOid 86165f8c-904b-4b67-b497-63d48c531d4a */
     public int logId;
     /** @pdOid 43843581-8219-4327-b92e-fe6ea6563912 */
-    public int userId;
+    public String userId;
     /** @pdOid 60d7bb88-ad6d-4b0b-afe6-a6cbe9e6966c */
     public int roleId;
     /** @pdOid b0f39a33-2291-4220-9d09-7b18a41c1c8d */
@@ -31,11 +31,11 @@ public class OperateLog {
         this.logId = logId;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

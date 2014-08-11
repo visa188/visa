@@ -30,7 +30,7 @@ public class LineProduct {
      * 
      * @pdOid c1fdd8b0-08a6-42b1-aa38-171a9e82bd15
      */
-    public String airCorp;
+    public int aircorpId;
     /**
      * 机票定金时限
      * 
@@ -96,12 +96,12 @@ public class LineProduct {
         this.groupLeader = groupLeader;
     }
 
-    public String getAirCorp() {
-        return airCorp;
+    public int getAirCorpId() {
+        return aircorpId;
     }
 
-    public void setAirCorp(String airCorp) {
-        this.airCorp = airCorp;
+    public void setAirCorpId(int aircorpId) {
+        this.aircorpId = aircorpId;
     }
 
     public Date getDepositLimitDate() {
