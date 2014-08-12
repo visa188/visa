@@ -74,6 +74,14 @@
 						#end
                     </dl>
                 </li>
+				<li class="order_mng#if($topNav==10) open#end">
+                    <a class="order_mng_tab" href="/lineOrder/list.do?page=1"><span class="ico_order"></span><span class="sidenav_text">路线订单管理</span><span class="ico_fold"></span></a>
+                    <dl>
+                        <dd#if($secNav==101) class="on"#end><a href="/lineOrder/list.do?page=1">路线订单信息管理</a></dd>
+						<dd#if($secNav==102) class="on"#end><a href="/lineOrder/add.do">新增路线订单信息</a></dd>
+						<dd#if($secNav==103) class="on"#end><a href="/lineOrder/export.do">导出路线订单信息</a></dd>
+                    </dl>
+                </li>
 				#if($userRoleId==${fn.getAdminRoleId()})
     				<li class="client_mng#if($topNav==5) open#end">
                         <a class="client_mng_tab" href="/country/list.do"><span class="ico_setting"></span><span class="sidenav_text">签证国家管理</span><span class="ico_fold"></span></a>
