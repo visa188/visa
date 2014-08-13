@@ -19,13 +19,13 @@ public class User {
 
     private int enable;
 
-    private int linecountryId;
+    private String linecountryId;
 
-    public int getLinecountryId() {
+    public String getLinecountryId() {
         return linecountryId;
     }
 
-    public void setLinecountryId(int linecountryId) {
+    public void setLinecountryId(String linecountryId) {
         this.linecountryId = linecountryId;
     }
 

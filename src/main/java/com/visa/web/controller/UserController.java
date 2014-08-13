@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,8 +18,10 @@ import com.visa.common.util.PagingUtil;
 import com.visa.dao.DepartmentDao;
 import com.visa.dao.UserDao;
 import com.visa.dao.line.LineCountryDao;
+import com.visa.dao.line.OperateCountryDao;
 import com.visa.po.Country;
 import com.visa.po.User;
+import com.visa.po.line.OperatorCountry;
 import com.visa.vo.Department;
 import com.visa.vo.UserVo;
 
@@ -35,6 +38,8 @@ public class UserController {
     private DepartmentDao deptDao;
     @Resource
     private LineCountryDao lineCountryDao;
+    @Resource
+    private OperateCountryDao operateCountryDao;
 
     /**
      * 列出所有的用户
@@ -106,6 +111,18 @@ public class UserController {
             return "result";
         } else {
             userDao.insert(user);
+
+            if (!StringUtils.isEmpty(user.getLinecountryId())) {
+                for (String linecountryId : user.getLinecountryId().split(",")) {
+                    if (!StringUtils.isEmpty(linecountryId)) {
+                        OperatorCountry record = new OperatorCountry();
+                        record.setLineCountryId(Integer.parseInt(linecountryId));
+                        record.setUserid(user.getUserId());
+                        operateCountryDao.insert(record);
+                    }
+                }
+            }
+
             Department dept = deptDao.select(user.getDeptId());
             if (dept == null) {
                 dept = new Department();

@@ -1,18 +1,4 @@
 #header($topNav,$secNav,$title)
-<script>
-	function selectCountry(){
-		var boxyCountry = new Boxy(jQuery("#lineCountryDiv"), {title: "所属线路国家", draggable: false,fixed:true,closeText:"",center:true,show:false});
-		
-		var roleId=jQuery("#roleId").val();
-		
-		if(roleId==${fn.getOperatorRoleId()}){
-			boxyCountry.show();
-		}else{
-			boxyCountry.hide();
-		}
-	}
-	
-</script>
 	<div class="miancon">
 		<div class="maincon_title">
 			<span class="ico_order_add">+</span><h2>$title</h2>
@@ -20,6 +6,7 @@
 		</div>
 		<div class="maincon_fluid">
 			<form action="${action}.do" method="post" class="form_horizontal hq_form">
+			  <input type="hidden"  id="linecountryId" name="linecountryId" />
 		      <div class="widget_box">
 		        <div class="widget_title">
 		        	<span class="ico_client_r"></span>
@@ -52,6 +39,12 @@
                                 <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>$one.value.name</option>
                                 #end
                             </select>
+                        </div>                          
+                    </div>
+					<div class="control_group" id="showCountryNames">
+                        <label class="control_label"><span class="ico_must">*</span>所属国家线路:</label>
+                        <div class="controls">
+                            <span class="form_item" id="showCountryNamesTip"><input value="" type="text" class="text1 js_non_empty" id="countryNames" placeholder="所属国家线路" readonly/></span>
                         </div>                          
                     </div>
                     <div class="control_group">
@@ -101,23 +94,27 @@
             <div class="boxybody boxy-content" style="display: block;">
 				<p>
 					#foreach($one in $countryList)
-						<input type="checkbox" name="linecountry" value="$one.countryId"$fn.selected(${user.linecountryId}, $one.countryId)>$one.countryName</input>
+                        <input type="checkbox" name="linecountry" value="$one.countryId" extraName="$one.countryName"/>$one.countryName
 						#if($velocityCount%3==0)
 							</p><br/><p>
 						#end
 					#end
 				</p>
+				<p><input type="submit" class="boxybtn1" id="BtnCountrySubmit" value=""></p>
             </div>   
 			<div class='boxyft'></div>
         </div>
 	</div>
 	
     <script>
+	
+	
     jQuery("#roleId").bind("blur",function(e){
         changeClass();
     }).bind("change",function(e){
         changeClass();
     })
+	
     function changeClass(){
         var roleId = jQuery("#roleId").val();
         if(roleId==2){
@@ -126,6 +123,7 @@
             jQuery("#managerId").removeClass('js_non_empty');
         }
     }
+	
     jQuery("#deptSel").bind("change",function(e){
         var val = $(this).val();
         if(val != ''){
@@ -133,6 +131,34 @@
         }
     })
 	
+	var boxyCountry = new Boxy(jQuery("#lineCountryDiv"), {title: "所属线路国家", draggable: false,fixed:true,closeText:"",center:true,show:false});
+	function selectCountry(){
+		var roleId=jQuery("#roleId").val();
+		
+		if(roleId==${fn.getOperatorRoleId()}){
+			boxyCountry.show();
+			jQuery("#showCountryNames").addClass('js_non_empty');
+		}else{
+			boxyCountry.hide();
+			jQuery("#showCountryNames").hide();
+			jQuery("#showCountryNames").removeClass('js_non_empty');
+		}
+	}
+	jQuery("#BtnCountrySubmit").click(function(){
+		boxyCountry.hide();
+		var vals= new Array();
+		var texts= new Array();
+		
+		jQuery('input:checkbox').each(function(){
+            if (this.checked) {
+    			vals.push(jQuery(this).val());
+				texts.push(jQuery(this).attr("extraName"));
+            }
+		});
+		jQuery("#linecountryId").val(vals.join(','));
+		jQuery("#countryNames").val(texts.join(','));
+		jQuery("#showCountryNames").show();
+	});
 	selectCountry();
     </script>
 #footer()
