@@ -17,6 +17,7 @@ import com.visa.common.util.PagingUtil;
 import com.visa.dao.line.LineOrderDao;
 import com.visa.po.Orders;
 import com.visa.po.User;
+import com.visa.po.line.LineOrder;
 import com.visa.vo.OrderSearchBean;
 
 /**
@@ -59,7 +60,6 @@ public class LineOrderController {
      */
     @RequestMapping
     public void add(ModelMap model) {
-        lineOrderDao.selectAllLineOrder();
     }
 
     /**
@@ -70,7 +70,8 @@ public class LineOrderController {
      * @return String
      */
     @RequestMapping
-    public String insert(User user, ModelMap model) {
+    public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user,
+            @ModelAttribute("lineOrder") LineOrder lineOrder, ModelMap model) {
         return "redirect:list.do";
     }
 

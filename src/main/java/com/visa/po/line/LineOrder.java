@@ -46,7 +46,7 @@ public class LineOrder {
      * 
      * @pdOid cbd8e698-2da8-4317-b94e-7e85b1d0011e
      */
-    public int lineOperatorId;
+    public String lineOperatorId;
     /**
      * 签证操作员id
      * 
@@ -162,11 +162,11 @@ public class LineOrder {
         this.salesmanId = salesmanId;
     }
 
-    public int getLineOperatorId() {
+    public String getLineOperatorId() {
         return lineOperatorId;
     }
 
-    public void setLineOperatorId(int lineOperatorId) {
+    public void setLineOperatorId(String lineOperatorId) {
         this.lineOperatorId = lineOperatorId;
     }
 
