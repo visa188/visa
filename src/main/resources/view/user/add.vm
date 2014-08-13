@@ -100,6 +100,7 @@
 						#end
 					#end
 				</p>
+				<p><span id="countryIdtip" class="error_tip" style="display:hidden"></span></p>
 				<p><input type="submit" class="boxybtn1" id="BtnCountrySubmit" value=""></p>
             </div>   
 			<div class='boxyft'></div>
@@ -131,7 +132,7 @@
         }
     })
 	
-	var boxyCountry = new Boxy(jQuery("#lineCountryDiv"), {title: "所属线路国家", draggable: false,fixed:true,closeText:"",center:true,show:false});
+	var boxyCountry = new Boxy(jQuery("#lineCountryDiv"), {title: "所属线路国家", modal: true, draggable: true,fixed:true,closeText:"",center:true,show:false,closeable:false});
 	function selectCountry(){
 		var roleId=jQuery("#roleId").val();
 		
@@ -145,7 +146,6 @@
 		}
 	}
 	jQuery("#BtnCountrySubmit").click(function(){
-		boxyCountry.hide();
 		var vals= new Array();
 		var texts= new Array();
 		
@@ -155,9 +155,18 @@
 				texts.push(jQuery(this).attr("extraName"));
             }
 		});
-		jQuery("#linecountryId").val(vals.join(','));
-		jQuery("#countryNames").val(texts.join(','));
-		jQuery("#showCountryNames").show();
+		if (vals.length>0 && texts.length>0) {
+			jQuery("#linecountryId").val(vals.join(','));
+			jQuery("#countryNames").val(texts.join(','));
+			jQuery("#showCountryNames").show();
+			boxyCountry.hide();
+			jQuery("#countryIdtip").text("");
+			jQuery("#showCountryNamesTip ~ span").each(function(){
+				jQuery(this).hide();
+			});
+		}else{
+			jQuery("#countryIdtip").text("请至少选择一个所属线路国家!");
+		}
 	});
 	selectCountry();
     </script>
