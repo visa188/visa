@@ -8,14 +8,6 @@
             <div class="searchbox">
                 <form id="form1" name="form1" action="/country/list.do" method="post">
                     <input type="hidden" id="page" name="page" value="1">
-                    <label for="s_guest">所属地区：
-    					<select name="continentId" id="continentId" class="text2" onchange="conditionSearch(1)">
-                            <option value="0">全部地区</option>
-                            #foreach($one in $fn.continentOptions().entrySet())
-                            <option value="$one.key"$fn.selected(${country.continentId}, $one.key)>$one.value.name</option>
-                            #end
-    					</select>
-					</label>  
 					<label for="s_client">国家名称：<input value="$!{country.countryName}" id="countryName" type="text" class="s_client searchtx" name="countryName" placeholder="国家名称" /></label>
                     <label for="searchbtn"><input onclick="conditionSearch(1);" id="searchbtn" type="button" name="" class="searchbtn" value="搜索" /></label>  
                 </form>
@@ -26,7 +18,6 @@
 	                <thead>
 	                    <tr>
 	                        <th width="">国家名称</th>
-	                        <th width="">所属地区</th>
 	                        <th width="">修改</th>
 	                        <th width="">删除</th>
 	                    </tr>
@@ -35,7 +26,6 @@
                         #foreach($one in $countryList)
 	                    <tr>
 	                        <td>$one.countryName</td>
-	                        <td>$fn.getContinent($one.continentId)</td>
 	                        <td><a class="ico_edit_g" href="edit.do?countryId=${one.countryId}&page=$page"></a></td>
 	                        <td><a class="ico_delete_r" onclick="return confirm('是否将此国家信息删除?')" href="delete.do?countryId=${one.countryId}&page=$page"></a></td>
 	                    </tr>

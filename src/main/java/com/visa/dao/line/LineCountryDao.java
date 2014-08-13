@@ -1,4 +1,4 @@
-package com.visa.dao;
+package com.visa.dao.line;
 
 import java.util.List;
 

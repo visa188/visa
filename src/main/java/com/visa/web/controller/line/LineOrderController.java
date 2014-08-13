@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.visa.common.constant.Constant;
 import com.visa.common.util.PagingUtil;
+import com.visa.dao.line.LineCountryDao;
 import com.visa.dao.line.LineOrderDao;
+import com.visa.po.Country;
 import com.visa.po.Orders;
 import com.visa.po.User;
 import com.visa.po.line.LineOrder;
@@ -29,9 +31,11 @@ import com.visa.vo.OrderSearchBean;
 public class LineOrderController {
     @Resource
     private LineOrderDao lineOrderDao;
+    @Resource
+    private LineCountryDao lineCountryDao;
 
     /**
-     * 列出所有的用户
+     * 列出所有的订单
      * 
      * @param user user
      * @param bean bean
@@ -54,29 +58,33 @@ public class LineOrderController {
     }
 
     /**
-     * 增加一个用户
+     * 增加一个订单
      * 
      * @param model model
      */
     @RequestMapping
     public void add(ModelMap model) {
+        List<Country> countryList = lineCountryDao.selectAllCountry();
+        model.put("countryList", countryList);
     }
 
     /**
-     * 增加一个用户
+     * 增加一个订单
      * 
      * @param user user
+     * @param lineOrder lineOrder
      * @param model model
      * @return String
      */
     @RequestMapping
     public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user,
             @ModelAttribute("lineOrder") LineOrder lineOrder, ModelMap model) {
-        return "redirect:list.do";
+        lineOrderDao.insert(lineOrder);
+        return "redirect:list.do?page=1";
     }
 
     /**
-     * 编辑一个user
+     * 编辑一个订单
      * 
      * @param userId userId
      * @param page page
@@ -85,11 +93,11 @@ public class LineOrderController {
      */
     @RequestMapping
     public String edit(String userId, Integer page, ModelMap model) {
-        return "redirect:list.do";
+        return "redirect:list.do?page=" + page;
     }
 
     /**
-     * 编辑一个user
+     * 编辑一个订单
      * 
      * @param user user
      * @param page page
@@ -97,20 +105,20 @@ public class LineOrderController {
      */
     @RequestMapping
     public String update(User user, Integer page) {
-        return "redirect:list.do";
+        return "redirect:list.do?page=" + page;
     }
 
     /**
-     * 删除一个user
+     * 删除一个订单
      * 
-     * @param userId userId
+     * @param orderId orderId
      * @param page page
-     * @param model model
      * @return String
      */
     @RequestMapping
-    public String delete(String userId, Integer page, ModelMap model) {
-        return "redirect:list.do";
+    public String delete(int orderId, Integer page) {
+        lineOrderDao.deleteByPrimaryKey(orderId);
+        return "redirect:list.do?page=" + page;
     }
 
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.visa.dao.LineCountryDao" >
+<mapper namespace="com.visa.dao.line.LineCountryDao" >
   <select id="selectAllCountry" resultType="Country">
     select * from linecountry
   </select>
