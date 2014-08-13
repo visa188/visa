@@ -19,6 +19,16 @@ public class User {
 
     private int enable;
 
+    private int linecountryId;
+
+    public int getLinecountryId() {
+        return linecountryId;
+    }
+
+    public void setLinecountryId(int linecountryId) {
+        this.linecountryId = linecountryId;
+    }
+
     public String getDeptId() {
         return deptId;
     }

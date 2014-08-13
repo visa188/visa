@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.visa.common.constant.Constant;
 import com.visa.common.constant.RoleEnumType;
 import com.visa.common.util.PagingUtil;
-import com.visa.dao.CustomerDao;
 import com.visa.dao.DepartmentDao;
-import com.visa.dao.OrdersDao;
 import com.visa.dao.UserDao;
+import com.visa.dao.line.LineCountryDao;
+import com.visa.po.Country;
 import com.visa.po.User;
 import com.visa.vo.Department;
 import com.visa.vo.UserVo;
@@ -32,11 +32,9 @@ public class UserController {
     @Resource
     private UserDao userDao;
     @Resource
-    private OrdersDao ordersDao;
-    @Resource
-    private CustomerDao customerDao;
-    @Resource
     private DepartmentDao deptDao;
+    @Resource
+    private LineCountryDao lineCountryDao;
 
     /**
      * 列出所有的用户
@@ -48,8 +46,8 @@ public class UserController {
      * @param model model
      */
     @RequestMapping
-    public void list(@ModelAttribute(Constant.SESSION_USER) User sessionUser, String searchUserName,
-            Integer searchRoleId, Integer page, ModelMap model) {
+    public void list(@ModelAttribute(Constant.SESSION_USER) User sessionUser,
+            String searchUserName, Integer searchRoleId, Integer page, ModelMap model) {
         List<UserVo> userList = new ArrayList<UserVo>();
         User user = new User();
         user.setUserName(searchUserName);
@@ -63,7 +61,8 @@ public class UserController {
             Integer recordCount = userDao.selectByManagerIdCount(sessionUser.getUserId(), user);
             int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page,
                     Constant.PAGE_OFFSET, model);
-            userList = userDao.selectByManagerId(sessionUser.getUserId(), recordRange[0], Constant.PAGE_COUNT, user);
+            userList = userDao.selectByManagerId(sessionUser.getUserId(), recordRange[0],
+                    Constant.PAGE_COUNT, user);
         }
         model.put("userList", userList);
         model.put("user", user);
@@ -78,6 +77,8 @@ public class UserController {
     public void add(ModelMap model) {
         List<User> managerList = userDao.selectByRoleId(RoleEnumType.MANAGER.getId());
         List<Department> deptList = deptDao.selectAll();
+        List<Country> countryList = lineCountryDao.selectAllCountry();
+        model.put("countryList", countryList);
         model.put("deptList", deptList);
         model.put("managerList", managerList);
         model.put("topNav", 4);
@@ -134,8 +135,8 @@ public class UserController {
      * @return result
      */
     @RequestMapping
-    public String change(@ModelAttribute(Constant.SESSION_USER) User sessionUser, String oldpwd, String newpwd,
-            ModelMap model) {
+    public String change(@ModelAttribute(Constant.SESSION_USER) User sessionUser, String oldpwd,
+            String newpwd, ModelMap model) {
         User userInDb = userDao.selectByPrimaryKey(sessionUser.getUserId());
         if (userInDb.getPwd() != null && userInDb.getPwd().equals(oldpwd)) {
             userDao.updatePwdByUserId(newpwd, sessionUser.getUserId());
@@ -165,6 +166,8 @@ public class UserController {
         model.put("user", user);
         List<User> managerList = userDao.selectByRoleId(RoleEnumType.MANAGER.getId());
         List<Department> deptList = deptDao.selectAll();
+        List<Country> countryList = lineCountryDao.selectAllCountry();
+        model.put("countryList", countryList);
         model.put("deptList", deptList);
         model.put("managerList", managerList);
         model.put("topNav", 4);

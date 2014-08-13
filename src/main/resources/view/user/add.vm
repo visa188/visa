@@ -1,4 +1,16 @@
 #header($topNav,$secNav,$title)
+<script>
+	function selectCountry(){
+		var roleId=jQuery("#roleId").val();
+		if(roleId==${fn.getOperatorRoleId()}){
+			jQuery("#lineCountryDiv").show();
+			jQuery("#lineCountryId").addClass("js_non_empty");
+		}else{
+			jQuery("#lineCountryDiv").hide();
+			jQuery("#lineCountryId").removeClass("js_non_empty");
+		}
+	}
+</script>
 	<div class="miancon">
 		<div class="maincon_title">
 			<span class="ico_order_add">+</span><h2>$title</h2>
@@ -33,11 +45,22 @@
 		            <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>用户权限:</label>
                         <div class="controls">
-                            <select name="roleId" id="roleId" class="text2">
+                            <select name="roleId" id="roleId" class="text2" onchange="selectCountry()">
                                 #foreach($one in $fn.roleOptions().entrySet())
                                 <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>$one.value.name</option>
                                 #end
                             </select>
+                        </div>                          
+                    </div>
+					<div class="control_group" id="lineCountryDiv">
+                        <label class="control_label"><span class="ico_must">*</span>所属线路国家:</label>
+                        <div class="controls">
+                            <span class="form_item"><select name="linecountryId" id="linecountryId" class="text1" placeholder="所属线路国家">
+                                <option value="" selected="selected">请选择</option>
+								#foreach($one in $countryList)
+									<option value="$one.countryId"$fn.selected(${user.linecountryId}, $one.countryId)>$one.countryName</option>
+                                #end
+                            </select></span>
                         </div>                          
                     </div>
                     <div class="control_group">
@@ -102,5 +125,7 @@
         	jQuery("#deptId").val(val);
         }
     })
+	
+	selectCountry();
     </script>
 #footer()
