@@ -14,9 +14,9 @@
 <meta name="keywords" content="">
 <link href="/haoqian.css" rel="stylesheet">
 <link href="/ui_custom.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/jquery.js"></script>
 <script type="text/javascript" src="/jquery-ui.js"></script>
-
+<script type="text/javascript" src="/jquery.boxy.js" charset='utf-8'></script>
 <script>
 	function conditionSearch(page){
 //		jQuery("#form1").attr("action","/orders/list.do");

@@ -1075,3 +1075,79 @@ a:hover {
   color: #fff;
 }
 .tcenter td{text-align:center}
+
+.boxy-wrapper{
+	width: 310px;
+	position: absolute;
+}
+.boxy-wrapper .title-bar {
+	background: url(images/importboxtop.png);
+	width: 310px;
+	height: 35px;
+	line-height: 35px;
+	overflow: hidden;
+}
+.boxy-wrapper .title-bar h2{
+	font-weight: bold;
+	font-size:14px;
+	color: #2b2b2b;
+	padding: 2px 0 0;
+	float: left;
+	margin-left: 120px;
+	display: inline;
+}
+.boxy-wrapper .title-bar .close{
+	float: right;
+	width: 9px;
+	height: 9px;
+	background: url(images/close.jpg) no-repeat left top;
+	margin: 16px 16px 0 0;
+	display: inline;
+}
+.boxy-wrapper .boxybody{
+	background: url(images/importboxbody.png) repeat-y left top;
+	overflow: hidden;
+	zoom:1;
+}
+.boxy-wrapper .boxybody .d1{
+	width: 180px;
+	display: inline-block;
+	text-align: left;
+	padding: 0 0 0 4px;
+}
+.boxy-wrapper .boxybody input {
+	vertical-align: middle;
+}
+.boxy-wrapper .boxybody p{
+	line-height: 21px;
+	margin-top: 15px;
+	padding-left:30px;
+}
+.boxy-wrapper .boxybody .boxytextinput{
+	vertical-align: middle;
+	width: 175px;
+	height: 21px;
+	border: 1px solid #BBB;
+	padding:0 2px;
+}
+.boxy-wrapper .boxybody .boxyradioinput{
+	vertical-align: middle;
+	padding-right:10px;
+}
+.boxy-wrapper .boxybtn1{
+	width: 68px;
+	height: 24px;
+	background: url(images/importboxbtn.jpg) no-repeat left top;
+	float: left;
+	margin-left: 96px;
+	border: none;
+	cursor: pointer;
+}
+.boxy-wrapper .boxyft{
+	width: 310px;
+	height: 7px;
+	overflow: hidden;
+	line-height: 1px;
+	font-size: 0;
+	background: url(images/importboxbottom.png) no-repeat left top;
+}

@@ -1,15 +1,17 @@
 #header($topNav,$secNav,$title)
 <script>
 	function selectCountry(){
+		var boxyCountry = new Boxy(jQuery("#lineCountryDiv"), {title: "所属线路国家", draggable: false,fixed:true,closeText:"",center:true,show:false});
+		
 		var roleId=jQuery("#roleId").val();
+		
 		if(roleId==${fn.getOperatorRoleId()}){
-			jQuery("#lineCountryDiv").show();
-			jQuery("#lineCountryId").addClass("js_non_empty");
+			boxyCountry.show();
 		}else{
-			jQuery("#lineCountryDiv").hide();
-			jQuery("#lineCountryId").removeClass("js_non_empty");
+			boxyCountry.hide();
 		}
 	}
+	
 </script>
 	<div class="miancon">
 		<div class="maincon_title">
@@ -52,17 +54,6 @@
                             </select>
                         </div>                          
                     </div>
-					<div class="control_group" id="lineCountryDiv">
-                        <label class="control_label"><span class="ico_must">*</span>所属线路国家:</label>
-                        <div class="controls">
-                            <span class="form_item"><select name="linecountryId" id="linecountryId" class="text1" placeholder="所属线路国家">
-                                <option value="" selected="selected">请选择</option>
-								#foreach($one in $countryList)
-									<option value="$one.countryId"$fn.selected(${user.linecountryId}, $one.countryId)>$one.countryName</option>
-                                #end
-                            </select></span>
-                        </div>                          
-                    </div>
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>所属经理:</label>
                         <div class="controls">
@@ -103,6 +94,22 @@
                 </div>
 		  	</form>
 		</div>
+	</div>
+	
+	<div style="display:hide">
+		<div id="lineCountryDiv">
+            <div class="boxybody boxy-content" style="display: block;">
+				<p>
+					#foreach($one in $countryList)
+						<input type="checkbox" name="linecountry" value="$one.countryId"$fn.selected(${user.linecountryId}, $one.countryId)>$one.countryName</input>
+						#if($velocityCount%3==0)
+							</p><br/><p>
+						#end
+					#end
+				</p>
+            </div>   
+			<div class='boxyft'></div>
+        </div>
 	</div>
 	
     <script>
