@@ -65,9 +65,9 @@
   
   <insert id="insert" parameterType="User" >
     insert into user (userId, userName, roleId, 
-      pwd, managerId, postDt, deptId,linecountryId)
+      pwd, managerId, postDt, deptId)
     values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, 
-      '123456', #{managerId,jdbcType=INTEGER}, now(),#{deptId,jdbcType=VARCHAR}),#{linecountryId,jdbcType=INTEGER})
+      '123456', #{managerId,jdbcType=INTEGER}, now(),#{deptId,jdbcType=VARCHAR}))
   </insert>
   
   <update id="updateByPrimaryKey" parameterType="User" >
@@ -77,7 +77,6 @@
       managerId = #{managerId,jdbcType=INTEGER},
       <if test="pwd != null">pwd = #{pwd,jdbcType=VARCHAR},</if>
       deptId = #{deptId,jdbcType=VARCHAR},
-      linecountryId = #{linecountryId,jdbcType=VARCHAR}
     where userId = #{userId,jdbcType=VARCHAR}
   </update>
   
