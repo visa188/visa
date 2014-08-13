@@ -32,10 +32,20 @@ public final class Constant {
      * PAGE_COUNT
      */
     public static final int PAGE_COUNT = 20;
+
+    /**
+     * PAGE_COUNT
+     */
+    public static final int LINE_PAGE_COUNT = 20;
+
     /**
      * PAGE_OFFSET
      */
     public static final int PAGE_OFFSET = 10;
-    
+    /**
+     * PAGE_OFFSET
+     */
+    public static final int LINE_PAGE_OFFSET = 10;
+
     public static final String ORDER_PREFIX_BJ = "BJ";
 }

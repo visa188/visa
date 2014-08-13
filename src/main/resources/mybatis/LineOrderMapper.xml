@@ -13,6 +13,18 @@
     where orderId = #{orderId,jdbcType=INTEGER}
   </select>
   
+   <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+      	select count(*)
+		from lineorder
+	</select>
+	
+	<select id="selectByPage" parameterType="java.util.Map" resultType="Orders">
+       	select *
+		from lineorder
+		order by orderDate desc,orderId desc
+		limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
+	</select>
+  
   <delete id="deleteByPrimaryKey">
     delete from lineorder
     where orderId = #{orderId,jdbcType=INTEGER}

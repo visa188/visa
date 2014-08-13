@@ -1,5 +1,9 @@
 package com.visa.web.controller.line;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -9,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.visa.common.constant.Constant;
+import com.visa.common.util.PagingUtil;
 import com.visa.dao.line.LineOrderDao;
+import com.visa.po.Orders;
 import com.visa.po.User;
+import com.visa.vo.OrderSearchBean;
 
 /**
  * @author LineOrder
@@ -25,16 +32,24 @@ public class LineOrderController {
     /**
      * 列出所有的用户
      * 
-     * @param sessionUser sessionUser
-     * @param searchUserName searchUserName
-     * @param searchRoleId searchRoleId
+     * @param user user
+     * @param bean bean
      * @param page page
      * @param model model
      */
     @RequestMapping
-    public void list(@ModelAttribute(Constant.SESSION_USER) User sessionUser,
-            String searchUserName, Integer searchRoleId, Integer page, ModelMap model) {
+    public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page,
+            ModelMap model, @ModelAttribute OrderSearchBean bean) {
+        Map<String, Object> paraMap = new HashMap<String, Object>();
+        // 记录总条数
+        int recordCount = lineOrderDao.count(paraMap);
+        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount,
+                page, Constant.LINE_PAGE_OFFSET, model);
+        paraMap.put("begin", recordRange[0]);
+        paraMap.put("pageCount", Constant.LINE_PAGE_COUNT);
 
+        List<Orders> orderList = lineOrderDao.selectByPage(paraMap);
+        model.addAttribute("orderList", orderList);
     }
 
     /**
