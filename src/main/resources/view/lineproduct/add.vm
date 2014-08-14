@@ -1,0 +1,104 @@
+#header($topNav,$secNav,$title)
+	<div class="miancon">
+		<div class="maincon_title">
+			<span class="ico_order_add">+</span><h2>$title</h2>
+			<div class="right"><a class="ico_order_w" title="产品信息管理" href="list.do">+</a></div>
+		</div>
+		<div class="maincon_fluid">
+			<form action="${action}.do" method="post" class="form_horizontal hq_form">
+		      <div class="widget_box">
+		        <div class="widget_title">
+		        	<span class="ico_client_r"></span>
+		        	<h3>产品基本信息</h3>
+		        </div>
+                #if("$action"=="update")
+                <input value="$!{product.lineProductId}" type="hidden" name="lineProductId">
+                <input value="$!{page}" type="hidden" name="page">
+                #end
+		        <div class="widget_content">
+		        	<div class="control_group">
+	        			<label class="control_label"><span class="ico_must">*</span>产品名称:</label>
+						<div class="controls">
+                            <span class="form_item"><input value="$!{product.lineProductName}" type="text" class="text1 js_non_empty" name="lineProductName" placeholder="产品名称" maxlength="50" size="50"/></span>
+		              	</div>		        			
+		        	</div>
+                    <div class="control_group">
+                        <label class="control_label"><span class="ico_must">*</span>航空公司:</label>
+                        <div class="controls">
+                            <span class="form_item"><select name="aircorpId" id="aircorpId" class="text2 js_non_empty" placeholder="航空公司">
+                                <option value="" selected="selected">请选择</option>
+								#foreach($one in $airlineList)
+                                <option value="$one.airlineId"$fn.selected(${product.aircorpId}, $one.airlineId)>$one.airlineName</option>
+                                #end
+                            </select></span>
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label"><span class="ico_must">*</span>所属线路国家:</label>
+                        <div class="controls">
+                            <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="所属线路国家">
+                                <option value="" selected="selected">请选择</option>
+								#foreach($one in $countryList)
+                                <option value="$one.countryId"$fn.selected(${product.lineCountryId}, $one.countryId)>$one.countryName</option>
+                                #end
+                            </select></span>
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label"><span class="ico_must">*</span>行程简介:</label>
+                        <div class="controls">
+                            <span class="form_item"><input value="$!{product.travelInfo}" type="text" class="text1 js_non_empty" name="travelInfo" placeholder="行程简介" maxlength="100" size="100"/></span>
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label"><span class="ico_must">*</span>领队:</label>
+                        <div class="controls">
+                            <span class="form_item"><input value="$!{product.groupLeader}" type="text" class="text1 js_non_empty" name="groupLeader" placeholder="领队" maxlength="100" size="100"/></span>
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label">机票订金时限:</label>
+                        <div class="controls">
+                            <input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="机票订金时限" name="depositLimitDate" id="depositLimitDate" value="$!{product.depositLimitDate}">
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label">出票时限:</label>
+                        <div class="controls">
+                            <input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="出票时限" name="printTicketLimitDate" id="printTicketLimitDate" value="$!{product.printTicketLimitDate}">
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label">机位占位数:</label>
+                        <div class="controls">
+                            <input class="text1 js_nan js_non_empty" name="seatNum" id="seatNum" placeholder="机位占位数" maxlength="4" size="4" value="$!{product.seatNum}" />
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label">余位数:</label>
+                        <div class="controls">
+                            <input class="text1" name="leftSeatNum" id="leftSeatNum"  placeholder="余位数" maxlength="4" size="4" value="$!{product.leftSeatNum}" readonly/>
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label">价格:</label>
+                        <div class="controls">
+                            <input class="text1 js_nan js_non_empty" name="price" id="price"  placeholder="价格" maxlength="10" size="10" value="$!{product.price}" />
+                        </div>                          
+                    </div>
+                    <div class="control_group">
+                        <label class="control_label">备注:</label>
+                        <div class="controls">
+                            <textarea class="text3" name="des" id="" cols="80" rows="8" placeholder="备注" maxlength="20" size="8">$!{product.des}</textarea>
+                        </div>                          
+                    </div>
+		        </div>
+		      </div>
+                <div class="form_actions">
+    				<button type="reset" class="btn btn_reset">重置</button>
+                  	<button type="submit" class="btn btn_save">保存</button>
+                </div>			      
+		  	</form>
+		</div>
+	</div>
+#footer()

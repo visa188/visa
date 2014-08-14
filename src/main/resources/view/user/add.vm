@@ -42,9 +42,9 @@
                         </div>                          
                     </div>
 					<div class="control_group" id="showCountryNames">
-                        <label class="control_label"><span class="ico_must">*</span>所属国家线路:</label>
+                        <label class="control_label"><span class="ico_must">*</span>所属线路国家:</label>
                         <div class="controls">
-                            <span class="form_item" id="showCountryNamesTip"><input value="" type="text" class="text1 js_non_empty" id="countryNames" placeholder="所属国家线路" readonly/></span>
+                            <span class="form_item" id="showCountryNamesTip"><input value="" type="text" class="text1 js_non_empty" id="countryNames" placeholder="所属线路国家" readonly/></span>
                         </div>                          
                     </div>
                     <div class="control_group">

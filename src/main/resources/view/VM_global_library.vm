@@ -52,6 +52,13 @@
                         <dd#if($secNav==12) class="on"#end><a href="/product/add.do">新增产品信息</a></dd>
                     </dl>
                 </li>
+				<li class="pro_mng#if($topNav==11) open#end">
+                    <a class="pro_mng_tab" href="/lineproduct/list.do"><span class="ico_pro"></span><span class="sidenav_text">线路产品管理</span><span class="ico_fold"></span></a>
+                    <dl>
+                        <dd#if($secNav==111) class="on"#end><a href="/lineproduct/list.do">线路产品信息管理</a></dd>
+                        <dd#if($secNav==112) class="on"#end><a href="/lineproduct/add.do">新增线路产品信息</a></dd>
+                    </dl>
+                </li>
 				#end
 				#if($userRoleId==${fn.getSalesmanRoleId()}||$userRoleId==${fn.getAdminRoleId()})
                 <li class="client_mng#if($topNav==2) open#end">

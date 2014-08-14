@@ -20,6 +20,11 @@
 		limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
 	</select>
 
+	<select id="selectAllAirline" resultType="Airline">
+		select * from airline
+		order by postDt desc
+	</select>
+
 	<select id="selectByPrimaryKey" resultType="Airline">
 		select
 		*

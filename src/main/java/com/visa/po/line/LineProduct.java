@@ -64,6 +64,43 @@ public class LineProduct {
     /** @pdOid e26e1c3f-0ea9-4e73-829f-d7365ba5ac05 */
     public String des;
 
+    /**
+     * 行程简介
+     * 
+     * @pdOid 2520f59a-f0dd-4c19-bce5-6db5a7af337f
+     */
+    public String travelInfo;
+    /**
+     * 行程文件上传地址
+     * 
+     * @pdOid dd766152-10e2-4418-95f5-74c9f2d6cc04
+     */
+    public String travelInfoFileUrl;
+
+    public int getAircorpId() {
+        return aircorpId;
+    }
+
+    public void setAircorpId(int aircorpId) {
+        this.aircorpId = aircorpId;
+    }
+
+    public String getTravelInfo() {
+        return travelInfo;
+    }
+
+    public void setTravelInfo(String travelInfo) {
+        this.travelInfo = travelInfo;
+    }
+
+    public String getTravelInfoFileUrl() {
+        return travelInfoFileUrl;
+    }
+
+    public void setTravelInfoFileUrl(String travelInfoFileUrl) {
+        this.travelInfoFileUrl = travelInfoFileUrl;
+    }
+
     public int getLineProductId() {
         return lineProductId;
     }

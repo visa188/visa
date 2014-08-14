@@ -53,6 +53,8 @@ public class LineOrder {
      * @pdOid 84c17522-1cd8-4b5f-8b20-1078a0546905
      */
     public String visaOperatorId;
+
+    public Integer lineProductId;
     /**
      * 组团社
      * 
@@ -121,6 +123,14 @@ public class LineOrder {
     public int status;
     /** @pdOid ac5cabc4-f167-49b7-9590-f036f58a74df */
     public Date postTime;
+
+    public Integer getLineProductId() {
+        return lineProductId;
+    }
+
+    public void setLineProductId(Integer lineProductId) {
+        this.lineProductId = lineProductId;
+    }
 
     public int getOrderId() {
         return orderId;
