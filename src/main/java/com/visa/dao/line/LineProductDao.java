@@ -18,7 +18,7 @@ public interface LineProductDao {
 
     int updateByPrimaryKey(LineProduct record);
 
-    Integer selectAllCount(LineProduct product);
+    Integer selectAllCount(Map<String, Object> paraMap);
 
     List<LineProductVo> selectByPage(Map<String, Object> paraMap);
 }

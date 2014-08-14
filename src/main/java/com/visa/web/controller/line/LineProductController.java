@@ -46,16 +46,26 @@ public class LineProductController {
      */
     @RequestMapping
     public void list(LineProduct product, Integer page, ModelMap model) {
-        List<Country> countryList = lineCountryDao.selectAllCountry();
-        model.put("countryList", countryList);
-        Integer recordCount = lineProductDao.selectAllCount(product);
+        Map<String, Object> paraMap = new HashMap<String, Object>();
+
+        String seachProductName = product.getLineProductName();
+        Integer lineCountryId = product.getLineCountryId();
+        paraMap.put("operator", "like");
+        paraMap.put("lineProductName", StringUtils.isEmpty(seachProductName) ? null : "%"
+                + seachProductName + "%");
+        paraMap.put("lineCountryId", lineCountryId == 0 ? null : lineCountryId);
+
+        Integer recordCount = lineProductDao.selectAllCount(paraMap);
         int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount,
                 page, Constant.LINE_PAGE_OFFSET, model);
-        Map<String, Object> paraMap = new HashMap<String, Object>();
+
         paraMap.put("begin", recordRange[0]);
         paraMap.put("pageCount", Constant.LINE_PAGE_COUNT);
+
         List<LineProductVo> productList = lineProductDao.selectByPage(paraMap);
         model.put("productList", productList);
+        List<Country> countryList = lineCountryDao.selectAllCountry();
+        model.put("countryList", countryList);
     }
 
     /**
