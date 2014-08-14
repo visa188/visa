@@ -18,9 +18,10 @@
 		from lineorder
 	</select>
 	
-	<select id="selectByPage" parameterType="java.util.Map" resultType="LineProduct">
-	      	select *
-		from lineproduct
+	<select id="selectByPage" parameterType="java.util.Map" resultType="LineProductVo">
+	      	select lineproduct.*,airline.airlineName airLineName,linecountry.countryName lineCountryName
+		from lineproduct,airline,linecountry
+		where lineproduct.aircorpId=airline.airlineId and lineproduct.lineCountryId=linecountry.countryId
 		limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
 	</select>
   

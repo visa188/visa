@@ -22,6 +22,7 @@ import com.visa.dao.line.LineProductDao;
 import com.visa.po.Airline;
 import com.visa.po.Country;
 import com.visa.po.line.LineProduct;
+import com.visa.vo.line.LineProductVo;
 
 /**
  * @author user
@@ -53,7 +54,7 @@ public class LineProductController {
         Map<String, Object> paraMap = new HashMap<String, Object>();
         paraMap.put("begin", recordRange[0]);
         paraMap.put("pageCount", Constant.LINE_PAGE_COUNT);
-        List<LineProduct> productList = lineProductDao.selectByPage(paraMap);
+        List<LineProductVo> productList = lineProductDao.selectByPage(paraMap);
         model.put("productList", productList);
     }
 
