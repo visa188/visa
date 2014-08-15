@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.visa.po.line.LineProduct;
+import com.visa.vo.line.LineProductVo;
 
 public interface LineProductDao {
 
@@ -17,7 +18,7 @@ public interface LineProductDao {
 
     int updateByPrimaryKey(LineProduct record);
 
-    Integer selectAllCount(LineProduct product);
+    Integer selectAllCount(Map<String, Object> paraMap);
 
-    List<LineProduct> selectByPage(Map<String, Object> paraMap);
+    List<LineProductVo> selectByPage(Map<String, Object> paraMap);
 }
