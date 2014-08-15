@@ -122,7 +122,7 @@
 			<div class="right"><a class="ico_order_w" title="订单信息管理" href="/lineOrder/list.do?page=1">+</a></div>
 		</div>
 		<div class="maincon_fluid">
-			<form action="/lineOrder/addSubmit.do" method="post" class="form_horizontal hq_form">
+			<form action="/lineOrder/addSubmit.do" method="post" class="form_horizontal hq_form line">
 		      <div class="widget_box">
 		        <div class="widget_title">
 		        	<span class="ico_order_r"></span>
@@ -188,7 +188,40 @@
 		              <div class="controls">
 		               <span class="form_item"><input name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="客人数量"></span>
 		              </div>
-		            </div>	
+		            </div>
+		            
+		            <div class="control_group">
+                        <label class="control_label"><span class="ico_must">*</span>客人信息:</label>
+                        <div class="controls" id="customTab">
+                            <div class="client_operate js_line_client_operate">
+                                <table cellpadding="0" cellspacing="0" class="client_table_data table_data">
+                                    <thead>
+                                        <tr>
+                                            <th>客人信息</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>
+性别:<select name="tempSex" placeholder="客人性别"><option value="1">男</option><option value="2">女</option></select>
+类型:<select name="tempAgeType" placeholder="客人类型"><option value="1">成人</option><option value="2">儿童(占床)</option><option value="3">儿童(不占床)</option></select>                            
+押金:<input type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>
+资料:<input type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>
+房间数:<input type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>
+备注:<input type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
+                                                <span name="delName" class="client_delete" title="删除行">-</span>
+                                            </td>
+                                        </tr>           
+                                    </tbody>
+                                </table><span class="form_item"><input type="hidden" class="js_non_empty" id="nameList" name="nameList" value="" placeholder="客人信息"></span>
+                                <div class="client_operate_btns">
+                                    <span class="client_add" title="添加行">+</span>
+                                </div>
+                            </div>
+                        </div>                          
+                    </div>
+                </div>	
 					
 		        </div>
 				

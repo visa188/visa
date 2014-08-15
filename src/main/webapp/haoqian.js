@@ -101,7 +101,7 @@ GLB.createErrortipEle = function(errortx){
 }
 
 // 客人信息操作
-GLB.clientOpr = function(node,addBtn,delBtn){
+GLB.clientOpr = function(node,addBtn,delBtn,type){
 	var oprTb = $("table",node);
 	var delBtns = $(".client_delete");
 	if(delBtns&&addBtn&&delBtn){
@@ -111,14 +111,23 @@ GLB.clientOpr = function(node,addBtn,delBtn){
 			};
 		});
 		addBtn.onclick = function(){
-			addRow();
+			if(typeof type == "undefined"){
+				addRow();
+			}else{
+				addRow(1);
+			}
 		}
 		delBtn.onclick = function(){
 			delRow(delBtn);
 		}
 	}
-	function addRow(){    
-		var vTrTemp = createTr();
+	function addRow(type){
+		var vTrTemp;
+		if(typeof type == "undefined"){
+			vTrTemp = createTr();
+		}else{
+			vTrTemp = createTr(1);
+		}
 		$(vTrTemp).appendTo(oprTb);
 		$("input",vTrTemp)[0].focus();
 	}
@@ -134,18 +143,35 @@ GLB.clientOpr = function(node,addBtn,delBtn){
 		}
 	}
 
-	function createTr(){
+	function createTr(type){
 		var t_tr = document.createElement("tr");
-		$(t_tr).html('<td>姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="姓名" style="width:20%;"/>' +
-				'联系方式:<input type="text" class="tb_text" name="tempContact" value="" placeholder="联系方式" style="width:30%;"/>' +
-				'地址:<input type="text" class="tb_text" name="tempAddr" value="" placeholder="地址" style="width:40%;"/>' +
-				'<span class="client_delete" title="删除行" onclick="delTempRow(this)">-</span></td>');
+		if(typeof type == "undefined"){
+			$(t_tr).html('<td>姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="姓名" style="width:20%;"/>' +
+					'联系方式:<input type="text" class="tb_text" name="tempContact" value="" placeholder="联系方式" style="width:30%;"/>' +
+					'地址:<input type="text" class="tb_text" name="tempAddr" value="" placeholder="地址" style="width:40%;"/>' +
+					'<span class="client_delete" title="删除行" onclick="delTempRow(this)">-</span></td>');
+			
+		}else{
+			$(t_tr).html('<td>姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>' +
+					'性别:<select name="tempSex" placeholder="客人性别"><option value="1">男</option><option value="2">女</option></select>' +
+					'类型:<select name="tempAgeType" placeholder="客人类型"><option value="1">成人</option><option value="2">儿童(占床)</option><option value="3">儿童(不占床)</option></select>'+                            
+					'押金:<input type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>'+
+					'资料:<input type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>'+
+					'房间数:<input type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>'+
+					'备注:<input type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>'+
+					'<span class="client_delete" title="删除行" onclick="delTempRow(this,'+type+')">-</span></td>');
+		}
 		return t_tr;
 	}
 }
 
-function delTempRow(delBtn){
-	var node = $(".js_client_operate");
+function delTempRow(delBtn,type){
+	var node;
+	if(typeof type == "undefined"){
+		node = $(".js_client_operate");
+	}else{
+		node = $(".js_line_client_operate");
+	}
 	var oprTb = $("table",node);
 	var tbodyTrs = $("tbody tr",oprTb);
 	var vNum = tbodyTrs.size();
@@ -224,7 +250,11 @@ $(function() {
 		submitBtn.bind("click",function(e){
 			$(this).attr("disabled",true);
 			GLB.vari.submit_flag = true;
-			setClientValue();
+			if($.inArray("line", $(this).attr('class'))){
+				setClientValue(1);
+			}else{
+				setClientValue();
+			}
 			e.preventDefault();
 			$(".controls").each(function(){
 				var formItem_wrap = this;
@@ -296,45 +326,111 @@ $(function() {
 		GLB.clientOpr(node,addBtn,delBtn);
 	}
 	
-	function setClientValue(){
+	// 线路客人信息的添加和删除
+	if($(".js_line_client_operate")[0]){
+		var node = $(".js_line_client_operate");
+		var addBtn = $(".client_add",node)[0];
+		var delBtn = $(".client_delete",node)[0];
+		GLB.clientOpr(node,addBtn,delBtn,1);
+	}
+	
+	function setClientValue(type){
 		var continentId = $("#continentId")[0];
 		var checkNotEmpty = false;
 		if (continentId && continentId.value!=4 && continentId.value!=5){
 			checkNotEmpty = true;
 		}
 		
-		var names=document.getElementsByName("tempName");
-		var contacts=document.getElementsByName("tempContact");
-		var addrs=document.getElementsByName("tempAddr");
-		var result="";
-		
-		if(checkNotEmpty){
-			$(names).each(function(){
-				$(this).addClass("js_non_empty");
+		if(typeof type == "undefined"){
+			var names=document.getElementsByName("tempName");
+			var contacts=document.getElementsByName("tempContact");
+			var addrs=document.getElementsByName("tempAddr");
+			var result="";
+			
+			if(checkNotEmpty){
+				$(names).each(function(){
+					$(this).addClass("js_non_empty");
+				});
+				$(contacts).each(function(){
+					$(this).addClass("js_non_empty");
+				});
+				$(addrs).each(function(){
+					$(this).addClass("js_non_empty");
+				});
+			}else{
+				$(names).each(function(){
+					$(this).removeClass("js_non_empty");
+				});
+				$(contacts).each(function(){
+					$(this).removeClass("js_non_empty");
+				});
+				$(addrs).each(function(){
+					$(this).removeClass("js_non_empty");
+				});
+			}
+			
+			$(names).each(function(i){
+				result+=$(names)[i].value+"_"+$(contacts)[i].value+"_"+$(addrs)[i].value+",";
 			});
-			$(contacts).each(function(){
-				$(this).addClass("js_non_empty");
-			});
-			$(addrs).each(function(){
-				$(this).addClass("js_non_empty");
-			});
+			if(result&&result.length>0){
+				result=result.substring(0, result.length-1);
+			}
 		}else{
-			$(names).each(function(){
-				$(this).removeClass("js_non_empty");
+			var names=document.getElementsByName("tempName");
+			var sexs=document.getElementsByName("tempSex");
+			var agetypes=document.getElementsByName("tempAgeType");
+			var deposits=document.getElementsByName("tempDeposit");
+			var datums=document.getElementsByName("tempDatum");
+			var rooms=document.getElementsByName("tempRoom");
+			var comments=document.getElementsByName("tempComment");
+			var result="";
+			
+			if(checkNotEmpty){
+				$(names).each(function(){
+					$(this).addClass("js_non_empty");
+				});
+				$(agetypes).each(function(){
+					$(this).addClass("js_non_empty");
+				});
+				$(deposits).each(function(){
+					$(this).addClass("js_non_empty");
+				});
+				$(datums).each(function(){
+					$(this).addClass("js_non_empty");
+				});
+				$(rooms).each(function(){
+					$(this).addClass("js_non_empty");
+				});
+				$(comments).each(function(){
+					$(this).addClass("js_non_empty");
+				});
+			}else{
+				$(names).each(function(){
+					$(this).removeClass("js_non_empty");
+				});
+				$(agetypes).each(function(){
+					$(this).removeClass("js_non_empty");
+				});
+				$(deposits).each(function(){
+					$(this).removeClass("js_non_empty");
+				});
+				$(datums).each(function(){
+					$(this).removeClass("js_non_empty");
+				});
+				$(rooms).each(function(){
+					$(this).removeClass("js_non_empty");
+				});
+				$(comments).each(function(){
+					$(this).removeClass("js_non_empty");
+				});
+			}
+			
+			$(names).each(function(i){
+				result+=$(names)[i].value+"_"+$(sexs)[i].value+"_"+$(agetypes)[i].value+"_"+$(deposits)[i].value+"_"+$(datums)[i].value+"_"+$(rooms)[i].value+"_"+$(comments)[i].value+",";
 			});
-			$(contacts).each(function(){
-				$(this).removeClass("js_non_empty");
-			});
-			$(addrs).each(function(){
-				$(this).removeClass("js_non_empty");
-			});
-		}
-		
-		$(names).each(function(i){
-			result+=$(names)[i].value+"_"+$(contacts)[i].value+"_"+$(addrs)[i].value+",";
-		});
-		if(result&&result.length>0){
-			result=result.substring(0, result.length-1);
+			if(result&&result.length>0){
+				result=result.substring(0, result.length-1);
+			}
 		}
 		$("#nameList").val(result);
 	}
