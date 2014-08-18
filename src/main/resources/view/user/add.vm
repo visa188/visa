@@ -45,6 +45,7 @@
                         <label class="control_label"><span class="ico_must">*</span>所属线路国家:</label>
                         <div class="controls">
                             <span class="form_item" id="showCountryNamesTip"><input value="" type="text" class="text1 js_non_empty" id="countryNames" placeholder="所属线路国家" readonly/></span>
+							<label for="searchbtn"><input onclick="selectCountry();" type="button" name="" class="searchbtn" value="选择国家" ></label>
                         </div>                          
                     </div>
                     <div class="control_group">
