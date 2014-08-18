@@ -13,6 +13,12 @@
     where orderId = #{orderId,jdbcType=INTEGER}
   </select>
   
+  <select id="selectByProductIdCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+      	select count(*)
+		from lineorder
+		where lineProductId = #{lineProductId,jdbcType=INTEGER}
+	</select>
+  
    <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
       	select count(*)
 		from lineorder

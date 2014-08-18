@@ -18,6 +18,7 @@ import com.visa.common.constant.Constant;
 import com.visa.common.util.PagingUtil;
 import com.visa.dao.line.AirlineDao;
 import com.visa.dao.line.LineCountryDao;
+import com.visa.dao.line.LineOrderDao;
 import com.visa.dao.line.LineProductDao;
 import com.visa.po.Airline;
 import com.visa.po.Country;
@@ -36,6 +37,8 @@ public class LineProductController {
     private LineCountryDao lineCountryDao;
     @Resource
     private AirlineDao airlineDao;
+    @Resource
+    private LineOrderDao lineOrderDao;
 
     private final Log logger = LogFactory.getLog(getClass());
 
@@ -138,8 +141,7 @@ public class LineProductController {
      */
     @RequestMapping
     public String delete(Integer productId, Integer page, ModelMap model) {
-        // int count = ordersDao.selectByProductIdCount(productId);
-        int count = 0;
+        int count = lineOrderDao.selectByProductIdCount(productId);
         if (count == 0) {
             lineProductDao.deleteByPrimaryKey(productId);
             return "redirect:list.do?page=" + page;

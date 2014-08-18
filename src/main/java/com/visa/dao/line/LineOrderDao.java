@@ -21,4 +21,6 @@ public interface LineOrderDao {
     int count(Map<String, Object> paraMap);
 
     List<Orders> selectByPage(Map<String, Object> paraMap);
+
+    int selectByProductIdCount(int lineProductId);
 }
