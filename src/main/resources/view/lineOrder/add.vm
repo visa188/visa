@@ -37,7 +37,7 @@
 			jQuery("#contact").addClass('js_non_empty');
 			jQuery("#contactNo").addClass('js_non_empty');
 			jQuery("#lineProductId").val(0);
-			
+			jQuery("#price").removeAttr("false");;
 		}else{
 			jQuery("#sanpinSelectDiv").show();
 			jQuery("#dantuanSelectDiv").hide();
@@ -46,6 +46,7 @@
 			jQuery("#travelAgency").removeClass('js_non_empty');
 			jQuery("#contact").removeClass('js_non_empty');
 			jQuery("#contactNo").removeClass('js_non_empty');
+			jQuery("#price").attr("readonly","true");
 		}
 	}
 </script>
