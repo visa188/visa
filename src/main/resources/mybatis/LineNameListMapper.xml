@@ -28,13 +28,13 @@
   <update id="updateByPrimaryKey">
     update area
     set name = #{name,jdbcType=VARCHAR},
-    set sex = #{sex,jdbcType=INTEGER},
-    set ageType = #{ageType,jdbcType=INTEGER},
-    set deposit = #{deposit,jdbcType=VARCHAR},
-    set datum = #{datum,jdbcType=VARCHAR},
-    set room = #{room,jdbcType=INTEGER},
-    set comment = #{comment,jdbcType=VARCHAR},
-    set postTime = now()
+    sex = #{sex,jdbcType=INTEGER},
+    ageType = #{ageType,jdbcType=INTEGER},
+    deposit = #{deposit,jdbcType=VARCHAR},
+    datum = #{datum,jdbcType=VARCHAR},
+    room = #{room,jdbcType=INTEGER},
+    comment = #{comment,jdbcType=VARCHAR},
+    postTime = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

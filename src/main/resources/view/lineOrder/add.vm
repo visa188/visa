@@ -1,120 +1,52 @@
 #header(10,102,"新增线路订单信息")
 <script>
-    function setBxyf(){
-        var priceBxys=jQuery("#priceBxys").val()==''?0:jQuery("#priceBxys").val();
-        jQuery("#priceBxyf").val(priceBxys);
-    }
-	function calculate(){
-		var priceYsdj=jQuery("#priceYsdj").val()==''?0:jQuery("#priceYsdj").val();
-		var priceBxys=jQuery("#priceBxys").val()==''?0:jQuery("#priceBxys").val();
-        var priceBxyf=jQuery("#priceBxyf").val()==''?0:jQuery("#priceBxyf").val();
-		var priceQtys=jQuery("#priceQtys").val()==''?0:jQuery("#priceQtys").val();
-		var priceQtzc=jQuery("#priceQtzc").val()==''?0:jQuery("#priceQtzc").val();
-		var nameListSize=jQuery("#nameListSize").val()==''?0:jQuery("#nameListSize").val();
-		var productPrice=jQuery("#productPrice").val()==''?0:jQuery("#productPrice").val();
+	function getProductId(){
+		var selectProductId=jQuery("#selectProductId").val();
+		jQuery("#lineProductId").val(selectProductId);
 		
-		var priceZjys = 0.0;
-		var priceZjyf = 0.0;
-		var grossProfit = 0.0;
-		
-		if(priceYsdj&&priceBxys&&priceBxyf&&priceQtys&&priceQtzc&&nameListSize){
-			priceZjys = Math.round(parseFloat(priceYsdj*100*nameListSize+priceQtys*100+priceBxys*100))/100;
-			priceZjyf = Math.round(parseFloat(productPrice*100 * nameListSize+priceQtzc*100+priceBxyf*100))/100;
-			grossProfit = Math.round(parseFloat(priceZjys*100 - priceZjyf*100))/100;
-		}
-		
-		jQuery("#priceZjys").val(priceZjys);
-		jQuery("#priceZjyf").val(priceZjyf);
-		jQuery("#grossProfit").val(grossProfit);
-	}
-	function getProductPrice(){
-		var productId=jQuery("#productId").val();
+		var productId=jQuery("#selectProductId").val();
 		if(productId==''){
 			return;
 		}
 		jQuery.ajax({
     	   type: "POST",
-    	   url: "/product/getProductPrice.do",
+    	   url: "/lineproduct/getProductInfo.do",
     	   data:{productId:productId},
     	   success: function(result){
 		   		if(result!='error'){
-    				jQuery("#productPrice").val(result);
-					calculate();
+    				jQuery("#depositLimitDate").val(result.depositLimitDate);
+					jQuery("#printTicketLimitDate").val(result.printTicketLimitDate);
+					jQuery("#travelInfo").val(result.travelInfo);
+					jQuery("#nameListSize").val(result.nameListSize);
+					jQuery("#lineCountryId").val(result.lineCountryId);
 				}
     	   }
 		});
 	}
-	
-	function searchCustomer(){
-		jQuery("#dropbox").hide();
-		var customerName=jQuery("#tempCustomerName").val();
-		if(customerName==''){
-			return;
+
+	function changeProductType(){
+		var type=jQuery("#type").val();
+		//1 单团;2 散拼
+		if(type==1){
+			jQuery("#sanpinSelectDiv").hide();
+			jQuery("#dantuanSelectDiv").show();
+			
+			jQuery("#selectProductId").removeClass('js_non_empty');
+			jQuery("#travelAgency").addClass('js_non_empty');
+			jQuery("#contact").addClass('js_non_empty');
+			jQuery("#contactNo").addClass('js_non_empty');
+			jQuery("#lineProductId").val(0);
+			
+		}else{
+			jQuery("#sanpinSelectDiv").show();
+			jQuery("#dantuanSelectDiv").hide();
+			
+			jQuery("#selectProductId").addClass('js_non_empty');
+			jQuery("#travelAgency").removeClass('js_non_empty');
+			jQuery("#contact").removeClass('js_non_empty');
+			jQuery("#contactNo").removeClass('js_non_empty');
 		}
-		jQuery.ajax({
-    	   type: "POST",
-    	   url: "/customer/searchCustomer.do",
-    	   data:{customerName:customerName},
-    	   success: function(result){
-		   		var searchResult=jQuery("#searchResult");
-    			var customerList=result;
-				if(customerList&&customerList.length>0){
-    				var html='';
-    				for(var i=0;i<customerList.length;i++){
-    					html+='<li><a href="javascript:setProductId('+customerList[i].customerId+',\''+customerList[i].customerName+'\')">'+customerList[i].customerName+'</a></li>';
-    				}
-    				searchResult.empty();
-    				searchResult.append(html);
-    				jQuery("#dropbox").show();
-				}
-    	   }
-		});
 	}
-	
-	function setProductId(customerId,customerName){
-		jQuery("#customerId").val(customerId);
-		jQuery("#tempCustomerName").val(customerName);
-		jQuery("#customerShowName").val(customerName);
-		jQuery("#dropbox").hide();
-	}
-	
-    function changeCountry(){
-        var continentId = jQuery("#continentId").val();
-        jQuery.ajax({
-           type: "POST",
-           async:false,
-           url: "/country/listByContinentId.do",
-           data:{continentId:continentId},
-           success: function(result){
-                var countryList=result;
-                var options='<option value="" selected="selected">请选择</option>';
-                for(var i=0;i<countryList.length;i++){
-                    options+='<option value='+countryList[i].countryId+'>'+countryList[i].countryName+'</option>';
-                }
-                jQuery("#countryId option").remove();
-                jQuery("#countryId").append(options);
-           }
-        });
-    }
-	
-	function changeProduct(){
-        var countryId = jQuery("#countryId").val();
-        jQuery.ajax({
-           type: "POST",
-           async:false,
-           url: "/product/searchProduct.do",
-           data:{countryId:countryId},
-           success: function(result){
-                var productList=result;
-                var options='<option value="" selected="selected">请选择</option>';
-                for(var i=0;i<productList.length;i++){
-                    options+='<option value='+productList[i].productId+'>'+productList[i].productName+'</option>';
-                }
-                jQuery("#productId option").remove();
-                jQuery("#productId").append(options);
-           }
-        });
-    }
 </script>
 	<div class="miancon">
 		<div class="maincon_title">
@@ -123,42 +55,85 @@
 		</div>
 		<div class="maincon_fluid">
 			<form action="/lineOrder/addSubmit.do" method="post" class="form_horizontal hq_form line">
+				
+			  <input value="0" type="hidden" id="lineProductId" name="lineProductId">
+				
 		      <div class="widget_box">
 		        <div class="widget_title">
 		        	<span class="ico_order_r"></span>
 		        	<h3>订单基本信息</h3>
 		        </div>
 		        <div class="widget_content">
-		        	<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>组团社:</label>
-		              <div class="controls">
-		               <span class="form_item"><input name="travelAgency" id="travelAgency" type="text" class="text1 js_non_empty" maxlength="50" size="50" placeholder="组团社"></span>
-		              </div>
-		            </div>	
+					<div class="control_group">
+                        <label class="control_label"><span class="ico_must">*</span>订单类型:</label>
+                        <div class="controls">
+                            <span class="form_item"><select name="type" id="type" class="text2 js_non_empty" placeholder="订单类型" onchange="changeProductType()">
+								<option value="1" selected>单团</option>
+								<option value="2">散拼团</option>
+                            </select></span>
+                        </div>                          
+                    </div>
+					
+					<div id="sanpinSelectDiv"> 
+    					<div class="control_group">
+                            <label class="control_label"><span class="ico_must">*</span>散拼团:</label>
+                            <div class="controls">
+                                <span class="form_item"><select id="selectProductId" class="text2" placeholder="散拼团" onchange="getProductId()">
+    								<option value="" selected="selected">请选择</option>
+    								#foreach($one in $lineProductList)
+    									<option value="$one.lineProductId">$one.lineProductName</option>
+                                    #end
+                                </select></span>
+                            </div>
+                        </div>
+    					
+    					<div class="control_group">
+        					<label class="control_label"><span class="ico_must">*</span>机票订金时限:</label>
+                            <div class="controls">
+                                <span class="form_item"><input id="depositLimitDate" type="text" class="text1" placeholder="机票订金时限" readonly></span>
+                            </div>   
+    					</div>
+    					
+    					<div class="control_group">
+        					<label class="control_label"><span class="ico_must">*</span>出票时限:</label>
+                            <div class="controls">
+                                <span class="form_item"><input id="printTicketLimitDate" type="text" class="text1" placeholder="出票时限" readonly></span>
+                            </div>  
+    					</div>
+					</div>
+					
+					<div id="dantuanSelectDiv"> 
+    		        	<div class="control_group">
+    		              <label class="control_label"><span class="ico_must">*</span>组团社:</label>
+    		              <div class="controls">
+    		               <span class="form_item"><input name="travelAgency" id="travelAgency" type="text" class="text1" maxlength="50" size="50" placeholder="组团社"></span>
+    		              </div>
+    		            </div>	
+    					
+    					<div class="control_group">
+    		              <label class="control_label"><span class="ico_must">*</span>联系人:</label>
+    		              <div class="controls">
+    		               <span class="form_item"><input name="contact" id="contact" type="text" class="text1" maxlength="10" size="10" placeholder="联系人"></span>
+    		              </div>
+    		            </div>	
+    					
+    					<div class="control_group">
+    		              <label class="control_label"><span class="ico_must">*</span>联系方式:</label>
+    		              <div class="controls">
+    		               <span class="form_item"><input name="contactNo" id="contactNo" type="text" class="text1" maxlength="50" size="50" placeholder="联系方式"></span>
+    		              </div>
+    		            </div>	
+					</div>	
 					
 					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>联系人:</label>
-		              <div class="controls">
-		               <span class="form_item"><input name="contact" id="contact" type="text" class="text1 js_non_empty" maxlength="10" size="10" placeholder="联系人"></span>
-		              </div>
-		            </div>	
-					
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>联系方式:</label>
-		              <div class="controls">
-		               <span class="form_item"><input name="contactNo" id="contactNo" type="text" class="text1 js_non_empty" maxlength="50" size="50" placeholder="联系方式"></span>
-		              </div>
-		            </div>	
-					
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">&nbsp;</span>出发日期:</label>
+		              <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
 		              <div class="controls">
 		               <span class="form_item"><input type="text"  class="text1 js_datepicker" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate" value=""></span>
 		              </div>
 		            </div> 
 					
                     <div class="control_group">
-		              <label class="control_label"><span class="ico_must">&nbsp;</span>归国日期:</label>
+		              <label class="control_label"><span class="ico_must">*</span>归国日期:</label>
 		              <div class="controls">
 		               <span class="form_item"><input type="text"  class="text1 js_datepicker" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate" value=""></span>
 		              </div>
@@ -203,13 +178,13 @@
                                     <tbody>
                                         <tr>
                                             <td>
-姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>
-性别:<select name="tempSex" placeholder="客人性别"><option value="1">男</option><option value="2">女</option></select>
-类型:<select name="tempAgeType" placeholder="客人类型"><option value="1">成人</option><option value="2">儿童(占床)</option><option value="3">儿童(不占床)</option></select>                            
-押金:<input type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>
-资料:<input type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>
-房间数:<input type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>
-备注:<input type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
+                                                                                                                                姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>
+                                                                                                                                性别:<select name="tempSex" placeholder="客人性别"><option value="1">男</option><option value="2">女</option></select>
+                                                                                                                                类型:<select name="tempAgeType" placeholder="客人类型"><option value="1">成人</option><option value="2">儿童(占床)</option><option value="3">儿童(不占床)</option></select>                            
+                                                                                                                                押金:<input type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>
+                                                                                                                                资料:<input type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>
+                                                                                                                                房间数:<input type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>
+                                                                                                                                备注:<input type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
                                                 <span name="delName" class="client_delete" title="删除行">-</span>
                                             </td>
                                         </tr>           
@@ -272,18 +247,6 @@
 		</div>
 	</div>
 	<script>
-		/*
-    	jQuery("#continentId").bind("blur",function(e){
-            changeCountry();
-        }).bind("change",function(e){
-            changeCountry();
-        });	
-		
-		jQuery("#countryId").bind("blur",function(e){
-            changeProduct();
-        }).bind("change",function(e){
-            changeProduct();
-        });	
-      */  
+	changeProductType();
 	</script>
 #footer()

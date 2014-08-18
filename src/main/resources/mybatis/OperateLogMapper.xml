@@ -27,10 +27,10 @@
   <update id="updateByPrimaryKey">
     update operatelog
     set userid = #{userId,jdbcType=VARCHAR},
-    set roleId = #{roleId,jdbcType=INTEGER},
-    set operateType = #{operateType,jdbcType=INTEGER},
-    set operateDes = #{operateDes,jdbcType=VARCHAR},
-    set operateTime = now()
+    roleId = #{roleId,jdbcType=INTEGER},
+    operateType = #{operateType,jdbcType=INTEGER},
+    operateDes = #{operateDes,jdbcType=VARCHAR},
+    operateTime = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

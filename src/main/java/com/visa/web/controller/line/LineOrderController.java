@@ -16,10 +16,12 @@ import com.visa.common.constant.Constant;
 import com.visa.common.util.PagingUtil;
 import com.visa.dao.line.LineCountryDao;
 import com.visa.dao.line.LineOrderDao;
+import com.visa.dao.line.LineProductDao;
 import com.visa.po.Country;
 import com.visa.po.Orders;
 import com.visa.po.User;
 import com.visa.po.line.LineOrder;
+import com.visa.po.line.LineProduct;
 import com.visa.vo.OrderSearchBean;
 
 /**
@@ -33,6 +35,8 @@ public class LineOrderController {
     private LineOrderDao lineOrderDao;
     @Resource
     private LineCountryDao lineCountryDao;
+    @Resource
+    private LineProductDao lineProductDao;
 
     /**
      * 列出所有的订单
@@ -65,6 +69,8 @@ public class LineOrderController {
     @RequestMapping
     public void add(ModelMap model) {
         List<Country> countryList = lineCountryDao.selectAllCountry();
+        List<LineProduct> lineProductList = lineProductDao.selectAllLineProduct();
+        model.put("lineProductList", lineProductList);
         model.put("countryList", countryList);
     }
 

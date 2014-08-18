@@ -43,24 +43,24 @@
   <update id="updateByPrimaryKey">
     update lineorder
     set orderDate = #{orderDate,jdbcType=DATE},
-    set type = #{type,jdbcType=INTEGER},
-    set nameListSize = #{nameListSize,jdbcType=INTEGER},
-    set salesmanId = #{salesmanId,jdbcType=VARCHAR},
-    set lineOperatorId = #{lineOperatorId,jdbcType=VARCHAR},
-    set visaOperatorId = #{visaOperatorId,jdbcType=VARCHAR},
-    set travelAgency = #{travelAgency,jdbcType=VARCHAR},
-    set contact = #{contact,jdbcType=VARCHAR},
-    set contactNo = #{contactNo,jdbcType=VARCHAR},
-    set lineCountryId = #{lineCountryId,jdbcType=INTEGER},
-    set startDate = #{startDate,jdbcType=DATE},
-    set endDate = #{endDate,jdbcType=DATE},
-    set travelInfo = #{travelInfo,jdbcType=VARCHAR},
-    set travelInfoFileUrl = #{travelInfoFileUrl,jdbcType=VARCHAR},
-    set aircorpId = #{aircorpId,jdbcType=INTEGER},
-    set price = #{price,jdbcType=DECIMAL},
-    set status = #{status,jdbcType=INTEGER},
-    set lineProductId = #{status,jdbcType=INTEGER},
-    set postTime = now()
+    type = #{type,jdbcType=INTEGER},
+    nameListSize = #{nameListSize,jdbcType=INTEGER},
+    salesmanId = #{salesmanId,jdbcType=VARCHAR},
+    lineOperatorId = #{lineOperatorId,jdbcType=VARCHAR},
+    visaOperatorId = #{visaOperatorId,jdbcType=VARCHAR},
+    travelAgency = #{travelAgency,jdbcType=VARCHAR},
+    contact = #{contact,jdbcType=VARCHAR},
+    contactNo = #{contactNo,jdbcType=VARCHAR},
+    lineCountryId = #{lineCountryId,jdbcType=INTEGER},
+    startDate = #{startDate,jdbcType=DATE},
+    endDate = #{endDate,jdbcType=DATE},
+    travelInfo = #{travelInfo,jdbcType=VARCHAR},
+    travelInfoFileUrl = #{travelInfoFileUrl,jdbcType=VARCHAR},
+    aircorpId = #{aircorpId,jdbcType=INTEGER},
+    price = #{price,jdbcType=DECIMAL},
+    status = #{status,jdbcType=INTEGER},
+    lineProductId = #{status,jdbcType=INTEGER},
+    postTime = now()
     where orderId = #{orderId,jdbcType=INTEGER}
   </update>
 </mapper>

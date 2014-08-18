@@ -46,15 +46,17 @@
   <update id="updateByPrimaryKey">
     update lineproduct
     set lineCountryId = #{lineCountryId,jdbcType=INTEGER},
-    set lineProductName = #{lineProductName,jdbcType=VARCHAR},
-    set groupLeader = #{groupLeader,jdbcType=VARCHAR},
-    set aircorpId = #{aircorpId,jdbcType=INTEGER},
-    set depositLimitDate = #{depositLimitDate,jdbcType=DATE},
-    set printTicketLimitDate = #{printTicketLimitDate,jdbcType=DATE},
-    set seatNum = #{seatNum,jdbcType=INTEGER},
-    set leftSeatNum = #{leftSeatNum,jdbcType=INTEGER},
-    set price = #{price,jdbcType=DECIMAL},
-    set des = #{des,jdbcType=DATE}
+    lineProductName = #{lineProductName,jdbcType=VARCHAR},
+    groupLeader = #{groupLeader,jdbcType=VARCHAR},
+    aircorpId = #{aircorpId,jdbcType=INTEGER},
+    depositLimitDate = #{depositLimitDate,jdbcType=DATE},
+    printTicketLimitDate = #{printTicketLimitDate,jdbcType=DATE},
+    seatNum = #{seatNum,jdbcType=INTEGER},
+    leftSeatNum = #{leftSeatNum,jdbcType=INTEGER},
+    price = #{price,jdbcType=DECIMAL},
+    travelInfo = #{travelInfo,jdbcType=VARCHAR},
+    travelInfoFileUrl = #{travelInfoFileUrl,jdbcType=VARCHAR},
+    des = #{des,jdbcType=VARCHAR}
     where lineProductId = #{lineProductId,jdbcType=INTEGER}
   </update>
 </mapper>

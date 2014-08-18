@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.visa.common.constant.Constant;
+import com.visa.common.util.JsonUtil;
 import com.visa.common.util.PagingUtil;
 import com.visa.dao.line.AirlineDao;
 import com.visa.dao.line.LineCountryDao;
@@ -105,6 +106,8 @@ public class LineProductController {
     public String edit(Integer productId, Integer page, ModelMap model) {
         LineProduct product = lineProductDao.selectByPrimaryKey(productId);
         List<Country> countryList = lineCountryDao.selectAllCountry();
+        List<Airline> airlineList = airlineDao.selectAllAirline();
+        model.put("airlineList", airlineList);
         model.put("countryList", countryList);
         model.put("product", product);
         model.put("topNav", 11);
@@ -112,7 +115,7 @@ public class LineProductController {
         model.put("title", "修改产品信息");
         model.put("action", "update");
         model.put("page", page);
-        return "product/add";
+        return "lineproduct/add";
     }
 
     /**
@@ -147,7 +150,7 @@ public class LineProductController {
             model.put("topNav", 11);
             model.put("secNav", 111);
             model.put("title", "产品信息删除");
-            model.put("href", "/product/list.do?page=" + page);
+            model.put("href", "/lineproduct/list.do?page=" + page);
             return "result";
         }
     }
@@ -158,13 +161,13 @@ public class LineProductController {
      */
     @RequestMapping
     @ResponseBody
-    public String getProductPrice(String productId) {
+    public String getProductInfo(String productId) {
         if (!StringUtils.isEmpty(productId)) {
             LineProduct product = lineProductDao.selectByPrimaryKey(Integer.parseInt(productId));
             if (product == null) {
                 return "error";
             } else {
-                return product.getPrice().toString();
+                return JsonUtil.toString(product);
             }
         }
         return "error";
