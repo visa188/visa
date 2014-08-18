@@ -47,7 +47,7 @@
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>行程简介:</label>
                         <div class="controls">
-                            <textarea class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100"></textarea>
+                            <textarea class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100">$!{product.travelInfo}</textarea>
                         </div>                          
                     </div>
                     <div class="control_group">

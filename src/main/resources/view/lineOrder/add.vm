@@ -4,20 +4,20 @@
 		var selectProductId=jQuery("#selectProductId").val();
 		jQuery("#lineProductId").val(selectProductId);
 		
-		var productId=jQuery("#selectProductId").val();
-		if(productId==''){
+		if(selectProductId==''){
 			return;
 		}
 		jQuery.ajax({
     	   type: "POST",
     	   url: "/lineproduct/getProductInfo.do",
-    	   data:{productId:productId},
+    	   data:{productId:selectProductId},
     	   success: function(result){
 		   		if(result!='error'){
-    				jQuery("#depositLimitDate").val(result.depositLimitDate);
-					jQuery("#printTicketLimitDate").val(result.printTicketLimitDate);
+					var depositLimitDate = new Date(result.depositLimitDate);
+					var printTicketLimitDate = new Date(result.printTicketLimitDate);
+    				jQuery("#depositLimitDate").val(depositLimitDate.getFullYear()+'-'+(depositLimitDate.getMonth()+1)+'-'+depositLimitDate.getDate());
+					jQuery("#printTicketLimitDate").val(printTicketLimitDate.getFullYear()+'-'+(printTicketLimitDate.getMonth()+1)+'-'+printTicketLimitDate.getDate());
 					jQuery("#travelInfo").val(result.travelInfo);
-					jQuery("#nameListSize").val(result.nameListSize);
 					jQuery("#lineCountryId").val(result.lineCountryId);
 				}
     	   }

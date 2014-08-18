@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.visa.common.constant.Constant;
-import com.visa.common.util.JsonUtil;
 import com.visa.common.util.PagingUtil;
 import com.visa.dao.line.AirlineDao;
 import com.visa.dao.line.LineCountryDao;
@@ -161,16 +160,12 @@ public class LineProductController {
      */
     @RequestMapping
     @ResponseBody
-    public String getProductInfo(String productId) {
+    public LineProduct getProductInfo(String productId) {
         if (!StringUtils.isEmpty(productId)) {
             LineProduct product = lineProductDao.selectByPrimaryKey(Integer.parseInt(productId));
-            if (product == null) {
-                return "error";
-            } else {
-                return JsonUtil.toString(product);
-            }
+            return product;
         }
-        return "error";
+        return null;
     }
 
 }
