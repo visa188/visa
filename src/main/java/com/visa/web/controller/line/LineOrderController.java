@@ -18,7 +18,6 @@ import com.visa.dao.line.LineCountryDao;
 import com.visa.dao.line.LineOrderDao;
 import com.visa.dao.line.LineProductDao;
 import com.visa.po.Country;
-import com.visa.po.Orders;
 import com.visa.po.User;
 import com.visa.po.line.LineOrder;
 import com.visa.po.line.LineProduct;
@@ -57,7 +56,7 @@ public class LineOrderController {
         paraMap.put("begin", recordRange[0]);
         paraMap.put("pageCount", Constant.LINE_PAGE_COUNT);
 
-        List<Orders> orderList = lineOrderDao.selectByPage(paraMap);
+        List<LineOrder> orderList = lineOrderDao.selectByPage(paraMap);
         model.addAttribute("orderList", orderList);
     }
 

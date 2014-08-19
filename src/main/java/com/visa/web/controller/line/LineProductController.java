@@ -22,6 +22,7 @@ import com.visa.dao.line.LineOrderDao;
 import com.visa.dao.line.LineProductDao;
 import com.visa.po.Airline;
 import com.visa.po.Country;
+import com.visa.po.line.LineOrder;
 import com.visa.po.line.LineProduct;
 import com.visa.vo.line.LineProductVo;
 
@@ -94,6 +95,15 @@ public class LineProductController {
      */
     @RequestMapping
     public String insert(LineProduct product) {
+        List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(product.getLineProductId());
+        int count = 0;
+        for (LineOrder order : lineOrderList) {
+            count += order.getNameListSize();
+        }
+        int seatNum = product.getSeatNum();
+        if (seatNum - count >= 0) {
+            product.setLeftSeatNum(seatNum - count);
+        }
         lineProductDao.insert(product);
         return "redirect:list.do";
     }
@@ -127,6 +137,15 @@ public class LineProductController {
      */
     @RequestMapping
     public String update(LineProduct product, Integer page) {
+        List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(product.getLineProductId());
+        int count = 0;
+        for (LineOrder order : lineOrderList) {
+            count += order.getNameListSize();
+        }
+        int seatNum = product.getSeatNum();
+        if (seatNum - count >= 0) {
+            product.setLeftSeatNum(seatNum - count);
+        }
         lineProductDao.updateByPrimaryKey(product);
         return "redirect:list.do?page=" + page;
     }

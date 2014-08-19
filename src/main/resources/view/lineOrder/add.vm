@@ -15,13 +15,17 @@
 		   		if(result!='error'){
 					var depositLimitDate = new Date(result.depositLimitDate);
 					var printTicketLimitDate = new Date(result.printTicketLimitDate);
+					var startDate = new Date(result.startDate);
+					var endDate = new Date(result.endDate);
     				jQuery("#depositLimitDate").val(depositLimitDate.getFullYear()+'-'+(depositLimitDate.getMonth()+1)+'-'+depositLimitDate.getDate());
 					jQuery("#printTicketLimitDate").val(printTicketLimitDate.getFullYear()+'-'+(printTicketLimitDate.getMonth()+1)+'-'+printTicketLimitDate.getDate());
 					jQuery("#travelInfo").val(result.travelInfo);
 					jQuery("#lineCountryId").val(result.lineCountryId);
 					jQuery("#price").val(result.price);
-					jQuery("#startDate").val(result.startDate);
-					jQuery("#endDate").val(result.endDate);
+					jQuery("#startDate").val(startDate.getFullYear()+'-'+(startDate.getMonth()+1)+'-'+startDate.getDate());
+					jQuery("#endDate").val(endDate.getFullYear()+'-'+(endDate.getMonth()+1)+'-'+endDate.getDate());
+					jQuery("#seatNum").val(result.seatNum);
+					jQuery("#leftSeatNum").val(result.leftSeatNum);
 				}
     	   }
 		});
@@ -53,6 +57,14 @@
 			jQuery("#price").attr("readonly","true");
 			jQuery("#startDate").attr("readonly","true");
 			jQuery("#endDate").attr("readonly","true");
+		}
+	}
+	function setNamelistSize(){
+		var nameListSize = parseInt(jQuery("#nameListSize").val());
+		var leftSeatNum = parseInt(jQuery("#leftSeatNum").val());
+		if(nameListSize>leftSeatNum){
+			jQuery("#nameListSize").val("");
+			alert('客人数量大于剩余机位数，请重新填写！');
 		}
 	}
 </script>
@@ -106,6 +118,20 @@
         					<label class="control_label"><span class="ico_must">*</span>出票时限:</label>
                             <div class="controls">
                                 <span class="form_item"><input id="printTicketLimitDate" type="text" class="text1" placeholder="出票时限" readonly></span>
+                            </div>  
+    					</div>
+						
+						<div class="control_group">
+        					<label class="control_label"><span class="ico_must">*</span>座位数:</label>
+                            <div class="controls">
+                                <span class="form_item"><input id="seatNum" type="text" class="text1" placeholder="座位数" readonly></span>
+                            </div>  
+    					</div>
+						
+						<div class="control_group">
+        					<label class="control_label"><span class="ico_must">*</span>余位数:</label>
+                            <div class="controls">
+                                <span class="form_item"><input id="leftSeatNum" type="text" class="text1" placeholder="余位数" readonly></span>
                             </div>  
     					</div>
 					</div>
@@ -169,7 +195,7 @@
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>客人数量:</label>
 		              <div class="controls">
-		               <span class="form_item"><input name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="客人数量"></span>
+		               <span class="form_item"><input name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="客人数量" onchange="setNamelistSize()"></span>
 		              </div>
 		            </div>
 		            

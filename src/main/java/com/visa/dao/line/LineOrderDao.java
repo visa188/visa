@@ -3,7 +3,6 @@ package com.visa.dao.line;
 import java.util.List;
 import java.util.Map;
 
-import com.visa.po.Orders;
 import com.visa.po.line.LineOrder;
 
 public interface LineOrderDao {
@@ -20,7 +19,9 @@ public interface LineOrderDao {
 
     int count(Map<String, Object> paraMap);
 
-    List<Orders> selectByPage(Map<String, Object> paraMap);
+    List<LineOrder> selectByPage(Map<String, Object> paraMap);
 
     int selectByProductIdCount(int lineProductId);
+
+    List<LineOrder> selectByProductId(int lineProductId);
 }

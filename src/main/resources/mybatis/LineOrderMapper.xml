@@ -18,13 +18,19 @@
 		from lineorder
 		where lineProductId = #{lineProductId,jdbcType=INTEGER}
 	</select>
-  
-   <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+	
+   <select id="selectByProductId" parameterType="java.lang.Integer" resultType="LineOrder">
+      	select *
+		from lineorder
+		where lineProductId = #{lineProductId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
       	select count(*)
 		from lineorder
 	</select>
 	
-	<select id="selectByPage" parameterType="java.util.Map" resultType="Orders">
+	<select id="selectByPage" parameterType="java.util.Map" resultType="LineOrder">
        	select *
 		from lineorder
 		order by orderDate desc,orderId desc
