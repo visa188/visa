@@ -84,6 +84,27 @@ public class LineOrderController {
     @RequestMapping
     public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user,
             @ModelAttribute("lineOrder") LineOrder lineOrder, ModelMap model) {
+        // 散拼团订单时，校验该产品下所有订单客人总量是否大于机位数
+        if (lineOrder.getType() == 2) {
+            LineProduct product = lineProductDao.selectByPrimaryKey(lineOrder.getLineProductId());
+            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(lineOrder
+                    .getLineProductId());
+            int count = 0;
+            for (LineOrder order : lineOrderList) {
+                count += order.getNameListSize();
+            }
+            count += lineOrder.getNameListSize();
+            int seatNum = product.getSeatNum();
+            if (seatNum - count < 0) {
+                model.put("msg", "新建订单失败，客人数量大于剩余机位数！");
+                model.put("code", 404);
+                model.put("topNav", 10);
+                model.put("secNav", 101);
+                model.put("title", "订单信息新增");
+                model.put("href", "/lineproduct/list.do");
+                return "result";
+            }
+        }
         lineOrderDao.insert(lineOrder);
         return "redirect:list.do?page=1";
     }
