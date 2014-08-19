@@ -64,6 +64,9 @@ public class LineProduct {
     /** @pdOid e26e1c3f-0ea9-4e73-829f-d7365ba5ac05 */
     public String des;
 
+    public Date startDate;
+    public Date endDate;
+
     /**
      * 行程简介
      * 
@@ -76,6 +79,22 @@ public class LineProduct {
      * @pdOid dd766152-10e2-4418-95f5-74c9f2d6cc04
      */
     public String travelInfoFileUrl;
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
     public int getAircorpId() {
         return aircorpId;

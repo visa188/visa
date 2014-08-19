@@ -20,6 +20,8 @@
 					jQuery("#travelInfo").val(result.travelInfo);
 					jQuery("#lineCountryId").val(result.lineCountryId);
 					jQuery("#price").val(result.price);
+					jQuery("#startDate").val(result.startDate);
+					jQuery("#endDate").val(result.endDate);
 				}
     	   }
 		});
@@ -37,7 +39,9 @@
 			jQuery("#contact").addClass('js_non_empty');
 			jQuery("#contactNo").addClass('js_non_empty');
 			jQuery("#lineProductId").val(0);
-			jQuery("#price").removeAttr("false");;
+			jQuery("#price").attr("readonly","false");
+			jQuery("#startDate").attr("readonly","false");
+			jQuery("#endDate").attr("readonly","false");
 		}else{
 			jQuery("#sanpinSelectDiv").show();
 			jQuery("#dantuanSelectDiv").hide();
@@ -47,6 +51,8 @@
 			jQuery("#contact").removeClass('js_non_empty');
 			jQuery("#contactNo").removeClass('js_non_empty');
 			jQuery("#price").attr("readonly","true");
+			jQuery("#startDate").attr("readonly","true");
+			jQuery("#endDate").attr("readonly","true");
 		}
 	}
 </script>
