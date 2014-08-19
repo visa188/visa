@@ -48,4 +48,6 @@ public final class Constant {
     public static final int LINE_PAGE_OFFSET = 10;
 
     public static final String ORDER_PREFIX_BJ = "BJ";
+
+    public static final int SUPER_ADMIN_ROLE_ID = 0;
 }

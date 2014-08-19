@@ -44,7 +44,7 @@
     <div class="sidebar">
         <div class="sidenav">
             <ul>
-				#if($userRoleId==${fn.getAdminRoleId()})
+				#if(${fn.isAdminRoleId($userRoleId)})
                 <li class="pro_mng#if($topNav==1) open#end">
                     <a class="pro_mng_tab" href="/product/list.do"><span class="ico_pro"></span><span class="sidenav_text">产品管理</span><span class="ico_fold"></span></a>
                     <dl>
@@ -60,7 +60,7 @@
                     </dl>
                 </li>
 				#end
-				#if($userRoleId==${fn.getSalesmanRoleId()}||$userRoleId==${fn.getAdminRoleId()})
+				#if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)})
                 <li class="client_mng#if($topNav==2) open#end">
                     <a class="client_mng_tab" href="/customer/list.do"><span class="ico_client"></span><span class="sidenav_text">客户管理</span><span class="ico_fold"></span></a>
                     <dl>
@@ -76,7 +76,7 @@
 						#if($userRoleId==${fn.getSalesmanRoleId()})
 							<dd#if($secNav==32) class="on"#end><a href="/orders/add.do">新增订单信息</a></dd>
 						#end
-						#if($userRoleId==${fn.getAdminRoleId()})
+						#if(${fn.isAdminRoleId($userRoleId)})
 							<dd#if($secNav==33) class="on"#end><a href="/orders/export.do">导出订单信息</a></dd>
 						#end
                     </dl>
@@ -89,7 +89,7 @@
 						<dd#if($secNav==103) class="on"#end><a href="/lineOrder/export.do">导出路线订单信息</a></dd>
                     </dl>
                 </li>
-				#if($userRoleId==${fn.getAdminRoleId()})
+				#if(${fn.isAdminRoleId($userRoleId)})
     				<li class="client_mng#if($topNav==5) open#end">
                         <a class="client_mng_tab" href="/country/list.do"><span class="ico_setting"></span><span class="sidenav_text">签证国家管理</span><span class="ico_fold"></span></a>
                         <dl>
@@ -132,9 +132,9 @@
 				#end
                 
                 <li class="client_mng#if($topNav==4) open#end">
-                    <a class="client_mng_tab" href="#if($userRoleId==${fn.getAdminRoleId()}) /user/list.do #else /user/changepwd.do #end"><span class="ico_setting"></span><span class="sidenav_text">系统管理</span><span class="ico_fold"></span></a>
+                    <a class="client_mng_tab" href="#if(${fn.isAdminRoleId($userRoleId)}) /user/list.do #else /user/changepwd.do #end"><span class="ico_setting"></span><span class="sidenav_text">系统管理</span><span class="ico_fold"></span></a>
                     <dl>
-                        #if($userRoleId==${fn.getAdminRoleId()})
+                        #if(${fn.isAdminRoleId($userRoleId)})
                         <dd#if($secNav==41) class="on"#end><a href="/user/list.do">用户信息管理</a></dd>
                         <dd#if($secNav==42) class="on"#end><a href="/user/add.do">新增用户信息</a></dd>
                         #end

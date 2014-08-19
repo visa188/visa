@@ -250,7 +250,7 @@
 					                <tbody>
 										#foreach($custom in $customList)
 					                    <tr>
-											#if($userRoleId==${fn.getSalesmanRoleId()}||$userRoleId==${fn.getAdminRoleId()}||$userRoleId==${fn.getFinanceRoleId()})
+											#if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
 												<td>
 													姓名:<input type="text" class="tb_text" name="tempName" value="$!{custom.name}" placeholder="客户姓名" style="width:20%;"/>
 													联系方式:<input type="text" class="tb_text" name="tempContact" value="$!{custom.contact}" placeholder="联系方式" style="width:30%;"/>
@@ -268,7 +268,7 @@
 										#end
 					                </tbody>
 					            </table><span class="form_item"><input type="hidden" class="js_non_empty" id="nameList" name="nameList" value="$!{orders.nameList}" placeholder="客人信息"></span>
-					            #if($userRoleId==${fn.getSalesmanRoleId()}||$userRoleId==${fn.getAdminRoleId()})
+					            #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)})
     								<div class="client_operate_btns">
     					            	<span id="addName" class="client_add" title="添加行">+</span>
     					            </div>
@@ -277,7 +277,7 @@
 		              	</div>		        			
 		        	</div>
 		        </div>
-				#if($userRoleId==${fn.getManagerRoleId()}||$userRoleId==${fn.getAdminRoleId()})
+				#if($userRoleId==${fn.getManagerRoleId()}||${fn.isAdminRoleId($userRoleId)})
 					<div class="widget_title">
     		        	<span class="ico_static_r"></span>
     		        	<h3>操作信息</h3>
@@ -296,7 +296,7 @@
     		            </div>  
 					</div>
 				#end
-				##if($userRoleId==${fn.getOperatorRoleId()}||$userRoleId==${fn.getAdminRoleId()})
+				##if($userRoleId==${fn.getOperatorRoleId()}||${fn.isAdminRoleId($userRoleId)})
     				<div class="widget_title">
     		        	<span class="ico_static_r"></span>
     		        	<h3>送签信息</h3>
@@ -336,13 +336,13 @@
     		            </div> 
     				</div>	
 				##end
-				#if($userRoleId==${fn.getSalesmanRoleId()}||$userRoleId==${fn.getAdminRoleId()}||$userRoleId==${fn.getFinanceRoleId()}||$userRoleId==${fn.getOperatorRoleId()})
+				#if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()}||$userRoleId==${fn.getOperatorRoleId()})
 		        <div class="widget_title">
 		        	<span class="ico_static_r"></span>
 		        	<h3>费用计算</h3>
 		        </div>
 		        <div class="widget_content">
-		            #if($userRoleId==${fn.getSalesmanRoleId()}||$userRoleId==${fn.getAdminRoleId()}||$userRoleId==${fn.getFinanceRoleId()})
+		            #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
 		        	<div class="control_group">
 	        			<label class="control_label"><span class="ico_must">*</span>应收单价:</label>
 						<div class="controls">
@@ -362,7 +362,7 @@
                        <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxyf" name="priceBxyf" placeholder="保险应付款" value="#if(${orders.priceBxyf})${orders.priceBxyf}#else 0.00 #end" onchange="calculate()"  #if($userRoleId!=${fn.getOperatorRoleId()}) readonly #end></span>
                       </div>
                     </div>
-                    #if($userRoleId==${fn.getSalesmanRoleId()}||$userRoleId==${fn.getAdminRoleId()}||$userRoleId==${fn.getFinanceRoleId()})
+                    #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
 		            <div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>其他应收款:</label>
 		              <div class="controls">
@@ -385,7 +385,7 @@
 	        			<label class="control_label">总计应付款:</label>
 						<div class="controls">
 		               		<span class="form_item">
-								#if($userRoleId==${fn.getAdminRoleId()}||$userRoleId==${fn.getFinanceRoleId()})
+								#if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
 									<input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceZjyf" name="priceZjyf" placeholder="总计应付款" value="$!{orders.priceZjyf}" onchange="calculateByAdmin()">
 								#else
 									<input type="text" class="text1" maxlength="10" size="10" id="priceZjyf" name="priceZjyf" placeholder="总计应付款" value="$!{orders.priceZjyf}" readonly >
@@ -407,7 +407,7 @@
 		        	<h3>备注信息</h3>
 		        </div>
 		        <div class="widget_content">
-					#if($userRoleId==${fn.getFinanceRoleId()}||$userRoleId==${fn.getAdminRoleId()})
+					#if($userRoleId==${fn.getFinanceRoleId()}||${fn.isAdminRoleId($userRoleId)})
 					<div class="control_group">
 	        			<label class="control_label"><span class="ico_must">*</span>付款状态:</label>
 						<div class="controls">
