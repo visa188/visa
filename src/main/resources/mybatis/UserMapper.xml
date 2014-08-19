@@ -39,6 +39,44 @@
     limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
   </select>
   
+  <select id="selectVisaAllCount" resultType="java.lang.Integer">
+    select count(*) from user 
+    where roleId in (1,2,3,4,5) 
+    <if test="userName != null">and userName like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')</if>
+    <if test="roleId != null and roleId != 0">and roleId = #{roleId,jdbcType=INTEGER}</if>
+    order by postDt desc 
+  </select>
+  
+  <select id="selectVisaAll" resultType="UserVo">
+    select u1.*,u2.userName as managerName  
+    FROM user u1 
+    LEFT JOIN user u2 ON u1.managerId=u2.userId  
+    where u2.roleId in (1,2,3,4,5) 
+    <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
+    <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
+    order by  enable desc,postDt desc 
+    limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectLineAllCount" resultType="java.lang.Integer">
+    select count(*) from user 
+    where roleId in (6,7,8,9,10) 
+    <if test="userName != null">and userName like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')</if>
+    <if test="roleId != null and roleId != 0">and roleId = #{roleId,jdbcType=INTEGER}</if>
+    order by postDt desc 
+  </select>
+  
+  <select id="selectLineAll" resultType="UserVo">
+    select u1.*,u2.userName as managerName  
+    FROM user u1 
+    LEFT JOIN user u2 ON u1.managerId=u2.userId  
+    where u2.roleId in (6,7,8,9,10) 
+    <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
+    <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
+    order by  enable desc,postDt desc 
+    limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
+  </select>
+  
   <select id="selectByRoleId" resultType="User">
     select *  
     FROM user 

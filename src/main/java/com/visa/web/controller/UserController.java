@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.visa.common.constant.Constant;
+import com.visa.common.constant.LineRoleEnumType;
 import com.visa.common.constant.RoleEnumType;
 import com.visa.common.util.PagingUtil;
 import com.visa.dao.DepartmentDao;
@@ -57,11 +58,24 @@ public class UserController {
         User user = new User();
         user.setUserName(searchUserName);
         user.setRoleId(searchRoleId);
-        if (sessionUser.getRoleId() == RoleEnumType.ADMIN.getId()) {
+        if (sessionUser.getRoleId() == Constant.SUPER_ADMIN_ROLE_ID) {
+            // 超级管理员
             Integer recordCount = userDao.selectAllCount(user);
             int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page,
                     Constant.PAGE_OFFSET, model);
             userList = userDao.selectAll(recordRange[0], Constant.PAGE_COUNT, user);
+        } else if (sessionUser.getRoleId() == RoleEnumType.ADMIN.getId()) {
+            // 签证管理员
+            Integer recordCount = userDao.selectVisaAllCount(user);
+            int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page,
+                    Constant.PAGE_OFFSET, model);
+            userList = userDao.selectVisaAll(recordRange[0], Constant.PAGE_COUNT, user);
+        } else if (sessionUser.getRoleId() == LineRoleEnumType.ADMIN.getId()) {
+            // 线路管理员
+            Integer recordCount = userDao.selectLineAllCount(user);
+            int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page,
+                    Constant.PAGE_OFFSET, model);
+            userList = userDao.selectLineAll(recordRange[0], Constant.PAGE_COUNT, user);
         } else {
             Integer recordCount = userDao.selectByManagerIdCount(sessionUser.getUserId(), user);
             int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page,

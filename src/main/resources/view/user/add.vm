@@ -35,9 +35,15 @@
                         <label class="control_label"><span class="ico_must">*</span>用户权限:</label>
                         <div class="controls">
                             <select name="roleId" id="roleId" class="text2" onchange="selectCountry()">
-                                #foreach($one in $fn.roleOptions().entrySet())
-                                <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>$one.value.name</option>
-                                #end
+								#if(${fn.isAdminRoleId($userRoleId)})
+                                    #foreach($one in $fn.roleOptions().entrySet())
+                                    <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>$one.value.name</option>
+    								#end
+								#else if(${fn.isLineAdminRoleId($userRoleId)})
+									#foreach($one in $fn.lineRoleOptions().entrySet())
+                                    <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>$one.value.name</option>
+    								#end
+								#end
                             </select>
                         </div>                          
                     </div>

@@ -143,6 +143,13 @@ public class VelocityToolbox {
     }
 
     /**
+     * @return Map<Integer, RoleEnumType>
+     */
+    public Map<Integer, LineRoleEnumType> lineRoleOptions() {
+        return LineRoleEnumType.ROLE_MAP;
+    }
+
+    /**
      * @return Map<Integer, ContinentEnum>
      */
     public Map<Integer, ContinentEnum> continentOptions() {
@@ -182,6 +189,38 @@ public class VelocityToolbox {
      */
     public int getAdminRoleId() {
         return RoleEnumType.ADMIN.getId();
+    }
+
+    public int getLineSalesmanRoleId() {
+        return LineRoleEnumType.SALESMAN.getId();
+    }
+
+    /**
+     * @return Map<Integer, RoleEnumType>
+     */
+    public int getLineOperatorRoleId() {
+        return LineRoleEnumType.OPERATOR.getId();
+    }
+
+    /**
+     * @return Map<Integer, RoleEnumType>
+     */
+    public int getLineManagerRoleId() {
+        return LineRoleEnumType.MANAGER.getId();
+    }
+
+    /**
+     * @return Map<Integer, RoleEnumType>
+     */
+    public int getLineFinanceRoleId() {
+        return LineRoleEnumType.FINANCE.getId();
+    }
+
+    /**
+     * @return Map<Integer, RoleEnumType>
+     */
+    public int getLineAdminRoleId() {
+        return LineRoleEnumType.ADMIN.getId();
     }
 
     /**
