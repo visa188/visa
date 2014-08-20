@@ -233,6 +233,7 @@
                     </div>
                 </div>	
 				
+				#**
 				<div class="widget_title">
 		        	<span class="ico_static_r"></span>
 		        	<h3>操作信息</h3>
@@ -258,7 +259,7 @@
 		              </div>
 		            </div>  
 				</div>
-				
+				*#
 		        <div class="widget_title">
 		        	<span class="ico_static_r"></span>
 		        	<h3>费用计算</h3>
