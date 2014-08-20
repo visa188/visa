@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.visa.common.constant.Constant;
+import com.visa.common.constant.LineRoleEnumType;
 import com.visa.common.util.PagingUtil;
+import com.visa.dao.UserDao;
 import com.visa.dao.line.LineCountryDao;
 import com.visa.dao.line.LineOrderDao;
 import com.visa.dao.line.LineProductDao;
@@ -36,6 +38,8 @@ public class LineOrderController {
     private LineCountryDao lineCountryDao;
     @Resource
     private LineProductDao lineProductDao;
+    @Resource
+    private UserDao userDao;
 
     /**
      * 列出所有的订单
@@ -115,11 +119,11 @@ public class LineOrderController {
      * @param userId userId
      * @param page page
      * @param model model
-     * @return String
      */
     @RequestMapping
-    public String edit(String userId, Integer page, ModelMap model) {
-        return "redirect:list.do?page=" + page;
+    public void edit(String userId, Integer page, ModelMap model) {
+        List<User> operatorList = userDao.selectByRoleId(LineRoleEnumType.OPERATOR.getId());
+        model.put("operatorList", operatorList);
     }
 
     /**
