@@ -166,14 +166,14 @@
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
 		              <div class="controls">
-		               <span class="form_item"><input type="text"  class="text1 js_datepicker" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate" value=""></span>
+		               <span class="form_item"><input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate" value=""></span>
 		              </div>
 		            </div> 
 					
                     <div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>归国日期:</label>
 		              <div class="controls">
-		               <span class="form_item"><input type="text"  class="text1 js_datepicker" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate" value=""></span>
+		               <span class="form_item"><input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate" value=""></span>
 		              </div>
 		            </div> 
 					
