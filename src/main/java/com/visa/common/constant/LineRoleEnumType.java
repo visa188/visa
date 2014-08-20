@@ -29,7 +29,11 @@ public enum LineRoleEnumType {
     /**
      * 财务
      */
-    FINANCE(10, "财务");
+    FINANCE(10, "财务"),
+    /**
+     * 送签员
+     */
+    VISAOPER(11, "送签员");
 
     private int id;
     private String name;
