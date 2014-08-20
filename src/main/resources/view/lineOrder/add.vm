@@ -43,9 +43,9 @@
 			jQuery("#contact").addClass('js_non_empty');
 			jQuery("#contactNo").addClass('js_non_empty');
 			jQuery("#lineProductId").val(0);
-			jQuery("#price").attr("readonly","false");
-			jQuery("#startDate").attr("readonly","false");
-			jQuery("#endDate").attr("readonly","false");
+			jQuery("#price").removeAttr("readonly");
+			jQuery("#startDate").removeAttr("readonly");
+			jQuery("#endDate").removeAttr("readonly");
 		}else{
 			jQuery("#sanpinSelectDiv").show();
 			jQuery("#dantuanSelectDiv").hide();
@@ -54,9 +54,10 @@
 			jQuery("#travelAgency").removeClass('js_non_empty');
 			jQuery("#contact").removeClass('js_non_empty');
 			jQuery("#contactNo").removeClass('js_non_empty');
-			jQuery("#price").attr("readonly","true");
-			jQuery("#startDate").attr("readonly","true");
-			jQuery("#endDate").attr("readonly","true");
+			jQuery("#price").attr("readonly","readonly");
+			jQuery("#startDate").attr("readonly","readonly");
+			jQuery("#endDate").attr("readonly","readonly");
+			
 		}
 	}
 	function setNamelistSize(){
@@ -231,8 +232,6 @@
                         </div>                          
                     </div>
                 </div>	
-					
-		        </div>
 				
 				<div class="widget_title">
 		        	<span class="ico_static_r"></span>
