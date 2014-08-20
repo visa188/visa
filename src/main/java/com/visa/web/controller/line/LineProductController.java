@@ -136,7 +136,7 @@ public class LineProductController {
      * @return String
      */
     @RequestMapping
-    public String update(LineProduct product, Integer page) {
+    public String update(LineProduct product, Integer page, ModelMap model) {
         List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(product.getLineProductId());
         int count = 0;
         for (LineOrder order : lineOrderList) {
@@ -145,9 +145,17 @@ public class LineProductController {
         int seatNum = product.getSeatNum();
         if (seatNum - count >= 0) {
             product.setLeftSeatNum(seatNum - count);
+            lineProductDao.updateByPrimaryKey(product);
+            return "redirect:list.do?page=" + page;
+        } else {
+            model.put("msg", "机位数：" + seatNum + "小于该产品下所有订单的客人总数，修改失败！");
+            model.put("code", 404);
+            model.put("topNav", 10);
+            model.put("secNav", 101);
+            model.put("title", "产品信息修改");
+            model.put("href", "/lineproduct/list.do");
+            return "result";
         }
-        lineProductDao.updateByPrimaryKey(product);
-        return "redirect:list.do?page=" + page;
     }
 
     /**
@@ -189,4 +197,21 @@ public class LineProductController {
         return null;
     }
 
+    /**
+     * @param productId productId
+     * @return string
+     */
+    @RequestMapping
+    @ResponseBody
+    public Integer getOrderCutomerSize(String productId) {
+        int count = 0;
+        if (!StringUtils.isEmpty(productId)) {
+            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(Integer
+                    .parseInt(productId));
+            for (LineOrder order : lineOrderList) {
+                count += order.getNameListSize();
+            }
+        }
+        return count;
+    }
 }

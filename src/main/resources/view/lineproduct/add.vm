@@ -1,4 +1,27 @@
 #header($topNav,$secNav,$title)
+<script>
+	function validateSeatNum(){
+		var selectProductId='$!{product.lineProductId}';
+		
+		if(selectProductId==''){
+			return;
+		}
+		jQuery.ajax({
+    	   type: "POST",
+    	   url: "/lineproduct/getOrderCutomerSize.do",
+    	   data:{productId:selectProductId},
+    	   success: function(result){
+		   		if(result!=0){
+					var seatNum = jQuery("#seatNum").val();
+					if(seatNum<result){
+						alert("机位数：" + seatNum + "小于该产品下所有订单的客人总数，请重新填写！");
+						jQuery("#seatNum").val('');
+					}
+				}
+    	   }
+		});
+	}
+</script>
 	<div class="miancon">
 		<div class="maincon_title">
 			<span class="ico_order_add">+</span><h2>$title</h2>
@@ -84,7 +107,7 @@
                     <div class="control_group">
                         <label class="control_label">机位数:</label>
                         <div class="controls">
-                            <span class="form_item"><input class="text1 js_nan js_non_empty" name="seatNum" id="seatNum" placeholder="机位数" maxlength="4" size="4" value="$!{product.seatNum}" /></span>
+                            <span class="form_item"><input class="text1 js_nan js_non_empty" name="seatNum" id="seatNum" placeholder="机位数" maxlength="4" size="4" value="$!{product.seatNum}" onchange="validateSeatNum()"/></span>
                         </div>                          
                     </div>
                     <div class="control_group">
