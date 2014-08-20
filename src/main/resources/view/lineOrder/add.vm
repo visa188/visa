@@ -46,6 +46,8 @@
 			jQuery("#price").removeAttr("readonly");
 			jQuery("#startDate").removeAttr("readonly");
 			jQuery("#endDate").removeAttr("readonly");
+			jQuery("#startDate").datepicker( "option", "disabled", false );
+			jQuery("#endDate").datepicker( "option", "disabled", false );
 		}else{
 			jQuery("#sanpinSelectDiv").show();
 			jQuery("#dantuanSelectDiv").hide();
@@ -57,7 +59,8 @@
 			jQuery("#price").attr("readonly","readonly");
 			jQuery("#startDate").attr("readonly","readonly");
 			jQuery("#endDate").attr("readonly","readonly");
-			
+			jQuery("#startDate").datepicker( "option", "disabled", true );
+			jQuery("#endDate").datepicker( "option", "disabled", true );
 		}
 	}
 	function setNamelistSize(){
