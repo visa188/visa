@@ -247,6 +247,7 @@ $(function() {
 	$(".hq_form").each(function(){
 		var thisForm = this;
 		var submitBtn = $(".btn_save",thisForm);
+		alert(submitBtn.length)
 		submitBtn.bind("click",function(e){
 			$(this).attr("disabled",true);
 			GLB.vari.submit_flag = true;
@@ -335,13 +336,13 @@ $(function() {
 	}
 	
 	function setClientValue(type){
-		var continentId = $("#continentId")[0];
-		var checkNotEmpty = false;
-		if (continentId && continentId.value!=4 && continentId.value!=5){
-			checkNotEmpty = true;
-		}
-		
 		if(typeof type == "undefined"){
+			var continentId = $("#continentId")[0];
+			var checkNotEmpty = false;
+			if (continentId && continentId.value!=4 && continentId.value!=5){
+				checkNotEmpty = true;
+			}
+			
 			var names=document.getElementsByName("tempName");
 			var contacts=document.getElementsByName("tempContact");
 			var addrs=document.getElementsByName("tempAddr");
@@ -376,6 +377,12 @@ $(function() {
 				result=result.substring(0, result.length-1);
 			}
 		}else{
+			var nameListSize = $("#nameListSize")[0];
+			var checkNotEmpty = false;
+			if (nameListSize.value>0){
+				checkNotEmpty = true;
+			}
+			
 			var names=document.getElementsByName("tempName");
 			var sexs=document.getElementsByName("tempSex");
 			var agetypes=document.getElementsByName("tempAgeType");
