@@ -34,14 +34,15 @@
 		            <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>用户权限:</label>
                         <div class="controls">
-                            <select name="roleId" id="roleId" class="text2" onchange="selectCountry()">
+                            <select name="roleId" id="roleId" class="text2" #if(${fn.isLineAdminRoleId($userRoleId)}) onchange="selectCountry()" #end>
 								#if(${fn.isAdminRoleId($userRoleId)})
                                     #foreach($one in $fn.roleOptions().entrySet())
-                                    <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>$one.value.name</option>
-    								#end
-								#else if(${fn.isLineAdminRoleId($userRoleId)})
+                                    <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>签证$one.value.name</option>
+									#end
+								#end
+								#if(${fn.isLineAdminRoleId($userRoleId)})
 									#foreach($one in $fn.lineRoleOptions().entrySet())
-                                    <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>$one.value.name</option>
+                                    <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>线路$one.value.name</option>
     								#end
 								#end
                             </select>
@@ -143,7 +144,7 @@
 	function selectCountry(){
 		var roleId=jQuery("#roleId").val();
 		
-		if(roleId==${fn.getOperatorRoleId()}){
+		if(roleId==${fn.getLineOperatorRoleId()}){
 			boxyCountry.show();
 			jQuery("#showCountryNames").addClass('js_non_empty');
 		}else{

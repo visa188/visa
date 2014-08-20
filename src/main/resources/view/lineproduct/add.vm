@@ -13,8 +13,8 @@
     	   success: function(result){
 		   		if(result!=0){
 					var seatNum = jQuery("#seatNum").val();
-					if(seatNum<result){
-						alert("机位数：" + seatNum + "小于该产品下所有订单的客人总数，请重新填写！");
+					if(parseInt(seatNum)<result){
+						alert("机位数：" + seatNum + "小于该产品下所有订单的客人总数"+result+"，请重新填写！");
 						jQuery("#seatNum").val('');
 					}
 				}

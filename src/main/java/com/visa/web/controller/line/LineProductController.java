@@ -148,7 +148,7 @@ public class LineProductController {
             lineProductDao.updateByPrimaryKey(product);
             return "redirect:list.do?page=" + page;
         } else {
-            model.put("msg", "机位数：" + seatNum + "小于该产品下所有订单的客人总数，修改失败！");
+            model.put("msg", "机位数：" + seatNum + "小于该产品下所有订单的客人总数：" + count + "，修改失败！");
             model.put("code", 404);
             model.put("topNav", 10);
             model.put("secNav", 101);
