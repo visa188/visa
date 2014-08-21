@@ -46,6 +46,8 @@
 			jQuery("#price").removeAttr("readonly");
 			jQuery("#startDate").removeAttr("readonly");
 			jQuery("#endDate").removeAttr("readonly");
+			jQuery("#startDate").datepicker( "option", "disabled", false );
+			jQuery("#endDate").datepicker( "option", "disabled", false );
 		}else{
 			jQuery("#sanpinSelectDiv").show();
 			jQuery("#dantuanSelectDiv").hide();
@@ -57,7 +59,8 @@
 			jQuery("#price").attr("readonly","readonly");
 			jQuery("#startDate").attr("readonly","readonly");
 			jQuery("#endDate").attr("readonly","readonly");
-			
+			jQuery("#startDate").datepicker( "option", "disabled", true );
+			jQuery("#endDate").datepicker( "option", "disabled", true );
 		}
 	}
 	function setNamelistSize(){
@@ -163,14 +166,14 @@
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
 		              <div class="controls">
-		               <span class="form_item"><input type="text"  class="text1 js_datepicker" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate" value=""></span>
+		               <span class="form_item"><input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate" value=""></span>
 		              </div>
 		            </div> 
 					
                     <div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>归国日期:</label>
 		              <div class="controls">
-		               <span class="form_item"><input type="text"  class="text1 js_datepicker" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate" value=""></span>
+		               <span class="form_item"><input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate" value=""></span>
 		              </div>
 		            </div> 
 					
@@ -230,6 +233,24 @@
                                 </div>
                             </div>
                         </div>                          
+                    </div>
+                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>服务:</label>
+                      <div class="controls">
+                       <span class="form_item"><input type="checkbox" name="ld" style="vertical-align: middle;"/> 领队服务 <select serv="ld" name="ldpai"><option value="1">组团社派</option><option value="2">启航假期派</option></select> 操作员:<select serv="ld" name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input type="checkbox" name="qz" style="vertical-align: middle;"/> 签证服务 <select serv="qz" name="ldpai"><option value="1">个签</option><option value="2">团签</option></select> 签证员:<select serv="qz" name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input type="checkbox" name="jp" style="vertical-align: middle;"/> 机票服务 <select serv="jp" name="ldpai"><option value="1">团队机票</option><option value="2">散客机票</option></select> 操作员:<select serv="jp" name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input type="checkbox" name="dj" style="vertical-align: middle;"/> 地接服务  酒店标准:<input serv="dj" type="text" class="tb_text" name="tempDeposit" style="width:4.3%;"/>星,房型:<input serv="dj" type="text" class="tb_text" name="tempDeposit" style="width:12%;"/> 备注:<input serv="dj" type="text" class="tb_text" name="tempDeposit" style="width:12%;" /> 特殊景点:<input serv="dj" type="text" class="tb_text" name="tempDeposit" style="width:12%;"/> 操作员:<select serv="dj" name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input type="radio" name="jpserv" style="vertical-align: middle;" checked/> 巴士: <input type="text" class="tb_text" name="tempDeposit" style="width:4.3%;"/> 备注:<input type="text" class="tb_text" name="tempDeposit" style="width:12%;" /> 导游:<select name="ldpai"><option value="1">需要</option><option value="2">不需要</option></select> 备注:<input type="text" class="tb_text" name="tempDeposit" style="width:12%;" /> <input type="radio" name="jpserv" style="vertical-align: middle;"/> 司机兼导游: 备注:<input type="text" class="tb_text" name="tempDeposit" style="width:12%;" /></span>
+                      </div>
+                    </div>
+                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>特殊说明:</label>
+                      <div class="controls">
+                       <span class="form_item"><input name="tssm" id="tssm" type="text" class="text1" maxlength="8" size="8" /></span>
+                      </div>
                     </div>
                 </div>	
 				

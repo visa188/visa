@@ -247,11 +247,10 @@ $(function() {
 	$(".hq_form").each(function(){
 		var thisForm = this;
 		var submitBtn = $(".btn_save",thisForm);
-		alert(submitBtn.length)
 		submitBtn.bind("click",function(e){
 			$(this).attr("disabled",true);
 			GLB.vari.submit_flag = true;
-			if($.inArray("line", $(this).attr('class'))){
+			if($.inArray("line", $(thisForm).attr('class')) >=0 ){
 				setClientValue(1);
 			}else{
 				setClientValue();
@@ -438,6 +437,8 @@ $(function() {
 			if(result&&result.length>0){
 				result=result.substring(0, result.length-1);
 			}
+			
+			
 		}
 		$("#nameList").val(result);
 	}
