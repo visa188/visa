@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.visa.common.constant.Constant;
@@ -276,5 +277,17 @@ public class UserController {
     public String active(String userId, Integer page, ModelMap model) {
         userDao.activeByPrimaryKey(userId);
         return "redirect:list.do?page=" + page;
+    }
+
+    /**
+     * 根据地区查询国家
+     * 
+     * @param continentId continentId
+     * @return List<Country>
+     */
+    @RequestMapping
+    @ResponseBody
+    public List<User> getOperators(String lineCountryId) {
+        return userDao.selectByLineCountryId(Integer.parseInt(lineCountryId));
     }
 }
