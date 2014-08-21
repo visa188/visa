@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.visa.dao.line.LinesSrviceDao" >
+<mapper namespace="com.visa.dao.line.LinesServiceDao" >
   <select id="selectAllLinesSrvice" resultType="LinesSrvice">
     select * 
     from linessrvice
@@ -20,10 +20,11 @@
   
   <insert id="insert">
     insert into linessrvice (orderId,serviceName,serviceType,servicePrice,serviceOperator,serviceItem1,serviceItem2,serviceItem3,serviceItem4,
-    serviceItem5,specialComment,priceSum,alreadyPaid,needPaid,paidBank,paidDate,alreadyGot,needGot,gotBank,gotDate,feeComment, postDt)
+    serviceItem5,serviceItem6,serviceItem7,serviceItem8,priceSum,alreadyPaid,needPaid,paidBank,paidDate,alreadyGot,needGot,gotBank,gotDate,feeComment, postTime)
     values (#{orderId,jdbcType=INTEGER},#{serviceName,jdbcType=VARCHAR},#{serviceType,jdbcType=VARCHAR},
     #{servicePrice,jdbcType=DECIMAL},#{serviceOperator,jdbcType=VARCHAR},#{serviceItem1,jdbcType=VARCHAR},#{serviceItem2,jdbcType=VARCHAR},
-    #{serviceItem3,jdbcType=VARCHAR},#{serviceItem4,jdbcType=VARCHAR},#{serviceItem5,jdbcType=VARCHAR},#{specialComment,jdbcType=VARCHAR},
+    #{serviceItem3,jdbcType=VARCHAR},#{serviceItem4,jdbcType=VARCHAR},#{serviceItem5,jdbcType=VARCHAR},#{serviceItem6,jdbcType=VARCHAR},
+    #{serviceItem7,jdbcType=VARCHAR},#{serviceItem8,jdbcType=VARCHAR},
     #{priceSum,jdbcType=DECIMAL},#{alreadyPaid,jdbcType=DECIMAL},#{needPaid,jdbcType=DECIMAL},#{paidBank,jdbcType=VARCHAR},
     #{paidDate,jdbcType=DATE},#{alreadyGot,jdbcType=DECIMAL},#{needGot,jdbcType=DECIMAL},#{gotBank,jdbcType=VARCHAR},
     #{gotDate,jdbcType=DATE},#{feeComment,jdbcType=VARCHAR}, now())
@@ -41,7 +42,9 @@
     serviceItem3 = #{serviceItem3,jdbcType=VARCHAR},
     serviceItem4 = #{serviceItem4,jdbcType=VARCHAR},
     serviceItem5 = #{serviceItem5,jdbcType=VARCHAR},
-    specialComment = #{specialComment,jdbcType=VARCHAR},
+    serviceItem6 = #{serviceItem6,jdbcType=VARCHAR},
+    serviceItem7 = #{serviceItem7,jdbcType=VARCHAR},
+    serviceItem8 = #{serviceItem8,jdbcType=VARCHAR},
     priceSum = #{priceSum,jdbcType=DECIMAL},
     alreadyPaid = #{alreadyPaid,jdbcType=DECIMAL},
     needPaid = #{needPaid,jdbcType=DECIMAL},

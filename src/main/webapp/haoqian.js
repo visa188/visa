@@ -250,7 +250,7 @@ $(function() {
 		submitBtn.bind("click",function(e){
 			$(this).attr("disabled",true);
 			GLB.vari.submit_flag = true;
-			if($.inArray("line", $(thisForm).attr('class')) >=0 ){
+			if($(thisForm).attr('class').indexOf("line") >=0){
 				setClientValue(1);
 			}else{
 				setClientValue();
@@ -437,7 +437,42 @@ $(function() {
 			if(result&&result.length>0){
 				result=result.substring(0, result.length-1);
 			}
+			// line service
+			var ldserv ='0';
+			if($('#ldserv').is(':checked')==true){
+				ldserv = '1_' + $('#ldtype').val();
+			}
+			$('#ld').val(ldserv);
 			
+			var qzserv ='0';
+			if($('#qzserv').is(':checked')==true){
+				qzserv = '1_' + $('#qztype').val();
+			}
+			$('#qz').val(qzserv);
+			
+			var jpserv ='0';
+			if($('#jpserv').is(':checked')==true){
+				jpserv = '1_' + $('#jptype').val();
+			}
+			$('#jp').val(jpserv);
+			
+			var djserv ='0';
+			if($('#djserv').is(':checked')==true){
+				djserv = '1_' + $('#djxing').val();
+				djserv += '_' + $('#djfx').val();
+				djserv += '_' + $('#djbz').val();
+				djserv += '_' + $('#djtsjd').val();
+				
+				if($('#djdyra').is(':checked')==true){
+					djserv += '_a_'+ $('#djbs').val();
+					djserv += '_' + $('#djbsbz').val();
+					djserv += '_' + $('#djsfxydy').val();
+					djserv += '_' + $('#djsfxydybz').val();
+				}else{
+					djserv += '_b_'+ $('#djsjjdybz').val();
+				}
+			}
+			$('#dj').val(djserv);
 			
 		}
 		$("#nameList").val(result);

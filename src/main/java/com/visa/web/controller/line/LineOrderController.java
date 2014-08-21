@@ -19,11 +19,14 @@ import com.visa.dao.UserDao;
 import com.visa.dao.line.LineCountryDao;
 import com.visa.dao.line.LineOrderDao;
 import com.visa.dao.line.LineProductDao;
+import com.visa.dao.line.LinesServiceDao;
 import com.visa.po.Country;
 import com.visa.po.User;
 import com.visa.po.line.LineOrder;
 import com.visa.po.line.LineProduct;
+import com.visa.po.line.LinesSrvice;
 import com.visa.vo.OrderSearchBean;
+import com.visa.vo.line.LineOrderVo;
 
 /**
  * @author LineOrder
@@ -39,6 +42,8 @@ public class LineOrderController {
     @Resource
     private LineProductDao lineProductDao;
     @Resource
+    private LinesServiceDao linesServiceDao;
+    @Resource
     private UserDao userDao;
 
     /**
@@ -50,13 +55,13 @@ public class LineOrderController {
      * @param model model
      */
     @RequestMapping
-    public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page,
-            ModelMap model, @ModelAttribute OrderSearchBean bean) {
+    public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page, ModelMap model,
+            @ModelAttribute OrderSearchBean bean) {
         Map<String, Object> paraMap = new HashMap<String, Object>();
         // 记录总条数
         int recordCount = lineOrderDao.count(paraMap);
-        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount,
-                page, Constant.LINE_PAGE_OFFSET, model);
+        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount, page,
+                Constant.LINE_PAGE_OFFSET, model);
         paraMap.put("begin", recordRange[0]);
         paraMap.put("pageCount", Constant.LINE_PAGE_COUNT);
 
@@ -86,13 +91,11 @@ public class LineOrderController {
      * @return String
      */
     @RequestMapping
-    public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user,
-            @ModelAttribute("lineOrder") LineOrder lineOrder, ModelMap model) {
+    public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrder, ModelMap model) {
         // 散拼团订单时，校验该产品下所有订单客人总量是否大于机位数
         if (lineOrder.getType() == 2) {
             LineProduct product = lineProductDao.selectByPrimaryKey(lineOrder.getLineProductId());
-            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(lineOrder
-                    .getLineProductId());
+            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(lineOrder.getLineProductId());
             int count = 0;
             for (LineOrder order : lineOrderList) {
                 count += order.getNameListSize();
@@ -110,6 +113,9 @@ public class LineOrderController {
             }
         }
         lineOrderDao.insert(lineOrder);
+        for (LinesSrvice srvice : lineOrder.getLineOrderService()) {
+            linesServiceDao.insert(srvice);
+        }
         return "redirect:list.do?page=1";
     }
 

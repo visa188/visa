@@ -3,8 +3,16 @@ package com.visa.po.line;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.visa.common.constant.LineSrviceEnumType;
+
 /** @pdOid 7eb4a52d-c3f6-47d8-8256-7886c71d4421 */
 public class LinesSrvice {
+    public LinesSrvice(int orderId, int serviceType) {
+        this.orderId = orderId;
+        this.serviceType = serviceType;
+        this.serviceName = LineSrviceEnumType.LINE_SRVICE_MAP.get(serviceType).getName();
+    }
+
     /**
      * 主键
      * 
@@ -48,7 +56,9 @@ public class LinesSrvice {
     /** @pdOid 8d565911-dabd-46c2-94ec-c21584719cf7 */
     public String serviceItem5;
     /** @pdOid 9d26ca88-29a9-4192-affd-c63fb97850c1 */
-    public String specialComment;
+    public String serviceItem6;
+    public String serviceItem7;
+    public String serviceItem8;
     /**
      * 合计
      * 
@@ -200,12 +210,28 @@ public class LinesSrvice {
         this.serviceItem5 = serviceItem5;
     }
 
-    public String getSpecialComment() {
-        return specialComment;
+    public String getServiceItem6() {
+        return serviceItem6;
     }
 
-    public void setSpecialComment(String specialComment) {
-        this.specialComment = specialComment;
+    public void setServiceItem6(String serviceItem6) {
+        this.serviceItem6 = serviceItem6;
+    }
+
+    public String getServiceItem7() {
+        return serviceItem7;
+    }
+
+    public void setServiceItem7(String serviceItem7) {
+        this.serviceItem7 = serviceItem7;
+    }
+
+    public String getServiceItem8() {
+        return serviceItem8;
+    }
+
+    public void setServiceItem8(String serviceItem8) {
+        this.serviceItem8 = serviceItem8;
     }
 
     public BigDecimal getPriceSum() {

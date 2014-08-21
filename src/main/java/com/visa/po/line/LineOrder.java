@@ -121,6 +121,7 @@ public class LineOrder {
      * @pdOid 039a9580-614d-44ec-89e9-c2ffcc97d52e
      */
     public int status;
+    public String specialComment;
     /** @pdOid ac5cabc4-f167-49b7-9590-f036f58a74df */
     public Date postTime;
 
@@ -274,6 +275,14 @@ public class LineOrder {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getSpecialComment() {
+        return specialComment;
+    }
+
+    public void setSpecialComment(String specialComment) {
+        this.specialComment = specialComment;
     }
 
     public Date getPostTime() {
