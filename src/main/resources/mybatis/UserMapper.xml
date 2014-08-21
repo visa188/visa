@@ -51,7 +51,7 @@
     select u1.*,u2.userName as managerName  
     FROM user u1 
     LEFT JOIN user u2 ON u1.managerId=u2.userId  
-    where u2.roleId in (1,2,3,4,5) 
+    where u1.roleId in (1,2,3,4,5) 
     <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
     order by  enable desc,postDt desc 
@@ -70,7 +70,7 @@
     select u1.*,u2.userName as managerName  
     FROM user u1 
     LEFT JOIN user u2 ON u1.managerId=u2.userId  
-    where u2.roleId in (6,7,8,9,10) 
+    where u1.roleId in (6,7,8,9,10) 
     <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
     order by  enable desc,postDt desc 
@@ -82,6 +82,13 @@
     FROM user 
     where roleId = #{roleId,jdbcType=INTEGER} 
     order by userName
+    and enable = 1
+  </select>
+  
+    <select id="selectByLineCountryId" resultType="User">
+    select *  
+    FROM user , operatorcountry
+    where user.userId = operatorcountry.userId and lineCountryId = #{lineCountryId,jdbcType=INTEGER} 
     and enable = 1
   </select>
   
@@ -101,7 +108,7 @@
     where userId = #{userId,jdbcType=VARCHAR}
   </delete>
   
-  <insert id="insert" parameterType="User" >
+  <insert id="insert" parameterType="User"  useGeneratedKeys="true" keyProperty="userId">
     insert into user (userId, userName, roleId, 
       pwd, managerId, postDt, deptId)
     values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, 

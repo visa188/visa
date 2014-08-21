@@ -100,7 +100,8 @@ public class VelocityToolbox {
      * @return role name
      */
     public String getRole(Integer roleId) {
-        return RoleEnumType.ROLE_MAP.get(roleId).getName();
+        return RoleEnumType.ROLE_MAP.get(roleId) != null ? RoleEnumType.ROLE_MAP.get(roleId)
+                .getName() : LineRoleEnumType.ROLE_MAP.get(roleId).getName();
     }
 
     /**
