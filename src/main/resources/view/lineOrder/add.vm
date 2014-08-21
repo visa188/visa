@@ -28,7 +28,7 @@
 					jQuery("#leftSeatNum").val(result.leftSeatNum);
 				}
     	   }
-		});
+		 });
 	}
 
 	function changeProductType(){
@@ -70,6 +70,28 @@
 			jQuery("#nameListSize").val("");
 			alert('客人数量大于剩余机位数，请重新填写！');
 		}
+	}
+	function getOperators(){
+		var lineCountryId = jQuery("#lineCountryId").val();
+		if(lineCountryId==''){
+			return;
+		}
+		jQuery.ajax({
+    	   type: "POST",
+    	   url: "/user/getOperators.do",
+    	   data:{lineCountryId:lineCountryId},
+    	   success: function(result){
+		   		if(result!='error'){
+					var operatorList=result;
+                    var options='<option value="" selected="selected">请选择</option>';
+                    for(var i=0;i<operatorList.length;i++){
+                        options+='<option value='+operatorList[i].userId+'>'+operatorList[i].userName+'</option>';
+                    }
+                    jQuery("#lineOperatorId option").remove();
+                    jQuery("#lineOperatorId").append(options);
+				}
+    	   }
+		 });
 	}
 </script>
 	<div class="miancon">
@@ -187,7 +209,7 @@
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
                         <div class="controls">
-                            <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称">
+                            <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" onchange="getOperators()">
                                 <option value="" selected="selected">请选择</option>
 								#foreach($one in $countryList)
 									<option value="$one.countryId">$one.countryName</option>
@@ -234,9 +256,27 @@
                             </div>
                         </div>                          
                     </div>
+                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>服务:</label>
+                      <div class="controls">
+                       <span class="form_item"><input type="checkbox" name="ld" style="vertical-align: middle;"/> 领队服务 <select serv="ld" name="ldpai"><option value="1">组团社派</option><option value="2">启航假期派</option></select> 操作员:<select serv="ld" name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input type="checkbox" name="qz" style="vertical-align: middle;"/> 签证服务 <select serv="qz" name="ldpai"><option value="1">个签</option><option value="2">团签</option></select> 签证员:<select serv="qz" name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input type="checkbox" name="jp" style="vertical-align: middle;"/> 机票服务 <select serv="jp" name="ldpai"><option value="1">团队机票</option><option value="2">散客机票</option></select> 操作员:<select serv="jp" name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input type="checkbox" name="dj" style="vertical-align: middle;"/> 地接服务  酒店标准:<input serv="dj" type="text" class="tb_text" name="tempDeposit" style="width:4.3%;"/>星,房型:<input serv="dj" type="text" class="tb_text" name="tempDeposit" style="width:12%;"/> 备注:<input serv="dj" type="text" class="tb_text" name="tempDeposit" style="width:12%;" /> 特殊景点:<input serv="dj" type="text" class="tb_text" name="tempDeposit" style="width:12%;"/> 操作员:<select serv="dj" name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input type="radio" name="jpserv" style="vertical-align: middle;" checked/> 巴士: <input type="text" class="tb_text" name="tempDeposit" style="width:4.3%;"/> 备注:<input type="text" class="tb_text" name="tempDeposit" style="width:12%;" /> 导游:<select name="ldpai"><option value="1">需要</option><option value="2">不需要</option></select> 备注:<input type="text" class="tb_text" name="tempDeposit" style="width:12%;" /> <input type="radio" name="jpserv" style="vertical-align: middle;"/> 司机兼导游: 备注:<input type="text" class="tb_text" name="tempDeposit" style="width:12%;" /></span>
+                      </div>
+                    </div>
+                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>特殊说明:</label>
+                      <div class="controls">
+                       <span class="form_item"><input name="tssm" id="tssm" type="text" class="text1" maxlength="8" size="8" /></span>
+                      </div>
+                    </div>
                 </div>	
 				
-				#**
+				
 				<div class="widget_title">
 		        	<span class="ico_static_r"></span>
 		        	<h3>操作信息</h3>
@@ -251,7 +291,7 @@
 						</select></span>
 		              </div>
 		            </div>
-					
+					#**
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>签证操作员:</label>
 		              <div class="controls">
@@ -261,8 +301,9 @@
 						</select></span>
 		              </div>
 		            </div>  
+					*#
 				</div>
-				*#
+				
 		        <div class="widget_title">
 		        	<span class="ico_static_r"></span>
 		        	<h3>费用计算</h3>
