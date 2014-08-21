@@ -71,28 +71,6 @@
 			alert('客人数量大于剩余机位数，请重新填写！');
 		}
 	}
-	function getOperators(){
-		var lineCountryId = jQuery("#lineCountryId").val();
-		if(lineCountryId==''){
-			return;
-		}
-		jQuery.ajax({
-    	   type: "POST",
-    	   url: "/user/getOperators.do",
-    	   data:{lineCountryId:lineCountryId},
-    	   success: function(result){
-		   		if(result!='error'){
-					var operatorList=result;
-                    var options='<option value="" selected="selected">请选择</option>';
-                    for(var i=0;i<operatorList.length;i++){
-                        options+='<option value='+operatorList[i].userId+'>'+operatorList[i].userName+'</option>';
-                    }
-                    jQuery("#lineOperatorId option").remove();
-                    jQuery("#lineOperatorId").append(options);
-				}
-    	   }
-		 });
-	}
 </script>
 	<div class="miancon">
 		<div class="maincon_title">
@@ -209,7 +187,7 @@
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
                         <div class="controls">
-                            <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" onchange="getOperators()">
+                            <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" #if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRoleId($userRoleId)}) onchange="getOperators()" #end>
                                 <option value="" selected="selected">请选择</option>
 								#foreach($one in $countryList)
 									<option value="$one.countryId">$one.countryName</option>
@@ -276,33 +254,58 @@
                     </div>
                 </div>	
 				
-				
-				<div class="widget_title">
-		        	<span class="ico_static_r"></span>
-		        	<h3>操作信息</h3>
-		        </div>
-		        <div class="widget_content">
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>线路操作员:</label>
-		              <div class="controls">
-		               <span class="form_item"><select name="lineOperatorId" id="lineOperatorId" class="text2 js_non_empty" placeholder="线路操作员">
-							<option value="" selected="selected">请选择</option>
-							
-						</select></span>
-		              </div>
-		            </div>
-					#**
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>签证操作员:</label>
-		              <div class="controls">
-		               <span class="form_item"><select name="visaOperatorId" id="visaOperatorId" class="text2 js_non_empty" placeholder="签证操作员">
-							<option value="" selected="selected">请选择</option>
-							
-						</select></span>
-		              </div>
-		            </div>  
-					*#
-				</div>
+				#if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRoleId($userRoleId)})
+    				<script>
+    					function getOperators(){
+                    		var lineCountryId = jQuery("#lineCountryId").val();
+                    		if(lineCountryId==''){
+                    			return;
+                    		}
+                    		jQuery.ajax({
+                        	   type: "POST",
+                        	   url: "/user/getOperators.do",
+                        	   data:{lineCountryId:lineCountryId},
+                        	   success: function(result){
+                    		   		if(result!='error'){
+                    					var operatorList=result;
+                                        var options='<option value="" selected="selected">请选择</option>';
+                                        for(var i=0;i<operatorList.length;i++){
+                                            options+='<option value='+operatorList[i].userId+'>'+operatorList[i].userName+'</option>';
+                                        }
+                                        jQuery("#lineOperatorId option").remove();
+                                        jQuery("#lineOperatorId").append(options);
+                    					jQuery("#visaOperatorId option").remove();
+                                        jQuery("#visaOperatorId").append(options);
+                    				}
+                        	   }
+                    		 });
+                    	}
+    				</script>
+    				<div class="widget_title">
+    		        	<span class="ico_static_r"></span>
+    		        	<h3>操作信息</h3>
+    		        </div>
+    		        <div class="widget_content">
+    					<div class="control_group">
+    		              <label class="control_label"><span class="ico_must">*</span>线路操作员:</label>
+    		              <div class="controls">
+    		               <span class="form_item"><select name="lineOperatorId" id="lineOperatorId" class="text2 js_non_empty" placeholder="线路操作员">
+    							<option value="" selected="selected">请选择</option>
+    							
+    						</select></span>
+    		              </div>
+    		            </div>
+    					<div class="control_group">
+    		              <label class="control_label"><span class="ico_must">*</span>签证操作员:</label>
+    		              <div class="controls">
+    		               <span class="form_item"><select name="visaOperatorId" id="visaOperatorId" class="text2 js_non_empty" placeholder="签证操作员">
+    							<option value="" selected="selected">请选择</option>
+    							
+    						</select></span>
+    		              </div>
+    		            </div>  
+    				</div>
+				#end
 				
 		        <div class="widget_title">
 		        	<span class="ico_static_r"></span>
