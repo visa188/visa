@@ -35,4 +35,10 @@ public class StringUtil {
         result.append("新增订单，编号：").append(lineOrder.getOrderSeq());
         return result.toString();
     }
+
+    public static String generateDeleteOperLog(LineOrder lineOrder) {
+        StringBuffer result = new StringBuffer();
+        result.append("删除订单，编号：").append(lineOrder.getOrderSeq());
+        return result.toString();
+    }
 }

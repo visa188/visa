@@ -184,8 +184,16 @@ public class LineOrderController {
      * @return String
      */
     @RequestMapping
-    public String delete(int orderId, Integer page) {
+    public String delete(@ModelAttribute(Constant.SESSION_USER) User user, int orderId, Integer page) {
+        LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(orderId);
         lineOrderDao.deleteByPrimaryKey(orderId);
+        // 记录操作日志
+        OperateLog operateLog = new OperateLog();
+        operateLog.setUserId(user.getUserId());
+        operateLog.setRoleId(user.getRoleId());
+        operateLog.setOperateType(Constant.OPERATOR_TYPE_ADD);
+        operateLog.setOperateDes(StringUtil.generateDeleteOperLog(lineOrder));
+        operateLogDao.insert(operateLog);
         return "redirect:list.do?page=" + page;
     }
 
