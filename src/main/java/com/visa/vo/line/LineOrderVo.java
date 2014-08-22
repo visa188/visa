@@ -3,6 +3,7 @@ package com.visa.vo.line;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.visa.common.constant.LineSrviceEnumType;
 import com.visa.po.line.LineOrder;
 import com.visa.po.line.LinesSrvice;
 
@@ -12,23 +13,24 @@ public class LineOrderVo extends LineOrder {
     private String qz;
     private String jp;
     private String dj;
+    private String qt;
 
     public List<LinesSrvice> getLineOrderService() {
         List<LinesSrvice> serviceList = new ArrayList<LinesSrvice>();
         if (ld.startsWith("1")) {
-            LinesSrvice linesSrvice = new LinesSrvice(orderId, 1);
+            LinesSrvice linesSrvice = new LinesSrvice(orderId, LineSrviceEnumType.LD.getId());
             // 组团社派 1/ 起航假期派 2
             linesSrvice.setServiceItem1(ld.split("_")[1]);
             serviceList.add(linesSrvice);
         }
         if (qz.startsWith("1")) {
-            LinesSrvice linesSrvice = new LinesSrvice(orderId, 2);
+            LinesSrvice linesSrvice = new LinesSrvice(orderId, LineSrviceEnumType.QZ.getId());
             // 个签 1/ 团签 2
             linesSrvice.setServiceItem1(qz.split("_")[1]);
             serviceList.add(linesSrvice);
         }
         if (jp.startsWith("1")) {
-            LinesSrvice linesSrvice = new LinesSrvice(orderId, 3);
+            LinesSrvice linesSrvice = new LinesSrvice(orderId, LineSrviceEnumType.JP.getId());
             // 团队机票 1/ 散客机票 2
             linesSrvice.setServiceItem1(ld.split("_")[1]);
             serviceList.add(linesSrvice);
@@ -36,9 +38,9 @@ public class LineOrderVo extends LineOrder {
         if (dj.startsWith("1")) {
             String[] items = dj.split("_");
             // 41 地接 巴士 / 42 地接司机兼导游
-            int serviceType = 41;
+            int serviceType = LineSrviceEnumType.DJBS.getId();
             if ("b".equals(items[5])) {
-                serviceType = 42;
+                serviceType = LineSrviceEnumType.DJSJDY.getId();
             }
             LinesSrvice linesSrvice = new LinesSrvice(orderId, serviceType);
             if (!"#".equals(items[1])) {
@@ -65,6 +67,12 @@ public class LineOrderVo extends LineOrder {
             if (!"#".equals(items[9])) {
                 linesSrvice.setServiceItem8(items[9]); // 41 的导游的备注
             }
+            serviceList.add(linesSrvice);
+        }
+        if (qt.startsWith("1")) {
+            LinesSrvice linesSrvice = new LinesSrvice(orderId, LineSrviceEnumType.QT.getId());
+            //
+            linesSrvice.setServiceItem1(qt.split("_")[1]);
             serviceList.add(linesSrvice);
         }
         return serviceList;

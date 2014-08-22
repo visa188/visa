@@ -36,6 +36,12 @@ public class LineOrder {
      */
     public int nameListSize;
     /**
+     * 客人名单
+     * 
+     * @pdOid 5e14ffc9-fda7-4aec-b56a-a9f0c9c6cf38
+     */
+    public int nameList;
+    /**
      * 销售id
      * 
      * @pdOid 704cf255-fb37-4469-b283-ac94cabf63e9
@@ -172,6 +178,14 @@ public class LineOrder {
 
     public void setNameListSize(int nameListSize) {
         this.nameListSize = nameListSize;
+    }
+
+    public int getNameList() {
+        return nameList;
+    }
+
+    public void setNameList(int nameList) {
+        this.nameList = nameList;
     }
 
     public String getSalesmanId() {

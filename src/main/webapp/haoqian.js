@@ -486,6 +486,12 @@ $(function() {
 			}
 			$('#dj').val(djserv);
 			
+			var qtserv ='0';
+			if($('#qtserv').is(':checked')==true){
+				qtserv = '1_' + $('#qtbz').val();
+			}
+			$('#qt').val(qtserv);
+			
 		}
 		$("#nameList").val(result);
 	}
