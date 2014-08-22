@@ -10,7 +10,7 @@ public interface LinesServiceDao {
 
     int insert(LinesSrvice record);
 
-    List<LinesSrvice> selectAllLinesSrvice();
+    List<LinesSrvice> selectAllLinesSrvice(Integer orderId);
 
     LinesSrvice selectByPrimaryKey(Integer serviceId);
 
