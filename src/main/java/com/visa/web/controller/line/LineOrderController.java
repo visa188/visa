@@ -21,11 +21,14 @@ import com.visa.dao.UserDao;
 import com.visa.dao.line.LineCountryDao;
 import com.visa.dao.line.LineOrderDao;
 import com.visa.dao.line.LineProductDao;
+import com.visa.dao.line.LinesServiceDao;
 import com.visa.po.Country;
 import com.visa.po.User;
 import com.visa.po.line.LineOrder;
 import com.visa.po.line.LineProduct;
+import com.visa.po.line.LinesSrvice;
 import com.visa.vo.OrderSearchBean;
+import com.visa.vo.line.LineOrderVo;
 
 /**
  * @author LineOrder
@@ -40,6 +43,8 @@ public class LineOrderController {
     private LineCountryDao lineCountryDao;
     @Resource
     private LineProductDao lineProductDao;
+    @Resource
+    private LinesServiceDao linesServiceDao;
     @Resource
     private UserDao userDao;
     @Resource
@@ -91,7 +96,7 @@ public class LineOrderController {
      */
     @RequestMapping
     public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user,
-            @ModelAttribute("lineOrder") LineOrder lineOrder, ModelMap model) {
+            LineOrderVo lineOrder, ModelMap model) {
         int orderSeq = seqDao.select("lineOrder");
         String prefix = StringUtil.paddingZeroToLeft(String.valueOf(orderSeq), 6);
         lineOrder.setOrderSeq(prefix);
@@ -117,8 +122,10 @@ public class LineOrderController {
             }
         }
         lineOrderDao.insert(lineOrder);
+        for (LinesSrvice srvice : lineOrder.getLineOrderService()) {
+            linesServiceDao.insert(srvice);
+        }
         // 记录操作日志
-
         return "redirect:list.do?page=1";
     }
 

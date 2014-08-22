@@ -250,7 +250,7 @@ $(function() {
 		submitBtn.bind("click",function(e){
 			$(this).attr("disabled",true);
 			GLB.vari.submit_flag = true;
-			if($.inArray("line", $(thisForm).attr('class')) >=0 ){
+			if($(thisForm).attr('class').indexOf("line") >=0){
 				setClientValue(1);
 			}else{
 				setClientValue();
@@ -437,7 +437,54 @@ $(function() {
 			if(result&&result.length>0){
 				result=result.substring(0, result.length-1);
 			}
+			// line service
+			var ldserv ='0';
+			if($('#ldserv').is(':checked')==true){
+				ldserv = '1_' + $('#ldtype').val();
+			}
+			$('#ld').val(ldserv);
 			
+			var qzserv ='0';
+			if($('#qzserv').is(':checked')==true){
+				qzserv = '1_' + $('#qztype').val();
+			}
+			$('#qz').val(qzserv);
+			
+			var jpserv ='0';
+			if($('#jpserv').is(':checked')==true){
+				jpserv = '1_' + $('#jptype').val();
+			}
+			$('#jp').val(jpserv);
+			
+			var djserv ='0';
+			if($('#djserv').is(':checked')==true){
+				var djxing = $('#djxing').val();
+				var djfx = $('#djfx').val();
+				var djbz = $('#djbz').val();
+				var djtsjd = $('#djtsjd').val();
+				
+				djserv = '1_' + (djxing==''?'#':djxing);
+				djserv += '_' + (djfx==''?'#':djfx);
+				djserv += '_' + (djbz==''?'#':djbz);
+				djserv += '_' + (djtsjd==''?'#':djtsjd);
+				
+				if($('#djdyra').is(':checked')==true){
+					var djbs = $('#djbs').val();
+					var djbsbz = $('#djbsbz').val();
+					var djsfxydy = $('#djsfxydy').val();
+					var djsfxydybz = $('#djsfxydybz').val();
+					
+					djserv += '_a_'+ (djbs==''?'#':djbs);
+					djserv += '_' + (djbsbz==''?'#':djbsbz);
+					djserv += '_' + (djsfxydy==''?'#':djsfxydy);
+					djserv += '_' + (djsfxydybz==''?'#':djsfxydybz);
+				}else{
+					var djsjjdybz = $('#djsjjdybz').val();
+					djserv += '_b_'+ (djsjjdybz==''?'#':djsjjdybz);
+					djserv += '_#_#_#';
+				}
+			}
+			$('#dj').val(djserv);
 			
 		}
 		$("#nameList").val(result);

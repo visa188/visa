@@ -238,12 +238,33 @@
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>服务:</label>
                       <div class="controls">
-                       <span class="form_item"><input type="checkbox" name="ld" style="vertical-align: middle;"/> 领队服务 <select serv="ld" name="ldpai"><option value="1">组团社派</option><option value="2">启航假期派</option></select> 操作员:<select serv="ld" name="ldpai"><option value="1">日本</option></select></span>
-                       <span class="form_item"><input type="checkbox" name="qz" style="vertical-align: middle;"/> 签证服务 <select serv="qz" name="ldpai"><option value="1">个签</option><option value="2">团签</option></select> 签证员:<select serv="qz" name="ldpai"><option value="1">日本</option></select></span>
-                       <span class="form_item"><input type="checkbox" name="jp" style="vertical-align: middle;"/> 机票服务 <select serv="jp" name="ldpai"><option value="1">团队机票</option><option value="2">散客机票</option></select> 操作员:<select serv="jp" name="ldpai"><option value="1">日本</option></select></span>
-                       <span class="form_item"><input type="checkbox" name="dj" style="vertical-align: middle;"/> 地接服务  酒店标准:<input serv="dj" type="text" class="tb_text" name="tempDeposit" style="width:4.3%;"/>星,房型:<input serv="dj" type="text" class="tb_text" name="tempDeposit" style="width:12%;"/> 备注:<input serv="dj" type="text" class="tb_text" name="tempDeposit" style="width:12%;" /> 特殊景点:<input serv="dj" type="text" class="tb_text" name="tempDeposit" style="width:12%;"/> 操作员:<select serv="dj" name="ldpai"><option value="1">日本</option></select></span>
-                       <span class="form_item"><input type="radio" name="jpserv" style="vertical-align: middle;" checked/> 巴士: <input type="text" class="tb_text" name="tempDeposit" style="width:4.3%;"/> 备注:<input type="text" class="tb_text" name="tempDeposit" style="width:12%;" /> 导游:<select name="ldpai"><option value="1">需要</option><option value="2">不需要</option></select> 备注:<input type="text" class="tb_text" name="tempDeposit" style="width:12%;" /> <input type="radio" name="jpserv" style="vertical-align: middle;"/> 司机兼导游: 备注:<input type="text" class="tb_text" name="tempDeposit" style="width:12%;" /></span>
-                      </div>
+                            <div class="client_operate">
+                                <table cellpadding="0" cellspacing="0" class="client_table_data table_data">
+                                    <thead>
+                                        <tr>
+                                            <th>服务信息</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                       <input type="hidden" id="ld" name="ld" />
+                       <span class="form_item"><input type="checkbox" id="ldserv" style="vertical-align: middle;"/> 领队服务 <select id="ldtype"><option value="1">组团社派</option><option value="2">启航假期派</option></select> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       </td></tr><tr><td>
+                       <input type="hidden" id="qz" name="qz" />
+                       <span class="form_item"><input type="checkbox" id="qzserv" style="vertical-align: middle;"/> 签证服务 <select id="qztype"><option value="1">个签</option><option value="2">团签</option></select> 签证员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       </td></tr><tr><td>
+                       <input type="hidden" id="jp" name="jp" />
+                       <span class="form_item"><input type="checkbox" id="jpserv" style="vertical-align: middle;"/> 机票服务 <select id="jptype"><option value="1">团队机票</option><option value="2">散客机票</option></select> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       </td></tr><tr><td>
+                       <input type="hidden" id="dj" name="dj" />
+                       <span class="form_item"><input type="checkbox" id="djserv" style="vertical-align: middle;"/> 地接服务  酒店标准:<input type="text" class="tb_text" id="djxing" style="width:4.3%;"/>星,房型:<input type="text" class="tb_text" id="djfx" style="width:12%;"/> 备注:<input type="text" class="tb_text" id="djbz" style="width:12%;" /> 特殊景点:<input type="text" class="tb_text" id="djtsjd" style="width:12%;"/> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input type="radio" id="djdyra" name="djdy" style="vertical-align: middle;" checked/> 巴士: <input type="text" class="tb_text" id="djbs" style="width:4.3%;"/> 备注:<input type="text" class="tb_text" id="djbsbz" style="width:12%;" /> 导游:<select id="djsfxydy"><option value="1">需要</option><option value="2">不需要</option></select> 备注:<input type="text" class="tb_text" id="djsfxydybz" style="width:12%;" /> <input type="radio" id="djdyrb" name="djdy" style="vertical-align: middle;"/> 司机兼导游: 备注:<input type="text" class="tb_text" id="djsjjdybz" style="width:12%;" /></span>
+                       </td></tr>           
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                
                     </div>
                     
                     <div class="control_group">
