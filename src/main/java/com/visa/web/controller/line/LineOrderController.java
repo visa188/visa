@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.visa.common.constant.Constant;
 import com.visa.common.constant.LineRoleEnumType;
 import com.visa.common.util.PagingUtil;
+import com.visa.common.util.StringUtil;
+import com.visa.dao.SeqDao;
 import com.visa.dao.UserDao;
 import com.visa.dao.line.LineCountryDao;
 import com.visa.dao.line.LineOrderDao;
@@ -45,6 +47,8 @@ public class LineOrderController {
     private LinesServiceDao linesServiceDao;
     @Resource
     private UserDao userDao;
+    @Resource
+    private SeqDao seqDao;
 
     /**
      * 列出所有的订单
@@ -55,13 +59,13 @@ public class LineOrderController {
      * @param model model
      */
     @RequestMapping
-    public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page, ModelMap model,
-            @ModelAttribute OrderSearchBean bean) {
+    public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page,
+            ModelMap model, @ModelAttribute OrderSearchBean bean) {
         Map<String, Object> paraMap = new HashMap<String, Object>();
         // 记录总条数
         int recordCount = lineOrderDao.count(paraMap);
-        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount, page,
-                Constant.LINE_PAGE_OFFSET, model);
+        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount,
+                page, Constant.LINE_PAGE_OFFSET, model);
         paraMap.put("begin", recordRange[0]);
         paraMap.put("pageCount", Constant.LINE_PAGE_COUNT);
 
@@ -91,11 +95,16 @@ public class LineOrderController {
      * @return String
      */
     @RequestMapping
-    public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrder, ModelMap model) {
+    public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user,
+            LineOrderVo lineOrder, ModelMap model) {
+        int orderSeq = seqDao.select("lineOrder");
+        String prefix = StringUtil.paddingZeroToLeft(String.valueOf(orderSeq), 6);
+        lineOrder.setOrderSeq(prefix);
         // 散拼团订单时，校验该产品下所有订单客人总量是否大于机位数
         if (lineOrder.getType() == 2) {
             LineProduct product = lineProductDao.selectByPrimaryKey(lineOrder.getLineProductId());
-            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(lineOrder.getLineProductId());
+            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(lineOrder
+                    .getLineProductId());
             int count = 0;
             for (LineOrder order : lineOrderList) {
                 count += order.getNameListSize();
@@ -116,6 +125,7 @@ public class LineOrderController {
         for (LinesSrvice srvice : lineOrder.getLineOrderService()) {
             linesServiceDao.insert(srvice);
         }
+        // 记录操作日志
         return "redirect:list.do?page=1";
     }
 
