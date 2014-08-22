@@ -33,7 +33,7 @@ public enum LineSrviceEnumType {
     /**
      * 其他服务
      */
-    QT(3, "机票服务");
+    QT(5, "其他服务");
 
     private int id;
     private String name;

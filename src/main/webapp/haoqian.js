@@ -447,12 +447,20 @@ $(function() {
 			var qzserv ='0';
 			if($('#qzserv').is(':checked')==true){
 				qzserv = '1_' + $('#qztype').val();
+				var qzysdj = $('#qzysdj').val();
+				var qzyshj = $('#qzyshj').val();
+				qzserv += '_' + (qzysdj==''?'#':qzysdj);
+				qzserv += '_' + (qzyshj==''?'#':qzyshj);
 			}
 			$('#qz').val(qzserv);
 			
 			var jpserv ='0';
 			if($('#jpserv').is(':checked')==true){
 				jpserv = '1_' + $('#jptype').val();
+				var jpysdj = $('#jpysdj').val();
+				var jpyshj = $('#jpyshj').val();
+				jpserv += '_' + (jpysdj==''?'#':jpysdj);
+				jpserv += '_' + (jpyshj==''?'#':jpyshj);
 			}
 			$('#jp').val(jpserv);
 			
@@ -483,12 +491,20 @@ $(function() {
 					djserv += '_b_'+ (djsjjdybz==''?'#':djsjjdybz);
 					djserv += '_#_#_#';
 				}
+				var djysdj = $('#djysdj').val();
+				var djyshj = $('#djyshj').val();
+				djserv += '_' + (djysdj==''?'#':djysdj);
+				djserv += '_' + (djyshj==''?'#':djyshj);
 			}
 			$('#dj').val(djserv);
 			
 			var qtserv ='0';
 			if($('#qtserv').is(':checked')==true){
 				qtserv = '1_' + $('#qtbz').val();
+				var qtysdj = $('#qtysdj').val();
+				var qtyshj = $('#qtyshj').val();
+				qtserv += '_' + (qtysdj==''?'#':qtysdj);
+				qtserv += '_' + (qtyshj==''?'#':qtyshj);
 			}
 			$('#qt').val(qtserv);
 			

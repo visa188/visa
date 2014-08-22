@@ -1,5 +1,6 @@
 package com.visa.vo.line;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,14 +26,28 @@ public class LineOrderVo extends LineOrder {
         }
         if (qz.startsWith("1")) {
             LinesSrvice linesSrvice = new LinesSrvice(orderId, LineSrviceEnumType.QZ.getId());
+            String[] items = qz.split("_");
             // 个签 1/ 团签 2
-            linesSrvice.setServiceItem1(qz.split("_")[1]);
+            linesSrvice.setServiceItem1(items[1]);
+            if (!"#".equals(items[2])) {
+                linesSrvice.setServicePrice(new BigDecimal(items[2])); // 单价
+            }
+            if (!"#".equals(items[3])) {
+                linesSrvice.setPriceSum(new BigDecimal(items[3])); // 合计
+            }
             serviceList.add(linesSrvice);
         }
         if (jp.startsWith("1")) {
             LinesSrvice linesSrvice = new LinesSrvice(orderId, LineSrviceEnumType.JP.getId());
+            String[] items = jp.split("_");
             // 团队机票 1/ 散客机票 2
-            linesSrvice.setServiceItem1(ld.split("_")[1]);
+            linesSrvice.setServiceItem1(items[1]);
+            if (!"#".equals(items[2])) {
+                linesSrvice.setServicePrice(new BigDecimal(items[2])); // 单价
+            }
+            if (!"#".equals(items[3])) {
+                linesSrvice.setPriceSum(new BigDecimal(items[3])); // 合计
+            }
             serviceList.add(linesSrvice);
         }
         if (dj.startsWith("1")) {
@@ -67,12 +82,24 @@ public class LineOrderVo extends LineOrder {
             if (!"#".equals(items[9])) {
                 linesSrvice.setServiceItem8(items[9]); // 41 的导游的备注
             }
+            if (!"#".equals(items[10])) {
+                linesSrvice.setServicePrice(new BigDecimal(items[10])); // 单价
+            }
+            if (!"#".equals(items[11])) {
+                linesSrvice.setPriceSum(new BigDecimal(items[11])); // 合计
+            }
             serviceList.add(linesSrvice);
         }
         if (qt.startsWith("1")) {
             LinesSrvice linesSrvice = new LinesSrvice(orderId, LineSrviceEnumType.QT.getId());
-            //
-            linesSrvice.setServiceItem1(qt.split("_")[1]);
+            String[] items = qt.split("_");
+            linesSrvice.setServiceItem1(items[1]);
+            if (!"#".equals(items[2])) {
+                linesSrvice.setServicePrice(new BigDecimal(items[2])); // 单价
+            }
+            if (!"#".equals(items[3])) {
+                linesSrvice.setPriceSum(new BigDecimal(items[3])); // 合计
+            }
             serviceList.add(linesSrvice);
         }
         return serviceList;
@@ -108,6 +135,14 @@ public class LineOrderVo extends LineOrder {
 
     public void setDj(String dj) {
         this.dj = dj;
+    }
+
+    public String getQt() {
+        return qt;
+    }
+
+    public void setQt(String qt) {
+        this.qt = qt;
     }
 
 }
