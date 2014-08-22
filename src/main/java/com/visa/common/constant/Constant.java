@@ -50,4 +50,8 @@ public final class Constant {
     public static final String ORDER_PREFIX_BJ = "BJ";
 
     public static final int SUPER_ADMIN_ROLE_ID = 0;
+
+    public static final int OPERATOR_TYPE_ADD = 1;
+
+    public static final int OPERATOR_TYPE_UPDATE = 2;
 }

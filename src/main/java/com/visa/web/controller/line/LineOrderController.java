@@ -22,11 +22,13 @@ import com.visa.dao.line.LineCountryDao;
 import com.visa.dao.line.LineOrderDao;
 import com.visa.dao.line.LineProductDao;
 import com.visa.dao.line.LinesServiceDao;
+import com.visa.dao.line.OperateLogDao;
 import com.visa.po.Country;
 import com.visa.po.User;
 import com.visa.po.line.LineOrder;
 import com.visa.po.line.LineProduct;
 import com.visa.po.line.LinesSrvice;
+import com.visa.po.line.OperateLog;
 import com.visa.vo.OrderSearchBean;
 import com.visa.vo.line.LineOrderVo;
 
@@ -49,6 +51,8 @@ public class LineOrderController {
     private UserDao userDao;
     @Resource
     private SeqDao seqDao;
+    @Resource
+    private OperateLogDao operateLogDao;
 
     /**
      * 列出所有的订单
@@ -126,6 +130,12 @@ public class LineOrderController {
             linesServiceDao.insert(srvice);
         }
         // 记录操作日志
+        OperateLog operateLog = new OperateLog();
+        operateLog.setUserId(user.getUserId());
+        operateLog.setRoleId(user.getRoleId());
+        operateLog.setOperateType(Constant.OPERATOR_TYPE_ADD);
+        operateLog.setOperateDes(StringUtil.generateAddOperLog(lineOrder));
+        operateLogDao.insert(operateLog);
         return "redirect:list.do?page=1";
     }
 
@@ -150,7 +160,16 @@ public class LineOrderController {
      * @return String
      */
     @RequestMapping
-    public String update(User user, Integer page) {
+    public String update(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrderVo,
+            Integer page) {
+        LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(lineOrderVo.getOrderId());
+        // 记录操作日志
+        OperateLog operateLog = new OperateLog();
+        operateLog.setUserId(user.getUserId());
+        operateLog.setRoleId(user.getRoleId());
+        operateLog.setOperateType(Constant.OPERATOR_TYPE_UPDATE);
+        operateLog.setOperateDes(StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder));
+        operateLogDao.insert(operateLog);
         return "redirect:list.do?page=" + page;
     }
 
