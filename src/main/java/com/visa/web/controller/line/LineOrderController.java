@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.visa.common.constant.Constant;
 import com.visa.common.constant.LineRoleEnumType;
 import com.visa.common.util.PagingUtil;
+import com.visa.common.util.StringUtil;
+import com.visa.dao.SeqDao;
 import com.visa.dao.UserDao;
 import com.visa.dao.line.LineCountryDao;
 import com.visa.dao.line.LineOrderDao;
@@ -40,6 +42,8 @@ public class LineOrderController {
     private LineProductDao lineProductDao;
     @Resource
     private UserDao userDao;
+    @Resource
+    private SeqDao seqDao;
 
     /**
      * 列出所有的订单
@@ -88,6 +92,9 @@ public class LineOrderController {
     @RequestMapping
     public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user,
             @ModelAttribute("lineOrder") LineOrder lineOrder, ModelMap model) {
+        int orderSeq = seqDao.select("lineOrder");
+        String prefix = StringUtil.paddingZeroToLeft(String.valueOf(orderSeq), 6);
+        lineOrder.setOrderSeq(prefix);
         // 散拼团订单时，校验该产品下所有订单客人总量是否大于机位数
         if (lineOrder.getType() == 2) {
             LineProduct product = lineProductDao.selectByPrimaryKey(lineOrder.getLineProductId());
@@ -110,6 +117,8 @@ public class LineOrderController {
             }
         }
         lineOrderDao.insert(lineOrder);
+        // 记录操作日志
+
         return "redirect:list.do?page=1";
     }
 

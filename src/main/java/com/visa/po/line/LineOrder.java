@@ -121,8 +121,18 @@ public class LineOrder {
      * @pdOid 039a9580-614d-44ec-89e9-c2ffcc97d52e
      */
     public int status;
+
+    public String orderSeq;
     /** @pdOid ac5cabc4-f167-49b7-9590-f036f58a74df */
     public Date postTime;
+
+    public String getOrderSeq() {
+        return orderSeq;
+    }
+
+    public void setOrderSeq(String orderSeq) {
+        this.orderSeq = orderSeq;
+    }
 
     public Integer getLineProductId() {
         return lineProductId;
