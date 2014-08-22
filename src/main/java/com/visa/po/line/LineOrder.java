@@ -40,7 +40,7 @@ public class LineOrder {
      * 
      * @pdOid 5e14ffc9-fda7-4aec-b56a-a9f0c9c6cf38
      */
-    public int nameList;
+    public String nameList;
     /**
      * 销售id
      * 
@@ -180,11 +180,11 @@ public class LineOrder {
         this.nameListSize = nameListSize;
     }
 
-    public int getNameList() {
+    public String getNameList() {
         return nameList;
     }
 
-    public void setNameList(int nameList) {
+    public void setNameList(String nameList) {
         this.nameList = nameList;
     }
 
