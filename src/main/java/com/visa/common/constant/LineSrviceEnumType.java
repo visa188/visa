@@ -29,7 +29,11 @@ public enum LineSrviceEnumType {
     /**
      * 地接服务-司机兼导游
      */
-    DJSJDY(42, "地接服务");
+    DJSJDY(42, "地接服务"),
+    /**
+     * 其他服务
+     */
+    QT(3, "机票服务");
 
     private int id;
     private String name;
