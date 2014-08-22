@@ -1,8 +1,11 @@
 package com.visa.common.util;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 
 import com.visa.po.line.LineOrder;
+import com.visa.po.line.LinesSrvice;
 import com.visa.vo.line.LineOrderVo;
 
 public class StringUtil {
@@ -26,7 +29,8 @@ public class StringUtil {
         return result.toString();
     }
 
-    public static String generateUpdateOperLog(LineOrderVo lineOrder, LineOrder lineOrderDB) {
+    public static String generateUpdateOperLog(LineOrderVo lineOrder, LineOrder lineOrderDB,
+            List<LinesSrvice> serviceListDB) {
         StringBuffer result = new StringBuffer();
         result.append("新增订单，编号：").append(lineOrder.getOrderSeq());
         return result.toString();

@@ -163,12 +163,15 @@ public class LineOrderController {
     public String update(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrderVo,
             Integer page) {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(lineOrderVo.getOrderId());
+        List<LinesSrvice> serviceListDB = linesServiceDao.selectAllLinesSrvice(lineOrderVo
+                .getOrderId());
         // 记录操作日志
         OperateLog operateLog = new OperateLog();
         operateLog.setUserId(user.getUserId());
         operateLog.setRoleId(user.getRoleId());
         operateLog.setOperateType(Constant.OPERATOR_TYPE_UPDATE);
-        operateLog.setOperateDes(StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder));
+        operateLog.setOperateDes(StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder,
+                serviceListDB));
         operateLogDao.insert(operateLog);
         return "redirect:list.do?page=" + page;
     }

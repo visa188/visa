@@ -4,6 +4,7 @@
   <select id="selectAllLinesSrvice" resultType="LinesSrvice">
     select * 
     from linessrvice
+    where orderId= #{orderId,jdbcType=INTEGER}
   </select>
   
   <select id="selectByPrimaryKey" resultType="LinesSrvice">
