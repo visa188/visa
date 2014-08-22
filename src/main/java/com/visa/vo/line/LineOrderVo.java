@@ -41,15 +41,30 @@ public class LineOrderVo extends LineOrder {
                 serviceType = 42;
             }
             LinesSrvice linesSrvice = new LinesSrvice(orderId, serviceType);
-
-            linesSrvice.setServiceItem1(items[1]); // 酒店星级
-            linesSrvice.setServiceItem2(items[2]); // 房型
-            linesSrvice.setServiceItem3(items[3]); // 备注
-            linesSrvice.setServiceItem4(items[4]); // 特殊景点
-            linesSrvice.setServiceItem5(items[6]); // 41 巴士 / 42 备注
-            linesSrvice.setServiceItem6(items[7]); // 41 的备注
-            linesSrvice.setServiceItem7(items[8]); // 41 的导游
-            linesSrvice.setServiceItem8(items[9]); // 41 的导游的备注
+            if (!"#".equals(items[1])) {
+                linesSrvice.setServiceItem1(items[1]); // 酒店星级
+            }
+            if (!"#".equals(items[2])) {
+                linesSrvice.setServiceItem2(items[2]); // 房型
+            }
+            if (!"#".equals(items[3])) {
+                linesSrvice.setServiceItem3(items[3]); // 备注
+            }
+            if (!"#".equals(items[4])) {
+                linesSrvice.setServiceItem4(items[4]); // 特殊景点
+            }
+            if (!"#".equals(items[6])) {
+                linesSrvice.setServiceItem5(items[6]); // 41 巴士 / 42 备注
+            }
+            if (!"#".equals(items[7])) {
+                linesSrvice.setServiceItem6(items[7]); // 41 的备注
+            }
+            if (!"#".equals(items[8])) {
+                linesSrvice.setServiceItem7(items[8]); // 41 的导游
+            }
+            if (!"#".equals(items[9])) {
+                linesSrvice.setServiceItem8(items[9]); // 41 的导游的备注
+            }
             serviceList.add(linesSrvice);
         }
         return serviceList;

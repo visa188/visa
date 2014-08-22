@@ -458,18 +458,30 @@ $(function() {
 			
 			var djserv ='0';
 			if($('#djserv').is(':checked')==true){
-				djserv = '1_' + $('#djxing').val();
-				djserv += '_' + $('#djfx').val();
-				djserv += '_' + $('#djbz').val();
-				djserv += '_' + $('#djtsjd').val();
+				var djxing = $('#djxing').val();
+				var djfx = $('#djfx').val();
+				var djbz = $('#djbz').val();
+				var djtsjd = $('#djtsjd').val();
+				
+				djserv = '1_' + (djxing==''?'#':djxing);
+				djserv += '_' + (djfx==''?'#':djfx);
+				djserv += '_' + (djbz==''?'#':djbz);
+				djserv += '_' + (djtsjd==''?'#':djtsjd);
 				
 				if($('#djdyra').is(':checked')==true){
-					djserv += '_a_'+ $('#djbs').val();
-					djserv += '_' + $('#djbsbz').val();
-					djserv += '_' + $('#djsfxydy').val();
-					djserv += '_' + $('#djsfxydybz').val();
+					var djbs = $('#djbs').val();
+					var djbsbz = $('#djbsbz').val();
+					var djsfxydy = $('#djsfxydy').val();
+					var djsfxydybz = $('#djsfxydybz').val();
+					
+					djserv += '_a_'+ (djbs==''?'#':djbs);
+					djserv += '_' + (djbsbz==''?'#':djbsbz);
+					djserv += '_' + (djsfxydy==''?'#':djsfxydy);
+					djserv += '_' + (djsfxydybz==''?'#':djsfxydybz);
 				}else{
-					djserv += '_b_'+ $('#djsjjdybz').val();
+					var djsjjdybz = $('#djsjjdybz').val();
+					djserv += '_b_'+ (djsjjdybz==''?'#':djsjjdybz);
+					djserv += '_#_#_#';
 				}
 			}
 			$('#dj').val(djserv);
