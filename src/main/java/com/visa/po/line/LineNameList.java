@@ -2,6 +2,8 @@ package com.visa.po.line;
 
 import java.util.Date;
 
+import com.visa.common.util.FieldDes;
+
 /***********************************************************************
  * Module:  LineNameList.java
  * Author:  bjyrwang
@@ -79,6 +81,7 @@ public class LineNameList {
         this.id = id;
     }
 
+    @FieldDes(fieldDes = "客户名称")
     public String getName() {
         return name;
     }
@@ -87,6 +90,7 @@ public class LineNameList {
         this.name = name;
     }
 
+    @FieldDes(fieldDes = "客户性别")
     public int getSex() {
         return sex;
     }
@@ -95,6 +99,7 @@ public class LineNameList {
         this.sex = sex;
     }
 
+    @FieldDes(fieldDes = "客户类型")
     public int getAgeType() {
         return ageType;
     }
@@ -103,6 +108,7 @@ public class LineNameList {
         this.ageType = ageType;
     }
 
+    @FieldDes(fieldDes = "押金")
     public String getDeposit() {
         return deposit;
     }
@@ -111,6 +117,7 @@ public class LineNameList {
         this.deposit = deposit;
     }
 
+    @FieldDes(fieldDes = "资料")
     public String getDatum() {
         return datum;
     }
@@ -119,6 +126,7 @@ public class LineNameList {
         this.datum = datum;
     }
 
+    @FieldDes(fieldDes = "房间数")
     public int getRoom() {
         return room;
     }
@@ -127,6 +135,7 @@ public class LineNameList {
         this.room = room;
     }
 
+    @FieldDes(fieldDes = "备注")
     public String getComment() {
         return comment;
     }
