@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.visa.common.constant.LineSrviceEnumType;
+import com.visa.common.util.FieldDes;
 
 /** @pdOid 7eb4a52d-c3f6-47d8-8256-7886c71d4421 */
 public class LinesSrvice {
@@ -234,6 +235,7 @@ public class LinesSrvice {
         this.serviceItem8 = serviceItem8;
     }
 
+    @FieldDes(fieldDes = "合计")
     public BigDecimal getPriceSum() {
         return priceSum;
     }
@@ -242,6 +244,7 @@ public class LinesSrvice {
         this.priceSum = priceSum;
     }
 
+    @FieldDes(fieldDes = "已付金额")
     public BigDecimal getAlreadyPaid() {
         return alreadyPaid;
     }
@@ -250,6 +253,7 @@ public class LinesSrvice {
         this.alreadyPaid = alreadyPaid;
     }
 
+    @FieldDes(fieldDes = "未付金额")
     public BigDecimal getNeedPaid() {
         return needPaid;
     }
@@ -258,6 +262,7 @@ public class LinesSrvice {
         this.needPaid = needPaid;
     }
 
+    @FieldDes(fieldDes = "付款银行")
     public String getPaidBank() {
         return paidBank;
     }
@@ -266,6 +271,7 @@ public class LinesSrvice {
         this.paidBank = paidBank;
     }
 
+    @FieldDes(fieldDes = "付款日期")
     public Date getPaidDate() {
         return paidDate;
     }
@@ -274,6 +280,7 @@ public class LinesSrvice {
         this.paidDate = paidDate;
     }
 
+    @FieldDes(fieldDes = "已收金额")
     public BigDecimal getAlreadyGot() {
         return alreadyGot;
     }
@@ -282,6 +289,7 @@ public class LinesSrvice {
         this.alreadyGot = alreadyGot;
     }
 
+    @FieldDes(fieldDes = "未收金额")
     public BigDecimal getNeedGot() {
         return needGot;
     }
@@ -290,6 +298,7 @@ public class LinesSrvice {
         this.needGot = needGot;
     }
 
+    @FieldDes(fieldDes = "收款银行")
     public String getGotBank() {
         return gotBank;
     }
@@ -298,6 +307,7 @@ public class LinesSrvice {
         this.gotBank = gotBank;
     }
 
+    @FieldDes(fieldDes = "收款日期")
     public Date getGotDate() {
         return gotDate;
     }
@@ -306,6 +316,7 @@ public class LinesSrvice {
         this.gotDate = gotDate;
     }
 
+    @FieldDes(fieldDes = "费用备注")
     public String getFeeComment() {
         return feeComment;
     }

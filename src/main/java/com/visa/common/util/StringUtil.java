@@ -67,8 +67,8 @@ public class StringUtil {
                 fieldDes = myAnnotation.fieldDes();
 
                 if ("java.lang.String".equals(rtnTypeName)) {
-                    String str1 = (String) mth.invoke(o);
-                    String str2 = (String) mth.invoke(db);
+                    String str1 = (String) mth.invoke(db);
+                    String str2 = (String) mth.invoke(o);
 
                     if (str1 != null && str2 != null && !str1.equals(str2)) {
                         result += "将" + fieldDes + "由\"" + str1 + "\"修改为\"" + str2 + "\"";
