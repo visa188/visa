@@ -3,6 +3,8 @@ package com.visa.po.line;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.visa.common.util.FieldDes;
+
 /***********************************************************************
  * Module:  LineOrder.java
  * Author:  bjyrwang
@@ -140,6 +142,7 @@ public class LineOrder {
         this.orderSeq = orderSeq;
     }
 
+    @FieldDes(fieldDes = "线路产品")
     public Integer getLineProductId() {
         return lineProductId;
     }
@@ -156,6 +159,7 @@ public class LineOrder {
         this.orderId = orderId;
     }
 
+    @FieldDes(fieldDes = "下单日期")
     public java.util.Date getOrderDate() {
         return orderDate;
     }
@@ -164,6 +168,7 @@ public class LineOrder {
         this.orderDate = orderDate;
     }
 
+    @FieldDes(fieldDes = "订单类型")
     public int getType() {
         return type;
     }
@@ -172,6 +177,7 @@ public class LineOrder {
         this.type = type;
     }
 
+    @FieldDes(fieldDes = "客人数量")
     public int getNameListSize() {
         return nameListSize;
     }
@@ -196,6 +202,7 @@ public class LineOrder {
         this.salesmanId = salesmanId;
     }
 
+    @FieldDes(fieldDes = "线路操作员")
     public String getLineOperatorId() {
         return lineOperatorId;
     }
@@ -204,6 +211,7 @@ public class LineOrder {
         this.lineOperatorId = lineOperatorId;
     }
 
+    @FieldDes(fieldDes = "签证操作员")
     public String getVisaOperatorId() {
         return visaOperatorId;
     }
@@ -212,6 +220,7 @@ public class LineOrder {
         this.visaOperatorId = visaOperatorId;
     }
 
+    @FieldDes(fieldDes = "组团社")
     public String getTravelAgency() {
         return travelAgency;
     }
@@ -220,6 +229,7 @@ public class LineOrder {
         this.travelAgency = travelAgency;
     }
 
+    @FieldDes(fieldDes = "联系人")
     public String getContact() {
         return contact;
     }
@@ -228,6 +238,7 @@ public class LineOrder {
         this.contact = contact;
     }
 
+    @FieldDes(fieldDes = "联系方式")
     public String getContactNo() {
         return contactNo;
     }
@@ -236,6 +247,7 @@ public class LineOrder {
         this.contactNo = contactNo;
     }
 
+    @FieldDes(fieldDes = "线路国家")
     public String getLineCountryId() {
         return lineCountryId;
     }
@@ -248,6 +260,7 @@ public class LineOrder {
         return startDate;
     }
 
+    @FieldDes(fieldDes = "出发日期")
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
@@ -256,6 +269,7 @@ public class LineOrder {
         return endDate;
     }
 
+    @FieldDes(fieldDes = "归国日期")
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
@@ -264,6 +278,7 @@ public class LineOrder {
         return travelInfo;
     }
 
+    @FieldDes(fieldDes = "行程简介")
     public void setTravelInfo(String travelInfo) {
         this.travelInfo = travelInfo;
     }
@@ -276,6 +291,7 @@ public class LineOrder {
         this.travelInfoFileUrl = travelInfoFileUrl;
     }
 
+    @FieldDes(fieldDes = "航空公司")
     public int getAircorpId() {
         return aircorpId;
     }
@@ -284,6 +300,7 @@ public class LineOrder {
         this.aircorpId = aircorpId;
     }
 
+    @FieldDes(fieldDes = "团费")
     public BigDecimal getPrice() {
         return price;
     }
@@ -292,6 +309,7 @@ public class LineOrder {
         this.price = price;
     }
 
+    @FieldDes(fieldDes = "订单状态")
     public int getStatus() {
         return status;
     }
@@ -300,6 +318,7 @@ public class LineOrder {
         this.status = status;
     }
 
+    @FieldDes(fieldDes = "特殊说明")
     public String getSpecialComment() {
         return specialComment;
     }
