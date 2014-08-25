@@ -367,7 +367,18 @@
 		      </div>
 				<div class="form_actions">
 					<button type="reset" class="btn btn_reset">重置</button>
-	              	<button type="submit" class="btn btn_save">保存</button>
+                    <input type="hidden" id="status" name="status" value="0"/>
+	              	<button type="button" class="btn btn_save" name="bc">保存</button>
+	              	<button type="button" class="btn btn_save" name="tj">提交</button>
+	              	<script>
+                        jQuery('.btn_save').click(function(){
+                            var nameListSize = jQuery('#nameListSize').val();
+                            if('tj'==jQuery(this).attr('name')){
+                                jQuery('#status').val('8');                                
+                            }
+                            jQuery(".hq_form")[0].submit();
+                        });
+                    </script>
 	            </div>			      
 		  	</form>
 		</div>
