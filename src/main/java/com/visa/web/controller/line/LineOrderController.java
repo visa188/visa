@@ -104,6 +104,7 @@ public class LineOrderController {
         int orderSeq = seqDao.select("lineOrder");
         String prefix = StringUtil.paddingZeroToLeft(String.valueOf(orderSeq), 6);
         lineOrder.setOrderSeq(prefix);
+        lineOrder.setSalesmanId(user.getUserId());
         // 散拼团订单时，校验该产品下所有订单客人总量是否大于机位数
         if (lineOrder.getType() == 2) {
             LineProduct product = lineProductDao.selectByPrimaryKey(lineOrder.getLineProductId());

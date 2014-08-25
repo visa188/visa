@@ -223,7 +223,7 @@
                                                                                                                                 资料:<input type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>
                                                                                                                                 房间数:<input type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>
                                                                                                                                 备注:<input type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
-                                                <span name="delName" class="client_delete" title="删除行">-</span>
+                                      <span name="delName" class="client_delete" title="删除行" style="margin-left:5%">-</span>
                                             </td>
                                         </tr>           
                                     </tbody>
@@ -288,7 +288,7 @@
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>特殊说明:</label>
                       <div class="controls">
-                       <span class="form_item"><input name="tssm" id="tssm" type="text" class="text1" maxlength="8" size="8" /></span>
+                       <span class="form_item"><input name="specialComment" id="specialComment" type="text" class="text1" maxlength="8" size="8" /></span>
                       </div>
                     </div>
                 </div>	
