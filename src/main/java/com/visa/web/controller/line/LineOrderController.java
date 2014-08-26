@@ -16,15 +16,18 @@ import com.visa.common.constant.Constant;
 import com.visa.common.constant.LineRoleEnumType;
 import com.visa.common.util.PagingUtil;
 import com.visa.common.util.StringUtil;
+import com.visa.common.util.VisaUtil;
 import com.visa.dao.SeqDao;
 import com.visa.dao.UserDao;
 import com.visa.dao.line.LineCountryDao;
+import com.visa.dao.line.LineNameListDao;
 import com.visa.dao.line.LineOrderDao;
 import com.visa.dao.line.LineProductDao;
 import com.visa.dao.line.LinesServiceDao;
 import com.visa.dao.line.OperateLogDao;
 import com.visa.po.Country;
 import com.visa.po.User;
+import com.visa.po.line.LineNameList;
 import com.visa.po.line.LineOrder;
 import com.visa.po.line.LineProduct;
 import com.visa.po.line.LinesSrvice;
@@ -47,6 +50,8 @@ public class LineOrderController {
     private LineProductDao lineProductDao;
     @Resource
     private LinesServiceDao linesServiceDao;
+    @Resource
+    private LineNameListDao lineNameListDao;
     @Resource
     private UserDao userDao;
     @Resource
@@ -147,7 +152,7 @@ public class LineOrderController {
      * @param model model
      */
     @RequestMapping
-    public void edit(String userId, Integer page, ModelMap model) {
+    public void edit(Integer orderId, Integer page, ModelMap model) {
         List<User> operatorList = userDao.selectByRoleId(LineRoleEnumType.OPERATOR.getId());
         model.put("operatorList", operatorList);
     }
@@ -163,15 +168,17 @@ public class LineOrderController {
     public String update(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrderVo,
             Integer page) {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(lineOrderVo.getOrderId());
-        List<LinesSrvice> serviceListDB = linesServiceDao.selectAllLinesSrvice(lineOrderVo
-                .getOrderId());
+        Map<Integer, LinesSrvice> serviceListDB = VisaUtil.dealServiceList(linesServiceDao
+                .selectAllLinesSrvice(lineOrderVo.getOrderId()));
+        Map<Integer, LineNameList> nameListDB = VisaUtil.dealNameList(lineNameListDao
+                .selectAllLineNameList(lineOrderVo.getOrderId()));
         // 记录操作日志
         OperateLog operateLog = new OperateLog();
         operateLog.setUserId(user.getUserId());
         operateLog.setRoleId(user.getRoleId());
         operateLog.setOperateType(Constant.OPERATOR_TYPE_UPDATE);
         operateLog.setOperateDes(StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder,
-                serviceListDB));
+                serviceListDB, nameListDB));
         operateLogDao.insert(operateLog);
         return "redirect:list.do?page=" + page;
     }
