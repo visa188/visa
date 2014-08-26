@@ -1,6 +1,7 @@
 package com.visa.web.controller.line;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.visa.common.constant.Constant;
-import com.visa.common.constant.LineRoleEnumType;
 import com.visa.common.util.PagingUtil;
 import com.visa.common.util.StringUtil;
 import com.visa.common.util.VisaUtil;
@@ -68,13 +71,13 @@ public class LineOrderController {
      * @param model model
      */
     @RequestMapping
-    public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page,
-            ModelMap model, @ModelAttribute OrderSearchBean bean) {
+    public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page, ModelMap model,
+            @ModelAttribute OrderSearchBean bean) {
         Map<String, Object> paraMap = new HashMap<String, Object>();
         // 记录总条数
         int recordCount = lineOrderDao.count(paraMap);
-        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount,
-                page, Constant.LINE_PAGE_OFFSET, model);
+        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount, page,
+                Constant.LINE_PAGE_OFFSET, model);
         paraMap.put("begin", recordRange[0]);
         paraMap.put("pageCount", Constant.LINE_PAGE_COUNT);
 
@@ -104,16 +107,15 @@ public class LineOrderController {
      * @return String
      */
     @RequestMapping
-    public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user,
-            LineOrderVo lineOrder, ModelMap model) {
+    public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrder, ModelMap model) {
         int orderSeq = seqDao.select("lineOrder");
         String prefix = StringUtil.paddingZeroToLeft(String.valueOf(orderSeq), 6);
         lineOrder.setOrderSeq(prefix);
+        lineOrder.setSalesmanId(user.getUserId());
         // 散拼团订单时，校验该产品下所有订单客人总量是否大于机位数
         if (lineOrder.getType() == 2) {
             LineProduct product = lineProductDao.selectByPrimaryKey(lineOrder.getLineProductId());
-            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(lineOrder
-                    .getLineProductId());
+            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(lineOrder.getLineProductId());
             int count = 0;
             for (LineOrder order : lineOrderList) {
                 count += order.getNameListSize();
@@ -152,9 +154,37 @@ public class LineOrderController {
      * @param model model
      */
     @RequestMapping
-    public void edit(Integer orderId, Integer page, ModelMap model) {
-        List<User> operatorList = userDao.selectByRoleId(LineRoleEnumType.OPERATOR.getId());
-        model.put("operatorList", operatorList);
+    public void edit(@ModelAttribute(Constant.SESSION_USER) User user, Integer orderId, Integer page, ModelMap model) {
+        LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(orderId);
+        List<LinesSrvice> lineServiceList = linesServiceDao.selectAllLinesSrvice(orderId);
+        List<Country> countryList = lineCountryDao.selectAllCountry();
+        List<LineProduct> lineProductList = lineProductDao.selectAllLineProduct();
+        model.put("lineOrder", lineOrder);
+        if (lineOrder.getNameList() != null) {
+            List<Map<String, String>> customList = Lists.newArrayList();
+            String[] customArray = lineOrder.getNameList().split(",");
+            for (String customStr : customArray) {
+                Iterator<String> it = Splitter.on("_").split(customStr).iterator();
+                if (!it.hasNext()) {
+                    continue;
+                }
+                Map<String, String> custom = Maps.newHashMap();
+                if (it.hasNext()) {
+                    custom.put("name", it.next());
+                }
+                if (it.hasNext()) {
+                    custom.put("contact", it.next());
+                }
+                if (it.hasNext()) {
+                    custom.put("addr", it.next());
+                }
+                customList.add(custom);
+            }
+            model.put("customList", customList);
+        }
+        model.put("lineServiceList", lineServiceList);
+        model.put("lineProductList", lineProductList);
+        model.put("countryList", countryList);
     }
 
     /**
@@ -165,8 +195,7 @@ public class LineOrderController {
      * @return String
      */
     @RequestMapping
-    public String update(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrderVo,
-            Integer page) {
+    public String update(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrderVo, Integer page) {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(lineOrderVo.getOrderId());
         Map<Integer, LinesSrvice> serviceListDB = VisaUtil.dealServiceList(linesServiceDao
                 .selectAllLinesSrvice(lineOrderVo.getOrderId()));
