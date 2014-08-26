@@ -432,7 +432,13 @@ $(function() {
 			}
 			
 			$(names).each(function(i){
-				result+=$(names)[i].value+"_"+$(sexs)[i].value+"_"+$(agetypes)[i].value+"_"+$(deposits)[i].value+"_"+$(datums)[i].value+"_"+$(rooms)[i].value+"_"+$(comments)[i].value+",";
+				result+=($(names)[i].value==''?'#':$(names)[i].value)+
+				"_"+($(sexs)[i].value==''?'#':$(sexs)[i].value)+
+				"_"+($(agetypes)[i].value==''?'#':$(agetypes)[i].value)+
+				"_"+($(deposits)[i].value==''?'#':$(deposits)[i].value)+
+				"_"+($(datums)[i].value==''?'#':$(datums)[i].value)+
+				"_"+($(rooms)[i].value==''?'#':$(rooms)[i].value)+
+				"_"+($(comments)[i].value==''?'#':$(comments)[i].value)+",";
 			});
 			if(result&&result.length>0){
 				result=result.substring(0, result.length-1);

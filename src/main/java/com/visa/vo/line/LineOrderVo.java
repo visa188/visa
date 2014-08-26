@@ -93,7 +93,9 @@ public class LineOrderVo extends LineOrder {
         if (qt.startsWith("1")) {
             LinesSrvice linesSrvice = new LinesSrvice(orderId, LineSrviceEnumType.QT.getId());
             String[] items = qt.split("_");
-            linesSrvice.setServiceItem1(items[1]);
+            if (!"#".equals(items[1])) {
+                linesSrvice.setServiceItem1(items[1]);
+            }
             if (!"#".equals(items[2])) {
                 linesSrvice.setServicePrice(new BigDecimal(items[2])); // 单价
             }

@@ -14,6 +14,9 @@ public class LinesSrvice {
         this.serviceName = LineSrviceEnumType.LINE_SRVICE_MAP.get(serviceType).getName();
     }
 
+    public LinesSrvice() {
+    }
+
     /**
      * 主键
      * 
