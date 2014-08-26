@@ -5,9 +5,11 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.visa.po.line.LineNameList;
 import com.visa.po.line.LineOrder;
 import com.visa.po.line.LinesSrvice;
 import com.visa.vo.line.LineOrderVo;
@@ -34,11 +36,20 @@ public class StringUtil {
     }
 
     public static String generateUpdateOperLog(LineOrderVo lineOrder, LineOrder lineOrderDB,
-            List<LinesSrvice> serviceListDB) {
+            Map<Integer, LinesSrvice> serviceListDB, Map<Integer, LineNameList> nameListDB) {
         StringBuffer result = new StringBuffer();
         result.append("修改订单，编号：").append(lineOrder.getOrderSeq()).append("。");
         try {
             result.append(compareChange(lineOrder, lineOrderDB));
+            List<LinesSrvice> linesSrviceList = lineOrder.getLineOrderService();
+            for (LinesSrvice linesSrvice : linesSrviceList) {
+                result.append(compareChange(linesSrvice,
+                        serviceListDB.get(linesSrvice.getServiceId())));
+            }
+            List<LineNameList> linesNameList = null;
+            for (LineNameList nameList : linesNameList) {
+                result.append(compareChange(nameList, nameListDB.get(nameList.getId())));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
