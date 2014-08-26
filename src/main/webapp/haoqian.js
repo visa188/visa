@@ -153,13 +153,13 @@ GLB.clientOpr = function(node,addBtn,delBtn,type){
 			
 		}else{
 			$(t_tr).html('<td>姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>' +
-					'性别:<select name="tempSex" placeholder="客人性别"><option value="1">男</option><option value="2">女</option></select>' +
-					'类型:<select name="tempAgeType" placeholder="客人类型"><option value="1">成人</option><option value="2">儿童(占床)</option><option value="3">儿童(不占床)</option></select>'+                            
-					'押金:<input type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>'+
-					'资料:<input type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>'+
-					'房间数:<input type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>'+
-					'备注:<input type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>'+
-					'<span class="client_delete" title="删除行" onclick="delTempRow(this,'+type+')">-</span></td>');
+					'&nbsp;性别:<select name="tempSex" placeholder="客人性别"><option value="1">男</option><option value="2">女</option></select>' +
+					'&nbsp;类型:<select name="tempAgeType" placeholder="客人类型"><option value="1">成人</option><option value="2">儿童(占床)</option><option value="3">儿童(不占床)</option></select>'+                            
+					'&nbsp;押金:<input type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>'+
+					'&nbsp;资料:<input type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>'+
+					'&nbsp;房间数:<input type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>'+
+					'&nbsp;备注:<input type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>'+
+					'&nbsp;<span class="client_delete" style="margin-left:5%" title="删除行" onclick="delTempRow(this,'+type+')">-</span></td>');
 		}
 		return t_tr;
 	}

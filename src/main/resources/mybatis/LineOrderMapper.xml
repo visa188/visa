@@ -43,10 +43,10 @@
   </delete>
   
   <insert id="insert" useGeneratedKeys="true" keyProperty="orderId">
-    insert into lineorder (orderDate,type,nameListSize,salesmanId,lineOperatorId,visaOperatorId,travelAgency,contact,contactNo,lineCountryId,startDate,endDate,travelInfo,travelInfoFileUrl,
+    insert into lineorder (orderDate,type,nameList,nameListSize,salesmanId,lineOperatorId,visaOperatorId,travelAgency,contact,contactNo,lineCountryId,startDate,endDate,travelInfo,travelInfoFileUrl,
     	aircorpId,price,status,lineProductId,specialComment,orderSeq, postTime)
     values (now(),
-    #{type,jdbcType=INTEGER},#{nameListSize,jdbcType=INTEGER},#{salesmanId,jdbcType=VARCHAR},#{lineOperatorId,jdbcType=VARCHAR},
+    #{type,jdbcType=INTEGER},#{nameList,jdbcType=VARCHAR},#{nameListSize,jdbcType=INTEGER},#{salesmanId,jdbcType=VARCHAR},#{lineOperatorId,jdbcType=VARCHAR},
     #{visaOperatorId,jdbcType=VARCHAR},#{travelAgency,jdbcType=VARCHAR},#{contact,jdbcType=VARCHAR},#{contactNo,jdbcType=VARCHAR},#{lineCountryId,jdbcType=INTEGER},#{startDate,jdbcType=DATE},
     #{endDate,jdbcType=DATE},#{travelInfo,jdbcType=VARCHAR},#{travelInfoFileUrl,jdbcType=VARCHAR},#{aircorpId,jdbcType=INTEGER},
     #{price,jdbcType=DECIMAL},#{status,jdbcType=INTEGER},#{lineProductId,jdbcType=INTEGER},#{specialComment,jdbcType=VARCHAR},#{orderSeq,jdbcType=VARCHAR}, now())
@@ -56,6 +56,7 @@
     update lineorder
     set orderDate = #{orderDate,jdbcType=DATE},
     type = #{type,jdbcType=INTEGER},
+    nameList = #{nameList,jdbcType=VARCHAR},
     nameListSize = #{nameListSize,jdbcType=INTEGER},
     salesmanId = #{salesmanId,jdbcType=VARCHAR},
     lineOperatorId = #{lineOperatorId,jdbcType=VARCHAR},

@@ -1,536 +1,391 @@
-#header(3,31,"修改订单信息")
-
+#header(10,101,"修改线路订单信息")
 <script>
-    function setBxyf(){
-        var priceBxys=jQuery("#priceBxys").val()==''?0:jQuery("#priceBxys").val();
-        jQuery("#priceBxyf").val(priceBxys);
-    }
-    
-	function calculate(){
-		var priceYsdj=jQuery("#priceYsdj").val()==''?0:jQuery("#priceYsdj").val();
-		var priceBxys=jQuery("#priceBxys").val()==''?0:jQuery("#priceBxys").val();
-        var priceBxyf=jQuery("#priceBxyf").val()==''?0:jQuery("#priceBxyf").val();
-		var priceQtys=jQuery("#priceQtys").val()==''?0:jQuery("#priceQtys").val();
-		var priceQtzc=jQuery("#priceQtzc").val()==''?0:jQuery("#priceQtzc").val();
-		var nameListSize=jQuery("#nameListSize").val()==''?0:jQuery("#nameListSize").val();
-		var productPrice=jQuery("#productPrice").val()==''?0:jQuery("#productPrice").val();
-		
-		var priceZjys = 0.0;
-		var priceZjyf = 0.0;
-		var grossProfit = 0.0;
-		
-		if(priceYsdj&&priceQtys&&priceQtzc&&nameListSize){
-			priceZjys = Math.round(parseFloat(priceYsdj*100*nameListSize+priceQtys*100+priceBxys*100))/100;
-            priceZjyf = Math.round(parseFloat(productPrice*100 * nameListSize+priceQtzc*100+priceBxyf*100))/100;
-			grossProfit = Math.round(parseFloat(priceZjys*100 - priceZjyf*100))/100;
-		}
-		
-		jQuery("#priceZjys").val(priceZjys);
-		jQuery("#priceZjyf").val(priceZjyf);
-		jQuery("#grossProfit").val(grossProfit);
-	}
-	
-	function calculateByAdmin(){
-		var priceZjys = jQuery("#priceZjys").val()==''?0:jQuery("#priceZjys").val();
-		var priceZjyf = jQuery("#priceZjyf").val()==''?0:jQuery("#priceZjyf").val();
-		var grossProfit = 0.0;
-		
-		if(priceZjys&&priceZjyf){
-			grossProfit = Math.round(parseFloat(priceZjys*100 - priceZjyf*100))/100;
-		}
-		jQuery("#grossProfit").val(grossProfit);
-	}
-	
-	function getProductPrice(){
-		var productId=jQuery("#productId").val();
-		if(productId==''){
-			return;
-		}
-		jQuery.ajax({
-    	   type: "POST",
-		   async:false,
-    	   url: "/product/getProductPrice.do",
-    	   data:{productId:productId},
-    	   success: function(result){
-		   		if(result!='error'){
-    				jQuery("#productPrice").val(result);
-					calculate();
-				}
-    	   }
-		});
-	}
-	
-	function searchCustomer(){
-		jQuery("#dropbox").hide();
-		var customerName=jQuery("#tempCustomerName").val();
-		if(customerName==''){
-			return;
-		}
-		jQuery.ajax({
-    	   type: "POST",
-    	   url: "/customer/searchCustomer.do",
-    	   data:{customerName:customerName},
-    	   success: function(result){
-		   		var searchResult=jQuery("#searchResult");
-    			var customerList=result;
-				if(customerList&&customerList.length>0){
-    				var html='';
-    				for(var i=0;i<customerList.length;i++){
-    					html+='<li><a href="javascript:setProductId('+customerList[i].customerId+',\''+customerList[i].customerName+'\')">'+customerList[i].customerName+'</a></li>';
-    				}
-    				searchResult.empty();
-    				searchResult.append(html);
-    				jQuery("#dropbox").show();
-				}
-    	   }
-		});
-	}
-	
-	function setProductId(customerId,customerName){
-		jQuery("#customerId").val(customerId);
-		jQuery("#tempCustomerName").val(customerName);
-		jQuery("#customerShowName").val(customerName);
-		jQuery("#dropbox").hide();
-	}
-	
-	function changeCountry(){
-        var continentId = jQuery("#continentId").val();
+    function getProductId(){
+        var selectProductId=jQuery("#selectProductId").val();
+        jQuery("#lineProductId").val(selectProductId);
+        
+        if(selectProductId==''){
+            return;
+        }
         jQuery.ajax({
            type: "POST",
-           async:false,
-           url: "/country/listByContinentId.do",
-           data:{continentId:continentId},
+           url: "/lineproduct/getProductInfo.do",
+           data:{productId:selectProductId},
            success: function(result){
-                var countryList=result;
-                var options='<option value="" selected="selected">请选择</option>';
-                for(var i=0;i<countryList.length;i++){
-                    options+='<option value='+countryList[i].countryId+'>'+countryList[i].countryName+'</option>';
+                if(result!='error'){
+                    var depositLimitDate = new Date(result.depositLimitDate);
+                    var printTicketLimitDate = new Date(result.printTicketLimitDate);
+                    var startDate = new Date(result.startDate);
+                    var endDate = new Date(result.endDate);
+                    jQuery("#depositLimitDate").val(depositLimitDate.getFullYear()+'-'+(depositLimitDate.getMonth()+1)+'-'+depositLimitDate.getDate());
+                    jQuery("#printTicketLimitDate").val(printTicketLimitDate.getFullYear()+'-'+(printTicketLimitDate.getMonth()+1)+'-'+printTicketLimitDate.getDate());
+                    jQuery("#travelInfo").val(result.travelInfo);
+                    jQuery("#lineCountryId").val(result.lineCountryId);
+                    jQuery("#price").val(result.price);
+                    jQuery("#startDate").val(startDate.getFullYear()+'-'+(startDate.getMonth()+1)+'-'+startDate.getDate());
+                    jQuery("#endDate").val(endDate.getFullYear()+'-'+(endDate.getMonth()+1)+'-'+endDate.getDate());
+                    jQuery("#seatNum").val(result.seatNum);
+                    jQuery("#leftSeatNum").val(result.leftSeatNum);
                 }
-                jQuery("#countryId option").remove();
-                jQuery("#countryId").append(options);
            }
-        });
+         });
     }
-	
-	function changeProduct(){
-        var countryId = jQuery("#countryId").val();
-        jQuery.ajax({
-           type: "POST",
-           async:false,
-           url: "/product/searchProduct.do",
-           data:{countryId:countryId},
-           success: function(result){
-                var productList=result;
-                var options='<option value="" selected="selected">请选择</option>';
-                for(var i=0;i<productList.length;i++){
-                    options+='<option value='+productList[i].productId+'>'+productList[i].productName+'</option>';
-                }
-                jQuery("#productId option").remove();
-                jQuery("#productId").append(options);
-           }
-        });
+
+    function changeProductType(){
+        var type=jQuery("#type").val();
+        //1 单团;2 散拼
+        if(type==1){
+            jQuery("#sanpinSelectDiv").hide();
+            jQuery("#dantuanSelectDiv").show();
+            
+            jQuery("#selectProductId").removeClass('js_non_empty');
+            jQuery("#travelAgency").addClass('js_non_empty');
+            jQuery("#contact").addClass('js_non_empty');
+            jQuery("#contactNo").addClass('js_non_empty');
+            jQuery("#lineProductId").val(0);
+            jQuery("#price").removeAttr("readonly");
+            jQuery("#startDate").removeAttr("readonly");
+            jQuery("#endDate").removeAttr("readonly");
+            jQuery("#startDate").datepicker( "option", "disabled", false );
+            jQuery("#endDate").datepicker( "option", "disabled", false );
+        }else{
+            jQuery("#sanpinSelectDiv").show();
+            jQuery("#dantuanSelectDiv").hide();
+            
+            jQuery("#selectProductId").addClass('js_non_empty');
+            jQuery("#travelAgency").removeClass('js_non_empty');
+            jQuery("#contact").removeClass('js_non_empty');
+            jQuery("#contactNo").removeClass('js_non_empty');
+            jQuery("#price").attr("readonly","readonly");
+            jQuery("#startDate").attr("readonly","readonly");
+            jQuery("#endDate").attr("readonly","readonly");
+            jQuery("#startDate").datepicker( "option", "disabled", true );
+            jQuery("#endDate").datepicker( "option", "disabled", true );
+            
+            jQuery('#selectProductId').change();
+        }
+    }
+    function setNamelistSize(){
+        var nameListSize = parseInt(jQuery("#nameListSize").val());
+        var leftSeatNum = parseInt(jQuery("#leftSeatNum").val());
+        if(nameListSize>leftSeatNum){
+            jQuery("#nameListSize").val("");
+            alert('客人数量大于剩余机位数，请重新填写！');
+        }
     }
 </script>
-	<div class="miancon">
-		<div class="maincon_title">
-			<span class="ico_order_add">+</span><h2>修改订单信息</h2>
-			<div class="right"><a class="ico_order_w" title="订单信息管理" href="/orders/list.do?page=1">+</a></div>
-		</div>
-		<div class="maincon_fluid">
-			<form action="/orders/update.do?page=$!{page}" method="post" class="form_horizontal hq_form">
-				
-				<input name="salesman" id="salesman" type="hidden" value="$!{searchBean.salesman}"/>
-				<input name="operator" id="operator" type="hidden" value="$!{searchBean.operator}"/>
-				<input name="seachYfhkStatus" id="seachYfhkStatus" type="hidden" value="$!{searchBean.seachYfhkStatus}"/>
-				<input name="seachYshkStatus" id="seachYshkStatus" type="hidden" value="$!{searchBean.seachYshkStatus}"/>
-				<input name="startDate" id="startDate" type="hidden" value="$!{searchBean.startDate}"/>
-				<input name="endDate" id="endDate" type="hidden" value="$!{searchBean.endDate}"/>
-				<input name="seachCountryName" id="seachCountryName" type="hidden" value="$!{searchBean.seachCountryName}"/>
-				<input name="seachCustomerName" id="seachCustomerName" type="hidden" value="$!{searchBean.seachCustomerName}"/>
-				<input name="seachCustomerCompany" id="seachCustomerCompany" type="hidden" value="$!{searchBean.seachCustomerCompany}"/>
-				<input name="seachNameList" id="seachNameList" type="hidden" value="$!{searchBean.seachNameList}"/>
-				
-				<input name="customerId" id="customerId" type="hidden" value="$!{orders.customerId}"/>
-				<input name="orderId" id="orderId" type="hidden" value="$!{orders.orderId}"/>
-				<input name="productPrice" id="productPrice" type="hidden" value="$!{product.price}"/>
-		      <div class="widget_box">
-		        <div class="widget_title">
-		        	<span class="ico_order_r"></span>
-		        	<h3>订单基本信息</h3>
-		        </div>
-		        <div class="widget_content">
-		        	<div class="control_group">
-	        			<label class="control_label"><span class="ico_must">*</span>客户:</label>
-						<div class="controls">
-							<span class="form_item">
-								<input name="customerShowName" id="customerShowName" type="text" class="text1 js_non_empty" placeholder="客户" value="$!{orders.customerName}" onkeydown="searchCustomer()" disabled>
-							</span>
-		              	</div>
-						<label class="control_label"><span class="ico_must"></span>客户搜素框:</label>
-						<div class="controls">
-							<label class="dropcontrol">
-    							<span class="form_item dd">
-									<input name="tempCustomerName" id="tempCustomerName" type="text" class="text1" placeholder="客户" value="" onkeyup="searchCustomer()">
-        							<div id="dropbox" class="dropbox" style="display:none">
-            							<ul id="searchResult">
-            							</ul>
-        							</div>
-    							</span>
-							</label>
-		              	</div>
-		        	</div>
-		            <div class="control_group">
-                        <label class="control_label"><span class="ico_must">*</span>所属领区:</label>
-                        <div class="controls">
-                            <span class="form_item"><select name="areaId" id="areaId" class="text2 js_non_empty" placeholder="所属领区">
-                                <option value="" selected="selected">请选择</option>
-								#foreach($one in $areaList)
-                                <option value="$one.areaId"$fn.selected(${product.areaId}, $one.areaId)>$one.areaName</option>
-                                #end
-                            </select></span>
-                        </div>                          
-                    </div>
+    <div class="miancon">
+        <div class="maincon_title">
+            <span class="ico_order_add">+</span><h2>修改订单信息</h2>
+            <div class="right"><a class="ico_order_w" title="订单信息管理" href="/lineOrder/list.do?page=1">+</a></div>
+        </div>
+        <div class="maincon_fluid">
+            <form action="/lineOrder/addSubmit.do" method="post" class="form_horizontal hq_form line">
+                
+              <input value="0" type="hidden" id="lineProductId" name="lineProductId">
+                
+              <div class="widget_box">
+                <div class="widget_title">
+                    <span class="ico_order_r"></span>
+                    <h3>订单基本信息</h3>
+                </div>
+                <div class="widget_content">
                     <div class="control_group">
-                        <label class="control_label"><span class="ico_must">*</span>所属地区:</label>
+                        <label class="control_label"><span class="ico_must">*</span>订单类型:</label>
                         <div class="controls">
-                            <span class="form_item"><select name="continentId" id="continentId" class="text2 js_non_empty" placeholder="所属地区">
-                                <option value="" selected="selected">请选择</option>
-								#foreach($one in $fn.continentOptions().entrySet())
-                                <option value="$one.key"$fn.selected(${product.continentId}, $one.key)>$one.value.name</option>
-                                #end
+                            <span class="form_item"><select name="type" id="type" class="text2 js_non_empty" placeholder="订单类型" onchange="changeProductType()">
+                                <option value="1" $fn.selected(${lineOrder.type}, "1")>单团</option>
+                                <option value="2" $fn.selected(${lineOrder.type}, "2")>散拼团</option>
                             </select></span>
                         </div>                          
                     </div>
+                    
+                    <div id="sanpinSelectDiv"> 
+                        <div class="control_group">
+                            <label class="control_label"><span class="ico_must">*</span>散拼团:</label>
+                            <div class="controls">
+                                <span class="form_item"><select id="selectProductId" class="text2" placeholder="散拼团" onchange="getProductId()">
+                                    <option value="" selected="selected">请选择</option>
+                                    #foreach($one in $lineProductList)
+                                        <option value="$one.lineProductId">$one.lineProductName</option>
+                                    #end
+                                </select></span>
+                            </div>
+                        </div>
+                        
+                        <div class="control_group">
+                            <label class="control_label"><span class="ico_must">*</span>机票订金时限:</label>
+                            <div class="controls">
+                                <span class="form_item"><input id="depositLimitDate" type="text" class="text1" placeholder="机票订金时限" readonly></span>
+                            </div>   
+                        </div>
+                        
+                        <div class="control_group">
+                            <label class="control_label"><span class="ico_must">*</span>出票时限:</label>
+                            <div class="controls">
+                                <span class="form_item"><input id="printTicketLimitDate" type="text" class="text1" placeholder="出票时限" readonly></span>
+                            </div>  
+                        </div>
+                        
+                        <div class="control_group">
+                            <label class="control_label"><span class="ico_must">*</span>座位数:</label>
+                            <div class="controls">
+                                <span class="form_item"><input id="seatNum" type="text" class="text1" placeholder="座位数" readonly></span>
+                            </div>  
+                        </div>
+                        
+                        <div class="control_group">
+                            <label class="control_label"><span class="ico_must">*</span>余位数:</label>
+                            <div class="controls">
+                                <span class="form_item"><input id="leftSeatNum" type="text" class="text1" placeholder="余位数" readonly></span>
+                            </div>  
+                        </div>
+                    </div>
+                    
+                    <div id="dantuanSelectDiv"> 
+                        <div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>组团社:</label>
+                          <div class="controls">
+                           <span class="form_item"><input value="$!{lineOrder.travelAgency}" name="travelAgency" id="travelAgency" type="text" class="text1" maxlength="50" size="50" placeholder="组团社"></span>
+                          </div>
+                        </div>  
+                        
+                        <div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>联系人:</label>
+                          <div class="controls">
+                           <span class="form_item"><input value="$!{lineOrder.contact}" name="contact" id="contact" type="text" class="text1" maxlength="10" size="10" placeholder="联系人"></span>
+                          </div>
+                        </div>  
+                        
+                        <div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>联系方式:</label>
+                          <div class="controls">
+                           <span class="form_item"><input value="$!{lineOrder.contactNo}" name="contactNo" id="contactNo" type="text" class="text1" maxlength="50" size="50" placeholder="联系方式"></span>
+                          </div>
+                        </div>  
+                    </div>  
+                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
+                      <div class="controls">
+                       <span class="form_item"><input value="$!{lineOrder.startDate}" type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate" value=""></span>
+                      </div>
+                    </div> 
+                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>归国日期:</label>
+                      <div class="controls">
+                       <span class="form_item"><input value="$!{lineOrder.endDate}" type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate" value=""></span>
+                      </div>
+                    </div> 
+                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>行程简介:</label>
+                      <div class="controls">
+                       <textarea value="$!{lineOrder.travelInfo}" class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100"></textarea>
+                      </div>
+                    </div>  
+                    
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
                         <div class="controls">
-                            <span class="form_item"><select name="countryId" id="countryId" class="text2 js_non_empty" placeholder="国家名称">
+                            <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" #if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRoleId($userRoleId)}) onchange="getOperators()" #end>
                                 <option value="" selected="selected">请选择</option>
-								#foreach($one in $countryList)
-									<option value="$one.countryId"$fn.selected(${product.countryId}, $one.countryId)>$one.countryName</option>
+                                #foreach($one in $countryList)
+                                    <option value="$one.countryId" $fn.selected(${lineOrder.lineCountryId}, $one.countryId)>$one.countryName</option>
                                 #end
                             </select></span>
                         </div>                          
                     </div>
-		        	<div class="control_group">
-	        			<label class="control_label"><span class="ico_must">*</span>选择产品:</label>
-						<div class="controls">
-		               		<span class="form_item"><select name="productId" id="productId" class="text2 js_non_empty" placeholder="产品" onchange="getProductPrice()">
-								<option value="" selected="selected">请选择</option>
-								#foreach($one in $productList)
-									<option value="$one.productId"$fn.selected(${orders.productId}, $one.productId)>$one.productName</option>
-                                #end
-							</select></span>
-		              	</div>		        			
-		        	</div>
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>下单日期:</label>
-		              <div class="controls">
-		               <span class="form_item"><input name="orderDate" id="orderDate" type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="下单日期" value="$fn.format($!{orders.orderDate},'yyyy-MM-dd')"></span>
-		              </div>
-		            </div>	
-					
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>客人数量:</label>
-		              <div class="controls">
-		               <span class="form_item"><input name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="客人数量" value="$!{orders.nameListSize}" onchange="calculate()"></span>
-		              </div>
-		            </div>	
-					
-					<div class="control_group">
-	        			<label class="control_label"><span class="ico_must">*</span>客人信息:</label>
-						<div class="controls">
-		               		<div class="client_operate js_client_operate">
-			               		<table cellpadding="0" cellspacing="0" class="client_table_data table_data">
-					                <thead>
-					                    <tr>
-					                        <th>客人信息</th>
-					                    </tr>
-					                </thead>
-					                <tbody>
-										#foreach($custom in $customList)
-					                    <tr>
-											#if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
-												<td>
-													姓名:<input type="text" class="tb_text" name="tempName" value="$!{custom.name}" placeholder="客户姓名" style="width:20%;"/>
-													联系方式:<input type="text" class="tb_text" name="tempContact" value="$!{custom.contact}" placeholder="联系方式" style="width:30%;"/>
-													住址:<input type="text" class="tb_text" name="tempAddr" value="$!{custom.addr}" placeholder="住址" style="width:40%;"/>
-													<span name="delName" class="client_delete" title="删除行">-</span>
-												</td>
-											#else
-												<td>
-													姓名:<input type="text" class="tb_text" name="tempName" value="$!{custom.name}" style="width:20%;" readonly />
-													联系方式:<input type="text" class="tb_text" name="tempContact" value="$!{custom.contact}" style="width:30%;" readonly />
-													住址:<input type="text" class="tb_text" name="tempAddr" value="$!{custom.addr}" style="width:40%;" readonly />
-												</td>
-											#end
-										</tr>    
-										#end
-					                </tbody>
-					            </table><span class="form_item"><input type="hidden" class="js_non_empty" id="nameList" name="nameList" value="$!{orders.nameList}" placeholder="客人信息"></span>
-					            #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)})
-    								<div class="client_operate_btns">
-    					            	<span id="addName" class="client_add" title="添加行">+</span>
-    					            </div>
-								#end
-				            </div>
-		              	</div>		        			
-		        	</div>
-		        </div>
-				#if($userRoleId==${fn.getManagerRoleId()}||${fn.isAdminRoleId($userRoleId)})
-					<div class="widget_title">
-    		        	<span class="ico_static_r"></span>
-    		        	<h3>操作信息</h3>
-    		        </div>
-    		        <div class="widget_content">
-    					<div class="control_group">
-    		              <label class="control_label"><span class="ico_must">*</span>选择操作员:</label>
-    		              <div class="controls">
-    		               <span class="form_item"><select name="operatorId" id="operatorId" class="text2 js_non_empty" placeholder="操作员">
-								<option value="" selected="selected">请选择</option>
-								#foreach($operator in $operatorList)
-    									<option value="$!{operator.userId}" #if($orders.operatorId==$!{operator.userId}) selected #end>$!{operator.userName}</option>
-    							#end
-							</select></span>
-    		              </div>
-    		            </div>  
-					</div>
-				#end
-				##if($userRoleId==${fn.getOperatorRoleId()}||${fn.isAdminRoleId($userRoleId)})
-    				<div class="widget_title">
-    		        	<span class="ico_static_r"></span>
-    		        	<h3>送签信息</h3>
-    		        </div>
-    		        <div class="widget_content">
-    					<div class="control_group">
-    		              <label class="control_label"><span class="ico_must">&nbsp;</span>送签日期:</label>
-    		              <div class="controls">
-    		               <span class="form_item"><input type="text"  class="text1 js_datepicker" maxlength="10" size="10" placeholder="送签日期" name="signDate" id="signDate" value="$fn.format($!{orders.signDate},'yyyy-MM-dd')"></span>
-    		              </div>
-    		            </div>  
-    					<div class="control_group">
-    		              <label class="control_label"><span class="ico_must">&nbsp;</span>送签员:</label>
-    		              <div class="controls">
-    		               	<span class="form_item"><input type="text" class="text1" maxlength="10" size="10" placeholder="送签员" name="signOperatorName" id="signOperatorName" value="$!{orders.signOperatorName}"></span>
-    		              </div>
-    		            </div>	
-    					<div class="control_group">
-    		              <label class="control_label"><span class="ico_must">&nbsp;</span>目前状态:</label>
-    		              <div class="controls">
-    		                <span class="form_item"><select name="operatorDes" id="operatorDes" class="text2" placeholder="目前状态">
-                                <option value="" selected="selected">请选择</option>
-                                <option value="等待材料补充" #if($!{orders.operatorDes}=="等待材料补充") selected #end>等待材料补充</option>
-                                <option value="待进使馆/面试" #if($!{orders.operatorDes}=="待进使馆/面试") selected #end>待进使馆/面试</option>
-                                <option value="已进使馆/面试" #if($!{orders.operatorDes}=="已进使馆/面试") selected #end>已进使馆/面试</option>
-                                <option value="签证出签" #if($!{orders.operatorDes}=="签证出签") selected #end>签证出签</option>
-                                <option value="签证拒签" #if($!{orders.operatorDes}=="签证拒签") selected #end>签证拒签</option>
-                                <option value="订单取消" #if($!{orders.operatorDes}=="订单取消") selected #end>订单取消</option>
-                            </select></span>
-    		              </div>
-    		            </div> 
-    					<div class="control_group">
-    		              <label class="control_label"><span class="ico_must">&nbsp;</span>送签备注:</label>
-    		              <div class="controls">
-    		               <span class="form_item"><input type="text" class="text1" maxlength="50" size="30" placeholder="送签备注" name="operatorRemark" id="operatorRemark" value="$!{orders.operatorRemark}"></span>
-    		              </div>
-    		            </div> 
-    				</div>	
-				##end
-				#if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()}||$userRoleId==${fn.getOperatorRoleId()})
-		        <div class="widget_title">
-		        	<span class="ico_static_r"></span>
-		        	<h3>费用计算</h3>
-		        </div>
-		        <div class="widget_content">
-		            #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
-		        	<div class="control_group">
-	        			<label class="control_label"><span class="ico_must">*</span>应收单价:</label>
-						<div class="controls">
-		               		<span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceYsdj" name="priceYsdj" placeholder="应收单价" value="$!{orders.priceYsdj}" onchange="calculate()"></span>
-		              	</div>		        			
-		        	</div>
-		        	#end
-		        	<div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>保险应收款:</label>
-                      <div class="controls">
-                       <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxys" name="priceBxys" placeholder="保险应收款" value="$!{orders.priceBxys}" onchange="setBxyf();calculate()" #if($userRoleId!=${fn.getOperatorRoleId()}) readonly #end></span>
-                      </div>
-                    </div>
+                    
                     <div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>保险应付款:</label>
+                      <label class="control_label"><span class="ico_must">*</span>客人数量:</label>
                       <div class="controls">
-                       <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxyf" name="priceBxyf" placeholder="保险应付款" value="#if(${orders.priceBxyf})${orders.priceBxyf}#else 0.00 #end" onchange="calculate()"  #if($userRoleId!=${fn.getOperatorRoleId()}) readonly #end></span>
+                       <span class="form_item"><input value="$!{lineOrder.nameListSize}" name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="客人数量" onchange="setNamelistSize()"></span>
                       </div>
                     </div>
-                    #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
-		            <div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>其他应收款:</label>
-		              <div class="controls">
-		               <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceQtys" name="priceQtys" placeholder="其他应收款" value="$!{orders.priceQtys}" onchange="calculate()"> <input type="text" class="text1" maxlength="100" size="20" id="priceQtysBz" name="priceQtysBz" value="$!{orders.priceQtysBz}" placeholder="其他应收款备注" ></span>
-		              </div>
-		            </div>
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>其他应付款:</label>
-		              <div class="controls">
-		               <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceQtzc" name="priceQtzc" placeholder="其他应付款" value="$!{orders.priceQtzc}" onchange="calculate()"> <input type="text" class="text1" maxlength="100" size="20" id="priceQtzcBz" name="priceQtzcBz" value="$!{orders.priceQtzcBz}" placeholder="其他应付款备注" ></span>
-		              </div>
-		            </div>
-					<div class="control_group">
-	        			<label class="control_label">总计应收款:</label>
-						<div class="controls">
-		               		<span class="form_item"><input type="text" class="text1" maxlength="10" size="10" id="priceZjys" name="priceZjys" placeholder="总计应收款" value="$!{orders.priceZjys}" readonly></span>
-		              	</div>		        			
-		        	</div>
-					<div class="control_group">
-	        			<label class="control_label">总计应付款:</label>
-						<div class="controls">
-		               		<span class="form_item">
-								#if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
-									<input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceZjyf" name="priceZjyf" placeholder="总计应付款" value="$!{orders.priceZjyf}" onchange="calculateByAdmin()">
-								#else
-									<input type="text" class="text1" maxlength="10" size="10" id="priceZjyf" name="priceZjyf" placeholder="总计应付款" value="$!{orders.priceZjyf}" readonly >
-								#end
-							</span>
-		              	</div>		        			
-		        	</div>
-					<div class="control_group">
-	        			<label class="control_label">毛利:</label>
-						<div class="controls">
-		               		<span class="form_item"><input type="text" class="text1" maxlength="10" size="10" id="grossProfit" name="grossProfit" placeholder="毛利" value="$!{orders.grossProfit}" readonly></span>
-		              	</div>		        			
-		        	</div>
-		        	#end		            
-		        </div>	  
-				#end
-		        <div class="widget_title">
-		        	<span class="ico_remark_r"></span>
-		        	<h3>备注信息</h3>
-		        </div>
-		        <div class="widget_content">
-					#if($userRoleId==${fn.getFinanceRoleId()}||${fn.isAdminRoleId($userRoleId)})
-					<div class="control_group">
-	        			<label class="control_label"><span class="ico_must">*</span>付款状态:</label>
-						<div class="controls">
-		               		<span class="form_item"><select name="yfhkStatus" id="yfhkStatus" class="text2 js_non_empty" placeholder="付款状态" onchange="processYfhk()">
-								<option value="" selected="selected">请选择</option>
-    							<option value="1" #if($orders.yfhkStatus=='1') selected #end>未付款</option>
-								<option value="2" #if($orders.yfhkStatus=='2') selected #end>部分付款</option>
-								<option value="3" #if($orders.yfhkStatus=='3') selected #end>已付全款</option>
-							</select></span>
-		              	</div>		
-						<script>
-							function processYfhk(){
-								var yfhkStatus=jQuery("#yfhkStatus").val();
-								if(yfhkStatus=='1'){
-									jQuery("#priceYfhk").val(0);
-									jQuery("#priceYfhk").removeClass('js_non_empty');
-									jQuery("#priceYfhk").attr("readonly","readonly");
-								}else{
-									jQuery("#priceYfhk").addClass('js_non_empty');
-									jQuery("#priceYfhk").removeAttr("readonly");
-								}
-							}
-							
-						</script>
-						<label class="control_label"><span class="ico_must">*</span>已付货款:</label>
-						<div class="controls">
-							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="priceYfhk" name="priceYfhk" placeholder="已付货款" value="$!{orders.priceYfhk}"></span>
-		              	</div>	
-	        			<label class="control_label">付款备注:</label>
-						<div class="controls">
-		               		<span class="form_item"><input type="text" class="text1" maxlength="50" size="20" id="yfhkRemark" name="yfhkRemark" placeholder="付款备注" value="$!{orders.yfhkRemark}""></span>
-		              	</div>		
-						<label class="control_label"><span class="ico_must">*</span>收款状态:</label>
-						<div class="controls">
-		               		<span class="form_item"><select name="yshkStatus" id="yshkStatus" class="text2 js_non_empty" placeholder="收款状态" onchange="processYshk()">
-								<option value="" selected="selected">请选择</option>
-    							<option value="1" #if($orders.yshkStatus=='1') selected #end>未收款</option>
-								<option value="2" #if($orders.yshkStatus=='2') selected #end>部分收款</option>
-								<option value="3" #if($orders.yshkStatus=='3') selected #end>已收全款</option>
-							</select></span>
-		              	</div>
-						<script>
-							function processYshk(){
-								var yshkStatus=jQuery("#yshkStatus").val();
-								if(yshkStatus=='1'){
-									jQuery("#priceYshk").val(0);
-									jQuery("#priceYshk").removeClass('js_non_empty');
-									jQuery("#priceYshk").attr("readonly","readonly");
-								}else{
-									jQuery("#priceYshk").addClass('js_non_empty');
-									jQuery("#priceYshk").removeAttr("readonly");
-								}
-							}
-						</script>
-						<label class="control_label"><span class="ico_must">*</span>已收货款:</label>
-						<div class="controls">
-							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="priceYshk" name="priceYshk" placeholder="已收货款" value="$!{orders.priceYshk}"></span>
-		              	</div>	
-		        	</div>
-	        			<label class="control_label">收款备注:</label>
-						<div class="controls">
-		               		<span class="form_item"><input type="text" class="text1" maxlength="50" size="20" id="yshkRemark" name="yshkRemark" placeholder="收款备注" value="$!{orders.yshkRemark}""></span>
-		              	</div>		
-		        	
-					#end
-		        	<div class="control_group">
-	        			<label class="control_label">销售备注:</label>
-						<div class="controls">
-							<textarea class="text3" id="des" name="des" cols="80" rows="8" placeholder="销售备注" maxlength="300">$!{orders.des}</textarea>
-		              	</div>		        			
-		        	</div>
-		        	<div class="control_group">
-                        <label class="control_label">操作备注:</label>
-                        <div class="controls">
-                            <textarea class="text3" id="czdes" name="czdes" cols="80" rows="8" placeholder="操作备注" maxlength="300">$!{orders.czdes}</textarea>
+                    
+                    <div class="control_group">
+                        <label class="control_label"><span class="ico_must">*</span>客人信息:</label>
+                        <div class="controls" id="customTab">
+                            <div class="client_operate js_line_client_operate">
+                                <table cellpadding="0" cellspacing="0" class="client_table_data table_data">
+                                    <thead>
+                                        <tr>
+                                            <th>客人信息</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                                                                                                姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>
+                                                                                                                                性别:<select name="tempSex" placeholder="客人性别"><option value="1">男</option><option value="2">女</option></select>
+                                                                                                                                类型:<select name="tempAgeType" placeholder="客人类型"><option value="1">成人</option><option value="2">儿童(占床)</option><option value="3">儿童(不占床)</option></select>                            
+                                                                                                                                押金:<input type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>
+                                                                                                                                资料:<input type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>
+                                                                                                                                房间数:<input type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>
+                                                                                                                                备注:<input type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
+                                      <span name="delName" class="client_delete" title="删除行" style="margin-left:5%">-</span>
+                                            </td>
+                                        </tr>           
+                                    </tbody>
+                                </table><span class="form_item"><input type="hidden" class="js_non_empty" id="nameList" name="nameList" value="" placeholder="客人信息"></span>
+                                <div class="client_operate_btns">
+                                    <span class="client_add" title="添加行">+</span>
+                                </div>
+                            </div>
                         </div>                          
                     </div>
-		        </div>
-		      </div>
-				<div class="form_actions">
-					<button type="reset" class="btn btn_reset">重置</button>
-	              	<button type="submit" class="btn btn_save">保存</button>
-	            </div>			      
-		  	</form>
-		</div>
-	</div>
-	<script>
-		jQuery("#continentId").bind("blur",function(e){
-            changeCountry();
-        }).bind("change",function(e){
-            changeCountry();
-        });	
-		
-		jQuery("#countryId").bind("blur",function(e){
-            changeProduct();
-        }).bind("change",function(e){
-            changeProduct();
-        });	
-	</script>
-	<script>
-    	var userRole='$!{userRoleId}';
-    	if(userRole!='2'&&userRole!='1'){
-    		jQuery("#tempCustomerName").attr("disabled", "disabled");
-    		jQuery("#areaId").attr("disabled", "disabled");
-    		jQuery("#continentId").attr("disabled", "disabled");
-    		jQuery("#countryId").attr("disabled", "disabled");
-    		jQuery("#productId").attr("disabled", "disabled");
-    		jQuery("#orderDate").attr("disabled", "disabled");
-    		jQuery("#nameListSize").attr("disabled", "disabled");
-        	
-			if(userRole=='5'){
-        		//jQuery("#priceYsdj").attr("disabled", "disabled");
-        		//jQuery("#priceQtys").attr("disabled", "disabled");
-        		//jQuery("#priceQtzc").attr("disabled", "disabled");
-        		//jQuery("#priceZjys").attr("disabled", "disabled");
-        		//jQuery("#priceZjyf").attr("disabled", "disabled");
-        		//jQuery("#grossProfit").attr("disabled", "disabled");
-        	}
-    	}
+                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>服务:</label>
+                      <div class="controls">
+                            <div class="client_operate">
+                                <table cellpadding="0" cellspacing="0" class="client_table_data table_data">
+                                    <thead>
+                                        <tr>
+                                            <th>服务信息</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                       <input type="hidden" id="ld" name="ld" />
+                       <span class="form_item"><input type="checkbox" id="ldserv" style="vertical-align: middle;"/> 领队服务 <select id="ldtype"><option value="1">组团社派</option><option value="2">启航假期派</option></select> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       </td></tr><tr><td>
+                       <input type="hidden" id="qz" name="qz" />
+                       <span class="form_item"><input type="checkbox" id="qzserv" style="vertical-align: middle;"/> 签证服务 <select id="qztype"><option value="1">个签</option><option value="2">团签</option></select> 应收单价:<input type="text" class="tb_text ysdj" id="qzysdj" style="width:12%;"/> 应收合计:<input type="text" class="tb_text" id="qzyshj" style="width:12%;"/> 签证员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       </td></tr><tr><td>
+                       <input type="hidden" id="jp" name="jp" />
+                       <span class="form_item"><input type="checkbox" id="jpserv" style="vertical-align: middle;"/> 机票服务 <select id="jptype"><option value="1">团队机票</option><option value="2">散客机票</option></select> 应收单价:<input type="text" class="tb_text ysdj" id="jpysdj" style="width:12%;"/> 应收合计:<input type="text" class="tb_text" id="jpyshj" style="width:12%;"/> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       </td></tr><tr><td>
+                       <input type="hidden" id="dj" name="dj" />
+                       <span class="form_item"><input type="checkbox" id="djserv" style="vertical-align: middle;"/> 地接服务  酒店标准:<input type="text" class="tb_text" id="djxing" style="width:4.3%;"/>星,房型:<input type="text" class="tb_text" id="djfx" style="width:12%;"/> 备注:<input type="text" class="tb_text" id="djbz" style="width:12%;" /> 特殊景点:<input type="text" class="tb_text" id="djtsjd" style="width:12%;"/> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input type="radio" id="djdyra" name="djdy" style="vertical-align: middle;" checked/> 巴士: <input type="text" class="tb_text" id="djbs" style="width:4.3%;"/> 备注:<input type="text" class="tb_text" id="djbsbz" style="width:12%;" /> 导游:<select id="djsfxydy"><option value="1">需要</option><option value="2">不需要</option></select> 备注:<input type="text" class="tb_text" id="djsfxydybz" style="width:12%;" /> <input type="radio" id="djdyrb" name="djdy" style="vertical-align: middle;"/> 司机兼导游: 备注:<input type="text" class="tb_text" id="djsjjdybz" style="width:12%;" /></span>
+                       <span class="form_item">应收单价:<input type="text" class="tb_text ysdj" id="djysdj" style="width:12%;"/> 应收合计:<input type="text" class="tb_text" id="djyshj" style="width:12%;"/></span>
+                       </td></tr><tr><td>
+                       <input type="hidden" id="qt" name="qt" />
+                       <span class="form_item"><input type="checkbox" id="qtserv" style="vertical-align: middle;"/> 其他服务 备注:<input type="text" class="tb_text" id="qtbz" style="width:10%;"/> 应收单价:<input type="text" class="tb_text ysdj" id="qtysdj" style="width:12%;"/> 应收合计:<input type="text" class="tb_text" id="qtyshj" style="width:12%;"/></span>
+                       </td></tr>  
+                       <script>
+                        jQuery('.ysdj').blur(function(){
+                            var nameListSize = jQuery('#nameListSize').val();
+                            var dj = jQuery(this).val();
+                            if(jQuery.isNumeric(nameListSize)&&jQuery.isNumeric(dj)){
+                                jQuery(jQuery(this).next()).val(nameListSize * dj);
+                            }
+                        });
+                        jQuery('#nameListSize').change(function(){
+                            if(jQuery.isNumeric(jQuery(this).val())){
+                                jQuery('.ysdj').blur();
+                            }
+                        });
+                       </script>          
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                
+                    </div>
+                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>特殊说明:</label>
+                      <div class="controls">
+                       <span class="form_item"><input name="specialComment" id="specialComment" type="text" class="text1" maxlength="8" size="8" /></span>
+                      </div>
+                    </div>
+                </div>  
+                
+                #if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRoleId($userRoleId)})
+                    <script>
+                        function getOperators(){
+                            var lineCountryId = jQuery("#lineCountryId").val();
+                            if(lineCountryId==''){
+                                return;
+                            }
+                            jQuery.ajax({
+                               type: "POST",
+                               url: "/user/getOperators.do",
+                               data:{lineCountryId:lineCountryId},
+                               success: function(result){
+                                    if(result!='error'){
+                                        var operatorList=result;
+                                        var options='<option value="" selected="selected">请选择</option>';
+                                        for(var i=0;i<operatorList.length;i++){
+                                            options+='<option value='+operatorList[i].userId+'>'+operatorList[i].userName+'</option>';
+                                        }
+                                        jQuery("#lineOperatorId option").remove();
+                                        jQuery("#lineOperatorId").append(options);
+                                        jQuery("#visaOperatorId option").remove();
+                                        jQuery("#visaOperatorId").append(options);
+                                    }
+                               }
+                             });
+                        }
+                    </script>
+                    <div class="widget_title">
+                        <span class="ico_static_r"></span>
+                        <h3>操作信息</h3>
+                    </div>
+                    <div class="widget_content">
+                        <div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>线路操作员:</label>
+                          <div class="controls">
+                           <span class="form_item"><select name="lineOperatorId" id="lineOperatorId" class="text2 js_non_empty" placeholder="线路操作员">
+                                <option value="" selected="selected">请选择</option>
+                                
+                            </select></span>
+                          </div>
+                        </div>
+                        <div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>签证操作员:</label>
+                          <div class="controls">
+                           <span class="form_item"><select name="visaOperatorId" id="visaOperatorId" class="text2 js_non_empty" placeholder="签证操作员">
+                                <option value="" selected="selected">请选择</option>
+                                
+                            </select></span>
+                          </div>
+                        </div>  
+                    </div>
+                #end
+                
+                <div class="widget_title">
+                    <span class="ico_static_r"></span>
+                    <h3>费用计算</h3>
+                </div>
+                <div class="widget_content">
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>单价:</label>
+                      <div class="controls">
+                       <span class="form_item"><input name="price" id="price" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="单价"></span>
+                      </div>
+                    </div>
+                </div>         
+                <div class="widget_title">
+                    <span class="ico_remark_r"></span>
+                    <h3>备注信息</h3>
+                </div>
+                <div class="widget_content">
+                </div> 
+              </div>
+                <div class="form_actions">
+                    <button type="reset" class="btn btn_reset">重置</button>
+                    <input type="hidden" id="status" name="status" value="0"/>
+                    <button type="button" class="btn btn_save" name="bc">保存</button>
+                    <button type="button" class="btn btn_save" name="tj">提交</button>
+                    <script>
+                        jQuery('.btn_save').click(function(){
+                            var nameListSize = jQuery('#nameListSize').val();
+                            if('tj'==jQuery(this).attr('name')){
+                                jQuery('#status').val('8');                                
+                            }
+                            jQuery(".hq_form")[0].submit();
+                        });
+                    </script>
+                </div>                
+            </form>
+        </div>
+    </div>
+    <script>
+    changeProductType();
     </script>
-	
-	<script>
-		processYfhk();
-		processYshk();
-	</script>
 #footer()
