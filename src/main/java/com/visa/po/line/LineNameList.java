@@ -17,7 +17,7 @@ public class LineNameList {
      * 
      * @pdOid 7a6408d4-54d9-4445-8eb7-d7d3802c268b
      */
-    public int id;
+    public Integer id;
 
     public int lineOrderId;
     /**
@@ -73,11 +73,11 @@ public class LineNameList {
         this.lineOrderId = lineOrderId;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

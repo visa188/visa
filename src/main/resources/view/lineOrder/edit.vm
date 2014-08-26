@@ -219,13 +219,14 @@
                                     #foreach($custom in $customList)
                                         <tr>
                                             <td>
-                                                                                                                                姓名:<input value="$!{custom.tempName}" type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>
-                                                                                                                                性别:<select name="tempSex" placeholder="客人性别"><option value="1" $fn.selected(${custom.tempSex}, "1")>男</option><option value="2" $fn.selected(${custom.tempSex}, "2")>女</option></select>
-                                                                                                                                类型:<select name="tempAgeType" placeholder="客人类型"><option value="1" $fn.selected(${custom.tempAgeType}, "1")>成人</option><option value="2" $fn.selected(${custom.tempAgeType}, "2")>儿童(占床)</option><option value="3"  $fn.selected(${custom.tempAgeType}, "3")>儿童(不占床)</option></select>                            
-                                                                                                                                押金:<input value="$!{custom.tempDeposit}" type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>
-                                                                                                                                资料:<input value="$!{custom.tempDatum}" type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>
-                                                                                                                                房间数:<input value="$!{custom.tempRoom}" type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>
-                                                                                                                                备注:<input value="$!{custom.tempComment}" type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
+                                       <input type="hidden" id="tempId" name="tempId" value="$!{custom.id}" />
+                                                                                                                                姓名:<input value="$!{custom.name}" type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>
+                                                                                                                                性别:<select name="tempSex" placeholder="客人性别"><option value="1" $fn.selected(${custom.sex}, "1")>男</option><option value="2" $fn.selected(${custom.sex}, "2")>女</option></select>
+                                                                                                                                类型:<select name="tempAgeType" placeholder="客人类型"><option value="1" $fn.selected(${custom.ageType}, "1")>成人</option><option value="2" $fn.selected(${custom.ageType}, "2")>儿童(占床)</option><option value="3"  $fn.selected(${custom.ageType}, "3")>儿童(不占床)</option></select>                            
+                                                                                                                                押金:<input value="$!{custom.deposit}" type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>
+                                                                                                                                资料:<input value="$!{custom.datum}" type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>
+                                                                                                                                房间数:<input value="$!{custom.room}" type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>
+                                                                                                                                备注:<input value="$!{custom.comment}" type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
                                       <span name="delName" class="client_delete" title="删除行" style="margin-left:5%">-</span>
                                             </td>
                                         </tr> 
@@ -253,6 +254,7 @@
                                         <tr>
                                             <td>
                        <input type="hidden" id="ld" name="ld" />
+                       <input type="hidden" id="ldservId" name="ldservId" value="$!{lineServiceMap.get(1).serviceId}" />
                        #if($lineServiceMap.get(1))
                        <span class="form_item"><input type="checkbox" checked id="ldserv" style="vertical-align: middle;"/> 领队服务 <select id="ldtype"><option value="1" $fn.selected(${lineServiceMap.get(1).serviceItem1}, "1")>组团社派</option><option value="2" $fn.selected(${lineServiceMap.get(1).serviceItem1}, "2")>启航假期派</option></select> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
                        #else
@@ -260,6 +262,7 @@
                        #end
                        </td></tr><tr><td>
                        <input type="hidden" id="qz" name="qz" />
+                       <input type="hidden" id="qzservId" name="qzservId" value="$!{lineServiceMap.get(2).serviceId}" />
                        #if($lineServiceMap.get(2))
                        <span class="form_item"><input type="checkbox" checked id="qzserv" style="vertical-align: middle;"/> 签证服务 <select id="qztype"><option value="1" $fn.selected(${lineServiceMap.get(2).serviceItem1}, "1")>个签</option><option value="2" $fn.selected(${lineServiceMap.get(2).serviceItem1}, "2")>团签</option></select> 应收单价:<input value="${lineServiceMap.get(2).servicePrice}" type="text" class="tb_text ysdj" id="qzysdj" style="width:12%;"/> 应收合计:<input value="${lineServiceMap.get(2).priceSum}" type="text" class="tb_text" id="qzyshj" style="width:12%;"/> 签证员:<select name="ldpai"><option value="1">日本</option></select></span>
                        #else
@@ -267,6 +270,7 @@
                        #end
                        </td></tr><tr><td>
                        <input type="hidden" id="jp" name="jp" />
+                       <input type="hidden" id="jpservId" name="jpservId" value="$!{lineServiceMap.get(3).serviceId}" />
                        #if($lineServiceMap.get(3))
                        <span class="form_item"><input type="checkbox" checked id="jpserv" style="vertical-align: middle;"/> 机票服务 <select id="jptype"><option value="1" $fn.selected(${lineServiceMap.get(3).serviceItem1}, "1")>团队机票</option><option value="2" $fn.selected(${lineServiceMap.get(3).serviceItem1}, "2")>散客机票</option></select> 应收单价:<input value="${lineServiceMap.get(3).servicePrice}" type="text" class="tb_text ysdj" id="jpysdj" style="width:12%;"/> 应收合计:<input value="${lineServiceMap.get(3).priceSum}" type="text" class="tb_text" id="jpyshj" style="width:12%;"/> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
                        #else
@@ -274,6 +278,7 @@
                        #end
                        </td></tr><tr><td>
                        <input type="hidden" id="dj" name="dj" />
+                       <input type="hidden" id="djservId" name="djservId" value="$!{lineServiceMap.get(4).serviceId}" />
                        #if($lineServiceMap.get(4))
                        <span class="form_item"><input type="checkbox" checked id="djserv" style="vertical-align: middle;"/> 地接服务  酒店标准:<input value="$!{lineServiceMap.get(4).serviceItem1}" type="text" class="tb_text" id="djxing" style="width:4.3%;"/>星,房型:<input value="$!{lineServiceMap.get(4).serviceItem2}" type="text" class="tb_text" id="djfx" style="width:12%;"/> 备注:<input value="!${lineServiceMap.get(4).serviceItem3}" type="text" class="tb_text" id="djbz" style="width:12%;" /> 特殊景点:<input value="$!{lineServiceMap.get(4).serviceItem4}" type="text" class="tb_text" id="djtsjd" style="width:12%;"/> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
                        <span class="form_item"><input type="radio" id="djdyra" name="djdy" style="vertical-align: middle;" #if("${lineServiceMap.get(4).serviceType}"=="41")checked#end/> 巴士: <input value="$!{lineServiceMap.get(4).serviceItem5}" type="text" class="tb_text" id="djbs" style="width:4.3%;"/> 备注:<input value="$!{lineServiceMap.get(4).serviceItem6}" type="text" class="tb_text" id="djbsbz" style="width:12%;" /> 导游:<select id="djsfxydy"><option value="1" $fn.selected($!{lineServiceMap.get(4).serviceItem7}, "1")>需要</option><option value="2" $fn.selected($!{lineServiceMap.get(4).serviceItem7}, "2")>不需要</option></select> 备注:<input value="$!{lineServiceMap.get(4).serviceItem8}" type="text" class="tb_text" id="djsfxydybz" style="width:12%;" /> <input type="radio" id="djdyrb" name="djdy" style="vertical-align: middle;" #if("${lineServiceMap.get(4).serviceType}"=="42")checked#end/> 司机兼导游: 备注:<input value="#if("${lineServiceMap.get(4).serviceType}"=="42")${lineServiceMap.get(4).serviceItem5}#end" type="text" class="tb_text" id="djsjjdybz" style="width:12%;" /></span>
@@ -285,6 +290,7 @@
                        #end
                        </td></tr><tr><td>
                        <input type="hidden" id="qt" name="qt" />
+                       <input type="hidden" id="qtservId" name="qtservId" value="$!{lineServiceMap.get(5).serviceId}" />
                        #if($lineServiceMap.get(5))
                        <span class="form_item"><input type="checkbox" checked id="qtserv" style="vertical-align: middle;"/> 其他服务 备注:<input value="$!{lineServiceMap.get(5).serviceItem1}" type="text" class="tb_text" id="qtbz" style="width:10%;"/> 应收单价:<input value="${lineServiceMap.get(5).servicePrice}" type="text" class="tb_text ysdj" id="qtysdj" style="width:12%;"/> 应收合计:<input value="${lineServiceMap.get(5).priceSum}" type="text" class="tb_text" id="qtyshj" style="width:12%;"/></span>
                        #else
