@@ -54,4 +54,6 @@ public final class Constant {
     public static final int OPERATOR_TYPE_ADD = 1;
 
     public static final int OPERATOR_TYPE_UPDATE = 2;
+
+    public static final int OPERATOR_TYPE_DELETE = 3;
 }

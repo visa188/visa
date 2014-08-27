@@ -1,6 +1,7 @@
 package com.visa.dao.line;
 
 import java.util.List;
+import java.util.Map;
 
 import com.visa.po.line.OperateLog;
 
@@ -16,4 +17,7 @@ public interface OperateLogDao {
 
     int updateByPrimaryKey(OperateLog record);
 
+    Integer selectAllCount(Map<String, Object> paraMap);
+
+    List<OperateLog> selectByPage(Map<String, Object> paraMap);
 }

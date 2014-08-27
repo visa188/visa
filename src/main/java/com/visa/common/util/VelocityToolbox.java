@@ -254,4 +254,19 @@ public class VelocityToolbox {
 
         return str.substring(0, length) + "..";
     }
+
+    /**
+     * 用于截字，超长的用".."表示
+     */
+    public String getOperate(int operateType) {
+        if (Constant.OPERATOR_TYPE_UPDATE == operateType) {
+            return "修改";
+        } else if (Constant.OPERATOR_TYPE_ADD == operateType) {
+            return "新增";
+        } else if (Constant.OPERATOR_TYPE_DELETE == operateType) {
+            return "删除";
+        } else {
+            return "";
+        }
+    }
 }

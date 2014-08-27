@@ -17,7 +17,6 @@ import com.visa.common.util.PagingUtil;
 import com.visa.common.util.StringUtil;
 import com.visa.common.util.VisaUtil;
 import com.visa.dao.SeqDao;
-import com.visa.dao.UserDao;
 import com.visa.dao.line.LineCountryDao;
 import com.visa.dao.line.LineNameListDao;
 import com.visa.dao.line.LineOrderDao;
@@ -52,8 +51,6 @@ public class LineOrderController {
     @Resource
     private LineNameListDao lineNameListDao;
     @Resource
-    private UserDao userDao;
-    @Resource
     private SeqDao seqDao;
     @Resource
     private OperateLogDao operateLogDao;
@@ -67,13 +64,13 @@ public class LineOrderController {
      * @param model model
      */
     @RequestMapping
-    public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page, ModelMap model,
-            @ModelAttribute OrderSearchBean bean) {
+    public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page,
+            ModelMap model, @ModelAttribute OrderSearchBean bean) {
         Map<String, Object> paraMap = new HashMap<String, Object>();
         // 记录总条数
         int recordCount = lineOrderDao.count(paraMap);
-        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount, page,
-                Constant.LINE_PAGE_OFFSET, model);
+        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount,
+                page, Constant.LINE_PAGE_OFFSET, model);
         paraMap.put("begin", recordRange[0]);
         paraMap.put("pageCount", Constant.LINE_PAGE_COUNT);
 
@@ -103,7 +100,8 @@ public class LineOrderController {
      * @return String
      */
     @RequestMapping
-    public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrder, ModelMap model) {
+    public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user,
+            LineOrderVo lineOrder, ModelMap model) {
         int orderSeq = seqDao.select("lineOrder");
         String prefix = StringUtil.paddingZeroToLeft(String.valueOf(orderSeq), 6);
         lineOrder.setOrderSeq(prefix);
@@ -111,7 +109,8 @@ public class LineOrderController {
         // 散拼团订单时，校验该产品下所有订单客人总量是否大于机位数
         if (lineOrder.getType() == 2) {
             LineProduct product = lineProductDao.selectByPrimaryKey(lineOrder.getLineProductId());
-            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(lineOrder.getLineProductId());
+            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(lineOrder
+                    .getLineProductId());
             int count = 0;
             for (LineOrder order : lineOrderList) {
                 count += order.getNameListSize();
@@ -153,7 +152,8 @@ public class LineOrderController {
      * @param model model
      */
     @RequestMapping
-    public void edit(@ModelAttribute(Constant.SESSION_USER) User user, Integer orderId, Integer page, ModelMap model) {
+    public void edit(@ModelAttribute(Constant.SESSION_USER) User user, Integer orderId,
+            Integer page, ModelMap model) {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(orderId);
         List<LinesSrvice> lineServiceList = linesServiceDao.selectAllLinesSrvice(orderId);
         Map<Integer, LinesSrvice> lineServiceMap = new HashMap<Integer, LinesSrvice>();
@@ -182,18 +182,20 @@ public class LineOrderController {
      * @return String
      */
     @RequestMapping
-    public String update(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrderVo, Integer page) {
+    public String update(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrderVo,
+            Integer page) {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(lineOrderVo.getOrderId());
         Map<Integer, LinesSrvice> serviceListDB = VisaUtil.dealServiceList(linesServiceDao
                 .selectAllLinesSrvice(lineOrderVo.getOrderId()));
-        Map<Integer, LineNameList> nameListDB = VisaUtil.dealNameList(lineNameListDao.selectAllLineNameList(lineOrderVo
-                .getOrderId()));
+        Map<Integer, LineNameList> nameListDB = VisaUtil.dealNameList(lineNameListDao
+                .selectAllLineNameList(lineOrderVo.getOrderId()));
         // 记录操作日志
         OperateLog operateLog = new OperateLog();
         operateLog.setUserId(user.getUserId());
         operateLog.setRoleId(user.getRoleId());
         operateLog.setOperateType(Constant.OPERATOR_TYPE_UPDATE);
-        operateLog.setOperateDes(StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder, serviceListDB, nameListDB));
+        operateLog.setOperateDes(StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder,
+                serviceListDB, nameListDB));
         operateLogDao.insert(operateLog);
         return "redirect:list.do?page=" + page;
     }
@@ -213,7 +215,7 @@ public class LineOrderController {
         OperateLog operateLog = new OperateLog();
         operateLog.setUserId(user.getUserId());
         operateLog.setRoleId(user.getRoleId());
-        operateLog.setOperateType(Constant.OPERATOR_TYPE_ADD);
+        operateLog.setOperateType(Constant.OPERATOR_TYPE_DELETE);
         operateLog.setOperateDes(StringUtil.generateDeleteOperLog(lineOrder));
         operateLogDao.insert(operateLog);
         return "redirect:list.do?page=" + page;

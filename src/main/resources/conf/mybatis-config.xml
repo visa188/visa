@@ -20,5 +20,6 @@
 		<typeAlias alias="OperateLog" type="com.visa.po.line.OperateLog" />
 		<typeAlias alias="OperatorCountry" type="com.visa.po.line.OperatorCountry" />
 		<typeAlias alias="LineProductVo" type="com.visa.vo.line.LineProductVo" />
+		<typeAlias alias="OperateLogVo" type="com.visa.vo.line.OperateLogVo" />
 	</typeAliases>
 </configuration>

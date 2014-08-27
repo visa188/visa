@@ -22,6 +22,15 @@ public class OperateLog {
     public String operateDes;
     /** @pdOid 1bda69c8-ac86-4cc7-8e23-e367486ac363 */
     public Date operateTime;
+    public int orderId;
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 
     public int getLogId() {
         return logId;
