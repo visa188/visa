@@ -152,7 +152,7 @@ GLB.clientOpr = function(node,addBtn,delBtn,type){
 					'<span class="client_delete" title="删除行" onclick="delTempRow(this)">-</span></td>');
 			
 		}else{
-			$(t_tr).html('<td>姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>' +
+			$(t_tr).html('<td><input type="hidden" id="tempId" name="tempId" value="" />姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>' +
 					'&nbsp;性别:<select name="tempSex" placeholder="客人性别"><option value="1">男</option><option value="2">女</option></select>' +
 					'&nbsp;类型:<select name="tempAgeType" placeholder="客人类型"><option value="1">成人</option><option value="2">儿童(占床)</option><option value="3">儿童(不占床)</option></select>'+                            
 					'&nbsp;押金:<input type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>'+
@@ -251,7 +251,7 @@ $(function() {
 			$(this).attr("disabled",true);
 			GLB.vari.submit_flag = true;
 			if($(thisForm).attr('class').indexOf("line") >=0){
-				setClientValue(1);
+				setClientValue(1);		
 			}else{
 				setClientValue();
 			}
@@ -382,6 +382,7 @@ $(function() {
 				checkNotEmpty = true;
 			}
 			
+			var ids=document.getElementsByName("tempId");
 			var names=document.getElementsByName("tempName");
 			var sexs=document.getElementsByName("tempSex");
 			var agetypes=document.getElementsByName("tempAgeType");
@@ -438,7 +439,8 @@ $(function() {
 				"_"+($(deposits)[i].value==''?'#':$(deposits)[i].value)+
 				"_"+($(datums)[i].value==''?'#':$(datums)[i].value)+
 				"_"+($(rooms)[i].value==''?'#':$(rooms)[i].value)+
-				"_"+($(comments)[i].value==''?'#':$(comments)[i].value)+",";
+				"_"+($(comments)[i].value==''?'#':$(comments)[i].value)+
+				"_"+($(ids)[i].value==''?'#':$(ids)[i].value)+",";
 			});
 			if(result&&result.length>0){
 				result=result.substring(0, result.length-1);
@@ -446,13 +448,17 @@ $(function() {
 			// line service
 			var ldserv ='0';
 			if($('#ldserv').is(':checked')==true){
-				ldserv = '1_' + $('#ldtype').val();
+				var ldservId = $('#ldservId').val();
+				ldserv = '1_' + (ldservId==''?'#':ldservId);
+				ldserv += '_' + $('#ldtype').val();
 			}
 			$('#ld').val(ldserv);
 			
 			var qzserv ='0';
 			if($('#qzserv').is(':checked')==true){
-				qzserv = '1_' + $('#qztype').val();
+				var qzservId = $('#qzservId').val();
+				qzserv = '1_' + (qzservId==''?'#':qzservId);
+				qzserv += '_' + $('#qztype').val();
 				var qzysdj = $('#qzysdj').val();
 				var qzyshj = $('#qzyshj').val();
 				qzserv += '_' + (qzysdj==''?'#':qzysdj);
@@ -462,7 +468,9 @@ $(function() {
 			
 			var jpserv ='0';
 			if($('#jpserv').is(':checked')==true){
-				jpserv = '1_' + $('#jptype').val();
+				var jpservId = $('#jpservId').val();
+				jpserv = '1_' + (jpservId==''?'#':jpservId);
+				jpserv += '_' + $('#jptype').val();
 				var jpysdj = $('#jpysdj').val();
 				var jpyshj = $('#jpyshj').val();
 				jpserv += '_' + (jpysdj==''?'#':jpysdj);
@@ -476,8 +484,9 @@ $(function() {
 				var djfx = $('#djfx').val();
 				var djbz = $('#djbz').val();
 				var djtsjd = $('#djtsjd').val();
-				
-				djserv = '1_' + (djxing==''?'#':djxing);
+				var djservId = $('#djservId').val();
+				djserv = '1_' + (djservId==''?'#':djservId);
+				djserv += '_' + (djxing==''?'#':djxing);
 				djserv += '_' + (djfx==''?'#':djfx);
 				djserv += '_' + (djbz==''?'#':djbz);
 				djserv += '_' + (djtsjd==''?'#':djtsjd);
@@ -506,7 +515,9 @@ $(function() {
 			
 			var qtserv ='0';
 			if($('#qtserv').is(':checked')==true){
-				qtserv = '1_' + $('#qtbz').val();
+				var qtservId = $('#qtservId').val();
+				qtserv = '1_' + (qtservId==''?'#':qtservId);
+				qtserv += '_' + $('#qtbz').val();
 				var qtysdj = $('#qtysdj').val();
 				var qtyshj = $('#qtyshj').val();
 				qtserv += '_' + (qtysdj==''?'#':qtysdj);

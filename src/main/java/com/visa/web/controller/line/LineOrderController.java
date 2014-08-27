@@ -1,7 +1,6 @@
 package com.visa.web.controller.line;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,9 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.google.common.base.Splitter;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.visa.common.constant.Constant;
 import com.visa.common.util.PagingUtil;
 import com.visa.common.util.StringUtil;
@@ -136,6 +132,9 @@ public class LineOrderController {
         for (LinesSrvice srvice : lineOrder.getLineOrderService()) {
             linesServiceDao.insert(srvice);
         }
+        for (LineNameList custom : lineOrder.getLineCustomList()) {
+            lineNameListDao.insert(custom);
+        }
         // 记录操作日志
         OperateLog operateLog = new OperateLog();
         operateLog.setUserId(user.getUserId());
@@ -157,7 +156,7 @@ public class LineOrderController {
     public void edit(@ModelAttribute(Constant.SESSION_USER) User user, Integer orderId, Integer page, ModelMap model) {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(orderId);
         List<LinesSrvice> lineServiceList = linesServiceDao.selectAllLinesSrvice(orderId);
-        Map<Integer,LinesSrvice> lineServiceMap = new HashMap<Integer, LinesSrvice>();
+        Map<Integer, LinesSrvice> lineServiceMap = new HashMap<Integer, LinesSrvice>();
         for (LinesSrvice linesSrvice : lineServiceList) {
             int serviceType = linesSrvice.getServiceType();
             if (serviceType == 41 || serviceType == 42) {
@@ -167,40 +166,8 @@ public class LineOrderController {
         }
         List<Country> countryList = lineCountryDao.selectAllCountry();
         List<LineProduct> lineProductList = lineProductDao.selectAllLineProduct();
-        if (lineOrder.getNameList() != null) {
-            List<Map<String, String>> customList = Lists.newArrayList();
-            String[] customArray = lineOrder.getNameList().split(",");
-            for (String customStr : customArray) {
-                Iterator<String> it = Splitter.on("_").split(customStr).iterator();
-                if (!it.hasNext()) {
-                    continue;
-                }
-                Map<String, String> custom = Maps.newHashMap();
-                if (it.hasNext()) {
-                    custom.put("tempName", it.next().replace("#", ""));
-                }
-                if (it.hasNext()) {
-                    custom.put("tempSex", it.next().replace("#", ""));
-                }
-                if (it.hasNext()) {
-                    custom.put("tempAgeType", it.next().replace("#", ""));
-                }
-                if (it.hasNext()) {
-                    custom.put("tempDeposit", it.next().replace("#", ""));
-                }
-                if (it.hasNext()) {
-                    custom.put("tempDatum", it.next().replace("#", ""));
-                }
-                if (it.hasNext()) {
-                    custom.put("tempRoom", it.next().replace("#", ""));
-                }
-                if (it.hasNext()) {
-                    custom.put("tempComment", it.next().replace("#", ""));
-                }
-                customList.add(custom);
-            }
-            model.put("customList", customList);
-        }
+        List<LineNameList> customList = lineNameListDao.selectAllLineNameList(orderId);
+        model.put("customList", customList);
         model.put("lineOrder", lineOrder);
         model.put("lineServiceMap", lineServiceMap);
         model.put("lineProductList", lineProductList);
@@ -219,15 +186,14 @@ public class LineOrderController {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(lineOrderVo.getOrderId());
         Map<Integer, LinesSrvice> serviceListDB = VisaUtil.dealServiceList(linesServiceDao
                 .selectAllLinesSrvice(lineOrderVo.getOrderId()));
-        Map<Integer, LineNameList> nameListDB = VisaUtil.dealNameList(lineNameListDao
-                .selectAllLineNameList(lineOrderVo.getOrderId()));
+        Map<Integer, LineNameList> nameListDB = VisaUtil.dealNameList(lineNameListDao.selectAllLineNameList(lineOrderVo
+                .getOrderId()));
         // 记录操作日志
         OperateLog operateLog = new OperateLog();
         operateLog.setUserId(user.getUserId());
         operateLog.setRoleId(user.getRoleId());
         operateLog.setOperateType(Constant.OPERATOR_TYPE_UPDATE);
-        operateLog.setOperateDes(StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder,
-                serviceListDB, nameListDB));
+        operateLog.setOperateDes(StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder, serviceListDB, nameListDB));
         operateLogDao.insert(operateLog);
         return "redirect:list.do?page=" + page;
     }

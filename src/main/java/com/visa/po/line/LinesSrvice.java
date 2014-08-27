@@ -22,7 +22,7 @@ public class LinesSrvice {
      * 
      * @pdOid 8c34c129-f8f3-4d65-bf01-efb7653878fe
      */
-    public int serviceId;
+    public Integer serviceId;
     /**
      * 订单id
      * 
@@ -126,11 +126,11 @@ public class LinesSrvice {
     /** @pdOid b9729eb6-c714-4e1d-8cf1-1b31ea3a939e */
     public Date postTime;
 
-    public int getServiceId() {
+    public Integer getServiceId() {
         return serviceId;
     }
 
-    public void setServiceId(int serviceId) {
+    public void setServiceId(Integer serviceId) {
         this.serviceId = serviceId;
     }
 

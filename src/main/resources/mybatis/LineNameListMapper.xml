@@ -20,8 +20,8 @@
   </delete>
   
   <insert id="insert">
-    insert into linenamelist (name,sex,ageType,deposit,datum,room,comment,postDt)
-    values (#{name,jdbcType=VARCHAR},#{sex,jdbcType=INTEGER},#{ageType,jdbcType=INTEGER},
+    insert into linenamelist (name,lineOrderId,sex,ageType,deposit,datum,room,comment,postTime)
+    values (#{name,jdbcType=VARCHAR},#{lineOrderId,jdbcType=INTEGER},#{sex,jdbcType=INTEGER},#{ageType,jdbcType=INTEGER},
     #{deposit,jdbcType=VARCHAR},#{datum,jdbcType=VARCHAR},#{room,jdbcType=INTEGER},#{comment,jdbcType=VARCHAR}, now())
   </insert>
   
