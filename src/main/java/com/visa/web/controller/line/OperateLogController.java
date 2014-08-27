@@ -38,7 +38,7 @@ public class OperateLogController {
         String userName = operateLog.getUserName();
         String orderSeq = operateLog.getOrderSeq();
         paraMap.put("operator", "like");
-        paraMap.put("orderSeq", StringUtils.isEmpty(orderSeq) ? null : "%" + orderSeq + "%");
+        paraMap.put("orderSeq", StringUtils.isEmpty(orderSeq) ? null : orderSeq);
         paraMap.put("userName", StringUtils.isEmpty(userName) ? null : "%" + userName + "%");
 
         Integer recordCount = operateLogDao.selectAllCount(paraMap);

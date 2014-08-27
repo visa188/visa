@@ -141,6 +141,7 @@ public class LineOrderController {
         operateLog.setRoleId(user.getRoleId());
         operateLog.setOperateType(Constant.OPERATOR_TYPE_ADD);
         operateLog.setOperateDes(StringUtil.generateAddOperLog(lineOrder));
+        operateLog.setOrderSeq(prefix);
         operateLogDao.insert(operateLog);
         return "redirect:list.do?page=1";
     }
@@ -191,7 +192,7 @@ public class LineOrderController {
                 .selectAllLinesSrvice(lineOrderVo.getOrderId()));
         Map<Integer, LineNameList> nameListDB = VisaUtil.dealNameList(lineNameListDao
                 .selectAllLineNameList(lineOrderVo.getOrderId()));
-        
+
         lineOrderDao.updateByPrimaryKey(lineOrderVo);
         linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId());
         for (LinesSrvice srvice : lineOrderVo.getLineOrderService()) {
@@ -201,7 +202,7 @@ public class LineOrderController {
         for (LineNameList custom : lineOrderVo.getLineCustomList()) {
             lineNameListDao.insert(custom);
         }
-        
+
         // 记录操作日志
         OperateLog operateLog = new OperateLog();
         operateLog.setUserId(user.getUserId());
@@ -209,6 +210,7 @@ public class LineOrderController {
         operateLog.setOperateType(Constant.OPERATOR_TYPE_UPDATE);
         operateLog.setOperateDes(StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder,
                 serviceListDB, nameListDB));
+        operateLog.setOrderSeq(lineOrder.getOrderSeq());
         operateLogDao.insert(operateLog);
         return "redirect:list.do?page=" + currentPage;
     }
@@ -230,6 +232,7 @@ public class LineOrderController {
         operateLog.setRoleId(user.getRoleId());
         operateLog.setOperateType(Constant.OPERATOR_TYPE_DELETE);
         operateLog.setOperateDes(StringUtil.generateDeleteOperLog(lineOrder));
+        operateLog.setOrderSeq(lineOrder.getOrderSeq());
         operateLogDao.insert(operateLog);
         return "redirect:list.do?page=" + page;
     }
