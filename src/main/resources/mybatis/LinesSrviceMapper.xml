@@ -20,6 +20,11 @@
     where serviceId = #{serviceId,jdbcType=INTEGER}
   </delete>
   
+  <delete id="deleteByOrderId">
+    delete from linessrvice
+    where orderId = #{orderId,jdbcType=INTEGER}
+  </delete>
+  
   <insert id="insert">
     insert into linessrvice (orderId,serviceName,serviceType,servicePrice,serviceOperator,serviceItem1,serviceItem2,serviceItem3,serviceItem4,
     serviceItem5,serviceItem6,serviceItem7,serviceItem8,priceSum,alreadyPaid,needPaid,paidBank,paidDate,alreadyGot,needGot,gotBank,gotDate,feeComment, postTime)

@@ -76,6 +76,7 @@ public class LineOrderController {
 
         List<LineOrder> orderList = lineOrderDao.selectByPage(paraMap);
         model.addAttribute("orderList", orderList);
+        model.addAttribute("page", page);
     }
 
     /**
@@ -153,7 +154,7 @@ public class LineOrderController {
      */
     @RequestMapping
     public void edit(@ModelAttribute(Constant.SESSION_USER) User user, Integer orderId,
-            Integer page, ModelMap model) {
+            Integer currentPage, ModelMap model) {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(orderId);
         List<LinesSrvice> lineServiceList = linesServiceDao.selectAllLinesSrvice(orderId);
         Map<Integer, LinesSrvice> lineServiceMap = new HashMap<Integer, LinesSrvice>();
@@ -172,6 +173,7 @@ public class LineOrderController {
         model.put("lineServiceMap", lineServiceMap);
         model.put("lineProductList", lineProductList);
         model.put("countryList", countryList);
+        model.put("currentPage", currentPage);
     }
 
     /**
@@ -183,12 +185,23 @@ public class LineOrderController {
      */
     @RequestMapping
     public String update(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrderVo,
-            Integer page) {
+            Integer currentPage) {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(lineOrderVo.getOrderId());
         Map<Integer, LinesSrvice> serviceListDB = VisaUtil.dealServiceList(linesServiceDao
                 .selectAllLinesSrvice(lineOrderVo.getOrderId()));
         Map<Integer, LineNameList> nameListDB = VisaUtil.dealNameList(lineNameListDao
                 .selectAllLineNameList(lineOrderVo.getOrderId()));
+        
+        lineOrderDao.updateByPrimaryKey(lineOrderVo);
+        linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId());
+        for (LinesSrvice srvice : lineOrderVo.getLineOrderService()) {
+            linesServiceDao.insert(srvice);
+        }
+        lineNameListDao.deleteByOrderId(lineOrderVo.getOrderId());
+        for (LineNameList custom : lineOrderVo.getLineCustomList()) {
+            lineNameListDao.insert(custom);
+        }
+        
         // 记录操作日志
         OperateLog operateLog = new OperateLog();
         operateLog.setUserId(user.getUserId());
@@ -197,7 +210,7 @@ public class LineOrderController {
         operateLog.setOperateDes(StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder,
                 serviceListDB, nameListDB));
         operateLogDao.insert(operateLog);
-        return "redirect:list.do?page=" + page;
+        return "redirect:list.do?page=" + currentPage;
     }
 
     /**

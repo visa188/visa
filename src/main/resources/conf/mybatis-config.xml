@@ -15,6 +15,7 @@
 		<typeAlias alias="Department" type="com.visa.vo.Department" />
 		<typeAlias alias="LineNameList" type="com.visa.po.line.LineNameList" />
 		<typeAlias alias="LineOrder" type="com.visa.po.line.LineOrder" />
+		<typeAlias alias="LineOrderVo" type="com.visa.vo.line.LineOrderVo" />
 		<typeAlias alias="LineProduct" type="com.visa.po.line.LineProduct" />
 		<typeAlias alias="LinesSrvice" type="com.visa.po.line.LinesSrvice" />
 		<typeAlias alias="OperateLog" type="com.visa.po.line.OperateLog" />

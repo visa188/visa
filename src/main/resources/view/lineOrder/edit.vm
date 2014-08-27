@@ -73,6 +73,47 @@
             alert('客人数量大于剩余机位数，请重新填写！');
         }
     }
+    function ajaxFileUpload()
+    {
+        jQuery("#loading")
+        .ajaxStart(function(){
+            jQuery(this).show();
+        })//开始上传文件时显示一个图片
+        .ajaxComplete(function(){
+            jQuery(this).hide();
+        });//文件上传完成将图片隐藏起来
+        
+        jQuery.ajaxFileUpload
+        (
+            {
+                url:'/file/upload.do',//用于文件上传的服务器端请求地址
+                secureuri:false,//一般设置为false
+                fileElementId:'myfile',//文件上传空间的id属性  <input type="file" id="myfile" name="myfile" />
+                dataType: 'text',//返回值类型 一般设置为json
+                success: function (data, status)  //服务器成功响应处理函数
+                {
+                    data = data.replace(/<pre.*?>/g, '');
+                    data = data.replace(/<PRE.*?>/g, '');
+                    data = data.replace("<PRE>", '');  //ajaxFileUpload会对服务器响应回来的text内容加上<pre>text</pre>前后缀
+                    data = data.replace("</PRE>", '');
+                    data = data.replace("<pre>", '');
+                    data = data.replace("</pre>", ''); //本例中设定上传文件完毕后,服务端会返回给前台[0`filepath]
+                    if(data.substring(0, 1) == 0){     //0表示上传成功(后跟上传后的文件路径),1表示失败(后跟失败描述)
+                        var result = data.split("#");
+                        jQuery('#result').html("文件上传成功<br/><a href='/file/download.do?myfile="+encodeURI(result[1])+"'>下载</a>");
+                        jQuery('#travelInfoFileUrl').val(result[1]);
+                    }else{
+                        jQuery('#result').html('文件上传失败，请重试！！');
+                    }
+                },
+                error: function (data, status, e)//服务器响应失败处理函数
+                {
+                    jQuery('#result').html('文件上传失败，请重试！！');
+                }
+            }
+        );
+        return false;
+    }
 </script>
     <div class="miancon">
         <div class="maincon_title">
@@ -80,8 +121,10 @@
             <div class="right"><a class="ico_order_w" title="订单信息管理" href="/lineOrder/list.do?page=1">+</a></div>
         </div>
         <div class="maincon_fluid">
-            <form action="/lineOrder/addSubmit.do" method="post" class="form_horizontal hq_form line">
-                
+            <form action="/lineOrder/update.do" method="post" class="form_horizontal hq_form line">
+              <input type="hidden" name="orderId" value="$!{lineOrder.orderId}" />  
+              <input type="hidden" name="orderSeq" value="$!{lineOrder.orderSeq}" /> 
+              <input type="hidden" name="currentPage" value="$!{currentPage}" />   
               <input value="0" type="hidden" id="lineProductId" name="lineProductId">
                 
               <div class="widget_box">
@@ -166,6 +209,15 @@
                     </div>  
                     
                     <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>行程说明:</label>
+                      <div class="controls">
+                           <input value="0" type="hidden" id="travelInfoFileUrl" name="travelInfoFileUrl">
+                           <img src="/images/loading.gif" id="loading" style="display: none;"><input id="myfile" name="myfile" type="file">
+                           <input type="button" id="fileSubmit" name="fileSubmit" value="上传" onclick="return ajaxFileUpload();"><div id="result"><a href='/file/download.do?myfile="+encodeURI($!{lineOrder.travelInfoFileUrl})+"'>下载</a></div>
+                      </div>
+                    </div>
+                    
+                    <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
                       <div class="controls">
                        <span class="form_item"><input value="$fn.format($!{lineOrder.startDate},"yyyy-MM-dd")" type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate" value=""></span>
@@ -182,7 +234,7 @@
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>行程简介:</label>
                       <div class="controls">
-                       <textarea value="$!{lineOrder.travelInfo}" class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100"></textarea>
+                       <textarea class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100">$!{lineOrder.travelInfo}</textarea>
                       </div>
                     </div>  
                     
@@ -280,7 +332,7 @@
                        <input type="hidden" id="dj" name="dj" />
                        <input type="hidden" id="djservId" name="djservId" value="$!{lineServiceMap.get(4).serviceId}" />
                        #if($lineServiceMap.get(4))
-                       <span class="form_item"><input type="checkbox" checked id="djserv" style="vertical-align: middle;"/> 地接服务  酒店标准:<input value="$!{lineServiceMap.get(4).serviceItem1}" type="text" class="tb_text" id="djxing" style="width:4.3%;"/>星,房型:<input value="$!{lineServiceMap.get(4).serviceItem2}" type="text" class="tb_text" id="djfx" style="width:12%;"/> 备注:<input value="!${lineServiceMap.get(4).serviceItem3}" type="text" class="tb_text" id="djbz" style="width:12%;" /> 特殊景点:<input value="$!{lineServiceMap.get(4).serviceItem4}" type="text" class="tb_text" id="djtsjd" style="width:12%;"/> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input type="checkbox" checked id="djserv" style="vertical-align: middle;"/> 地接服务  酒店标准:<input value="$!{lineServiceMap.get(4).serviceItem1}" type="text" class="tb_text" id="djxing" style="width:4.3%;"/>星,房型:<input value="$!{lineServiceMap.get(4).serviceItem2}" type="text" class="tb_text" id="djfx" style="width:12%;"/> 备注:<input value="$!{lineServiceMap.get(4).serviceItem3}" type="text" class="tb_text" id="djbz" style="width:12%;" /> 特殊景点:<input value="$!{lineServiceMap.get(4).serviceItem4}" type="text" class="tb_text" id="djtsjd" style="width:12%;"/> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
                        <span class="form_item"><input type="radio" id="djdyra" name="djdy" style="vertical-align: middle;" #if("${lineServiceMap.get(4).serviceType}"=="41")checked#end/> 巴士: <input value="$!{lineServiceMap.get(4).serviceItem5}" type="text" class="tb_text" id="djbs" style="width:4.3%;"/> 备注:<input value="$!{lineServiceMap.get(4).serviceItem6}" type="text" class="tb_text" id="djbsbz" style="width:12%;" /> 导游:<select id="djsfxydy"><option value="1" $fn.selected($!{lineServiceMap.get(4).serviceItem7}, "1")>需要</option><option value="2" $fn.selected($!{lineServiceMap.get(4).serviceItem7}, "2")>不需要</option></select> 备注:<input value="$!{lineServiceMap.get(4).serviceItem8}" type="text" class="tb_text" id="djsfxydybz" style="width:12%;" /> <input type="radio" id="djdyrb" name="djdy" style="vertical-align: middle;" #if("${lineServiceMap.get(4).serviceType}"=="42")checked#end/> 司机兼导游: 备注:<input value="#if("${lineServiceMap.get(4).serviceType}"=="42")${lineServiceMap.get(4).serviceItem5}#end" type="text" class="tb_text" id="djsjjdybz" style="width:12%;" /></span>
                        <span class="form_item">应收单价:<input value="${lineServiceMap.get(4).servicePrice}" type="text" class="tb_text ysdj" id="djysdj" style="width:12%;"/> 应收合计:<input value="${lineServiceMap.get(4).priceSum}" type="text" class="tb_text" id="djyshj" style="width:12%;"/></span>
                        #else

@@ -7,6 +7,8 @@ import com.visa.po.line.LineNameList;
 public interface LineNameListDao {
 
     int deleteByPrimaryKey(Integer id);
+    
+    int deleteByOrderId(Integer lineOrderId);
 
     int insert(LineNameList record);
 

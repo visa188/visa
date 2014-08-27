@@ -4,18 +4,19 @@ import java.util.List;
 import java.util.Map;
 
 import com.visa.po.line.LineOrder;
+import com.visa.vo.line.LineOrderVo;
 
 public interface LineOrderDao {
 
     int deleteByPrimaryKey(Integer orderId);
 
-    int insert(LineOrder record);
+    int insert(LineOrderVo record);
 
     List<LineOrder> selectAllLineOrder();
 
     LineOrder selectByPrimaryKey(Integer orderId);
 
-    int updateByPrimaryKey(LineOrder record);
+    int updateByPrimaryKey(LineOrderVo record);
 
     int count(Map<String, Object> paraMap);
 

@@ -7,6 +7,8 @@ import com.visa.po.line.LinesSrvice;
 public interface LinesServiceDao {
 
     int deleteByPrimaryKey(Integer serviceId);
+    
+    int deleteByOrderId(Integer orderId);
 
     int insert(LinesSrvice record);
 

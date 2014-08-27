@@ -72,7 +72,6 @@
     price = #{price,jdbcType=DECIMAL},
     status = #{status,jdbcType=INTEGER},
     lineProductId = #{status,jdbcType=INTEGER},
-    orderSeq = #{orderSeq,jdbcType=VARCHAR},
     specialComment = #{specialComment,jdbcType=VARCHAR},
     postTime = now()
     where orderId = #{orderId,jdbcType=INTEGER}
