@@ -43,11 +43,6 @@ public class FileUploadController {
             return null;
         } else {
             originalFilename = myfile.getOriginalFilename();
-            System.out.println("文件原名: " + originalFilename);
-            System.out.println("文件名称: " + myfile.getName());
-            System.out.println("文件长度: " + myfile.getSize());
-            System.out.println("文件类型: " + myfile.getContentType());
-            System.out.println("========================================");
             try {
                 // 这里不必处理IO流关闭的问题,因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉
                 // 此处也可以使用Spring提供的MultipartFile.transferTo(File dest)方法实现文件的上传
@@ -60,7 +55,6 @@ public class FileUploadController {
             }
         }
         out.print("0#" + request.getContextPath() + "/upload/" + originalFilename);
-        System.out.println(request.getContextPath() + "/upload/" + originalFilename);
         out.flush();
         return null;
 
