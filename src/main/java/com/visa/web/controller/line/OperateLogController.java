@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import com.visa.common.constant.Constant;
 import com.visa.common.util.PagingUtil;
 import com.visa.dao.line.OperateLogDao;
 import com.visa.po.line.OperateLog;
+import com.visa.vo.line.OperateLogVo;
 
 /**
  * @author user
@@ -30,11 +32,14 @@ public class OperateLogController {
      * @param model model
      */
     @RequestMapping
-    public void list(OperateLog operateLog, Integer page, ModelMap model) {
+    public void list(OperateLogVo operateLog, Integer page, ModelMap model) {
         Map<String, Object> paraMap = new HashMap<String, Object>();
 
+        String userName = operateLog.getUserName();
+        String orderSeq = operateLog.getOrderSeq();
         paraMap.put("operator", "like");
-        paraMap.put("orderId", operateLog.getOrderId());
+        paraMap.put("orderSeq", StringUtils.isEmpty(orderSeq) ? null : "%" + orderSeq + "%");
+        paraMap.put("userName", StringUtils.isEmpty(userName) ? null : "%" + userName + "%");
 
         Integer recordCount = operateLogDao.selectAllCount(paraMap);
         int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount,

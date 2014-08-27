@@ -59,7 +59,7 @@
     	                        <td>$!{order.operatorName}</td>
     	                        <td><a class="ico_edit_g" href="javascript:updateOrder('/lineOrder/edit.do?orderId=$!{order.orderId}&currentPage=${page}')"></a></td>
     	                        <td><a class="ico_delete_r" onclick="return confirm('是否将此订单删除?')" href="/lineOrder/delete.do?orderId=$!{order.orderId}&page=${page}"></a></td>
-								<td><a class="ico_edit_g" href="javascript:updateOrder('/operatelog/list.do?orderId=$!{order.orderId}&currentPage=${page}')"></a></td>
+								<td><a class="ico_edit_g" href="/operatelog/list.do?orderSeq=$!{order.orderSeq}&currentPage=1"></a></td>
     	                    </tr>
 						#end
 	                </tbody>

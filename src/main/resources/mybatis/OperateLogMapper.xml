@@ -17,14 +17,16 @@
       	select count(*)
 		from operatelog,user
 		where operatelog.userId=user.userId
-		<if test="orderId != null and orderId != 0">and operatelog.orderId = #{orderId,jdbcType=INTEGER}</if>
+		<if test="orderSeq != null">and operatelog.orderSeq = #{orderSeq,jdbcType=VARCHAR}</if>
+		<if test="userName != null">and user.userName ${operator} #{userName,jdbcType=VARCHAR}</if>
 	</select>
 	
 	<select id="selectByPage" parameterType="java.util.Map" resultType="OperateLogVo">
 	    select operatelog.*,userName
 		from operatelog,user
 		where operatelog.userId=user.userId
-		<if test="orderId != null and orderId != 0">and operatelog.orderId = #{orderId,jdbcType=INTEGER}</if>
+		<if test="orderSeq != null">and operatelog.orderSeq = #{orderSeq,jdbcType=VARCHAR}</if>
+		<if test="userName != null">and user.userName ${operator} #{userName,jdbcType=VARCHAR}</if>
 		limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
 	</select>
   
@@ -34,9 +36,9 @@
   </delete>
   
   <insert id="insert">
-    insert into operatelog (userId, roleId,operateType,operateDes,operateTime,orderId)
+    insert into operatelog (userId, roleId,operateType,operateDes,operateTime,orderSeq)
     values (#{userId,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, #{operateType,jdbcType=INTEGER}, #{operateDes,jdbcType=VARCHAR}
-    , now(), #{orderId,jdbcType=INTEGER})
+    , now(), #{orderSeq,jdbcType=VARCHAR})
   </insert>
   
   <update id="updateByPrimaryKey">
@@ -45,7 +47,7 @@
     roleId = #{roleId,jdbcType=INTEGER},
     operateType = #{operateType,jdbcType=INTEGER},
     operateDes = #{operateDes,jdbcType=VARCHAR},
-    orderId = #{orderId,jdbcType=INTEGER},
+    orderSeq = #{orderSeq,jdbcType=VARCHAR},
     operateTime = now()
     where id = #{id,jdbcType=INTEGER}
   </update>

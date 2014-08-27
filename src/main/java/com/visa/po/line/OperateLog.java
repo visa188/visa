@@ -22,14 +22,14 @@ public class OperateLog {
     public String operateDes;
     /** @pdOid 1bda69c8-ac86-4cc7-8e23-e367486ac363 */
     public Date operateTime;
-    public int orderId;
+    public String orderSeq;
 
-    public int getOrderId() {
-        return orderId;
+    public String getOrderSeq() {
+        return orderSeq;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setOrderSeq(String orderSeq) {
+        this.orderSeq = orderSeq;
     }
 
     public int getLogId() {
