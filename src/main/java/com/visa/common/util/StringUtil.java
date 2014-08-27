@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -38,17 +39,34 @@ public class StringUtil {
     public static String generateUpdateOperLog(LineOrderVo lineOrder, LineOrder lineOrderDB,
             Map<Integer, LinesSrvice> serviceListDB, Map<Integer, LineNameList> nameListDB) {
         StringBuffer result = new StringBuffer();
-        result.append("修改订单，编号：").append(lineOrder.getOrderSeq()).append("。");
+        result.append("修改订单，编号：").append(lineOrder.getOrderSeq()).append("<br/>");
         try {
             result.append(compareChange(lineOrder, lineOrderDB));
             List<LinesSrvice> linesSrviceList = lineOrder.getLineOrderService();
             for (LinesSrvice linesSrvice : linesSrviceList) {
-                result.append(compareChange(linesSrvice,
-                        serviceListDB.get(linesSrvice.getServiceId())));
+                if (serviceListDB.get(linesSrvice.getServiceId()) != null) {
+                    result.append(compareChange(linesSrvice,
+                            serviceListDB.get(linesSrvice.getServiceId())));
+                    serviceListDB.remove(linesSrvice.getServiceId());
+                } else {
+                    result.append("新增服务：").append(linesSrvice.getServiceName()).append("<br/>");
+                }
             }
-            List<LineNameList> linesNameList = null;
+            for (Entry<Integer, LinesSrvice> entry : serviceListDB.entrySet()) {
+                result.append("删除服务：").append(entry.getValue().getServiceName()).append("<br/>");
+            }
+
+            List<LineNameList> linesNameList = lineOrder.getLineCustomList();
             for (LineNameList nameList : linesNameList) {
-                result.append(compareChange(nameList, nameListDB.get(nameList.getId())));
+                if (nameListDB.get(nameList.getId()) != null) {
+                    result.append(compareChange(nameList, nameListDB.get(nameList.getId())));
+                    serviceListDB.remove(nameList.getId());
+                } else {
+                    result.append("新增客户：").append(nameList.getName()).append("<br/>");
+                }
+            }
+            for (Entry<Integer, LineNameList> entry : nameListDB.entrySet()) {
+                result.append("删除客户：").append(entry.getValue().getName()).append("<br/>");
             }
         } catch (Exception e) {
             e.printStackTrace();
