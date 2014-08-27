@@ -41,32 +41,44 @@ public class StringUtil {
         StringBuffer result = new StringBuffer();
         result.append("修改订单，编号：").append(lineOrder.getOrderSeq()).append("<br/>");
         try {
-            result.append(compareChange(lineOrder, lineOrderDB));
-            List<LinesSrvice> linesSrviceList = lineOrder.getLineOrderService();
-            for (LinesSrvice linesSrvice : linesSrviceList) {
-                if (serviceListDB.get(linesSrvice.getServiceId()) != null) {
-                    result.append(compareChange(linesSrvice,
-                            serviceListDB.get(linesSrvice.getServiceId())));
-                    serviceListDB.remove(linesSrvice.getServiceId());
-                } else {
-                    result.append("新增服务：").append(linesSrvice.getServiceName()).append("<br/>");
-                }
+            if (lineOrder != null && lineOrderDB != null) {
+                result.append(compareChange(lineOrder, lineOrderDB));
             }
-            for (Entry<Integer, LinesSrvice> entry : serviceListDB.entrySet()) {
-                result.append("删除服务：").append(entry.getValue().getServiceName()).append("<br/>");
+            List<LinesSrvice> linesSrviceList = lineOrder.getLineOrderService();
+            if (linesSrviceList != null) {
+                for (LinesSrvice linesSrvice : linesSrviceList) {
+                    if (serviceListDB != null
+                            && serviceListDB.get(linesSrvice.getServiceId()) != null) {
+                        result.append(compareChange(linesSrvice,
+                                serviceListDB.get(linesSrvice.getServiceId())));
+                        serviceListDB.remove(linesSrvice.getServiceId());
+                    } else {
+                        result.append("新增服务：").append(linesSrvice.getServiceName()).append("<br/>");
+                    }
+                }
+                if (serviceListDB != null) {
+                    for (Entry<Integer, LinesSrvice> entry : serviceListDB.entrySet()) {
+                        result.append("删除服务：").append(entry.getValue().getServiceName())
+                                .append("<br/>");
+                    }
+                }
             }
 
             List<LineNameList> linesNameList = lineOrder.getLineCustomList();
-            for (LineNameList nameList : linesNameList) {
-                if (nameListDB.get(nameList.getId()) != null) {
-                    result.append(compareChange(nameList, nameListDB.get(nameList.getId())));
-                    serviceListDB.remove(nameList.getId());
-                } else {
-                    result.append("新增客户：").append(nameList.getName()).append("<br/>");
+            if (linesNameList != null) {
+                for (LineNameList nameList : linesNameList) {
+                    if (nameListDB != null && nameListDB.get(nameList.getId()) != null) {
+                        result.append(compareChange(nameList, nameListDB.get(nameList.getId())));
+                        nameListDB.remove(nameList.getId());
+                    } else {
+                        result.append("新增客户：").append(nameList.getName()).append("<br/>");
+                    }
                 }
-            }
-            for (Entry<Integer, LineNameList> entry : nameListDB.entrySet()) {
-                result.append("删除客户：").append(entry.getValue().getName()).append("<br/>");
+                if (nameListDB != null) {
+                    for (Entry<Integer, LineNameList> entry : nameListDB.entrySet()) {
+                        result.append("删除客户：").append(entry.getValue().getName()).append("<br/>");
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
