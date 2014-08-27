@@ -20,7 +20,7 @@ public final class VisaUtil {
     public static Map<Integer, LinesSrvice> dealServiceList(List<LinesSrvice> serviceList) {
         Map<Integer, LinesSrvice> map = new HashMap<Integer, LinesSrvice>();
         for (LinesSrvice service : serviceList) {
-            map.put(service.getOrderId(), service);
+            map.put(service.getServiceId(), service);
         }
         return map;
     }

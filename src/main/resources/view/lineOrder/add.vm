@@ -52,6 +52,7 @@
 			jQuery("#sanpinSelectDiv").show();
 			jQuery("#dantuanSelectDiv").hide();
 			
+			jQuery("#lineProductId").val(jQuery("#selectProductId").val());
 			jQuery("#selectProductId").addClass('js_non_empty');
 			jQuery("#travelAgency").removeClass('js_non_empty');
 			jQuery("#contact").removeClass('js_non_empty');
