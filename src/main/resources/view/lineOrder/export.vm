@@ -1,15 +1,15 @@
-#header(3,33,"导出订单信息")
+#header(10,103,"导出路线订单信息")
 	<div class="miancon">
 		<div class="maincon_title">
-			<span class="ico_order_add">+</span><h2>导出订单信息</h2>
-			<div class="right"><a class="ico_order_w" title="订单信息管理" href="/orders/list.do?page=1">+</a></div>
+			<span class="ico_order_add">+</span><h2>导出路线订单信息</h2>
+			<div class="right"><a class="ico_order_w" title="路线订单信息管理" href="/lineOrder/list.do?page=1">+</a></div>
 		</div>
 		<div class="maincon_fluid">
-			<form action="/orders/exportSubmit.do" method="post" class="form_horizontal hq_form">
+			<form action="/lineOrder/exportSubmit.do" method="post" class="form_horizontal hq_form">
 		      <div class="widget_box">
 		        <div class="widget_title">
 		        	<span class="ico_order_r"></span>
-		        	<h3>选择订单时间</h3>
+		        	<h3>选择路线订单时间</h3>
 		        </div>
 		        <div class="widget_content">
 					<div class="control_group">
@@ -21,28 +21,6 @@
 									<option value="$!salesman.userId">$!salesman.userName</option>
     							#end
     						</select></span>
-		              	</div>		        			
-		        	</div>
-					<div class="control_group">
-	        			<label class="control_label"><span class="ico_must">&nbsp;</span>付款状态:</label>
-						<div class="controls">
-		               		<select name="yfhkStatus" id="yfhkStatus" class="text">
-        						<option value="" selected="selected">全部</option>
-        						<option value="1">未付款</option>
-        						<option value="2">部分付款</option>
-        						<option value="3">已付全款</option>
-        					</select>
-		              	</div>		        			
-		        	</div>
-					<div class="control_group">
-	        			<label class="control_label"><span class="ico_must">&nbsp;</span>收款状态:</label>
-						<div class="controls">
-		               		<select name="yshkStatus" id="yshkStatus" class="text">
-        						<option value="" selected="selected">全部</option>
-        						<option value="1">未收款</option>
-        						<option value="2">部分收款</option>
-        						<option value="3">已收全款</option>
-        					</select>
 		              	</div>		        			
 		        	</div>
 		        	<div class="control_group">
@@ -67,39 +45,6 @@
     						</select></span>
 						</div>
 		        	</div>
-		        	<div class="control_group">
-                        <label class="control_label"><span class="ico_must">&nbsp;</span>客户名称:</label>
-                        <div class="controls">
-                            <span class="form_item"><select name="customerId" id="customerId" class="text2" placeholder="客户名称">
-                                <option value="" selected="selected">请选择</option>
-                                #foreach($customer in $customerList)
-                                    <option value="$!customer.customerId">$!customer.customerName</option>
-                                #end
-                            </select></span>
-                        </div>                          
-                    </div>
-                    <div class="control_group">
-                        <label class="control_label"><span class="ico_must">&nbsp;</span>客户公司:</label>
-                        <div class="controls">
-                            <span class="form_item"><select name="company" id="company" class="text2" placeholder="客户公司">
-                                <option value="" selected="selected">请选择</option>
-                                #foreach($company in $companyList)
-                                    <option value="$!company">$!company</option>
-                                #end
-                            </select></span>
-                        </div>                          
-                    </div>
-                    <div class="control_group">
-                        <label class="control_label"><span class="ico_must">&nbsp;</span>操作员:</label>
-                        <div class="controls">
-                            <span class="form_item"><select name="operatorId" id="operatorId" class="text2" placeholder="操作员">
-                                <option value="" selected="selected">请选择</option>
-                                #foreach($operator in $operatorList)
-                                    <option value="$!operator.userId">$!operator.userName</option>
-                                #end
-                            </select></span>
-                        </div>                          
-                    </div>
 		        </div>
 		       
 		      </div>

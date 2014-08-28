@@ -1,11 +1,25 @@
 package com.visa.web.controller.line;
 
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,10 +27,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.visa.common.constant.Constant;
+import com.visa.common.constant.LineRoleEnumType;
 import com.visa.common.util.PagingUtil;
 import com.visa.common.util.StringUtil;
 import com.visa.common.util.VisaUtil;
 import com.visa.dao.SeqDao;
+import com.visa.dao.UserDao;
 import com.visa.dao.line.LineCountryDao;
 import com.visa.dao.line.LineNameListDao;
 import com.visa.dao.line.LineOrderDao;
@@ -40,6 +56,8 @@ import com.visa.vo.line.LineOrderVo;
 @RequestMapping("/lineOrder/*")
 @SessionAttributes(Constant.SESSION_USER)
 public class LineOrderController {
+    private final Log logger = LogFactory.getLog(this.getClass());
+
     @Resource
     private LineOrderDao lineOrderDao;
     @Resource
@@ -54,6 +72,8 @@ public class LineOrderController {
     private SeqDao seqDao;
     @Resource
     private OperateLogDao operateLogDao;
+    @Resource
+    private UserDao userDao;
 
     /**
      * 列出所有的订单
@@ -237,4 +257,101 @@ public class LineOrderController {
         return "redirect:list.do?page=" + page;
     }
 
+    /**
+     */
+    @RequestMapping
+    public void export(ModelMap model) {
+        model.put("salesmanList", userDao.selectByRoleId(LineRoleEnumType.SALESMAN.getId()));
+        model.put("yearList", lineOrderDao.selectOrderYears());
+        model.put("monthList", lineOrderDao.selectOrderMonths());
+    }
+
+    /**
+     * @param request request
+     * @param response response
+     */
+    @RequestMapping
+    public void exportSubmit(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String year = request.getParameter("year");
+            String month = request.getParameter("month");
+            String salesman = request.getParameter("salesman");
+            String customerId = request.getParameter("customerId");
+            String company = request.getParameter("company");
+            String operatorId = request.getParameter("operatorId");
+            String yfhkStatus = request.getParameter("yfhkStatus");
+            String yshkStatus = request.getParameter("yshkStatus");
+
+            NumberFormat formatter = NumberFormat.getNumberInstance();
+            formatter.setMinimumIntegerDigits(2);
+            formatter.setGroupingUsed(false);
+            month = formatter.format(Integer.parseInt(month));
+
+            // 这里还应增加一个报表时间，精确到月即可
+            String fileName = year + "-" + month;
+            response.reset();
+            response.addHeader("Content-Disposition", "attachment;filename=" + fileName + ".xls");
+            OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
+            response.setContentType("application/octet-stream");
+            this.exportOrderData(toClient, year, month, salesman, yfhkStatus, yshkStatus,
+                    customerId, company, operatorId);
+
+        } catch (IOException e) {
+            logger.error(e, e);
+        }
+    }
+
+    /**
+     * 订单报表
+     * 
+     * @param type type
+     * @param out out
+     */
+    private void exportOrderData(OutputStream out, String year, String month, String salesmanId,
+            String yfhkStatus, String yshkStatus, String customerId, String company,
+            String operatorId) {
+        String[] titles = { "客户名称", "下单日期", "产品名称", "客人名单", "客人数量", "销售员", "操作员", "送签日期", "送签员",
+                "应收单价", "其它应收款", "其它应付款", "总计应收款", "总计应付款", "毛利润", "付款状态", "已付货款", "收款状态", "已收货款",
+                "备注" };
+        HSSFWorkbook wb = new HSSFWorkbook();
+        Sheet s = wb.createSheet();
+        // header row
+        Row headerRow = s.createRow(0);
+        headerRow.setHeightInPoints(40);
+        Cell headerCell;
+        for (int i = 0; i < titles.length; i++) {
+            headerCell = headerRow.createCell(i);
+            headerCell.setCellValue(titles[i]);
+        }
+        Map<String, Object> paraMap = new HashMap<String, Object>();
+        paraMap.put("date", year + "-" + month + "%");
+        paraMap.put("salesmanId", StringUtils.isEmpty(salesmanId) ? null : salesmanId);
+
+        paraMap.put("customerId", StringUtils.isEmpty(customerId) ? null : customerId);
+        paraMap.put("company", StringUtils.isEmpty(company) ? null : company);
+        paraMap.put("operatorId", StringUtils.isEmpty(operatorId) ? null : operatorId);
+
+        paraMap.put("yfhkStatus", StringUtils.isEmpty(yfhkStatus) ? null : yfhkStatus);
+        paraMap.put("yshkStatus", StringUtils.isEmpty(yshkStatus) ? null : yshkStatus);
+        List<LineOrder> ordersList = lineOrderDao.selectAllLineOrder(paraMap);
+
+        if (ordersList != null && ordersList.size() > 0) {
+            new BigDecimal(0);
+            new BigDecimal(0);
+            new BigDecimal(0);
+            int i = 0;
+            for (; i < ordersList.size(); i++) {
+                ordersList.get(i);
+                s.createRow(i + 1);
+            }
+        }
+        try {
+            wb.write(out);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            logger.error("写出excel出错!", e);
+        }
+
+    }
 }

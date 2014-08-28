@@ -12,7 +12,7 @@ public interface LineOrderDao {
 
     int insert(LineOrderVo record);
 
-    List<LineOrder> selectAllLineOrder();
+    List<LineOrder> selectAllLineOrder(Map<String, Object> paraMap);
 
     LineOrder selectByPrimaryKey(Integer orderId);
 
@@ -25,4 +25,8 @@ public interface LineOrderDao {
     int selectByProductIdCount(int lineProductId);
 
     List<LineOrder> selectByProductId(int lineProductId);
+
+    List<String> selectOrderYears();
+
+    List<String> selectOrderMonths();
 }

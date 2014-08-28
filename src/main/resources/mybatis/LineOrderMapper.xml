@@ -3,7 +3,9 @@
 <mapper namespace="com.visa.dao.line.LineOrderDao" >
   <select id="selectAllLineOrder" resultType="LineOrder">
     select * 
-    from lineorder
+    from lineorder,user user1
+    where user1.userId=orders.salesmanId and orders.orderDate like #{date,jdbcType=VARCHAR}
+    <if test="salesmanId != null">and lineorder.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
   </select>
   
   <select id="selectByPrimaryKey" resultType="LineOrder">
@@ -36,6 +38,14 @@
 		order by orderDate desc,orderId desc
 		limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
 	</select>
+	
+	<select id="selectOrderYears" resultType="java.lang.String" >
+    select distinct YEAR(orderDate) from lineorder where orderDate is not null order by orderDate
+  </select>
+  
+  <select id="selectOrderMonths" resultType="java.lang.String" >
+    select distinct MONTH(orderDate) from lineorder where orderDate is not null order by orderDate
+  </select>
   
   <delete id="deleteByPrimaryKey">
     delete from lineorder
@@ -54,7 +64,7 @@
   
   <update id="updateByPrimaryKey">
     update lineorder
-    set orderDate = #{orderDate,jdbcType=DATE},
+    set 
     type = #{type,jdbcType=INTEGER},
     nameListSize = #{nameListSize,jdbcType=INTEGER},
     salesmanId = #{salesmanId,jdbcType=VARCHAR},
