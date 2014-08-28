@@ -312,7 +312,7 @@ public class VelocityToolbox {
     }
 
     public String getFileName(String fileUrl) {
-        if (StringUtils.isEmpty(fileUrl)) {
+        if (!StringUtils.isEmpty(fileUrl)) {
             return fileUrl.replace("/upload/", "");
         }
         return "";
@@ -336,5 +336,19 @@ public class VelocityToolbox {
             return "";
         }
         return "disabled";
+    }
+
+    public String isDisplay(int userRoleId) {
+        return isDisplay(userRoleId, getLineSalesmanRoleId());
+    }
+
+    public String isDisplay(int userRoleId, int role) {
+        if (isLineAdminRole(userRoleId)) {
+            return "";
+        }
+        if (userRoleId == role) {
+            return "";
+        }
+        return "style = \"display:none\"";
     }
 }
