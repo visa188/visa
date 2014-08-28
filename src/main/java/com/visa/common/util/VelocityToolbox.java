@@ -100,8 +100,8 @@ public class VelocityToolbox {
      * @return role name
      */
     public String getRole(Integer roleId) {
-        return RoleEnumType.ROLE_MAP.get(roleId) != null ? RoleEnumType.ROLE_MAP.get(roleId)
-                .getName() : LineRoleEnumType.ROLE_MAP.get(roleId).getName();
+        return RoleEnumType.ROLE_MAP.get(roleId) != null ? RoleEnumType.ROLE_MAP.get(roleId).getName()
+                : LineRoleEnumType.ROLE_MAP.get(roleId).getName();
     }
 
     /**
@@ -196,6 +196,17 @@ public class VelocityToolbox {
         return LineRoleEnumType.SALESMAN.getId();
     }
 
+    public int getLineSalesmanManagerRoleId() {
+        return LineRoleEnumType.SALEMAN_MANAGER.getId();
+    }
+
+    public boolean isLineSalesmanRole(int roleId) {
+        if (LineRoleEnumType.SALESMAN.getId() == roleId || LineRoleEnumType.SALEMAN_MANAGER.getId() == roleId) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * @return Map<Integer, RoleEnumType>
      */
@@ -203,11 +214,15 @@ public class VelocityToolbox {
         return LineRoleEnumType.OPERATOR.getId();
     }
 
-    /**
-     * @return Map<Integer, RoleEnumType>
-     */
-    public int getLineManagerRoleId() {
-        return LineRoleEnumType.MANAGER.getId();
+    public int getLineOperatorManagerRoleId() {
+        return LineRoleEnumType.OPERATOR_MANAGER.getId();
+    }
+
+    public boolean isLineOperatorRole(int roleId) {
+        if (LineRoleEnumType.OPERATOR.getId() == roleId || LineRoleEnumType.OPERATOR_MANAGER.getId() == roleId) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -215,6 +230,32 @@ public class VelocityToolbox {
      */
     public int getLineFinanceRoleId() {
         return LineRoleEnumType.FINANCE.getId();
+    }
+
+    public int getLineFinanceManagerRoleId() {
+        return LineRoleEnumType.FINANCE_MANAGER.getId();
+    }
+
+    public boolean isLineFinanceRole(int roleId) {
+        if (LineRoleEnumType.FINANCE.getId() == roleId || LineRoleEnumType.FINANCE_MANAGER.getId() == roleId) {
+            return true;
+        }
+        return false;
+    }
+
+    public int getLineVisaoperRoleId() {
+        return LineRoleEnumType.VISAOPER.getId();
+    }
+
+    public int getLineVisaoperManagerRoleId() {
+        return LineRoleEnumType.VISAOPER_MANAGER.getId();
+    }
+
+    public boolean isLineVisaoperRole(int roleId) {
+        if (LineRoleEnumType.VISAOPER.getId() == roleId || LineRoleEnumType.VISAOPER_MANAGER.getId() == roleId) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -237,7 +278,7 @@ public class VelocityToolbox {
     /**
      * @return Map<Integer, RoleEnumType>
      */
-    public boolean isLineAdminRoleId(int roleId) {
+    public boolean isLineAdminRole(int roleId) {
         if (LineRoleEnumType.ADMIN.getId() == roleId || roleId == Constant.SUPER_ADMIN_ROLE_ID) {
             return true;
         }
@@ -268,5 +309,32 @@ public class VelocityToolbox {
         } else {
             return "";
         }
+    }
+
+    public String getFileName(String fileUrl) {
+        if (StringUtils.isEmpty(fileUrl)) {
+            return fileUrl.replace("/upload/", "");
+        }
+        return "";
+    }
+
+    public String isReadOnly(int userRoleId) {
+        if (isLineAdminRole(userRoleId)) {
+            return "";
+        }
+        if (userRoleId == getLineSalesmanRoleId()) {
+            return "";
+        }
+        return "readonly";
+    }
+
+    public String isDisabled(int userRoleId) {
+        if (isLineAdminRole(userRoleId)) {
+            return "";
+        }
+        if (userRoleId == getLineSalesmanRoleId()) {
+            return "";
+        }
+        return "disabled";
     }
 }

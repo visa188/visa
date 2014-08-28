@@ -19,21 +19,33 @@ public enum LineRoleEnumType {
      */
     SALESMAN(7, "销售"),
     /**
-     * 经理
+     * 销售经理
      */
-    MANAGER(8, "经理"),
+    SALEMAN_MANAGER(71, "销售经理"),
     /**
      * 操作员
      */
-    OPERATOR(9, "操作员"),
+    OPERATOR(8, "操作员"),
+    /**
+     * 操作经理
+     */
+    OPERATOR_MANAGER(81, "操作经理"),
     /**
      * 财务
      */
-    FINANCE(10, "财务"),
+    FINANCE(9, "财务"),
+    /**
+     * 财务经理
+     */
+    FINANCE_MANAGER(91, "财务经理"),
     /**
      * 送签员
      */
-    VISAOPER(11, "送签员");
+    VISAOPER(10, "送签员"),
+    /**
+     * 送签经理
+     */
+    VISAOPER_MANAGER(101, "送签经理");
 
     private int id;
     private String name;

@@ -136,7 +136,7 @@
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>订单类型:</label>
                         <div class="controls">
-                            <span class="form_item"><select name="type" id="type" class="text2 js_non_empty" placeholder="订单类型" onchange="changeProductType()">
+                            <span class="form_item"><select $fn.isReadOnly($userRoleId) name="type" id="type" class="text2 js_non_empty" placeholder="订单类型" onchange="changeProductType()">
                                 <option value="1" $fn.selected(${lineOrder.type}, "1")>单团</option>
                                 <option value="2" $fn.selected(${lineOrder.type}, "2")>散拼团</option>
                             </select></span>
@@ -147,7 +147,7 @@
                         <div class="control_group">
                             <label class="control_label"><span class="ico_must">*</span>散拼团:</label>
                             <div class="controls">
-                                <span class="form_item"><select id="selectProductId" class="text2" placeholder="散拼团" onchange="getProductId()">
+                                <span class="form_item"><select $fn.isReadOnly($userRoleId) id="selectProductId" class="text2" placeholder="散拼团" onchange="getProductId()">
                                     <option value="" selected="selected">请选择</option>
                                     #foreach($one in $lineProductList)
                                         <option value="$one.lineProductId">$one.lineProductName</option>
@@ -189,21 +189,21 @@
                         <div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>组团社:</label>
                           <div class="controls">
-                           <span class="form_item"><input value="$!{lineOrder.travelAgency}" name="travelAgency" id="travelAgency" type="text" class="text1" maxlength="50" size="50" placeholder="组团社"></span>
+                           <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.travelAgency}" name="travelAgency" id="travelAgency" type="text" class="text1" maxlength="50" size="50" placeholder="组团社"></span>
                           </div>
                         </div>  
                         
                         <div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>联系人:</label>
                           <div class="controls">
-                           <span class="form_item"><input value="$!{lineOrder.contact}" name="contact" id="contact" type="text" class="text1" maxlength="10" size="10" placeholder="联系人"></span>
+                           <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.contact}" name="contact" id="contact" type="text" class="text1" maxlength="10" size="10" placeholder="联系人"></span>
                           </div>
                         </div>  
                         
                         <div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>联系方式:</label>
                           <div class="controls">
-                           <span class="form_item"><input value="$!{lineOrder.contactNo}" name="contactNo" id="contactNo" type="text" class="text1" maxlength="50" size="50" placeholder="联系方式"></span>
+                           <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.contactNo}" name="contactNo" id="contactNo" type="text" class="text1" maxlength="50" size="50" placeholder="联系方式"></span>
                           </div>
                         </div>  
                     </div>  
@@ -213,35 +213,35 @@
                       <div class="controls">
                            <input value="0" type="hidden" id="travelInfoFileUrl" name="travelInfoFileUrl">
                            <img src="/images/loading.gif" id="loading" style="display: none;"><input id="myfile" name="myfile" type="file">
-                           <input type="button" id="fileSubmit" name="fileSubmit" value="上传" onclick="return ajaxFileUpload();"><div id="result"><a href='/file/download.do?myfile="+encodeURI($!{lineOrder.travelInfoFileUrl})+"'>下载</a></div>
+                           <input $fn.isDisabled($userRoleId) type="button" id="fileSubmit" name="fileSubmit" value="上传" onclick="return ajaxFileUpload();"><div id="result">#if(${lineOrder.travelInfoFileUrl})<a href='/file/download.do?myfile="+encodeURI($!{lineOrder.travelInfoFileUrl})+"'>$fn.getFileName($!{lineOrder.travelInfoFileUrl})</a>#else无行程说明文件#end</div>
                       </div>
                     </div>
                     
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
                       <div class="controls">
-                       <span class="form_item"><input value="$fn.format($!{lineOrder.startDate},"yyyy-MM-dd")" type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate" value=""></span>
+                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$fn.format($!{lineOrder.startDate},"yyyy-MM-dd")" type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate" value=""></span>
                       </div>
                     </div> 
                     
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>归国日期:</label>
                       <div class="controls">
-                       <span class="form_item"><input value="$fn.format($!{lineOrder.endDate},"yyyy-MM-dd")" type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate" value=""></span>
+                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$fn.format($!{lineOrder.endDate},"yyyy-MM-dd")" type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate" value=""></span>
                       </div>
                     </div> 
                     
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>行程简介:</label>
                       <div class="controls">
-                       <textarea class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100">$!{lineOrder.travelInfo}</textarea>
+                       <textarea $fn.isReadOnly($userRoleId) class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100">$!{lineOrder.travelInfo}</textarea>
                       </div>
                     </div>  
                     
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
                         <div class="controls">
-                            <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" #if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRoleId($userRoleId)}) onchange="getOperators()" #end>
+                            <span class="form_item"><select $fn.isReadOnly($userRoleId) name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" #if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRoleId($userRoleId)}) onchange="getOperators()" #end>
                                 <option value="" selected="selected">请选择</option>
                                 #foreach($one in $countryList)
                                     <option value="$one.countryId" $fn.selected(${lineOrder.lineCountryId}, $one.countryId)>$one.countryName</option>
@@ -253,7 +253,7 @@
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>客人数量:</label>
                       <div class="controls">
-                       <span class="form_item"><input value="$!{lineOrder.nameListSize}" name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="客人数量" onchange="setNamelistSize()"></span>
+                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.nameListSize}" name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="客人数量" onchange="setNamelistSize()"></span>
                       </div>
                     </div>
                     
@@ -272,13 +272,13 @@
                                         <tr>
                                             <td>
                                        <input type="hidden" id="tempId" name="tempId" value="$!{custom.id}" />
-                                                                                                                                姓名:<input value="$!{custom.name}" type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>
-                                                                                                                                性别:<select name="tempSex" placeholder="客人性别"><option value="1" $fn.selected(${custom.sex}, "1")>男</option><option value="2" $fn.selected(${custom.sex}, "2")>女</option></select>
-                                                                                                                                类型:<select name="tempAgeType" placeholder="客人类型"><option value="1" $fn.selected(${custom.ageType}, "1")>成人</option><option value="2" $fn.selected(${custom.ageType}, "2")>儿童(占床)</option><option value="3"  $fn.selected(${custom.ageType}, "3")>儿童(不占床)</option></select>                            
-                                                                                                                                押金:<input value="$!{custom.deposit}" type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>
-                                                                                                                                资料:<input value="$!{custom.datum}" type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>
-                                                                                                                                房间数:<input value="$!{custom.room}" type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>
-                                                                                                                                备注:<input value="$!{custom.comment}" type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
+                                                                                                                                姓名:<input $fn.isReadOnly($userRoleId) value="$!{custom.name}" type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>
+                                                                                                                                性别:<select $fn.isReadOnly($userRoleId) name="tempSex" placeholder="客人性别"><option value="1" $fn.selected(${custom.sex}, "1")>男</option><option value="2" $fn.selected(${custom.sex}, "2")>女</option></select>
+                                                                                                                                类型:<select $fn.isReadOnly($userRoleId) name="tempAgeType" placeholder="客人类型"><option value="1" $fn.selected(${custom.ageType}, "1")>成人</option><option value="2" $fn.selected(${custom.ageType}, "2")>儿童(占床)</option><option value="3"  $fn.selected(${custom.ageType}, "3")>儿童(不占床)</option></select>                            
+                                                                                                                                押金:<input $fn.isReadOnly($userRoleId) value="$!{custom.deposit}" type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>
+                                                                                                                                资料:<input $fn.isReadOnly($userRoleId) value="$!{custom.datum}" type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>
+                                                                                                                                房间数:<input $fn.isReadOnly($userRoleId) value="$!{custom.room}" type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>
+                                                                                                                                备注:<input $fn.isReadOnly($userRoleId) value="$!{custom.comment}" type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
                                       <span name="delName" class="client_delete" title="删除行" style="margin-left:5%">-</span>
                                             </td>
                                         </tr> 
