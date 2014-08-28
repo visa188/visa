@@ -319,13 +319,31 @@ public class VelocityToolbox {
     }
 
     public String isReadOnly(int userRoleId) {
+        return isReadOnly(userRoleId, 0);
+    }
+
+    /**
+     * @param userRoleId
+     * @param type 0 text 1 select 2 datepicker
+     * @return
+     */
+    public String isReadOnly(int userRoleId, int type) {
         if (isLineAdminRole(userRoleId)) {
-            return "";
+            return "aa";
         }
         if (userRoleId == getLineSalesmanRoleId()) {
-            return "";
+            return "bb";
         }
-        return "readonly";
+        switch (type) {
+        case 0:
+            return " readonly";
+        case 1:
+            return " onfocus=\"this.defaultIndex=this.selectedIndex;\" onchange=\"this.selectedIndex=this.defaultIndex;\"";
+        case 2:
+            return "cc";
+        default:
+            return "dd";
+        }
     }
 
     public String isDisabled(int userRoleId) {
