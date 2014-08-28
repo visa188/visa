@@ -56,6 +56,8 @@ public class LineOrder {
      */
     public String visaOperatorId;
 
+    public String signOperatorId;
+
     public Integer lineProductId;
     /**
      * 组团社
@@ -127,6 +129,14 @@ public class LineOrder {
     public String specialComment;
     /** @pdOid ac5cabc4-f167-49b7-9590-f036f58a74df */
     public Date postTime;
+
+    public String getSignOperatorId() {
+        return signOperatorId;
+    }
+
+    public void setSignOperatorId(String signOperatorId) {
+        this.signOperatorId = signOperatorId;
+    }
 
     public String getOrderSeq() {
         return orderSeq;

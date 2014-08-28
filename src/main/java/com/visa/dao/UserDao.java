@@ -45,4 +45,5 @@ public interface UserDao {
             @Param("pageCount") Integer pageCount, @Param("user") User user);
 
     List<User> selectByLineCountryId(Integer lineCountryId);
+
 }

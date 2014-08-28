@@ -94,7 +94,7 @@
   
   <select id="selectByPrimaryKey" resultType="User" parameterType="java.lang.String" >
     select * from user 
-    where userId = #{userId,jdbcType=VARCHAR}
+    where userId = #{roleId,jdbcType=VARCHAR}
     and enable = 1
   </select>
   

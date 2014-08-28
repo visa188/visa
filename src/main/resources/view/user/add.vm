@@ -152,6 +152,26 @@
 			jQuery("#showCountryNames").hide();
 			jQuery("#showCountryNames").removeClass('js_non_empty');
 		}
+		
+		if(roleId==${fn.getLineSalesmanRoleId()}||roleId==${fn.getLineOperatorRoleId()}
+			||roleId==${fn.getLineVisaoperRoleId()||roleId==${fn.getLineFinanceRoleId()}){
+    		jQuery.ajax({
+        	   type: "POST",
+        	   url: "/user/getManagers.do",
+        	   data:{roleId:roleId},
+        	   success: function(result){
+    		   		if(result!='error'){
+    					var managers=result;
+                        var options='<option value="" selected="selected">请选择</option>';
+                        for(var i=0;i<managers.length;i++){
+                            options+='<option value='+managers[i].userId+'>'+managers[i].userName+'</option>';
+                        }
+                        jQuery("#managerId option").remove();
+                        jQuery("#managerId").append(options);
+    				}
+        	   }
+    		 });
+		 }
 	}
 	jQuery("#BtnCountrySubmit").click(function(){
 		var vals= new Array();

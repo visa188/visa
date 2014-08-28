@@ -290,4 +290,16 @@ public class UserController {
     public List<User> getOperators(String lineCountryId) {
         return userDao.selectByLineCountryId(Integer.parseInt(lineCountryId));
     }
+
+    /**
+     * 根据地区查询国家
+     * 
+     * @param continentId continentId
+     * @return List<Country>
+     */
+    @RequestMapping
+    @ResponseBody
+    public List<User> getManagers(String roleId) {
+        return userDao.selectByRoleId(Integer.parseInt(roleId + "1"));
+    }
 }

@@ -87,6 +87,26 @@ public class LineOrderController {
     public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page,
             ModelMap model, @ModelAttribute OrderSearchBean bean) {
         Map<String, Object> paraMap = new HashMap<String, Object>();
+
+        if (LineRoleEnumType.SALESMAN.getId() == user.getRoleId()) {
+            paraMap.put("salesmanId", user.getUserId());
+        } else if (LineRoleEnumType.SALEMAN_MANAGER.getId() == user.getRoleId()) {
+            paraMap.put("managerId", user.getUserId());
+            paraMap.put("role", "salesmanId");
+        } else if (LineRoleEnumType.OPERATOR_MANAGER.getId() == user.getRoleId()) {
+            paraMap.put("managerId", user.getUserId());
+            paraMap.put("role", "lineOperatorId");
+        } else if (LineRoleEnumType.VISAOPER_MANAGER.getId() == user.getRoleId()) {
+            paraMap.put("managerId", user.getUserId());
+            paraMap.put("role", "visaOperatorId");
+        } else if (LineRoleEnumType.OPERATOR.getId() == user.getRoleId()) {
+            paraMap.put("lineOperatorId", user.getUserId());
+        } else if (LineRoleEnumType.VISAOPER.getId() == user.getRoleId()) {
+            paraMap.put("visaOperatorId", user.getUserId());
+        } else if (LineRoleEnumType.SIGNOPERATOR.getId() == user.getRoleId()) {
+            paraMap.put("signOperatorId", user.getUserId());
+        }
+
         // 记录总条数
         int recordCount = lineOrderDao.count(paraMap);
         int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount,

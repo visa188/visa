@@ -100,8 +100,8 @@ public class VelocityToolbox {
      * @return role name
      */
     public String getRole(Integer roleId) {
-        return RoleEnumType.ROLE_MAP.get(roleId) != null ? RoleEnumType.ROLE_MAP.get(roleId).getName()
-                : LineRoleEnumType.ROLE_MAP.get(roleId).getName();
+        return RoleEnumType.ROLE_MAP.get(roleId) != null ? RoleEnumType.ROLE_MAP.get(roleId)
+                .getName() : LineRoleEnumType.ROLE_MAP.get(roleId).getName();
     }
 
     /**
@@ -201,7 +201,8 @@ public class VelocityToolbox {
     }
 
     public boolean isLineSalesmanRole(int roleId) {
-        if (LineRoleEnumType.SALESMAN.getId() == roleId || LineRoleEnumType.SALEMAN_MANAGER.getId() == roleId) {
+        if (LineRoleEnumType.SALESMAN.getId() == roleId
+                || LineRoleEnumType.SALEMAN_MANAGER.getId() == roleId) {
             return true;
         }
         return false;
@@ -219,7 +220,8 @@ public class VelocityToolbox {
     }
 
     public boolean isLineOperatorRole(int roleId) {
-        if (LineRoleEnumType.OPERATOR.getId() == roleId || LineRoleEnumType.OPERATOR_MANAGER.getId() == roleId) {
+        if (LineRoleEnumType.OPERATOR.getId() == roleId
+                || LineRoleEnumType.OPERATOR_MANAGER.getId() == roleId) {
             return true;
         }
         return false;
@@ -237,7 +239,8 @@ public class VelocityToolbox {
     }
 
     public boolean isLineFinanceRole(int roleId) {
-        if (LineRoleEnumType.FINANCE.getId() == roleId || LineRoleEnumType.FINANCE_MANAGER.getId() == roleId) {
+        if (LineRoleEnumType.FINANCE.getId() == roleId
+                || LineRoleEnumType.FINANCE_MANAGER.getId() == roleId) {
             return true;
         }
         return false;
@@ -252,7 +255,8 @@ public class VelocityToolbox {
     }
 
     public boolean isLineVisaoperRole(int roleId) {
-        if (LineRoleEnumType.VISAOPER.getId() == roleId || LineRoleEnumType.VISAOPER_MANAGER.getId() == roleId) {
+        if (LineRoleEnumType.VISAOPER.getId() == roleId
+                || LineRoleEnumType.VISAOPER_MANAGER.getId() == roleId) {
             return true;
         }
         return false;

@@ -39,13 +39,18 @@ public enum LineRoleEnumType {
      */
     FINANCE_MANAGER(91, "财务经理"),
     /**
+     * 签证操作员
+     */
+    VISAOPER(10, "签证操作员"),
+    /**
+     * 签证操作经理
+     */
+    VISAOPER_MANAGER(101, "签证操作经理"),
+
+    /**
      * 送签员
      */
-    VISAOPER(10, "送签员"),
-    /**
-     * 送签经理
-     */
-    VISAOPER_MANAGER(101, "送签经理");
+    SIGNOPERATOR(11, "送签员");
 
     private int id;
     private String name;

@@ -72,14 +72,6 @@
 			alert('客人数量大于剩余机位数，请重新填写！');
 		}
 	}
-	function setNamelistSize(){
-		var nameListSize = parseInt(jQuery("#nameListSize").val());
-		var leftSeatNum = parseInt(jQuery("#leftSeatNum").val());
-		if(nameListSize>leftSeatNum){
-			jQuery("#nameListSize").val("");
-			alert('客人数量大于剩余机位数，请重新填写！');
-		}
-	}
 	function ajaxFileUpload()
     {
         jQuery("#loading")
@@ -246,7 +238,7 @@
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
                         <div class="controls">
-                            <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" #if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRoleId($userRoleId)}) onchange="getOperators()" #end>
+                            <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" #if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRole($userRoleId)}) onchange="getOperators()" #end>
                                 <option value="" selected="selected">请选择</option>
 								#foreach($one in $countryList)
 									<option value="$one.countryId">$one.countryName</option>
@@ -358,7 +350,7 @@
                     </div>
                 </div>	
 				
-				#if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRoleId($userRoleId)})
+				#if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRole($userRoleId)})
     				<script>
     					function getOperators(){
                     		var lineCountryId = jQuery("#lineCountryId").val();

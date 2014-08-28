@@ -54,7 +54,7 @@
                     </dl>
                 </li>
 				#end
-				#if(${fn.isLineAdminRoleId($userRoleId)})
+				#if(${fn.isLineAdminRole($userRoleId)})
 				<li class="pro_mng#if($topNav==11) open#end">
                     <a class="pro_mng_tab" href="/lineproduct/list.do"><span class="ico_pro"></span><span class="sidenav_text">线路产品管理</span><span class="ico_fold"></span></a>
                     <dl>
