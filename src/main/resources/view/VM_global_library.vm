@@ -110,6 +110,7 @@
 						#end
 						#if(${fn.isLineAdminRoleId($userRoleId)})
 							<dd#if($secNav==103) class="on"#end><a href="/lineOrder/export.do">导出路线订单信息</a></dd>
+							<dd#if($secNav==104) class="on"#end><a href="/operatelog/list.do?page=1">路线订单操作日志</a></dd>
 						#end
                     </dl>
                 </li>

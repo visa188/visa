@@ -19,6 +19,14 @@
 		where operatelog.userId=user.userId
 		<if test="orderSeq != null">and operatelog.orderSeq = #{orderSeq,jdbcType=VARCHAR}</if>
 		<if test="userName != null">and user.userName ${operator} #{userName,jdbcType=VARCHAR}</if>
+		<if test="startDate != null">
+	  		and operatelog.operateTime >= #{startDate,jdbcType=VARCHAR}
+		  </if>
+		  <if test="endDate != null">
+		  	<![CDATA[
+			and operatelog.operateTime <= #{endDate,jdbcType=VARCHAR}
+			]]>
+		  </if>
 	</select>
 	
 	<select id="selectByPage" parameterType="java.util.Map" resultType="OperateLogVo">
@@ -27,6 +35,15 @@
 		where operatelog.userId=user.userId
 		<if test="orderSeq != null">and operatelog.orderSeq = #{orderSeq,jdbcType=VARCHAR}</if>
 		<if test="userName != null">and user.userName ${operator} #{userName,jdbcType=VARCHAR}</if>
+		<if test="startDate != null">
+		  	and operatelog.operateTime >= #{startDate,jdbcType=VARCHAR}
+		  </if>
+		  <if test="endDate != null">
+		  	<![CDATA[
+			and operatelog.operateTime <= #{endDate,jdbcType=VARCHAR}
+			]]>
+		  </if>
+		order by operateTime desc
 		limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
 	</select>
   

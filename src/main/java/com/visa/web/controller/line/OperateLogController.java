@@ -1,5 +1,7 @@
 package com.visa.web.controller.line;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +17,7 @@ import com.visa.common.constant.Constant;
 import com.visa.common.util.PagingUtil;
 import com.visa.dao.line.OperateLogDao;
 import com.visa.po.line.OperateLog;
-import com.visa.vo.line.OperateLogVo;
+import com.visa.vo.line.LogSearchBean;
 
 /**
  * @author user
@@ -32,14 +34,32 @@ public class OperateLogController {
      * @param model model
      */
     @RequestMapping
-    public void list(OperateLogVo operateLog, Integer page, ModelMap model) {
+    public void list(LogSearchBean searchBean, Integer page, ModelMap model) {
         Map<String, Object> paraMap = new HashMap<String, Object>();
 
-        String userName = operateLog.getUserName();
-        String orderSeq = operateLog.getOrderSeq();
+        String userName = searchBean.getUserName();
+        String orderSeq = searchBean.getOrderSeq();
+        String startDate = searchBean.getStartDate();
+        String endDate = searchBean.getEndDate();
+
+        if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate)) {
+            // 如果未选择起止日期，默认为本月一号到当日
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            endDate = sdf.format(c.getTime());
+            searchBean.setEndDate(endDate);
+            c.set(Calendar.DAY_OF_MONTH, 1);
+            startDate = sdf.format(c.getTime());
+            searchBean.setStartDate(startDate);
+        }
+        startDate = searchBean.getStartDate();
+        endDate = searchBean.getEndDate();
+
         paraMap.put("operator", "like");
         paraMap.put("orderSeq", StringUtils.isEmpty(orderSeq) ? null : orderSeq);
         paraMap.put("userName", StringUtils.isEmpty(userName) ? null : "%" + userName + "%");
+        paraMap.put("startDate", StringUtils.isEmpty(startDate) ? null : startDate);
+        paraMap.put("endDate", StringUtils.isEmpty(endDate) ? null : endDate);
 
         Integer recordCount = operateLogDao.selectAllCount(paraMap);
         int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount,
@@ -50,6 +70,6 @@ public class OperateLogController {
 
         List<OperateLog> operateLogList = operateLogDao.selectByPage(paraMap);
         model.put("operateLogList", operateLogList);
-        model.put("operateLog", operateLog);
+        model.put("searchBean", searchBean);
     }
 }

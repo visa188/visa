@@ -1,4 +1,4 @@
-#header(10,101,"操作日志")
+#header(10,104,"操作日志")
 	<div class="miancon">
 		<div class="maincon_title">
 			<span class="ico_order_w"></span><h2>操作日志管理</h2>
@@ -7,9 +7,11 @@
 			<form id="form1" name="form1" action="/operatelog/list.do" method="post" class="form_horizontal">
         		<input type="hidden" id="page" name="page" value="1">
     			<div class="searchbox">
-        			<label for="s_client">用户：<input value="$!{operateLog.userName}" id="userName" name="userName" type="text" class="s_client searchtx" placeholder="用户名称"></label>
-					<label for="s_client">订单编号：<input value="$!{operateLog.orderSeq}" id="orderSeq" name="orderSeq" type="text" class="s_client searchtx" placeholder="订单编号"></label>
-        			<label for="searchbtn"><input onclick="conditionSearch(1);" id="searchbtn" type="button" name="" class="searchbtn" value="搜索" ></label>	
+        			<label for="s_client">用户：<input value="$!{searchBean.userName}" id="userName" name="userName" type="text" class="s_client searchtx" placeholder="用户名称"></label>
+					<label for="s_client">订单编号：<input value="$!{searchBean.orderSeq}" id="orderSeq" name="orderSeq" type="text" class="s_client searchtx" placeholder="订单编号"></label>
+        			<label for="s_ordertime">开始时间：<input id="startDate" name="startDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="开始时间" value="$!{searchBean.startDate}"></label>
+					<label for="s_ordertime">结束时间：<input id="endDate" name="endDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="结束时间" value="$!{searchBean.endDate}"></label>
+					<label for="searchbtn"><input onclick="conditionSearch(1);" id="searchbtn" type="button" name="" class="searchbtn" value="搜索" ></label>	
         		</div>
 			</form>
 			<hr class="hr_a">
