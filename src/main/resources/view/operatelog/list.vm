@@ -33,7 +33,7 @@
     							<td>$!fn.getRole($one.roleId)</td>
     	                        <td>$!fn.getOperate($one.operateType)订单</td>
                                 <td>$!one.operateDes</td>
-                                <td>$!fn.format($!{one.operateTime},"yyyy-MM-dd")</td>
+                                <td>$!fn.format($!{one.operateTime},"yyyy-MM-dd HH:mm:ss")</td>
     	                    </tr>
                         #end	 
 	                </tbody>
