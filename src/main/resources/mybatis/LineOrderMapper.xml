@@ -77,6 +77,7 @@
     set 
     type = #{type,jdbcType=INTEGER},
     nameListSize = #{nameListSize,jdbcType=INTEGER},
+    salesmanName = #{salesmanName,jdbcType=VARCHAR},
     lineOperatorId = #{lineOperatorId,jdbcType=VARCHAR},
     lineOperatorName = #{lineOperatorName,jdbcType=VARCHAR},
     visaOperatorId = #{visaOperatorId,jdbcType=VARCHAR},
