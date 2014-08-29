@@ -34,15 +34,15 @@
 		            <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>用户权限:</label>
                         <div class="controls">
-                            <select name="roleId" id="roleId" class="text2" #if(${fn.isLineAdminRoleId($userRoleId)}) onchange="selectCountry()" #end>
+                            <select name="roleId" id="roleId" class="text2" #if(${fn.isLineAdminRole($userRoleId)}) onchange="selectCountry()" #end>
 								#if(${fn.isAdminRoleId($userRoleId)})
                                     #foreach($one in $fn.roleOptions().entrySet())
-                                    <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>签证$one.value.name</option>
+                                    <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>$one.value.name</option>
 									#end
 								#end
-								#if(${fn.isLineAdminRoleId($userRoleId)})
+								#if(${fn.isLineAdminRole($userRoleId)})
 									#foreach($one in $fn.lineRoleOptions().entrySet())
-                                    <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>线路$one.value.name</option>
+                                    <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>$one.value.name</option>
     								#end
 								#end
                             </select>
@@ -109,7 +109,7 @@
 					#end
 				</p>
 				<p><span id="countryIdtip" class="error_tip" style="display:hidden"></span></p>
-				<p><input type="submit" class="boxybtn1" id="BtnCountrySubmit" value=""></p>
+				<p><input type="button" class="boxybtn1" id="BtnCountrySubmit" value=""></p>
             </div>   
 			<div class='boxyft'></div>
         </div>
@@ -126,7 +126,7 @@
 	
     function changeClass(){
         var roleId = jQuery("#roleId").val();
-        if(roleId==2){
+        if(roleId==2||roleId==7||roleId==8||roleId==9||roleId==10){
             jQuery("#managerId").addClass('js_non_empty');
         }else{
             jQuery("#managerId").removeClass('js_non_empty');
@@ -146,29 +146,25 @@
 		
 		if(roleId==${fn.getLineOperatorRoleId()}){
 			boxyCountry.show();
-			jQuery("#showCountryNames").addClass('js_non_empty');
+			jQuery("#countryNames").addClass('js_non_empty');
 		}else{
 			boxyCountry.hide();
 			jQuery("#showCountryNames").hide();
-			jQuery("#showCountryNames").removeClass('js_non_empty');
+			jQuery("#countryNames").removeClass('js_non_empty');
 		}
-		
-		if(roleId==${fn.getLineSalesmanRoleId()}||roleId==${fn.getLineOperatorRoleId()}
-			||roleId==${fn.getLineVisaoperRoleId()||roleId==${fn.getLineFinanceRoleId()}){
+		if(roleId!=""){
     		jQuery.ajax({
         	   type: "POST",
         	   url: "/user/getManagers.do",
         	   data:{roleId:roleId},
         	   success: function(result){
-    		   		if(result!='error'){
-    					var managers=result;
-                        var options='<option value="" selected="selected">请选择</option>';
-                        for(var i=0;i<managers.length;i++){
-                            options+='<option value='+managers[i].userId+'>'+managers[i].userName+'</option>';
-                        }
-                        jQuery("#managerId option").remove();
-                        jQuery("#managerId").append(options);
-    				}
+    				var managers=result;
+                    var options='<option value="" selected="selected">无</option>';
+                    for(var i=0;i<managers.length;i++){
+                        options+='<option value='+managers[i].userId+'>'+managers[i].userName+'</option>';
+                    }
+                    jQuery("#managerId option").remove();
+                    jQuery("#managerId").append(options);
         	   }
     		 });
 		 }

@@ -13,23 +13,23 @@ public enum RoleEnumType {
     /**
      * 管理员
      */
-    ADMIN(1, "管理员"),
+    ADMIN(1, "签证管理员"),
     /**
      * 销售
      */
-    SALESMAN(2, "销售"),
+    SALESMAN(2, "签证销售"),
     /**
      * 经理
      */
-    MANAGER(3, "经理"),
+    MANAGER(3, "签证经理"),
     /**
      * 操作员
      */
-    OPERATOR(4, "操作员"),
+    OPERATOR(4, "签证操作员"),
     /**
      * 财务
      */
-    FINANCE(5, "财务");
+    FINANCE(5, "签证财务");
 
     private int id;
     private String name;
