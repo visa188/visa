@@ -3,7 +3,6 @@ package com.visa.web.controller.line;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,6 +29,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.visa.common.constant.Constant;
 import com.visa.common.constant.LineRoleEnumType;
+import com.visa.common.util.DateUtil;
 import com.visa.common.util.PagingUtil;
 import com.visa.common.util.StringUtil;
 import com.visa.common.util.VisaUtil;
@@ -114,12 +114,6 @@ public class LineOrderController {
         } else if (LineRoleEnumType.SALEMAN_MANAGER.getId() == user.getRoleId()) {
             paraMap.put("managerId", user.getUserId());
             paraMap.put("role", "salesmanId");
-        } else if (LineRoleEnumType.OPERATOR_MANAGER.getId() == user.getRoleId()) {
-            paraMap.put("managerId", user.getUserId());
-            paraMap.put("role", "lineOperatorId");
-        } else if (LineRoleEnumType.VISAOPER_MANAGER.getId() == user.getRoleId()) {
-            paraMap.put("managerId", user.getUserId());
-            paraMap.put("role", "visaOperatorId");
         } else if (LineRoleEnumType.OPERATOR.getId() == user.getRoleId()) {
             paraMap.put("lineOperatorId", user.getUserId());
         } else if (LineRoleEnumType.VISAOPER.getId() == user.getRoleId()) {
@@ -250,6 +244,10 @@ public class LineOrderController {
         model.put("lineServiceMap", lineServiceMap);
         model.put("lineProductList", lineProductList);
         model.put("currentPage", currentPage);
+        List<Country> countryList = lineCountryDao.selectAllCountry();
+        model.put("countryList", countryList);
+        List<LineNameList> customList = lineNameListDao.selectAllLineNameList(orderId);
+        model.put("customList", customList);
     }
 
     /**
@@ -380,9 +378,8 @@ public class LineOrderController {
     private void exportOrderData(OutputStream out, String year, String month, String salesmanId,
             String yfhkStatus, String yshkStatus, String customerId, String company,
             String operatorId) {
-        String[] titles = { "客户名称", "下单日期", "产品名称", "客人名单", "客人数量", "销售员", "操作员", "送签日期", "送签员",
-                "应收单价", "其它应收款", "其它应付款", "总计应收款", "总计应付款", "毛利润", "付款状态", "已付货款", "收款状态", "已收货款",
-                "备注" };
+        String[] titles = { "订单序号", "销售员", "产品名称", "订单类型", "线路国家", "下单日期", "客人数量", "操作员", "送签员",
+                "组团社", "联系人", "联系方式", "备注" };
         HSSFWorkbook wb = new HSSFWorkbook();
         Sheet s = wb.createSheet();
         // header row
@@ -406,13 +403,36 @@ public class LineOrderController {
         List<LineOrder> ordersList = lineOrderDao.selectAllLineOrder(paraMap);
 
         if (ordersList != null && ordersList.size() > 0) {
-            new BigDecimal(0);
-            new BigDecimal(0);
-            new BigDecimal(0);
             int i = 0;
             for (; i < ordersList.size(); i++) {
-                ordersList.get(i);
-                s.createRow(i + 1);
+                LineOrder p = ordersList.get(i);
+                Row row = s.createRow(i + 1);
+                headerCell = row.createCell(0);
+                headerCell.setCellValue(p.getOrderSeq());
+                headerCell = row.createCell(1);
+                headerCell.setCellValue(p.getSalesmanName());
+                headerCell = row.createCell(2);
+                headerCell.setCellValue(p.getLineProductName());
+                headerCell = row.createCell(3);
+                headerCell.setCellValue(p.getType() == 1 ? "单团" : "散拼");
+                headerCell = row.createCell(4);
+                headerCell.setCellValue(p.getLineCountryName());
+                headerCell = row.createCell(5);
+                headerCell.setCellValue(DateUtil.format(p.getOrderDate(), DateUtil.FORMAT_DATE));
+                headerCell = row.createCell(6);
+                headerCell.setCellValue(p.getNameListSize());
+                headerCell = row.createCell(7);
+                headerCell.setCellValue(p.getLineOperatorName());
+                headerCell = row.createCell(8);
+                headerCell.setCellValue(p.getSignOperatorName());
+                headerCell = row.createCell(9);
+                headerCell.setCellValue(p.getTravelAgency());
+                headerCell = row.createCell(10);
+                headerCell.setCellValue(p.getContact());
+                headerCell = row.createCell(11);
+                headerCell.setCellValue(p.getContactNo());
+                headerCell = row.createCell(12);
+                headerCell.setCellValue(p.getSpecialComment());
             }
         }
         try {
