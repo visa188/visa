@@ -126,6 +126,7 @@
             <form action="/lineOrder/update.do" method="post" class="form_horizontal hq_form line">
               <input type="hidden" name="orderId" value="$!{lineOrder.orderId}" />  
               <input type="hidden" name="orderSeq" value="$!{lineOrder.orderSeq}" /> 
+              <input type="hidden" name="salesmanId" value="$!{lineOrder.salesmanId}" />  
               <input type="hidden" name="currentPage" value="$!{currentPage}" />   
               <input value="$!{lineOrder.lineProductId}" type="hidden" id="lineProductId" name="lineProductId">
                 
@@ -243,7 +244,7 @@
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
                         <div class="controls">
-                            <span class="form_item"><select $fn.isReadOnly($userRoleId,1) name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" #if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRoleId($userRoleId)}) onchange="getOperators()" #end>
+                            <span class="form_item"><select $fn.isReadOnly($userRoleId,1) name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" #if($userRoleId==${fn.getLineSalesmanRoleId()}||${fn.isLineAdminRole($userRoleId)}) onchange="getOperators()" #end>
                                 <option value="" selected="selected">请选择</option>
                                 #foreach($one in $countryList)
                                     <option value="$one.countryId" $fn.selected(${lineOrder.lineCountryId}, $one.countryId)>$one.countryName</option>
@@ -346,9 +347,9 @@
                        <input type="hidden" id="qt" name="qt" />
                        <input type="hidden" id="qtservId" name="qtservId" value="$!{lineServiceMap.get(5).serviceId}" />
                        #if($lineServiceMap.get(5))
-                       <span class="form_item"><input $fn.isReadOnly($userRoleId) type="checkbox" checked id="qtserv" style="vertical-align: middle;"/> 其他服务 备注:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(5).serviceItem1}" type="text" class="tb_text" id="qtbz" style="width:10%;"/> 应收单价:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(5).servicePrice}" type="text" class="tb_text ysdj" id="qtysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(5).priceSum}" type="text" class="tb_text" id="qtyshj" style="width:12%;"/></span>
+                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="qtserv" style="vertical-align: middle;"/> 其他服务 备注:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(5).serviceItem1}" type="text" class="tb_text" id="qtbz" style="width:10%;"/> 应收单价:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(5).servicePrice}" type="text" class="tb_text ysdj" id="qtysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(5).priceSum}" type="text" class="tb_text" id="qtyshj" style="width:12%;"/></span>
                        #else
-                       <span class="form_item"><input $fn.isReadOnly($userRoleId) type="checkbox" id="qtserv" style="vertical-align: middle;"/> 其他服务 备注:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="qtbz" style="width:10%;"/> 应收单价:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text ysdj" id="qtysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="qtyshj" style="width:12%;"/></span>
+                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" id="qtserv" style="vertical-align: middle;"/> 其他服务 备注:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="qtbz" style="width:10%;"/> 应收单价:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text ysdj" id="qtysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="qtyshj" style="width:12%;"/></span>
                        #end
                        </td></tr>  
                        <script>
@@ -379,38 +380,55 @@
                     </div>
                 </div>  
                 
-                <script>
-                    function getOperators(isedit){
-                        var lineCountryId = jQuery("#lineCountryId").val();
-                        if(lineCountryId==''){
-                            return;
+                #if($userRoleId == $fn.getLineOperatorManagerRoleId() || $userRoleId == $fn.getLineVisaoperManagerRoleId() || $fn.isLineAdminRole($userRoleId))
+                    <script>
+                        function getOperators(isedit){
+                            var lineCountryId = jQuery("#lineCountryId").val();
+                            if(lineCountryId==''){
+                                return;
+                            }
+                            jQuery.ajax({
+                               type: "POST",
+                               url: "/user/getOperators.do",
+                               data:{lineCountryId:lineCountryId,#if(!$fn.isLineAdminRole($userRoleId))managerId:$userUserId,#end roleId:$fn.getLineOperatorRoleId()},
+                               success: function(result){
+                                    if(result!='error'){
+                                        var operatorList=result;
+                                        var options='<option value="" selected="selected">请选择</option>';
+                                        for(var i=0;i<operatorList.length;i++){
+                                            options+='<option value='+operatorList[i].userId+'>'+operatorList[i].userName+'</option>';
+                                        }
+                                        jQuery("#lineOperatorId option").remove();
+                                        jQuery("#lineOperatorId").append(options);
+                                        
+                                        if(isedit==1){
+                                            jQuery("#lineOperatorId").val("$!{lineOrder.lineOperatorId}");
+                                        }
+                                    }
+                               }
+                             });
+                             jQuery.ajax({
+                               type: "POST",
+                               url: "/user/getOperators.do",
+                               data:{lineCountryId:lineCountryId,#if(!$fn.isLineAdminRole($userRoleId))managerId:$userUserId,#end roleId:$fn.getLineVisaoperRoleId()},
+                               success: function(result){
+                                    if(result!='error'){
+                                        var operatorList=result;
+                                        var options='<option value="" selected="selected">请选择</option>';
+                                        for(var i=0;i<operatorList.length;i++){
+                                            options+='<option value='+operatorList[i].userId+'>'+operatorList[i].userName+'</option>';
+                                        }
+                                        jQuery("#visaOperatorId option").remove();
+                                        jQuery("#visaOperatorId").append(options);
+                                        
+                                        if(isedit==1){
+                                            jQuery("#visaOperatorId").val("$!{lineOrder.visaOperatorId}");
+                                        }
+                                    }
+                               }
+                             });
                         }
-                        jQuery.ajax({
-                           type: "POST",
-                           url: "/user/getOperators.do",
-                           data:{lineCountryId:lineCountryId},
-                           success: function(result){
-                                if(result!='error'){
-                                    var operatorList=result;
-                                    var options='<option value="" selected="selected">请选择</option>';
-                                    for(var i=0;i<operatorList.length;i++){
-                                        options+='<option value='+operatorList[i].userId+'>'+operatorList[i].userName+'</option>';
-                                    }
-                                    jQuery("#lineOperatorId option").remove();
-                                    jQuery("#lineOperatorId").append(options);
-                                    jQuery("#visaOperatorId option").remove();
-                                    jQuery("#visaOperatorId").append(options);
-                                    
-                                    if(isedit==1){
-                                        jQuery("#lineOperatorId").val("$!{lineOrder.lineOperatorId}");
-                                        jQuery("#visaOperatorId").val("$!{lineOrder.visaOperatorId}");
-                                    }
-                                }
-                           }
-                         });
-                    }
-                </script>
-                #if($userRoleId == $fn.getLineOperatorManagerRoleId() || $userRoleId == $fn.getLineVisaoperManagerRoleId())
+                    </script>
                     <div class="widget_title">
                         <span class="ico_static_r"></span>
                         <h3>操作信息</h3>

@@ -85,10 +85,13 @@
     and enable = 1
   </select>
   
-    <select id="selectByLineCountryId" resultType="User">
+  <select id="selectByLineCountryId" resultType="User">
     select *  
     FROM user , operatorcountry
-    where user.userId = operatorcountry.userId and lineCountryId = #{lineCountryId,jdbcType=INTEGER} 
+    where user.userId = operatorcountry.userId 
+    and lineCountryId = #{lineCountryId,jdbcType=INTEGER} 
+    <if test="managerId != null">and managerId = #{managerId,jdbcType=INTEGER}</if>
+    and roleId = #{roleId,jdbcType=INTEGER} 
     and enable = 1
   </select>
   

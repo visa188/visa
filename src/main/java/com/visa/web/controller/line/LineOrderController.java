@@ -192,12 +192,18 @@ public class LineOrderController {
         }
         lineOrder.setSalesmanName(userDao.selectByPrimaryKey(lineOrder.getSalesmanId())
                 .getUserName());
-        lineOrder.setLineOperatorName(userDao.selectByPrimaryKey(lineOrder.getLineOperatorId())
-                .getUserName());
-        lineOrder.setVisaOperatorName(userDao.selectByPrimaryKey(lineOrder.getVisaOperatorId())
-                .getUserName());
-        lineOrder.setSignOperatorName(userDao.selectByPrimaryKey(lineOrder.getSignOperatorId())
-                .getUserName());
+        if (!StringUtils.isEmpty(lineOrder.getLineOperatorId())) {
+            lineOrder.setLineOperatorName(userDao.selectByPrimaryKey(lineOrder.getLineOperatorId())
+                    .getUserName());
+        }
+        if (!StringUtils.isEmpty(lineOrder.getVisaOperatorId())) {
+            lineOrder.setVisaOperatorName(userDao.selectByPrimaryKey(lineOrder.getVisaOperatorId())
+                    .getUserName());
+        }
+        if (!StringUtils.isEmpty(lineOrder.getSignOperatorId())) {
+            lineOrder.setSignOperatorName(userDao.selectByPrimaryKey(lineOrder.getSignOperatorId())
+                    .getUserName());
+        }
         lineOrderDao.insert(lineOrder);
         for (LinesSrvice srvice : lineOrder.getLineOrderService()) {
             linesServiceDao.insert(srvice);
@@ -264,12 +270,19 @@ public class LineOrderController {
 
         lineOrderVo.setSalesmanName(userDao.selectByPrimaryKey(lineOrderVo.getSalesmanId())
                 .getUserName());
-        lineOrderVo.setLineOperatorName(userDao.selectByPrimaryKey(lineOrderVo.getLineOperatorId())
-                .getUserName());
-        lineOrderVo.setVisaOperatorName(userDao.selectByPrimaryKey(lineOrderVo.getVisaOperatorId())
-                .getUserName());
-        lineOrderVo.setSignOperatorName(userDao.selectByPrimaryKey(lineOrderVo.getSignOperatorId())
-                .getUserName());
+        if (!StringUtils.isEmpty(lineOrderVo.getLineOperatorId())) {
+            lineOrderVo.setLineOperatorName(userDao.selectByPrimaryKey(
+                    lineOrderVo.getLineOperatorId()).getUserName());
+        }
+        if (!StringUtils.isEmpty(lineOrderVo.getVisaOperatorId())) {
+            lineOrderVo.setVisaOperatorName(userDao.selectByPrimaryKey(
+                    lineOrderVo.getVisaOperatorId()).getUserName());
+        }
+        if (!StringUtils.isEmpty(lineOrderVo.getSignOperatorId())) {
+            lineOrderVo.setSignOperatorName(userDao.selectByPrimaryKey(
+                    lineOrderVo.getSignOperatorId()).getUserName());
+        }
+
         lineOrderDao.updateByPrimaryKey(lineOrderVo);
         linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId());
         for (LinesSrvice srvice : lineOrderVo.getLineOrderService()) {

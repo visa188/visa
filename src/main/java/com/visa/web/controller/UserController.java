@@ -285,8 +285,8 @@ public class UserController {
      */
     @RequestMapping
     @ResponseBody
-    public List<User> getOperators(String lineCountryId) {
-        return userDao.selectByLineCountryId(Integer.parseInt(lineCountryId));
+    public List<User> getOperators(int lineCountryId, String managerId, int roleId) {
+        return userDao.selectByLineCountryId(lineCountryId, managerId, roleId);
     }
 
     /**

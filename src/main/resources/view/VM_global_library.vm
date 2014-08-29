@@ -41,6 +41,7 @@
     </div>
 </div>
 #set($userRoleId=${session.getAttribute("session_user").roleId})
+#set($userUserId=${session.getAttribute("session_user").userId})
 <div class="pbody">
     <div class="sidebar">
         <div class="sidenav">

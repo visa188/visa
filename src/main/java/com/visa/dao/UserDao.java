@@ -17,9 +17,8 @@ public interface UserDao {
 
     Integer selectByManagerIdCount(@Param("managerId") String managerId, @Param("user") User user);
 
-    List<UserVo> selectByManagerId(@Param("managerId") String managerId,
-            @Param("start") Integer start, @Param("pageCount") Integer pageCount,
-            @Param("user") User user);
+    List<UserVo> selectByManagerId(@Param("managerId") String managerId, @Param("start") Integer start,
+            @Param("pageCount") Integer pageCount, @Param("user") User user);
 
     Integer selectAllCount(User user);
 
@@ -36,14 +35,15 @@ public interface UserDao {
 
     Integer selectVisaAllCount(User user);
 
-    List<UserVo> selectVisaAll(@Param("start") Integer start,
-            @Param("pageCount") Integer pageCount, @Param("user") User user);
+    List<UserVo> selectVisaAll(@Param("start") Integer start, @Param("pageCount") Integer pageCount,
+            @Param("user") User user);
 
     Integer selectLineAllCount(User user);
 
-    List<UserVo> selectLineAll(@Param("start") Integer start,
-            @Param("pageCount") Integer pageCount, @Param("user") User user);
+    List<UserVo> selectLineAll(@Param("start") Integer start, @Param("pageCount") Integer pageCount,
+            @Param("user") User user);
 
-    List<User> selectByLineCountryId(Integer lineCountryId);
+    List<User> selectByLineCountryId(@Param("lineCountryId") Integer lineCountryId,
+            @Param("managerId") String managerId, @Param("roleId") Integer roleId);
 
 }
