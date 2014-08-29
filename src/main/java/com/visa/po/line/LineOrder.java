@@ -43,20 +43,24 @@ public class LineOrder {
      * @pdOid 704cf255-fb37-4469-b283-ac94cabf63e9
      */
     public String salesmanId;
+    public String salesmanName;
     /**
      * 线路操作员id
      * 
      * @pdOid cbd8e698-2da8-4317-b94e-7e85b1d0011e
      */
     public String lineOperatorId;
+    public String lineOperatorName;
     /**
      * 签证操作员id
      * 
      * @pdOid 84c17522-1cd8-4b5f-8b20-1078a0546905
      */
     public String visaOperatorId;
+    public String visaOperatorName;
 
     public String signOperatorId;
+    public String signOperatorName;
 
     public Integer lineProductId;
     /**
@@ -129,14 +133,6 @@ public class LineOrder {
     public String specialComment;
     /** @pdOid ac5cabc4-f167-49b7-9590-f036f58a74df */
     public Date postTime;
-
-    public String getSignOperatorId() {
-        return signOperatorId;
-    }
-
-    public void setSignOperatorId(String signOperatorId) {
-        this.signOperatorId = signOperatorId;
-    }
 
     public String getOrderSeq() {
         return orderSeq;
@@ -329,6 +325,46 @@ public class LineOrder {
 
     public void setPostTime(Date postTime) {
         this.postTime = postTime;
+    }
+
+    public String getSalesmanName() {
+        return salesmanName;
+    }
+
+    public void setSalesmanName(String salesmanName) {
+        this.salesmanName = salesmanName;
+    }
+
+    public String getLineOperatorName() {
+        return lineOperatorName;
+    }
+
+    public void setLineOperatorName(String lineOperatorName) {
+        this.lineOperatorName = lineOperatorName;
+    }
+
+    public String getVisaOperatorName() {
+        return visaOperatorName;
+    }
+
+    public void setVisaOperatorName(String visaOperatorName) {
+        this.visaOperatorName = visaOperatorName;
+    }
+
+    public String getSignOperatorId() {
+        return signOperatorId;
+    }
+
+    public void setSignOperatorId(String signOperatorId) {
+        this.signOperatorId = signOperatorId;
+    }
+
+    public String getSignOperatorName() {
+        return signOperatorName;
+    }
+
+    public void setSignOperatorName(String signOperatorName) {
+        this.signOperatorName = signOperatorName;
     }
 
 }
