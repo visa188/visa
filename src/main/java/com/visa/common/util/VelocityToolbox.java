@@ -262,6 +262,10 @@ public class VelocityToolbox {
         return false;
     }
 
+    public int getLineSignoperRoleId() {
+        return LineRoleEnumType.SIGNOPERATOR.getId();
+    }
+
     /**
      * @return Map<Integer, RoleEnumType>
      */

@@ -13,20 +13,21 @@
 				<div class="right"><a class="ico_order_add" title="新增订单信息" href="/lineOrder/add.do">+</a></div>
 		</div>
 		<div class="maincon_fluid">
-		<form id="form1" name="form1" action="/orders/list.do" method="post" class="form_horizontal">
+		<form id="form1" name="form1" action="/lineOrder/list.do" method="post" class="form_horizontal">
 			<input type="hidden" id="page" name="page" value="1">
     		<div class="searchbox">
    				<label for="s_client">订单号：<input type="text" name="orderSeq" value="$!{searchBean.orderSeq}" />
-   					
    				</label>
-				<label for="s_client">所属销售：
-					<select name="salesman" id="salesman" class="text" onchange="conditionSearch(1)">
-						<option value="" selected="selected">全部</option>
-						#foreach($one in $salesmanList)
-							<option value="$one.userId"$fn.selected(${searchBean.salesman}, $one.userId)>$one.userName</option>
-                        #end
-					</select>
-				</label>
+				#if(${fn.isLineAdminRole($userRoleId)})
+    				<label for="s_client">所属销售：
+    					<select name="salesman" id="salesman" class="text" onchange="conditionSearch(1)">
+    						<option value="" selected="selected">全部</option>
+    						#foreach($one in $salesmanList)
+    							<option value="$one.userId"$fn.selected(${searchBean.salesman}, $one.userId)>$one.userName</option>
+                            #end
+    					</select>
+    				</label>
+				#end
 			</div>
 			<div class="searchbox">
 				<label for="s_ordertime">开始时间：<input id="startDate" name="startDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="开始时间" value="$!{searchBean.startDate}"></label>
@@ -42,8 +43,7 @@
 							<th width="">订单号</th>
 							<th width="">客人数量</th>
 	                        <th width="">下单日期</th>
-	                        <th width="">目前状态</th>
-	                        <th width="">操作员</th>
+	                        <th width="">线路操作员</th>
 	                        <th width="">修改</th>
 	                        <th width="">删除</th>
 							<th width="">查看日志</th>
@@ -55,8 +55,7 @@
 								<td>$!{order.orderSeq}</td>
 								<td>$!{order.nameListSize}人</td>
     	                        <td>$fn.format($!{order.orderDate},'yyyy-MM-dd')</td>
-    	                        <td>$!{order.operatorDes}</td>
-    	                        <td>$!{order.operatorName}</td>
+    	                        <td>$!{order.lineOperatorName}</td>
     	                        <td><a class="ico_edit_g" href="javascript:updateOrder('/lineOrder/edit.do?orderId=$!{order.orderId}&currentPage=${page}')"></a></td>
     	                        <td><a class="ico_delete_r" onclick="return confirm('是否将此订单删除?')" href="/lineOrder/delete.do?orderId=$!{order.orderId}&page=${page}"></a></td>
 								<td><a class="ico_edit_g" href="/operatelog/list.do?orderSeq=$!{order.orderSeq}&currentPage=1"></a></td>

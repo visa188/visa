@@ -36,11 +36,35 @@
 		<if test="visaOperatorId != null">and lineorder.visaOperatorId=#{visaOperatorId,jdbcType=VARCHAR}</if>
 		<if test="signOperatorId != null">and lineorder.signOperatorId=#{signOperatorId,jdbcType=VARCHAR}</if>
 		<if test="managerId != null">and ${role} in (select userId from user where managerId=#{managerId,jdbcType=VARCHAR})</if>
+		<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
+		<if test="startDate != null">
+		  	and lineorder.orderDate >= #{startDate,jdbcType=VARCHAR}
+		  </if>
+		  <if test="endDate != null">
+		  	<![CDATA[
+			and lineorder.orderDate <= #{endDate,jdbcType=VARCHAR}
+			]]>
+		  </if>
 	</select>
 	
 	<select id="selectByPage" parameterType="java.util.Map" resultType="LineOrder">
        	select *
-		from lineorder
+		from lineorder,user user1
+		where user1.userId=lineorder.salesmanId 
+		<if test="salesmanId != null">and lineorder.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
+		<if test="lineOperatorId != null">and lineorder.lineOperatorId=#{lineOperatorId,jdbcType=VARCHAR}</if>
+		<if test="visaOperatorId != null">and lineorder.visaOperatorId=#{visaOperatorId,jdbcType=VARCHAR}</if>
+		<if test="signOperatorId != null">and lineorder.signOperatorId=#{signOperatorId,jdbcType=VARCHAR}</if>
+		<if test="managerId != null">and ${role} in (select userId from user where managerId=#{managerId,jdbcType=VARCHAR})</if>
+		<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
+		<if test="startDate != null">
+		  	and lineorder.orderDate >= #{startDate,jdbcType=VARCHAR}
+		  </if>
+		  <if test="endDate != null">
+		  	<![CDATA[
+			and lineorder.orderDate <= #{endDate,jdbcType=VARCHAR}
+			]]>
+		  </if>
 		order by orderDate desc,orderId desc
 		limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
 	</select>
