@@ -43,6 +43,8 @@
 							<th width="">订单号</th>
 							<th width="">客人数量</th>
 	                        <th width="">下单日期</th>
+							<th width="">国家名称</th>
+							<th width="">产品名称</th>
 	                        <th width="">线路操作员</th>
 	                        <th width="">修改</th>
 	                        <th width="">删除</th>
@@ -55,7 +57,9 @@
 								<td>$!{order.orderSeq}</td>
 								<td>$!{order.nameListSize}人</td>
     	                        <td>$fn.format($!{order.orderDate},'yyyy-MM-dd')</td>
-    	                        <td>$!{order.lineOperatorName}</td>
+								<td>$!{order.lineCountryName}</td>
+    	                        <td>$!{order.lineProductName}</td>
+								<td>$!{order.lineOperatorName}</td>
     	                        <td><a class="ico_edit_g" href="javascript:updateOrder('/lineOrder/edit.do?orderId=$!{order.orderId}&currentPage=${page}')"></a></td>
     	                        <td><a class="ico_delete_r" onclick="return confirm('是否将此订单删除?')" href="/lineOrder/delete.do?orderId=$!{order.orderId}&page=${page}"></a></td>
 								<td><a class="ico_edit_g" href="/operatelog/list.do?orderSeq=$!{order.orderSeq}&currentPage=1"></a></td>
