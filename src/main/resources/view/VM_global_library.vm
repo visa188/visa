@@ -108,7 +108,7 @@
 						#if($userRoleId==${fn.getLineSalesmanRoleId()})
 							<dd#if($secNav==102) class="on"#end><a href="/lineOrder/add.do">新增路线订单信息</a></dd>
 						#end
-						#if(${fn.isLineAdminRoleId($userRoleId)})
+						#if(${fn.isLineAdminRole($userRoleId)})
 							<dd#if($secNav==103) class="on"#end><a href="/lineOrder/export.do">导出路线订单信息</a></dd>
 							<dd#if($secNav==104) class="on"#end><a href="/operatelog/list.do?page=1">路线订单操作日志</a></dd>
 						#end
@@ -142,9 +142,9 @@
 				#end
                 
                 <li class="client_mng#if($topNav==4) open#end">
-                    <a class="client_mng_tab" href="#if(${fn.isAdminRoleId($userRoleId)}||${fn.isLineAdminRoleId($userRoleId)}) /user/list.do #else /user/changepwd.do #end"><span class="ico_setting"></span><span class="sidenav_text">系统管理</span><span class="ico_fold"></span></a>
+                    <a class="client_mng_tab" href="#if(${fn.isAdminRoleId($userRoleId)}||${fn.isLineAdminRole($userRoleId)}) /user/list.do #else /user/changepwd.do #end"><span class="ico_setting"></span><span class="sidenav_text">系统管理</span><span class="ico_fold"></span></a>
                     <dl>
-                        #if(${fn.isAdminRoleId($userRoleId)}||${fn.isLineAdminRoleId($userRoleId)})
+                        #if(${fn.isAdminRoleId($userRoleId)}||${fn.isLineAdminRole($userRoleId)})
                         <dd#if($secNav==41) class="on"#end><a href="/user/list.do">用户信息管理</a></dd>
                         <dd#if($secNav==42) class="on"#end><a href="/user/add.do">新增用户信息</a></dd>
                         #end

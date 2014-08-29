@@ -94,13 +94,11 @@ public class UserController {
      * @param model model
      */
     @RequestMapping
-    public void add(ModelMap model) {
-        List<User> managerList = userDao.selectByRoleId(RoleEnumType.MANAGER.getId());
+    public void add(@ModelAttribute(Constant.SESSION_USER) User sessionUser, ModelMap model) {
         List<Department> deptList = deptDao.selectAll();
         List<Country> countryList = lineCountryDao.selectAllCountry();
         model.put("countryList", countryList);
         model.put("deptList", deptList);
-        model.put("managerList", managerList);
         model.put("topNav", 4);
         model.put("secNav", 42);
         model.put("title", "新增用户信息");
@@ -300,6 +298,13 @@ public class UserController {
     @RequestMapping
     @ResponseBody
     public List<User> getManagers(String roleId) {
-        return userDao.selectByRoleId(Integer.parseInt(roleId + "1"));
+        List<User> managerList = new ArrayList<User>();
+        int tempRoleId = Integer.parseInt(roleId);
+        if (tempRoleId < 6) {
+            managerList = userDao.selectByRoleId(RoleEnumType.MANAGER.getId());
+        } else if (tempRoleId == 7 || tempRoleId == 8 || tempRoleId == 9 || tempRoleId == 10) {
+            managerList = userDao.selectByRoleId(Integer.parseInt(roleId + "1"));
+        }
+        return managerList;
     }
 }
