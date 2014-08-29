@@ -114,12 +114,6 @@ public class LineOrderController {
         } else if (LineRoleEnumType.SALEMAN_MANAGER.getId() == user.getRoleId()) {
             paraMap.put("managerId", user.getUserId());
             paraMap.put("role", "salesmanId");
-        } else if (LineRoleEnumType.OPERATOR_MANAGER.getId() == user.getRoleId()) {
-            paraMap.put("managerId", user.getUserId());
-            paraMap.put("role", "lineOperatorId");
-        } else if (LineRoleEnumType.VISAOPER_MANAGER.getId() == user.getRoleId()) {
-            paraMap.put("managerId", user.getUserId());
-            paraMap.put("role", "visaOperatorId");
         } else if (LineRoleEnumType.OPERATOR.getId() == user.getRoleId()) {
             paraMap.put("lineOperatorId", user.getUserId());
         } else if (LineRoleEnumType.VISAOPER.getId() == user.getRoleId()) {
