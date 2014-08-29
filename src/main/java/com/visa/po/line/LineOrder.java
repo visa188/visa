@@ -63,6 +63,7 @@ public class LineOrder {
     public String signOperatorName;
 
     public Integer lineProductId;
+    public String lineProductName;
     /**
      * 组团社
      * 
@@ -87,6 +88,7 @@ public class LineOrder {
      * @pdOid ed3abc93-1497-46e9-8a5a-3eb37b4a7eb4
      */
     public String lineCountryId;
+    public String lineCountryName;
     /**
      * 出发日期
      * 
@@ -133,6 +135,22 @@ public class LineOrder {
     public String specialComment;
     /** @pdOid ac5cabc4-f167-49b7-9590-f036f58a74df */
     public Date postTime;
+
+    public String getLineProductName() {
+        return lineProductName;
+    }
+
+    public void setLineProductName(String lineProductName) {
+        this.lineProductName = lineProductName;
+    }
+
+    public String getLineCountryName() {
+        return lineCountryName;
+    }
+
+    public void setLineCountryName(String lineCountryName) {
+        this.lineCountryName = lineCountryName;
+    }
 
     public String getOrderSeq() {
         return orderSeq;
