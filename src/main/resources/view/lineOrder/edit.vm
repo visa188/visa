@@ -214,7 +214,7 @@
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>行程说明:</label>
                       <div class="controls">
-                           <input value="0" type="hidden" id="travelInfoFileUrl" name="travelInfoFileUrl">
+                           <input value="$!{lineOrder.travelInfoFileUrl}" type="hidden" id="travelInfoFileUrl" name="travelInfoFileUrl">
                            <img src="/images/loading.gif" id="loading" style="display: none;"><input id="myfile" name="myfile" type="file">
                            <input $fn.isDisabled($userRoleId) type="button" id="fileSubmit" name="fileSubmit" value="上传" onclick="return ajaxFileUpload();"><div id="result">#if(${lineOrder.travelInfoFileUrl})<a href='/file/download.do?myfile=$!{lineOrder.travelInfoFileUrl}'>$fn.getFileName($!{lineOrder.travelInfoFileUrl})</a>#else无行程说明文件#end</div>
                       </div>
@@ -271,20 +271,36 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    #foreach($custom in $customList)
+                                    #if($customList.size() > 0)
+                                        #foreach($custom in $customList)
+                                            <tr>
+                                                <td>
+                                           <input type="hidden" id="tempId" name="tempId" value="$!{custom.id}" />
+                                                                                                                                    姓名:<input $fn.isReadOnly($userRoleId) value="$!{custom.name}" type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>
+                                                                                                                                    性别:<select $fn.isReadOnly($userRoleId,1) name="tempSex" placeholder="客人性别"><option value="1" $fn.selected(${custom.sex}, "1")>男</option><option value="2" $fn.selected(${custom.sex}, "2")>女</option></select>
+                                                                                                                                    类型:<select $fn.isReadOnly($userRoleId,1) name="tempAgeType" placeholder="客人类型"><option value="1" $fn.selected(${custom.ageType}, "1")>成人</option><option value="2" $fn.selected(${custom.ageType}, "2")>儿童(占床)</option><option value="3"  $fn.selected(${custom.ageType}, "3")>儿童(不占床)</option></select>                            
+                                                                                                                                    押金:<input $fn.isReadOnly($userRoleId) value="$!{custom.deposit}" type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>
+                                                                                                                                    资料:<input $fn.isReadOnly($userRoleId) value="$!{custom.datum}" type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>
+                                                                                                                                    房间数:<input $fn.isReadOnly($userRoleId) value="$!{custom.room}" type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>
+                                                                                                                                    备注:<input $fn.isReadOnly($userRoleId) value="$!{custom.comment}" type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
+                                          <span $fn.isDisplay($userRoleId) name="delName" class="client_delete" title="删除行" style="margin-left:5%">-</span>
+                                                </td>
+                                            </tr> 
+                                        #end
+                                    #else
                                         <tr>
-                                            <td>
-                                       <input type="hidden" id="tempId" name="tempId" value="$!{custom.id}" />
-                                                                                                                                姓名:<input $fn.isReadOnly($userRoleId) value="$!{custom.name}" type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>
-                                                                                                                                性别:<select $fn.isReadOnly($userRoleId,1) name="tempSex" placeholder="客人性别"><option value="1" $fn.selected(${custom.sex}, "1")>男</option><option value="2" $fn.selected(${custom.sex}, "2")>女</option></select>
-                                                                                                                                类型:<select $fn.isReadOnly($userRoleId,1) name="tempAgeType" placeholder="客人类型"><option value="1" $fn.selected(${custom.ageType}, "1")>成人</option><option value="2" $fn.selected(${custom.ageType}, "2")>儿童(占床)</option><option value="3"  $fn.selected(${custom.ageType}, "3")>儿童(不占床)</option></select>                            
-                                                                                                                                押金:<input $fn.isReadOnly($userRoleId) value="$!{custom.deposit}" type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>
-                                                                                                                                资料:<input $fn.isReadOnly($userRoleId) value="$!{custom.datum}" type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>
-                                                                                                                                房间数:<input $fn.isReadOnly($userRoleId) value="$!{custom.room}" type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>
-                                                                                                                                备注:<input $fn.isReadOnly($userRoleId) value="$!{custom.comment}" type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
-                                      <span $fn.isDisplay($userRoleId) name="delName" class="client_delete" title="删除行" style="margin-left:5%">-</span>
-                                            </td>
-                                        </tr> 
+                                                <td>
+                                          <input type="hidden" id="tempId" name="tempId" value="" />
+                                                                                                                                    姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>
+                                                                                                                                    性别:<select name="tempSex" placeholder="客人性别"><option value="1">男</option><option value="2">女</option></select>
+                                                                                                                                    类型:<select name="tempAgeType" placeholder="客人类型"><option value="1">成人</option><option value="2">儿童(占床)</option><option value="3">儿童(不占床)</option></select>                            
+                                                                                                                                    押金:<input type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>
+                                                                                                                                    资料:<input type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>
+                                                                                                                                    房间数:<input type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>
+                                                                                                                                    备注:<input type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
+                                          <span name="delName" class="client_delete" title="删除行" style="margin-left:5%">-</span>
+                                                </td>
+                                            </tr>
                                     #end          
                                     </tbody>
                                 </table><span class="form_item"><input type="hidden" class="js_non_empty" id="nameList" name="nameList" value="" placeholder="客人信息"></span>
@@ -311,35 +327,35 @@
                        <input type="hidden" id="ld" name="ld" />
                        <input type="hidden" id="ldservId" name="ldservId" value="$!{lineServiceMap.get(1).serviceId}" />
                        #if($lineServiceMap.get(1))
-                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="ldserv" style="vertical-align: middle;"/> 领队服务 <select $fn.isReadOnly($userRoleId,1) id="ldtype"><option value="1" $fn.selected(${lineServiceMap.get(1).serviceItem1}, "1")>组团社派</option><option value="2" $fn.selected(${lineServiceMap.get(1).serviceItem1}, "2")>启航假期派</option></select> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="ldserv" style="vertical-align: middle;"/> 领队服务 <select $fn.isReadOnly($userRoleId,1) id="ldtype"><option value="1" $fn.selected(${lineServiceMap.get(1).serviceItem1}, "1")>组团社派</option><option value="2" $fn.selected(${lineServiceMap.get(1).serviceItem1}, "2")>启航假期派</option></select>#if($userRoleId == $fn.getLineOperatorManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 操作员:<select name="ldpai" id="ldpai"><option value="1">日本</option></select>#end</span>
                        #else
-                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" id="ldserv" style="vertical-align: middle;"/> 领队服务 <select $fn.isReadOnly($userRoleId,1) id="ldtype"><option value="1">组团社派</option><option value="2">启航假期派</option></select> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" id="ldserv" style="vertical-align: middle;"/> 领队服务 <select $fn.isReadOnly($userRoleId,1) id="ldtype"><option value="1">组团社派</option><option value="2">启航假期派</option></select>#if($userRoleId == $fn.getLineOperatorManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 操作员:<select name="ldpai" id="ldpai"><option value="1">日本</option></select>#end</span>
                        #end
                        </td></tr><tr><td>
                        <input type="hidden" id="qz" name="qz" />
                        <input type="hidden" id="qzservId" name="qzservId" value="$!{lineServiceMap.get(2).serviceId}" />
                        #if($lineServiceMap.get(2))
-                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="qzserv" style="vertical-align: middle;"/> 签证服务 <select $fn.isReadOnly($userRoleId,1) id="qztype"><option value="1" $fn.selected(${lineServiceMap.get(2).serviceItem1}, "1")>个签</option><option value="2" $fn.selected(${lineServiceMap.get(2).serviceItem1}, "2")>团签</option></select> 应收单价:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(2).servicePrice}" type="text" class="tb_text ysdj" id="qzysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(2).priceSum}" type="text" class="tb_text" id="qzyshj" style="width:12%;"/> 签证员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="qzserv" style="vertical-align: middle;"/> 签证服务 <select $fn.isReadOnly($userRoleId,1) id="qztype"><option value="1" $fn.selected(${lineServiceMap.get(2).serviceItem1}, "1")>个签</option><option value="2" $fn.selected(${lineServiceMap.get(2).serviceItem1}, "2")>团签</option></select> 应收单价:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(2).servicePrice}" type="text" class="tb_text ysdj" id="qzysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(2).priceSum}" type="text" class="tb_text" id="qzyshj" style="width:12%;"/>#if($userRoleId == $fn.getLineVisaoperManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 签证员:<select name="qzpai" id="qzpai"><option value="1">日本</option></select>#end</span>
                        #else
-                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" id="qzserv" style="vertical-align: middle;"/> 签证服务 <select $fn.isReadOnly($userRoleId,1) id="qztype"><option value="1">个签</option><option value="2">团签</option></select> 应收单价:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text ysdj" id="qzysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="qzyshj" style="width:12%;"/> 签证员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" id="qzserv" style="vertical-align: middle;"/> 签证服务 <select $fn.isReadOnly($userRoleId,1) id="qztype"><option value="1">个签</option><option value="2">团签</option></select> 应收单价:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text ysdj" id="qzysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="qzyshj" style="width:12%;"/>#if($userRoleId == $fn.getLineVisaoperManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 签证员:<select name="qzpai" id="qzpai"><option value="1">日本</option></select>#end</span>
                        #end
                        </td></tr><tr><td>
                        <input type="hidden" id="jp" name="jp" />
                        <input type="hidden" id="jpservId" name="jpservId" value="$!{lineServiceMap.get(3).serviceId}" />
                        #if($lineServiceMap.get(3))
-                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="jpserv" style="vertical-align: middle;"/> 机票服务 <select $fn.isReadOnly($userRoleId,1) id="jptype"><option value="1" $fn.selected(${lineServiceMap.get(3).serviceItem1}, "1")>团队机票</option><option value="2" $fn.selected(${lineServiceMap.get(3).serviceItem1}, "2")>散客机票</option></select> 应收单价:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(3).servicePrice}" type="text" class="tb_text ysdj" id="jpysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(3).priceSum}" type="text" class="tb_text" id="jpyshj" style="width:12%;"/> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="jpserv" style="vertical-align: middle;"/> 机票服务 <select $fn.isReadOnly($userRoleId,1) id="jptype"><option value="1" $fn.selected(${lineServiceMap.get(3).serviceItem1}, "1")>团队机票</option><option value="2" $fn.selected(${lineServiceMap.get(3).serviceItem1}, "2")>散客机票</option></select> 应收单价:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(3).servicePrice}" type="text" class="tb_text ysdj" id="jpysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(3).priceSum}" type="text" class="tb_text" id="jpyshj" style="width:12%;"/>#if($userRoleId == $fn.getLineOperatorManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 操作员:<select name="jppai" id="jppai"><option value="1">日本</option></select>#end</span>
                        #else
-                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" id="jpserv" style="vertical-align: middle;"/> 机票服务 <select $fn.isReadOnly($userRoleId,1) id="jptype"><option value="1">团队机票</option><option value="2">散客机票</option></select> 应收单价:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text ysdj" id="jpysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="jpyshj" style="width:12%;"/> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" id="jpserv" style="vertical-align: middle;"/> 机票服务 <select $fn.isReadOnly($userRoleId,1) id="jptype"><option value="1">团队机票</option><option value="2">散客机票</option></select> 应收单价:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text ysdj" id="jpysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="jpyshj" style="width:12%;"/>#if($userRoleId == $fn.getLineOperatorManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 操作员:<select name="jppai" id="jppai"><option value="1">日本</option></select>#end</span>
                        #end
                        </td></tr><tr><td>
                        <input type="hidden" id="dj" name="dj" />
                        <input type="hidden" id="djservId" name="djservId" value="$!{lineServiceMap.get(4).serviceId}" />
                        #if($lineServiceMap.get(4))
-                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="djserv" style="vertical-align: middle;"/> 地接服务  酒店标准:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem1}" type="text" class="tb_text" id="djxing" style="width:4.3%;"/>星,房型:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem2}" type="text" class="tb_text" id="djfx" style="width:12%;"/> 备注:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem3}" type="text" class="tb_text" id="djbz" style="width:12%;" /> 特殊景点:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem4}" type="text" class="tb_text" id="djtsjd" style="width:12%;"/> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="djserv" style="vertical-align: middle;"/> 地接服务  酒店标准:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem1}" type="text" class="tb_text" id="djxing" style="width:4.3%;"/>星,房型:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem2}" type="text" class="tb_text" id="djfx" style="width:12%;"/> 备注:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem3}" type="text" class="tb_text" id="djbz" style="width:12%;" /> 特殊景点:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem4}" type="text" class="tb_text" id="djtsjd" style="width:12%;"/>#if($userRoleId == $fn.getLineOperatorManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 操作员:<select name="djpai" id="djpai"><option value="1">日本</option></select>#end</span>
                        <span class="form_item"><input $fn.isDisabled($userRoleId) type="radio" id="djdyra" name="djdy" style="vertical-align: middle;" #if("${lineServiceMap.get(4).serviceType}"=="41")checked#end/> 巴士: <input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem5}" type="text" class="tb_text" id="djbs" style="width:4.3%;"/> 备注:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem6}" type="text" class="tb_text" id="djbsbz" style="width:12%;" /> 导游:<select $fn.isReadOnly($userRoleId,1) id="djsfxydy"><option value="1" $fn.selected($!{lineServiceMap.get(4).serviceItem7}, "1")>需要</option><option value="2" $fn.selected($!{lineServiceMap.get(4).serviceItem7}, "2")>不需要</option></select> 备注:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem8}" type="text" class="tb_text" id="djsfxydybz" style="width:12%;" /> <input $fn.isDisabled($userRoleId) type="radio" id="djdyrb" name="djdy" style="vertical-align: middle;" #if("${lineServiceMap.get(4).serviceType}"=="42")checked#end/> 司机兼导游: 备注:<input $fn.isReadOnly($userRoleId) value="#if("${lineServiceMap.get(4).serviceType}"=="42")${lineServiceMap.get(4).serviceItem5}#end" type="text" class="tb_text" id="djsjjdybz" style="width:12%;" /></span>
                        <span class="form_item">应收单价:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(4).servicePrice}" type="text" class="tb_text ysdj" id="djysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(4).priceSum}" type="text" class="tb_text" id="djyshj" style="width:12%;"/></span>
                        #else
-                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" id="djserv" style="vertical-align: middle;"/> 地接服务  酒店标准:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djxing" style="width:4.3%;"/>星,房型:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djfx" style="width:12%;"/> 备注:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djbz" style="width:12%;" /> 特殊景点:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djtsjd" style="width:12%;"/> 操作员:<select name="ldpai"><option value="1">日本</option></select></span>
+                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" id="djserv" style="vertical-align: middle;"/> 地接服务  酒店标准:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djxing" style="width:4.3%;"/>星,房型:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djfx" style="width:12%;"/> 备注:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djbz" style="width:12%;" /> 特殊景点:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djtsjd" style="width:12%;"/>#if($userRoleId == $fn.getLineOperatorManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 操作员:<select name="djpai" id="djpai"><option value="1">日本</option></select>#end</span>
                        <span class="form_item"><input $fn.isDisabled($userRoleId) type="radio" id="djdyra" name="djdy" style="vertical-align: middle;" checked/> 巴士: <input type="text" class="tb_text" id="djbs" style="width:4.3%;"/> 备注:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djbsbz" style="width:12%;" /> 导游:<select $fn.isReadOnly($userRoleId,1) id="djsfxydy"><option value="1">需要</option><option value="2">不需要</option></select> 备注:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djsfxydybz" style="width:12%;" /> <input $fn.isDisabled($userRoleId) type="radio" id="djdyrb" name="djdy" style="vertical-align: middle;"/> 司机兼导游: 备注:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djsjjdybz" style="width:12%;" /></span>
                        <span class="form_item">应收单价:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text ysdj" id="djysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djyshj" style="width:12%;"/></span>
                        #end
@@ -356,12 +372,12 @@
                         jQuery('.ysdj').blur(function(){
                             var nameListSize = jQuery('#nameListSize').val();
                             var dj = jQuery(this).val();
-                            if(jQuery.isNumeric(nameListSize)&&jQuery.isNumeric(dj)){
+                            if(!isNaN(nameListSize)&&!isNaN(dj)){
                                 jQuery(jQuery(this).next()).val(nameListSize * dj);
                             }
                         });
                         jQuery('#nameListSize').change(function(){
-                            if(jQuery.isNumeric(jQuery(this).val())){
+                            if(!isNaN(jQuery(this).val())){
                                 jQuery('.ysdj').blur();
                             }
                         });
@@ -401,6 +417,15 @@
                                         jQuery("#lineOperatorId option").remove();
                                         jQuery("#lineOperatorId").append(options);
                                         
+                                        jQuery("#ldpai option").remove();
+                                        jQuery("#ldpai").append(options);
+                                        
+                                        jQuery("#jppai option").remove();
+                                        jQuery("#jppai").append(options);
+                                        
+                                        jQuery("#djpai option").remove();
+                                        jQuery("#djpai").append(options);
+                                        
                                         if(isedit==1){
                                             jQuery("#lineOperatorId").val("$!{lineOrder.lineOperatorId}");
                                         }
@@ -421,6 +446,9 @@
                                         jQuery("#visaOperatorId option").remove();
                                         jQuery("#visaOperatorId").append(options);
                                         
+                                        jQuery("#qzpai option").remove();
+                                        jQuery("#qzpai").append(options);
+                                        
                                         if(isedit==1){
                                             jQuery("#visaOperatorId").val("$!{lineOrder.visaOperatorId}");
                                         }
@@ -434,6 +462,7 @@
                         <h3>操作信息</h3>
                     </div>
                     <div class="widget_content">
+                        #if($userRoleId == $fn.getLineOperatorManagerRoleId() || $fn.isLineAdminRole($userRoleId))
                         <div $fn.isDisplay($userRoleId,$fn.getLineOperatorManagerRoleId()) class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>线路操作员:</label>
                           <div class="controls">
@@ -443,6 +472,8 @@
                             </select></span>
                           </div>
                         </div>
+                        #end
+                        #if($userRoleId == $fn.getLineVisaoperManagerRoleId() || $fn.isLineAdminRole($userRoleId))
                         <div $fn.isDisplay($userRoleId,$fn.getLineVisaoperManagerRoleId()) class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>签证操作员:</label>
                           <div class="controls">
@@ -452,6 +483,7 @@
                             </select></span>
                           </div>
                         </div>  
+                        #end
                     </div>
                     <script>
                         getOperators(1);
@@ -475,15 +507,6 @@
                     <input type="hidden" id="status" name="status" value="0"/>
                     <button type="button" class="btn btn_save" name="bc">保存</button>
                     <button type="button" class="btn btn_save" name="tj">提交</button>
-                    <script>
-                        jQuery('.btn_save').click(function(){
-                            var nameListSize = jQuery('#nameListSize').val();
-                            if('tj'==jQuery(this).attr('name')){
-                                jQuery('#status').val('8');                                
-                            }
-                            jQuery(".hq_form")[0].submit();
-                        });
-                    </script>
                 </div>                
             </form>
         </div>
