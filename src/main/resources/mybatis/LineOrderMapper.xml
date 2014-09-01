@@ -91,14 +91,14 @@
   <insert id="insert" useGeneratedKeys="true" keyProperty="orderId">
     insert into lineorder (orderDate,type,nameListSize,salesmanId,salesmanName,lineOperatorId,lineOperatorName,
     visaOperatorId,visaOperatorName,signOperatorId,signOperatorName,travelAgency,contact,contactNo,lineCountryId,
-    startDate,endDate,travelInfo,travelInfoFileUrl,aircorpId,price,status,lineProductId,specialComment,orderSeq, postTime)
+    startDate,endDate,travelInfo,travelInfoFileUrl,aircorpId,price,priceSum,alreadyGot,needGot,gotBank,gotDate,status,lineProductId,specialComment,orderSeq, postTime)
     values (now(),
     #{type,jdbcType=INTEGER},#{nameListSize,jdbcType=INTEGER},#{salesmanId,jdbcType=VARCHAR},#{salesmanName,jdbcType=VARCHAR},
     #{lineOperatorId,jdbcType=VARCHAR},#{lineOperatorName,jdbcType=VARCHAR},#{visaOperatorId,jdbcType=VARCHAR},#{visaOperatorName,jdbcType=VARCHAR},
     #{signOperatorId,jdbcType=VARCHAR},#{signOperatorName,jdbcType=VARCHAR},#{travelAgency,jdbcType=VARCHAR},#{contact,jdbcType=VARCHAR},
     #{contactNo,jdbcType=VARCHAR},#{lineCountryId,jdbcType=INTEGER},#{startDate,jdbcType=DATE},
     #{endDate,jdbcType=DATE},#{travelInfo,jdbcType=VARCHAR},#{travelInfoFileUrl,jdbcType=VARCHAR},#{aircorpId,jdbcType=INTEGER},
-    #{price,jdbcType=DECIMAL},#{status,jdbcType=INTEGER},#{lineProductId,jdbcType=INTEGER},#{specialComment,jdbcType=VARCHAR},
+    #{price,jdbcType=DECIMAL},#{priceSum,jdbcType=DECIMAL},#{alreadyGot,jdbcType=DECIMAL},#{needGot,jdbcType=DECIMAL},#{gotBank,jdbcType=VARCHAR},#{gotDate,jdbcType=DATE},#{status,jdbcType=INTEGER},#{lineProductId,jdbcType=INTEGER},#{specialComment,jdbcType=VARCHAR},
     #{orderSeq,jdbcType=VARCHAR}, now())
   </insert>
   
@@ -124,6 +124,11 @@
 	    <if test="travelInfoFileUrl != null">travelInfoFileUrl = #{travelInfoFileUrl,jdbcType=VARCHAR},</if>
 	    <if test="aircorpId != null">aircorpId = #{aircorpId,jdbcType=INTEGER},</if>
 	    <if test="price != null">price = #{price,jdbcType=DECIMAL},</if>
+	    <if test="priceSum != null">price = #{price,jdbcType=DECIMAL},</if>
+	    <if test="alreadyGot != null">price = #{price,jdbcType=DECIMAL},</if>
+	    <if test="needGot != null">price = #{price,jdbcType=DECIMAL},</if>
+	    <if test="gotBank != null">price = #{gotBank,jdbcType=VARCHAR},</if>
+	    <if test="gotDate != null">price = #{price,jdbcType=DATE},</if>
 	    <if test="status != null">status = #{status,jdbcType=INTEGER},</if>
 	    <if test="lineProductId != null">lineProductId = #{lineProductId,jdbcType=INTEGER},</if>
 	    <if test="specialComment != null">specialComment = #{specialComment,jdbcType=VARCHAR},</if>
