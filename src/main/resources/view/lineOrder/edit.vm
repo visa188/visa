@@ -489,7 +489,6 @@
                         getOperators(1);
                     </script>
 				#end
-<<<<<<< HEAD
 				#if($userRoleId == $fn.getLineOperatorRoleId() || $fn.isLineAdminRole($userRoleId))
                     <div class="widget_title">
                         <span class="ico_static_r"></span>
@@ -545,8 +544,6 @@
                         </div> 
                     </div>  
                 #end
-=======
->>>>>>> branch 'master' of https://github.com/visa188/visa
 				#set($visaService = $!{lineServiceMap.get(2)})
 				#if($visaService&&($userRoleId == $fn.getLineVisaoperRoleId() || $fn.isLineAdminRole($userRoleId)))
     				<div class="widget_title">
