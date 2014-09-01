@@ -2,13 +2,15 @@ package com.visa.dao.line;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.visa.po.line.LinesSrvice;
 
 public interface LinesServiceDao {
 
     int deleteByPrimaryKey(Integer serviceId);
-    
-    int deleteByOrderId(Integer orderId);
+
+    int deleteByOrderId(@Param("orderId") Integer orderId, @Param("serviceTypeList") List<Integer> serviceType);
 
     int insert(LinesSrvice record);
 

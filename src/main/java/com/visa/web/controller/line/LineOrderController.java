@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.visa.common.constant.Constant;
 import com.visa.common.constant.LineRoleEnumType;
+import com.visa.common.constant.LineSrviceEnumType;
 import com.visa.common.util.DateUtil;
 import com.visa.common.util.PagingUtil;
 import com.visa.common.util.StringUtil;
@@ -277,31 +279,45 @@ public class LineOrderController {
         }
 
         lineOrderDao.updateByPrimaryKey(lineOrderVo);
-        linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId());
-        for (LinesSrvice srvice : lineOrderVo.getLineOrderService()) {
-            // 签证管理员指定送签日期和应付单价
-            if (srvice.getServiceType() == 2) {
-                if (lineOrderVo.getServicePayPrice() != null) {
-                    srvice.setServicePayPrice(lineOrderVo.getServicePayPrice());
-                }
-                if (!StringUtils.isEmpty(lineOrderVo.getSignDate())) {
-                    srvice.setServiceItem2(lineOrderVo.getSignDate());
-                }
-                if (!StringUtils.isEmpty(lineOrderVo.getDatumIsready())) {
-                    srvice.setServiceItem4(lineOrderVo.getDatumIsready());
-                }
-                if (!StringUtils.isEmpty(lineOrderVo.getDatumLimitDate())) {
-                    srvice.setServiceItem3(lineOrderVo.getDatumLimitDate());
-                }
-                if (!StringUtils.isEmpty(lineOrderVo.getDatumIsready())) {
-                    srvice.setServiceItem4(lineOrderVo.getDatumIsready());
-                }
-                if (!StringUtils.isEmpty(lineOrderVo.getDatumLimitDate())) {
-                    srvice.setServiceItem3(lineOrderVo.getDatumLimitDate());
+        if (user.getRoleId() == LineRoleEnumType.OPERATOR.getId()) {
+            List<Integer> serviceTypeList = new ArrayList<Integer>();
+            serviceTypeList.add(LineSrviceEnumType.LD.getId());
+            serviceTypeList.add(LineSrviceEnumType.JP.getId());
+            serviceTypeList.add(LineSrviceEnumType.DJBS.getId());
+            serviceTypeList.add(LineSrviceEnumType.DJSJDY.getId());
+            serviceTypeList.add(LineSrviceEnumType.BX.getId());
+            serviceTypeList.add(LineSrviceEnumType.QT.getId());
+            linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId(), serviceTypeList);
+
+            for (LinesSrvice srvice : lineOrderVo.getLineOrderService()) {
+                if (srvice.getServiceType() == LineSrviceEnumType.LD.getId()
+                        || srvice.getServiceType() == LineSrviceEnumType.JP.getId()
+                        || srvice.getServiceType() == LineSrviceEnumType.DJBS.getId()
+                        || srvice.getServiceType() == LineSrviceEnumType.DJSJDY.getId()
+                        || srvice.getServiceType() == LineSrviceEnumType.BX.getId()
+                        || srvice.getServiceType() == LineSrviceEnumType.QT.getId()) {
+                    linesServiceDao.insert(srvice);
                 }
             }
-            linesServiceDao.insert(srvice);
+        } else if (user.getRoleId() == LineRoleEnumType.VISAOPER.getId()) {
+            List<Integer> serviceTypeList = new ArrayList<Integer>();
+            serviceTypeList.add(LineSrviceEnumType.QZ.getId());
+            serviceTypeList.add(LineSrviceEnumType.GGBZ.getId());
+            linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId(), serviceTypeList);
+
+            for (LinesSrvice srvice : lineOrderVo.getLineOrderService()) {
+                if (srvice.getServiceType() == LineSrviceEnumType.QZ.getId()
+                        || srvice.getServiceType() == LineSrviceEnumType.GGBZ.getId()) {
+                    linesServiceDao.insert(srvice);
+                }
+            }
+        } else {
+            linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId(), null);
+            for (LinesSrvice srvice : lineOrderVo.getLineOrderService()) {
+                linesServiceDao.insert(srvice);
+            }
         }
+
         lineNameListDao.deleteByOrderId(lineOrderVo.getOrderId());
         for (LineNameList custom : lineOrderVo.getLineCustomList()) {
             lineNameListDao.insert(custom);

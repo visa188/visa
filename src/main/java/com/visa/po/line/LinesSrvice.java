@@ -71,6 +71,7 @@ public class LinesSrvice {
      * @pdOid fe16c5de-f39c-49d9-a595-e2a169cdb0f2
      */
     public BigDecimal priceSum;
+    public BigDecimal yfhj;
     /**
      * 已付
      * 
@@ -255,6 +256,14 @@ public class LinesSrvice {
 
     public void setPriceSum(BigDecimal priceSum) {
         this.priceSum = priceSum;
+    }
+    @FieldDes(fieldDes = "应付合计")
+    public BigDecimal getYfhj() {
+        return yfhj;
+    }
+
+    public void setYfhj(BigDecimal yfhj) {
+        this.yfhj = yfhj;
     }
 
     @FieldDes(fieldDes = "已付金额")

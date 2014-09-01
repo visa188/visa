@@ -23,16 +23,22 @@
   <delete id="deleteByOrderId">
     delete from linessrvice
     where orderId = #{orderId,jdbcType=INTEGER}
+    <if test="serviceTypeList != null">and serviceType in 
+        <foreach collection="serviceTypeList" item="serviceType" index="index"
+            open="(" close=")" separator=",">
+            #{serviceType}
+        </foreach>
+    </if>
   </delete>
   
   <insert id="insert">
     insert into linessrvice (orderId,serviceName,serviceType,servicePrice,servicePayPrice,serviceOperator,serviceItem1,serviceItem2,serviceItem3,serviceItem4,
-    serviceItem5,serviceItem6,serviceItem7,serviceItem8,priceSum,alreadyPaid,needPaid,paidBank,paidDate,alreadyGot,needGot,gotBank,gotDate,feeComment, postTime)
+    serviceItem5,serviceItem6,serviceItem7,serviceItem8,priceSum,yfhj,alreadyPaid,needPaid,paidBank,paidDate,alreadyGot,needGot,gotBank,gotDate,feeComment, postTime)
     values (#{orderId,jdbcType=INTEGER},#{serviceName,jdbcType=VARCHAR},#{serviceType,jdbcType=VARCHAR},
     #{servicePrice,jdbcType=DECIMAL},#{servicePayPrice,jdbcType=DECIMAL},#{serviceOperator,jdbcType=VARCHAR},#{serviceItem1,jdbcType=VARCHAR},#{serviceItem2,jdbcType=VARCHAR},
     #{serviceItem3,jdbcType=VARCHAR},#{serviceItem4,jdbcType=VARCHAR},#{serviceItem5,jdbcType=VARCHAR},#{serviceItem6,jdbcType=VARCHAR},
     #{serviceItem7,jdbcType=VARCHAR},#{serviceItem8,jdbcType=VARCHAR},
-    #{priceSum,jdbcType=DECIMAL},#{alreadyPaid,jdbcType=DECIMAL},#{needPaid,jdbcType=DECIMAL},#{paidBank,jdbcType=VARCHAR},
+    #{priceSum,jdbcType=DECIMAL},#{yfhj,jdbcType=DECIMAL},#{alreadyPaid,jdbcType=DECIMAL},#{needPaid,jdbcType=DECIMAL},#{paidBank,jdbcType=VARCHAR},
     #{paidDate,jdbcType=DATE},#{alreadyGot,jdbcType=DECIMAL},#{needGot,jdbcType=DECIMAL},#{gotBank,jdbcType=VARCHAR},
     #{gotDate,jdbcType=DATE},#{feeComment,jdbcType=VARCHAR}, now())
   </insert>
@@ -55,6 +61,7 @@
 	    <if test="serviceItem7 != null">serviceItem7 = #{serviceItem7,jdbcType=VARCHAR},</if>
 	    <if test="serviceItem8 != null">serviceItem8 = #{serviceItem8,jdbcType=VARCHAR},</if>
 	    <if test="priceSum != null">priceSum = #{priceSum,jdbcType=DECIMAL},</if>
+	    <if test="yfhj != null">yfhj = #{yfhj,jdbcType=DECIMAL},</if>
 	    <if test="alreadyPaid != null">alreadyPaid = #{alreadyPaid,jdbcType=DECIMAL},</if>
 	    <if test="needPaid != null">needPaid = #{needPaid,jdbcType=DECIMAL},</if>
 	    <if test="paidBank != null">paidBank = #{paidBank,jdbcType=VARCHAR},</if>

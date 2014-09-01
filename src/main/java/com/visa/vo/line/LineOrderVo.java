@@ -29,6 +29,20 @@ public class LineOrderVo extends LineOrder {
     private Integer garanteeServiceId;
     private BigDecimal garanteePrice;
 
+    // 机票
+    private String yfjpkType;
+    private BigDecimal yfjpkdj;
+    private BigDecimal yfjpkhj;
+    private String hkgs;
+
+    // 地接
+    private BigDecimal yfdjhj;
+
+    // 保险
+    private String bxServicId;
+    private BigDecimal yfbxdj;
+    private BigDecimal yfbxhj;
+
     public List<LinesSrvice> getLineOrderService() {
         List<LinesSrvice> serviceList = new ArrayList<LinesSrvice>();
         if (ld.startsWith("1")) {
@@ -61,6 +75,19 @@ public class LineOrderVo extends LineOrder {
             if (!"#".equals(items[5])) {
                 linesSrvice.setServiceOperator(items[5]);
             }
+
+            if (this.getServicePayPrice() != null) {
+                linesSrvice.setServicePayPrice(this.getServicePayPrice());
+            }
+            if (!StringUtils.isEmpty(this.getSignDate())) {
+                linesSrvice.setServiceItem2(this.getSignDate());
+            }
+            if (!StringUtils.isEmpty(this.getDatumIsready())) {
+                linesSrvice.setServiceItem4(this.getDatumIsready());
+            }
+            if (!StringUtils.isEmpty(this.getDatumLimitDate())) {
+                linesSrvice.setServiceItem3(this.getDatumLimitDate());
+            }
             serviceList.add(linesSrvice);
         }
         if (jp.startsWith("1")) {
@@ -80,6 +107,12 @@ public class LineOrderVo extends LineOrder {
             if (!"#".equals(items[5])) {
                 linesSrvice.setServiceOperator(items[5]);
             }
+
+            linesSrvice.setServiceItem2(yfjpkType);
+            linesSrvice.setServiceItem3(hkgs);
+            linesSrvice.setServicePayPrice(yfjpkdj);
+            linesSrvice.setYfhj(yfjpkhj);
+
             serviceList.add(linesSrvice);
         }
         if (dj.startsWith("1")) {
@@ -128,6 +161,7 @@ public class LineOrderVo extends LineOrder {
             if (!"#".equals(items[13])) {
                 linesSrvice.setServiceOperator(items[13]);
             }
+            linesSrvice.setYfhj(yfdjhj);
             serviceList.add(linesSrvice);
         }
         if (qt.startsWith("1")) {
@@ -156,6 +190,18 @@ public class LineOrderVo extends LineOrder {
             }
             serviceList.add(linesSrvice);
         }
+
+        LinesSrvice bxSrvice = new LinesSrvice(orderId, LineSrviceEnumType.BX.getId());
+        bxSrvice.setYfhj(yfbxhj);
+        bxSrvice.setServicePayPrice(yfbxdj);
+        int bxId = 0;
+        try {
+            bxId = Integer.valueOf(bxServicId);
+        } catch (Exception e) {
+            bxId = 0;
+        }
+        bxSrvice.setServiceId(bxId);
+        serviceList.add(bxSrvice);
         return serviceList;
     }
 
@@ -285,6 +331,70 @@ public class LineOrderVo extends LineOrder {
 
     public void setNameList(String nameList) {
         this.nameList = nameList;
+    }
+
+    public String getYfjpkType() {
+        return yfjpkType;
+    }
+
+    public void setYfjpkType(String yfjpkType) {
+        this.yfjpkType = yfjpkType;
+    }
+
+    public BigDecimal getYfjpkdj() {
+        return yfjpkdj;
+    }
+
+    public void setYfjpkdj(BigDecimal yfjpkdj) {
+        this.yfjpkdj = yfjpkdj;
+    }
+
+    public BigDecimal getYfjpkhj() {
+        return yfjpkhj;
+    }
+
+    public void setYfjpkhj(BigDecimal yfjpkhj) {
+        this.yfjpkhj = yfjpkhj;
+    }
+
+    public String getHkgs() {
+        return hkgs;
+    }
+
+    public void setHkgs(String hkgs) {
+        this.hkgs = hkgs;
+    }
+
+    public BigDecimal getYfdjhj() {
+        return yfdjhj;
+    }
+
+    public void setYfdjhj(BigDecimal yfdjhj) {
+        this.yfdjhj = yfdjhj;
+    }
+
+    public String getBxServicId() {
+        return bxServicId;
+    }
+
+    public void setBxServicId(String bxServicId) {
+        this.bxServicId = bxServicId;
+    }
+
+    public BigDecimal getYfbxdj() {
+        return yfbxdj;
+    }
+
+    public void setYfbxdj(BigDecimal yfbxdj) {
+        this.yfbxdj = yfbxdj;
+    }
+
+    public BigDecimal getYfbxhj() {
+        return yfbxhj;
+    }
+
+    public void setYfbxhj(BigDecimal yfbxhj) {
+        this.yfbxhj = yfbxhj;
     }
 
 }
