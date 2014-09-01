@@ -21,6 +21,8 @@ public class LineOrderVo extends LineOrder {
 
     private String signDate;
     private BigDecimal servicePayPrice;
+    private String datumLimitDate;
+    private String datumIsready;
 
     public List<LinesSrvice> getLineOrderService() {
         List<LinesSrvice> serviceList = new ArrayList<LinesSrvice>();
@@ -165,6 +167,22 @@ public class LineOrderVo extends LineOrder {
             }
         }
         return customList;
+    }
+
+    public String getDatumLimitDate() {
+        return datumLimitDate;
+    }
+
+    public void setDatumLimitDate(String datumLimitDate) {
+        this.datumLimitDate = datumLimitDate;
+    }
+
+    public String getDatumIsready() {
+        return datumIsready;
+    }
+
+    public void setDatumIsready(String datumIsready) {
+        this.datumIsready = datumIsready;
     }
 
     public String getSignDate() {

@@ -285,12 +285,18 @@ public class LineOrderController {
         linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId());
         for (LinesSrvice srvice : lineOrderVo.getLineOrderService()) {
             // 签证管理员指定送签日期和应付单价
-            if (srvice.getServiceType() == 1) {
+            if (srvice.getServiceType() == 2) {
                 if (lineOrderVo.getServicePayPrice() != null) {
                     srvice.setServicePayPrice(lineOrderVo.getServicePayPrice());
                 }
                 if (!StringUtils.isEmpty(lineOrderVo.getSignDate())) {
                     srvice.setServiceItem2(lineOrderVo.getSignDate());
+                }
+                if (!StringUtils.isEmpty(lineOrderVo.getDatumIsready())) {
+                    srvice.setServiceItem4(lineOrderVo.getDatumIsready());
+                }
+                if (!StringUtils.isEmpty(lineOrderVo.getDatumLimitDate())) {
+                    srvice.setServiceItem3(lineOrderVo.getDatumLimitDate());
                 }
             }
             linesServiceDao.insert(srvice);

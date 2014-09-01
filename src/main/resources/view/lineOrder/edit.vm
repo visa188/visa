@@ -489,8 +489,8 @@
                         getOperators(1);
                     </script>
 				#end
-				#if($userRoleId == $fn.getLineVisaoperRoleId() || $fn.isLineAdminRole($userRoleId))
-					#set($visaService = $!{lineServiceMap.get(2).serviceId})
+				#set($visaService = $!{lineServiceMap.get(2)})
+				#if($visaService&&($userRoleId == $fn.getLineVisaoperRoleId() || $fn.isLineAdminRole($userRoleId)))
     				<div class="widget_title">
                         <span class="ico_static_r"></span>
                         <h3>签证信息</h3>
@@ -508,25 +508,57 @@
                           </div>
                         </div>  
 						<div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>资料已全:</label>
+                          <div class="controls">
+                           <span class="form_item">
+								<select name="datumIsready" id="datumIsready" class="text2 js_non_empty" placeholder="资料已全">
+									<option value="否">否</option>
+                                    <option value="是" $fn.selected($!{visaService.serviceItem4}, "是")>是</option>
+								</select>
+						   </span>
+                          </div>
+                        </div>
+						<div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>资料上交期限:</label>
+                          <div class="controls">
+                           <span class="form_item">
+						   <input value="$!{visaService.serviceItem3}" type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="资料上交期限" name="datumLimitDate" id="datumLimitDate"></span>
+                          </div>
+                        </div>
+						<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>送签日期:</label>
                           <div class="controls">
                            <span class="form_item">
-						   <input value="$!{visaService.serviceItem2}" type="text"  class="text1 js_non_empty" maxlength="10" size="10" placeholder="送签日期" name="signDate" id="signDate"></span>
+						   <input value="$!{visaService.serviceItem2}" type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="送签日期" name="signDate" id="signDate"></span>
                           </div>
                         </div>  
 						<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>应付签证费（单价）:</label>
                           <div class="controls">
-                           <span class="form_item"><input value="$!{lineOrder.servicePayPrice}" name="servicePayPrice" id="servicePayPrice" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应付签证费（单价）"></span>
+                           <span class="form_item"><input value="$!{visaService.servicePayPrice}" name="servicePayPrice" id="servicePayPrice" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应付签证费（单价）" onchange="sumVisaPay();"></span>
                           </div>
                         </div>
 						<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>应付签证费（合计）:</label>
                           <div class="controls">
-                           <span class="form_item"><input value="0" id="price" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应付签证费（合计）"></span>
+                           <span class="form_item"><input value="0" id="sumServicePayPrice" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应付签证费（合计）" readonly></span>
                           </div>
                         </div>  
     				</div>	
+					<script>
+						function sumVisaPay(){
+							var size=jQuery("#nameListSize").val()==''?0:jQuery("#nameListSize").val();
+							var servicePayPrice=jQuery("#servicePayPrice").val()==''?0:jQuery("#servicePayPrice").val();
+							
+							var sumServicePayPrice = 0.0;
+							if(size&&servicePayPrice){
+								sumServicePayPrice = Math.round(parseFloat(servicePayPrice*100*size))/100;
+							}
+							
+							jQuery("#sumServicePayPrice").val(sumServicePayPrice);
+						}
+						sumVisaPay();
+					</script>
 				#end
                 <div class="widget_title">
                     <span class="ico_static_r"></span>
@@ -534,12 +566,20 @@
                 </div>
                 <div class="widget_content">
                     <div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>单价:</label>
+                      <label class="control_label"><span class="ico_must">*</span>团费单价:</label>
                       <div class="controls">
                        <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.price}" name="price" id="price" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="单价"></span>
                       </div>
                     </div>
-                </div>         
+					#if($userRoleId == $fn.getLineFinanceRoleId() || $userRoleId == $fn.getLineFinanceManagerRoleId() || $fn.isLineAdminRole($userRoleId))
+						<div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>团费应收合计:</label>
+                          <div class="controls">
+                           <span class="form_item"><input value="$!{lineOrder.sumPrice}" name="sumPrice" id="price" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="单价" readonly></span>
+                          </div>
+                        </div>
+					#end
+                </div>
               </div>
                 <div class="form_actions">
                     <button type="reset" class="btn btn_reset">重置</button>
