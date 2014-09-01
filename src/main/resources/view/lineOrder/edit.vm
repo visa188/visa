@@ -489,6 +489,61 @@
                         getOperators(1);
                     </script>
 				#end
+				#if($userRoleId == $fn.getLineOperatorRoleId() || $fn.isLineAdminRole($userRoleId))
+                    <div class="widget_title">
+                        <span class="ico_static_r"></span>
+                        <h3>应付明细</h3>
+                    </div>
+                    <div class="widget_content">
+                        #if(${lineServiceMap.get(3)})
+                        <div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>应付机票款:</label>
+                          <div class="controls">
+                           <span class="form_item"><select name="yfjpk" id="yfjpk" class="text2 js_non_empty">
+                                <option value="1" selected="selected">定金</option>
+                                <option value="2" selected="selected">机票款</option>
+                            </select></span>
+                            <span class="form_item">单价(含税)<input value="$!{visaService.serviceItem2}" type="text"  class="text1 js_non_empty" name="yfjpkdj" id="yfjpkdj">元</span>
+                            <span class="form_item">合计<input value="$!{visaService.serviceItem2}" type="text"  class="text1 js_non_empty" name="yfjpkhj" id="yfjpkhj">元</span>
+                            <span class="form_item">航空公司:<select name="hkgs" id="hkgs" class="text2 js_non_empty">
+                                <option value="" selected="selected">请选择</option>
+                                #foreach($one in $airlineList)
+                                    <option value="$one.airlineId" $fn.selected(${lineOrder.signOperatorId}, $one.airlineId)>$one.airlineName</option>
+                                #end
+                            </select></span>
+                          </div>
+                        </div>
+                        #end
+                        #set($djService = $!{lineServiceMap.get(4)})  
+                        #if($djService)
+                        <div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>地接费用总计:</label>
+                          <div class="controls">
+                           <span class="form_item">#if($djService.serviceItem1)酒店费用#end #if($djService.serviceItem4)特殊景点费用#end #if($djService.serviceType == $fn.getBsServicTypeId())巴士费用#else司兼导费用#end
+                           <input value="" type="text" class="text1 js_non_empty" name="djfzj" id="djfzj">元</span>
+                          </div>
+                        </div>
+                        #end  
+                        <div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>保险费用:</label>
+                          <div class="controls">
+                           <span class="form_item"><input value="" name="bxfy" id="bxft" type="text" class="text1 js_non_empty js_nan">元  总计 <input value="" name="bxzj" id="bxzj" type="text" class="text1 js_non_empty js_nan">元</span>
+                          </div>
+                        </div>
+                        <div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>已付合计:</label>
+                          <div class="controls">
+                           <span class="form_item"><input value="" name='yfhj' id="yfhj" type="text" class="text1 js_nan"></span>
+                          </div>
+                        </div>  
+                        <div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>未付合计:</label>
+                          <div class="controls">
+                           <span class="form_item"><input value="" name='wfhj' id="wfhj" type="text" class="text1 js_nan"></span>
+                          </div>
+                        </div> 
+                    </div>  
+                #end
 				#set($visaService = $!{lineServiceMap.get(2)})
 				#if($visaService&&($userRoleId == $fn.getLineVisaoperRoleId() || $fn.isLineAdminRole($userRoleId)))
     				<div class="widget_title">
