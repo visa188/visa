@@ -39,31 +39,33 @@
   
   <update id="updateByPrimaryKey">
     update linessrvice
-    set orderId = #{orderId,jdbcType=INTEGER},
-    serviceName = #{serviceName,jdbcType=VARCHAR},
-    serviceType = #{serviceType,jdbcType=INTEGER},
-    servicePrice = #{servicePrice,jdbcType=DECIMAL},
-    servicePayPrice = #{servicePayPrice,jdbcType=DECIMAL},
-    serviceOperator = #{serviceOperator,jdbcType=VARCHAR},
-    serviceItem1 = #{serviceItem1,jdbcType=VARCHAR},
-    serviceItem2 = #{serviceItem2,jdbcType=VARCHAR},
-    serviceItem3 = #{serviceItem3,jdbcType=VARCHAR},
-    serviceItem4 = #{serviceItem4,jdbcType=VARCHAR},
-    serviceItem5 = #{serviceItem5,jdbcType=VARCHAR},
-    serviceItem6 = #{serviceItem6,jdbcType=VARCHAR},
-    serviceItem7 = #{serviceItem7,jdbcType=VARCHAR},
-    serviceItem8 = #{serviceItem8,jdbcType=VARCHAR},
-    priceSum = #{priceSum,jdbcType=DECIMAL},
-    alreadyPaid = #{alreadyPaid,jdbcType=DECIMAL},
-    needPaid = #{needPaid,jdbcType=DECIMAL},
-    paidBank = #{paidBank,jdbcType=VARCHAR},
-    paidDate = #{paidDate,jdbcType=DATE},
-    alreadyGot = #{alreadyGot,jdbcType=DECIMAL},
-    needGot = #{needGot,jdbcType=DECIMAL},
-    gotBank = #{gotBank,jdbcType=VARCHAR},
-    gotDate = #{gotDate,jdbcType=DATE},
-    feeComment = #{feeComment,jdbcType=VARCHAR},
-    postTime = now()
+    <set>
+		<if test="orderId != null">orderId = #{orderId,jdbcType=INTEGER},</if>
+	    <if test="serviceName != null">serviceName = #{serviceName,jdbcType=VARCHAR},</if>
+	    <if test="serviceType != null">serviceType = #{serviceType,jdbcType=INTEGER},</if>
+	    <if test="servicePrice != null">servicePrice = #{servicePrice,jdbcType=DECIMAL},</if>
+	    <if test="servicePayPrice != null">servicePayPrice = #{servicePayPrice,jdbcType=DECIMAL},</if>
+	    <if test="serviceOperator != null">serviceOperator = #{serviceOperator,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem1 != null">serviceItem1 = #{serviceItem1,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem2 != null">serviceItem2 = #{serviceItem2,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem3 != null">serviceItem3 = #{serviceItem3,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem4 != null">serviceItem4 = #{serviceItem4,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem5 != null">serviceItem5 = #{serviceItem5,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem6 != null">serviceItem6 = #{serviceItem6,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem7 != null">serviceItem7 = #{serviceItem7,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem8 != null">serviceItem8 = #{serviceItem8,jdbcType=VARCHAR},</if>
+	    <if test="priceSum != null">priceSum = #{priceSum,jdbcType=DECIMAL},</if>
+	    <if test="alreadyPaid != null">alreadyPaid = #{alreadyPaid,jdbcType=DECIMAL},</if>
+	    <if test="needPaid != null">needPaid = #{needPaid,jdbcType=DECIMAL},</if>
+	    <if test="paidBank != null">paidBank = #{paidBank,jdbcType=VARCHAR},</if>
+	    <if test="paidDate != null">paidDate = #{paidDate,jdbcType=DATE},</if>
+	    <if test="alreadyGot != null">alreadyGot = #{alreadyGot,jdbcType=DECIMAL},</if>
+	    <if test="needGot != null">needGot = #{needGot,jdbcType=DECIMAL},</if>
+	    <if test="gotBank != null">gotBank = #{gotBank,jdbcType=VARCHAR},</if>
+	    <if test="gotDate != null">gotDate = #{gotDate,jdbcType=DATE},</if>
+	    <if test="feeComment != null">feeComment = #{feeComment,jdbcType=VARCHAR},</if>
+	    postTime = now()
+    </set>
     where serviceId = #{serviceId,jdbcType=INTEGER}
   </update>
 </mapper>

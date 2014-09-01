@@ -525,6 +525,26 @@
 						   <input value="$!{visaService.serviceItem3}" type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="资料上交期限" name="datumLimitDate" id="datumLimitDate"></span>
                           </div>
                         </div>
+						#set($garanteeService = $!{lineServiceMap.get(6)})
+						<div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>归国保证方式:</label>
+                          <div class="controls">
+                           <span class="form_item">
+								<select name="garanteeType" id="garanteeType" class="text2 js_non_empty" placeholder="归国保证方式" onchange="showGaranteePrice()">
+									<option value="1" $fn.selected($!{garanteeService.serviceItem1}, "1")>承诺函</option>
+                                    <option value="2" $fn.selected($!{garanteeService.serviceItem1}, "2")>归国保证金</option>
+									<option value="3" $fn.selected($!{garanteeService.serviceItem1}, "3")>联保</option>
+								</select>
+						   </span>
+                          </div>
+                        </div>
+						<div class="control_group" id="garanteePriceDiv">
+                          <label class="control_label"><span class="ico_must">*</span>保证金额:</label>
+                          <div class="controls">
+							<input type="hidden" name="garanteeServiceId" value="$!{garanteeService.serviceId}" />  
+                           <span class="form_item"><input value="$!{garanteeService.servicePrice}" name="garanteePrice" id="garanteePrice" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="保证金额"></span>
+                          </div>
+                        </div>
 						<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>送签日期:</label>
                           <div class="controls">
@@ -557,7 +577,20 @@
 							
 							jQuery("#sumServicePayPrice").val(sumServicePayPrice);
 						}
+						function showGaranteePrice(){
+							var garanteePriceDiv = jQuery("#garanteePriceDiv");
+							var garanteeType=jQuery("#garanteeType").val();
+							if(garanteeType==2 || garanteeType==3){
+								garanteePriceDiv.show();
+								jQuery("#garanteePrice").addClass('js_non_empty');
+							}else{
+								jQuery("#garanteePrice").val(0);
+								garanteePriceDiv.hide();
+								jQuery("#garanteePrice").removeClass('js_non_empty');
+							}
+						}
 						sumVisaPay();
+						showGaranteePrice();
 					</script>
 				#end
                 <div class="widget_title">
