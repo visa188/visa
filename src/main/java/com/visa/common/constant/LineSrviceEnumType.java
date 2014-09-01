@@ -33,7 +33,9 @@ public enum LineSrviceEnumType {
     /**
      * 其他服务
      */
-    QT(5, "其他服务");
+    QT(5, "其他服务"),
+
+    GGBZ(6, "归国保证服务");
 
     private int id;
     private String name;

@@ -293,6 +293,12 @@ public class LineOrderController {
                 if (!StringUtils.isEmpty(lineOrderVo.getDatumLimitDate())) {
                     srvice.setServiceItem3(lineOrderVo.getDatumLimitDate());
                 }
+                if (!StringUtils.isEmpty(lineOrderVo.getDatumIsready())) {
+                    srvice.setServiceItem4(lineOrderVo.getDatumIsready());
+                }
+                if (!StringUtils.isEmpty(lineOrderVo.getDatumLimitDate())) {
+                    srvice.setServiceItem3(lineOrderVo.getDatumLimitDate());
+                }
             }
             linesServiceDao.insert(srvice);
         }

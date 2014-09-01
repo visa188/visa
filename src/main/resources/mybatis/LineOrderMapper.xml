@@ -104,30 +104,31 @@
   
   <update id="updateByPrimaryKey">
     update lineorder
-    set 
-    type = #{type,jdbcType=INTEGER},
-    nameListSize = #{nameListSize,jdbcType=INTEGER},
-    salesmanName = #{salesmanName,jdbcType=VARCHAR},
-    lineOperatorId = #{lineOperatorId,jdbcType=VARCHAR},
-    lineOperatorName = #{lineOperatorName,jdbcType=VARCHAR},
-    visaOperatorId = #{visaOperatorId,jdbcType=VARCHAR},
-    visaOperatorName = #{visaOperatorName,jdbcType=VARCHAR},
-    signOperatorId = #{signOperatorId,jdbcType=VARCHAR},
-    signOperatorName = #{signOperatorName,jdbcType=VARCHAR},
-    travelAgency = #{travelAgency,jdbcType=VARCHAR},
-    contact = #{contact,jdbcType=VARCHAR},
-    contactNo = #{contactNo,jdbcType=VARCHAR},
-    lineCountryId = #{lineCountryId,jdbcType=INTEGER},
-    startDate = #{startDate,jdbcType=DATE},
-    endDate = #{endDate,jdbcType=DATE},
-    travelInfo = #{travelInfo,jdbcType=VARCHAR},
-    travelInfoFileUrl = #{travelInfoFileUrl,jdbcType=VARCHAR},
-    aircorpId = #{aircorpId,jdbcType=INTEGER},
-    price = #{price,jdbcType=DECIMAL},
-    status = #{status,jdbcType=INTEGER},
-    lineProductId = #{status,jdbcType=INTEGER},
-    specialComment = #{specialComment,jdbcType=VARCHAR},
+    <set>
+		<if test="type != null">type = #{type,jdbcType=INTEGER},</if>
+	    <if test="nameListSize != null">nameListSize = #{nameListSize,jdbcType=INTEGER},</if>
+	    <if test="salesmanName != null">salesmanName = #{salesmanName,jdbcType=VARCHAR},</if>
+	    <if test="lineOperatorId != null">lineOperatorId = #{lineOperatorId,jdbcType=VARCHAR},</if>
+	    <if test="lineOperatorName != null">lineOperatorName = #{lineOperatorName,jdbcType=VARCHAR},</if>
+	    <if test="visaOperatorId != null">visaOperatorId = #{visaOperatorId,jdbcType=VARCHAR},</if>
+	    <if test="visaOperatorName != null">visaOperatorName = #{visaOperatorName,jdbcType=VARCHAR},</if>
+	    <if test="signOperatorId != null">signOperatorId = #{signOperatorId,jdbcType=VARCHAR},</if>
+	    <if test="signOperatorName != null">signOperatorName = #{signOperatorName,jdbcType=VARCHAR},</if>
+	    <if test="travelAgency != null">travelAgency = #{travelAgency,jdbcType=VARCHAR},</if>
+	    <if test="contact != null">contact = #{contact,jdbcType=VARCHAR},</if>
+	    <if test="contactNo != null">contactNo = #{contactNo,jdbcType=VARCHAR},</if>
+	    <if test="lineCountryId != null">lineCountryId = #{lineCountryId,jdbcType=INTEGER},</if>
+	    <if test="startDate != null">startDate = #{startDate,jdbcType=DATE},</if>
+	    <if test="endDate != null">endDate = #{endDate,jdbcType=DATE},</if>
+	    <if test="travelInfo != null">travelInfo = #{travelInfo,jdbcType=VARCHAR},</if>
+	    <if test="travelInfoFileUrl != null">travelInfoFileUrl = #{travelInfoFileUrl,jdbcType=VARCHAR},</if>
+	    <if test="aircorpId != null">aircorpId = #{aircorpId,jdbcType=INTEGER},</if>
+	    <if test="price != null">price = #{price,jdbcType=DECIMAL},</if>
+	    <if test="status != null">status = #{status,jdbcType=INTEGER},</if>
+	    <if test="lineProductId != null">lineProductId = #{lineProductId,jdbcType=INTEGER},</if>
+	    <if test="specialComment != null">specialComment = #{specialComment,jdbcType=VARCHAR},</if>
     postTime = now()
+    </set>
     where orderId = #{orderId,jdbcType=INTEGER}
   </update>
 </mapper>

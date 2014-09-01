@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.visa.common.constant.LineSrviceEnumType;
 import com.visa.po.line.LineNameList;
 import com.visa.po.line.LineOrder;
@@ -21,6 +23,11 @@ public class LineOrderVo extends LineOrder {
 
     private String signDate;
     private BigDecimal servicePayPrice;
+    private String datumLimitDate;
+    private String datumIsready;
+    private String garanteeType;
+    private Integer garanteeServiceId;
+    private BigDecimal garanteePrice;
 
     public List<LinesSrvice> getLineOrderService() {
         List<LinesSrvice> serviceList = new ArrayList<LinesSrvice>();
@@ -140,6 +147,15 @@ public class LineOrderVo extends LineOrder {
             }
             serviceList.add(linesSrvice);
         }
+        if (!StringUtils.isEmpty(getGaranteeType())) {
+            LinesSrvice linesSrvice = new LinesSrvice(orderId, LineSrviceEnumType.GGBZ.getId());
+            linesSrvice.setServiceId(getGaranteeServiceId());
+            linesSrvice.setServiceItem1(getGaranteeType());
+            if (getGaranteePrice() != null) {
+                linesSrvice.setPriceSum(getGaranteePrice());
+            }
+            serviceList.add(linesSrvice);
+        }
         return serviceList;
     }
 
@@ -165,6 +181,46 @@ public class LineOrderVo extends LineOrder {
             }
         }
         return customList;
+    }
+
+    public Integer getGaranteeServiceId() {
+        return garanteeServiceId;
+    }
+
+    public void setGaranteeServiceId(Integer garanteeServiceId) {
+        this.garanteeServiceId = garanteeServiceId;
+    }
+
+    public String getGaranteeType() {
+        return garanteeType;
+    }
+
+    public void setGaranteeType(String garanteeType) {
+        this.garanteeType = garanteeType;
+    }
+
+    public BigDecimal getGaranteePrice() {
+        return garanteePrice;
+    }
+
+    public void setGaranteePrice(BigDecimal garanteePrice) {
+        this.garanteePrice = garanteePrice;
+    }
+
+    public String getDatumLimitDate() {
+        return datumLimitDate;
+    }
+
+    public void setDatumLimitDate(String datumLimitDate) {
+        this.datumLimitDate = datumLimitDate;
+    }
+
+    public String getDatumIsready() {
+        return datumIsready;
+    }
+
+    public void setDatumIsready(String datumIsready) {
+        this.datumIsready = datumIsready;
     }
 
     public String getSignDate() {
