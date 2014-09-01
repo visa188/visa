@@ -35,12 +35,14 @@ import com.visa.common.util.StringUtil;
 import com.visa.common.util.VisaUtil;
 import com.visa.dao.SeqDao;
 import com.visa.dao.UserDao;
+import com.visa.dao.line.AirlineDao;
 import com.visa.dao.line.LineCountryDao;
 import com.visa.dao.line.LineNameListDao;
 import com.visa.dao.line.LineOrderDao;
 import com.visa.dao.line.LineProductDao;
 import com.visa.dao.line.LinesServiceDao;
 import com.visa.dao.line.OperateLogDao;
+import com.visa.po.Airline;
 import com.visa.po.Country;
 import com.visa.po.User;
 import com.visa.po.line.LineNameList;
@@ -76,6 +78,8 @@ public class LineOrderController {
     private OperateLogDao operateLogDao;
     @Resource
     private UserDao userDao;
+    @Resource
+    private AirlineDao airlineDao;
 
     /**
      * 列出所有的订单
@@ -86,8 +90,8 @@ public class LineOrderController {
      * @param model model
      */
     @RequestMapping
-    public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page,
-            ModelMap model, @ModelAttribute LineOrderSearchBean bean) {
+    public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page, ModelMap model,
+            @ModelAttribute LineOrderSearchBean bean) {
         Map<String, Object> paraMap = new HashMap<String, Object>();
 
         String startDate = bean.getStartDate();
@@ -124,8 +128,8 @@ public class LineOrderController {
 
         // 记录总条数
         int recordCount = lineOrderDao.count(paraMap);
-        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount,
-                page, Constant.LINE_PAGE_OFFSET, model);
+        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount, page,
+                Constant.LINE_PAGE_OFFSET, model);
         paraMap.put("begin", recordRange[0]);
         paraMap.put("pageCount", Constant.LINE_PAGE_COUNT);
 
@@ -157,8 +161,7 @@ public class LineOrderController {
      * @return String
      */
     @RequestMapping
-    public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user,
-            LineOrderVo lineOrder, ModelMap model) {
+    public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrder, ModelMap model) {
         int orderSeq = seqDao.select("lineOrder");
         String prefix = StringUtil.paddingZeroToLeft(String.valueOf(orderSeq), 6);
         lineOrder.setOrderSeq(prefix);
@@ -166,8 +169,7 @@ public class LineOrderController {
         // 散拼团订单时，校验该产品下所有订单客人总量是否大于机位数
         if (lineOrder.getType() == 2) {
             LineProduct product = lineProductDao.selectByPrimaryKey(lineOrder.getLineProductId());
-            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(lineOrder
-                    .getLineProductId());
+            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(lineOrder.getLineProductId());
             int count = 0;
             for (LineOrder order : lineOrderList) {
                 count += order.getNameListSize();
@@ -184,19 +186,15 @@ public class LineOrderController {
                 return "result";
             }
         }
-        lineOrder.setSalesmanName(userDao.selectByPrimaryKey(lineOrder.getSalesmanId())
-                .getUserName());
+        lineOrder.setSalesmanName(userDao.selectByPrimaryKey(lineOrder.getSalesmanId()).getUserName());
         if (!StringUtils.isEmpty(lineOrder.getLineOperatorId())) {
-            lineOrder.setLineOperatorName(userDao.selectByPrimaryKey(lineOrder.getLineOperatorId())
-                    .getUserName());
+            lineOrder.setLineOperatorName(userDao.selectByPrimaryKey(lineOrder.getLineOperatorId()).getUserName());
         }
         if (!StringUtils.isEmpty(lineOrder.getVisaOperatorId())) {
-            lineOrder.setVisaOperatorName(userDao.selectByPrimaryKey(lineOrder.getVisaOperatorId())
-                    .getUserName());
+            lineOrder.setVisaOperatorName(userDao.selectByPrimaryKey(lineOrder.getVisaOperatorId()).getUserName());
         }
         if (!StringUtils.isEmpty(lineOrder.getSignOperatorId())) {
-            lineOrder.setSignOperatorName(userDao.selectByPrimaryKey(lineOrder.getSignOperatorId())
-                    .getUserName());
+            lineOrder.setSignOperatorName(userDao.selectByPrimaryKey(lineOrder.getSignOperatorId()).getUserName());
         }
         lineOrderDao.insert(lineOrder);
         for (LinesSrvice srvice : lineOrder.getLineOrderService()) {
@@ -225,8 +223,8 @@ public class LineOrderController {
      * @param model model
      */
     @RequestMapping
-    public void edit(@ModelAttribute(Constant.SESSION_USER) User user, Integer orderId,
-            Integer currentPage, ModelMap model) {
+    public void edit(@ModelAttribute(Constant.SESSION_USER) User user, Integer orderId, Integer currentPage,
+            ModelMap model) {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(orderId);
         List<LinesSrvice> lineServiceList = linesServiceDao.selectAllLinesSrvice(orderId);
         Map<Integer, LinesSrvice> lineServiceMap = new HashMap<Integer, LinesSrvice>();
@@ -248,6 +246,8 @@ public class LineOrderController {
         model.put("countryList", countryList);
         List<LineNameList> customList = lineNameListDao.selectAllLineNameList(orderId);
         model.put("customList", customList);
+        List<Airline> airlineList = airlineDao.selectAllAirline();
+        model.put("airlineList", airlineList);
     }
 
     /**
@@ -258,39 +258,40 @@ public class LineOrderController {
      * @return String
      */
     @RequestMapping
-    public String update(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrderVo,
-            Integer currentPage) {
+    public String update(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrderVo, Integer currentPage) {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(lineOrderVo.getOrderId());
         Map<Integer, LinesSrvice> serviceListDB = VisaUtil.dealServiceList(linesServiceDao
                 .selectAllLinesSrvice(lineOrderVo.getOrderId()));
-        Map<Integer, LineNameList> nameListDB = VisaUtil.dealNameList(lineNameListDao
-                .selectAllLineNameList(lineOrderVo.getOrderId()));
+        Map<Integer, LineNameList> nameListDB = VisaUtil.dealNameList(lineNameListDao.selectAllLineNameList(lineOrderVo
+                .getOrderId()));
 
-        lineOrderVo.setSalesmanName(userDao.selectByPrimaryKey(lineOrderVo.getSalesmanId())
-                .getUserName());
+        lineOrderVo.setSalesmanName(userDao.selectByPrimaryKey(lineOrderVo.getSalesmanId()).getUserName());
         if (!StringUtils.isEmpty(lineOrderVo.getLineOperatorId())) {
-            lineOrderVo.setLineOperatorName(userDao.selectByPrimaryKey(
-                    lineOrderVo.getLineOperatorId()).getUserName());
+            lineOrderVo.setLineOperatorName(userDao.selectByPrimaryKey(lineOrderVo.getLineOperatorId()).getUserName());
         }
         if (!StringUtils.isEmpty(lineOrderVo.getVisaOperatorId())) {
-            lineOrderVo.setVisaOperatorName(userDao.selectByPrimaryKey(
-                    lineOrderVo.getVisaOperatorId()).getUserName());
+            lineOrderVo.setVisaOperatorName(userDao.selectByPrimaryKey(lineOrderVo.getVisaOperatorId()).getUserName());
         }
         if (!StringUtils.isEmpty(lineOrderVo.getSignOperatorId())) {
-            lineOrderVo.setSignOperatorName(userDao.selectByPrimaryKey(
-                    lineOrderVo.getSignOperatorId()).getUserName());
+            lineOrderVo.setSignOperatorName(userDao.selectByPrimaryKey(lineOrderVo.getSignOperatorId()).getUserName());
         }
 
         lineOrderDao.updateByPrimaryKey(lineOrderVo);
         linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId());
         for (LinesSrvice srvice : lineOrderVo.getLineOrderService()) {
             // 签证管理员指定送签日期和应付单价
-            if (srvice.getServiceType() == 1) {
+            if (srvice.getServiceType() == 2) {
                 if (lineOrderVo.getServicePayPrice() != null) {
                     srvice.setServicePayPrice(lineOrderVo.getServicePayPrice());
                 }
                 if (!StringUtils.isEmpty(lineOrderVo.getSignDate())) {
                     srvice.setServiceItem2(lineOrderVo.getSignDate());
+                }
+                if (!StringUtils.isEmpty(lineOrderVo.getDatumIsready())) {
+                    srvice.setServiceItem4(lineOrderVo.getDatumIsready());
+                }
+                if (!StringUtils.isEmpty(lineOrderVo.getDatumLimitDate())) {
+                    srvice.setServiceItem3(lineOrderVo.getDatumLimitDate());
                 }
             }
             linesServiceDao.insert(srvice);
@@ -305,8 +306,7 @@ public class LineOrderController {
         operateLog.setUserId(user.getUserId());
         operateLog.setRoleId(user.getRoleId());
         operateLog.setOperateType(Constant.OPERATOR_TYPE_UPDATE);
-        operateLog.setOperateDes(StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder,
-                serviceListDB, nameListDB));
+        operateLog.setOperateDes(StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder, serviceListDB, nameListDB));
         operateLog.setOrderSeq(lineOrder.getOrderSeq());
         operateLogDao.insert(operateLog);
         return "redirect:list.do?page=" + currentPage;
@@ -370,8 +370,8 @@ public class LineOrderController {
             response.addHeader("Content-Disposition", "attachment;filename=" + fileName + ".xls");
             OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
             response.setContentType("application/octet-stream");
-            this.exportOrderData(toClient, year, month, salesman, yfhkStatus, yshkStatus,
-                    customerId, company, operatorId);
+            this.exportOrderData(toClient, year, month, salesman, yfhkStatus, yshkStatus, customerId, company,
+                    operatorId);
 
         } catch (IOException e) {
             logger.error(e, e);
@@ -384,11 +384,10 @@ public class LineOrderController {
      * @param type type
      * @param out out
      */
-    private void exportOrderData(OutputStream out, String year, String month, String salesmanId,
-            String yfhkStatus, String yshkStatus, String customerId, String company,
-            String operatorId) {
-        String[] titles = { "订单序号", "销售员", "产品名称", "订单类型", "线路国家", "下单日期", "客人数量", "操作员", "送签员",
-                "组团社", "联系人", "联系方式", "备注" };
+    private void exportOrderData(OutputStream out, String year, String month, String salesmanId, String yfhkStatus,
+            String yshkStatus, String customerId, String company, String operatorId) {
+        String[] titles = { "订单序号", "销售员", "产品名称", "订单类型", "线路国家", "下单日期", "客人数量", "操作员", "送签员", "组团社", "联系人", "联系方式",
+                "备注" };
         HSSFWorkbook wb = new HSSFWorkbook();
         Sheet s = wb.createSheet();
         // header row
