@@ -125,6 +125,11 @@ public class LineOrder {
      * @pdOid f8303ff7-81db-4111-900b-d21f5ec968d0
      */
     public BigDecimal price;
+    public BigDecimal priceSum;
+    public BigDecimal alreadyGot;
+    public BigDecimal needGot;
+    public String gotBank;
+    public Date goaDate;
     /**
      * 线路订单状态
      * 
@@ -135,6 +140,51 @@ public class LineOrder {
     public String specialComment;
     /** @pdOid ac5cabc4-f167-49b7-9590-f036f58a74df */
     public Date postTime;
+
+    @FieldDes(fieldDes = "团费总计")
+    public BigDecimal getPriceSum() {
+        return priceSum;
+    }
+
+    public void setPriceSum(BigDecimal priceSum) {
+        this.priceSum = priceSum;
+    }
+
+    @FieldDes(fieldDes = "已收团费")
+    public BigDecimal getAlreadyGot() {
+        return alreadyGot;
+    }
+
+    public void setAlreadyGot(BigDecimal alreadyGot) {
+        this.alreadyGot = alreadyGot;
+    }
+
+    @FieldDes(fieldDes = "未收团费")
+    public BigDecimal getNeedGot() {
+        return needGot;
+    }
+
+    public void setNeedGot(BigDecimal needGot) {
+        this.needGot = needGot;
+    }
+
+    @FieldDes(fieldDes = "入账银行")
+    public String getGotBank() {
+        return gotBank;
+    }
+
+    public void setGotBank(String gotBank) {
+        this.gotBank = gotBank;
+    }
+
+    @FieldDes(fieldDes = "入账日期")
+    public Date getGoaDate() {
+        return goaDate;
+    }
+
+    public void setGoaDate(Date goaDate) {
+        this.goaDate = goaDate;
+    }
 
     public String getLineProductName() {
         return lineProductName;
