@@ -29,6 +29,9 @@ public class LineOrderVo extends LineOrder {
             }
             // 组团社派 1/ 起航假期派 2
             linesSrvice.setServiceItem1(items[2]);
+            if (!"#".equals(items[3])) {
+                linesSrvice.setServiceOperator(items[3]);
+            }
             serviceList.add(linesSrvice);
         }
         if (qz.startsWith("1")) {
@@ -45,6 +48,9 @@ public class LineOrderVo extends LineOrder {
             if (!"#".equals(items[4])) {
                 linesSrvice.setPriceSum(new BigDecimal(items[4])); // 合计
             }
+            if (!"#".equals(items[5])) {
+                linesSrvice.setServiceOperator(items[5]);
+            }
             serviceList.add(linesSrvice);
         }
         if (jp.startsWith("1")) {
@@ -60,6 +66,9 @@ public class LineOrderVo extends LineOrder {
             }
             if (!"#".equals(items[4])) {
                 linesSrvice.setPriceSum(new BigDecimal(items[4])); // 合计
+            }
+            if (!"#".equals(items[5])) {
+                linesSrvice.setServiceOperator(items[5]);
             }
             serviceList.add(linesSrvice);
         }
@@ -105,6 +114,9 @@ public class LineOrderVo extends LineOrder {
             }
             if (!"#".equals(items[12])) {
                 linesSrvice.setPriceSum(new BigDecimal(items[12])); // 合计
+            }
+            if (!"#".equals(items[13])) {
+                linesSrvice.setServiceOperator(items[13]);
             }
             serviceList.add(linesSrvice);
         }

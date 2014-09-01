@@ -248,6 +248,9 @@ $(function() {
 		var thisForm = this;
 		var submitBtn = $(".btn_save",thisForm);
 		submitBtn.bind("click",function(e){
+			if('tj'==jQuery(this).attr('name')){
+                jQuery('#status').val('8');                                
+            }
 			$(this).attr("disabled",true);
 			GLB.vari.submit_flag = true;
 			if($(thisForm).attr('class').indexOf("line") >=0){
@@ -451,6 +454,11 @@ $(function() {
 				var ldservId = $('#ldservId').val();
 				ldserv = '1_' + (ldservId==''?'#':ldservId);
 				ldserv += '_' + $('#ldtype').val();
+				var ldpai = $('#ldpai').val();
+				if(typeof ldpai == 'undefined' || ldpai == ''){
+					ldpai = '#';
+				}
+				ldserv += '_'+ldpai;
 			}
 			$('#ld').val(ldserv);
 			
@@ -463,6 +471,11 @@ $(function() {
 				var qzyshj = $('#qzyshj').val();
 				qzserv += '_' + (qzysdj==''?'#':qzysdj);
 				qzserv += '_' + (qzyshj==''?'#':qzyshj);
+				var qzpai = $('#qzpai').val();
+				if(typeof qzpai == 'undefined' || qzpai == ''){
+					qzpai = '#';
+				}
+				qzserv += '_'+qzpai;
 			}
 			$('#qz').val(qzserv);
 			
@@ -475,6 +488,11 @@ $(function() {
 				var jpyshj = $('#jpyshj').val();
 				jpserv += '_' + (jpysdj==''?'#':jpysdj);
 				jpserv += '_' + (jpyshj==''?'#':jpyshj);
+				var jppai = $('#jppai').val();
+				if(typeof jppai == 'undefined' || jppai == ''){
+					jppai = '#';
+				}
+				jpserv += '_'+jppai;
 			}
 			$('#jp').val(jpserv);
 			
@@ -510,6 +528,11 @@ $(function() {
 				var djyshj = $('#djyshj').val();
 				djserv += '_' + (djysdj==''?'#':djysdj);
 				djserv += '_' + (djyshj==''?'#':djyshj);
+				var djpai = $('#djpai').val();
+				if(typeof djpai == 'undefined' || djpai == ''){
+					djpai = '#';
+				}
+				djserv += '_'+djpai;
 			}
 			$('#dj').val(djserv);
 			
