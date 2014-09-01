@@ -19,6 +19,9 @@ public class LineOrderVo extends LineOrder {
 
     private String nameList;
 
+    private String signDate;
+    private BigDecimal servicePayPrice;
+
     public List<LinesSrvice> getLineOrderService() {
         List<LinesSrvice> serviceList = new ArrayList<LinesSrvice>();
         if (ld.startsWith("1")) {
@@ -162,6 +165,22 @@ public class LineOrderVo extends LineOrder {
             }
         }
         return customList;
+    }
+
+    public String getSignDate() {
+        return signDate;
+    }
+
+    public void setSignDate(String signDate) {
+        this.signDate = signDate;
+    }
+
+    public BigDecimal getServicePayPrice() {
+        return servicePayPrice;
+    }
+
+    public void setServicePayPrice(BigDecimal servicePayPrice) {
+        this.servicePayPrice = servicePayPrice;
     }
 
     public String getLd() {

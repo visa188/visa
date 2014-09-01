@@ -488,7 +488,46 @@
                     <script>
                         getOperators(1);
                     </script>
-                #end
+				#end
+				#if($userRoleId == $fn.getLineVisaoperRoleId() || $fn.isLineAdminRole($userRoleId))
+					#set($visaService = $!{lineServiceMap.get(2).serviceId})
+    				<div class="widget_title">
+                        <span class="ico_static_r"></span>
+                        <h3>签证信息</h3>
+                    </div>
+                    <div class="widget_content">
+    					<div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>送签员:</label>
+                          <div class="controls">
+                           <span class="form_item"><select name="signOperatorId" id="signOperatorId" class="text2 js_non_empty" placeholder="送签员">
+                                <option value="" selected="selected">请选择</option>
+                                #foreach($one in $signOperList)
+                                    <option value="$one.userId" $fn.selected(${lineOrder.signOperatorId}, $one.userId)>$one.userName</option>
+                                #end
+                            </select></span>
+                          </div>
+                        </div>  
+						<div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>送签日期:</label>
+                          <div class="controls">
+                           <span class="form_item">
+						   <input value="$!{visaService.serviceItem2}" type="text"  class="text1 js_non_empty" maxlength="10" size="10" placeholder="送签日期" name="signDate" id="signDate"></span>
+                          </div>
+                        </div>  
+						<div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>应付签证费（单价）:</label>
+                          <div class="controls">
+                           <span class="form_item"><input value="$!{lineOrder.servicePayPrice}" name="servicePayPrice" id="servicePayPrice" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应付签证费（单价）"></span>
+                          </div>
+                        </div>
+						<div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>应付签证费（合计）:</label>
+                          <div class="controls">
+                           <span class="form_item"><input value="0" id="price" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应付签证费（合计）"></span>
+                          </div>
+                        </div>  
+    				</div>	
+				#end
                 <div class="widget_title">
                     <span class="ico_static_r"></span>
                     <h3>费用计算</h3>

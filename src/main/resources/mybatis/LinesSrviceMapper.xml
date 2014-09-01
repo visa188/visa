@@ -26,10 +26,10 @@
   </delete>
   
   <insert id="insert">
-    insert into linessrvice (orderId,serviceName,serviceType,servicePrice,serviceOperator,serviceItem1,serviceItem2,serviceItem3,serviceItem4,
+    insert into linessrvice (orderId,serviceName,serviceType,servicePrice,servicePayPrice,serviceOperator,serviceItem1,serviceItem2,serviceItem3,serviceItem4,
     serviceItem5,serviceItem6,serviceItem7,serviceItem8,priceSum,alreadyPaid,needPaid,paidBank,paidDate,alreadyGot,needGot,gotBank,gotDate,feeComment, postTime)
     values (#{orderId,jdbcType=INTEGER},#{serviceName,jdbcType=VARCHAR},#{serviceType,jdbcType=VARCHAR},
-    #{servicePrice,jdbcType=DECIMAL},#{serviceOperator,jdbcType=VARCHAR},#{serviceItem1,jdbcType=VARCHAR},#{serviceItem2,jdbcType=VARCHAR},
+    #{servicePrice,jdbcType=DECIMAL},#{servicePayPrice,jdbcType=DECIMAL},#{serviceOperator,jdbcType=VARCHAR},#{serviceItem1,jdbcType=VARCHAR},#{serviceItem2,jdbcType=VARCHAR},
     #{serviceItem3,jdbcType=VARCHAR},#{serviceItem4,jdbcType=VARCHAR},#{serviceItem5,jdbcType=VARCHAR},#{serviceItem6,jdbcType=VARCHAR},
     #{serviceItem7,jdbcType=VARCHAR},#{serviceItem8,jdbcType=VARCHAR},
     #{priceSum,jdbcType=DECIMAL},#{alreadyPaid,jdbcType=DECIMAL},#{needPaid,jdbcType=DECIMAL},#{paidBank,jdbcType=VARCHAR},
@@ -43,6 +43,7 @@
     serviceName = #{serviceName,jdbcType=VARCHAR},
     serviceType = #{serviceType,jdbcType=INTEGER},
     servicePrice = #{servicePrice,jdbcType=DECIMAL},
+    servicePayPrice = #{servicePayPrice,jdbcType=DECIMAL},
     serviceOperator = #{serviceOperator,jdbcType=VARCHAR},
     serviceItem1 = #{serviceItem1,jdbcType=VARCHAR},
     serviceItem2 = #{serviceItem2,jdbcType=VARCHAR},

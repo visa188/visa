@@ -47,6 +47,8 @@ public class LinesSrvice {
      * @pdOid 026063bf-35d7-4e16-98d7-c12b0ce38d83
      */
     public BigDecimal servicePrice;
+
+    public BigDecimal servicePayPrice;
     /** @pdOid 3cdd0ad2-2585-421d-83e7-ffd0ced86acb */
     public String serviceOperator;
     /** @pdOid 0f5b9a45-8109-4205-8433-67e09ac2c675 */
@@ -125,6 +127,14 @@ public class LinesSrvice {
     public String feeComment;
     /** @pdOid b9729eb6-c714-4e1d-8cf1-1b31ea3a939e */
     public Date postTime;
+
+    public BigDecimal getServicePayPrice() {
+        return servicePayPrice;
+    }
+
+    public void setServicePayPrice(BigDecimal servicePayPrice) {
+        this.servicePayPrice = servicePayPrice;
+    }
 
     public Integer getServiceId() {
         return serviceId;
