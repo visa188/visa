@@ -140,6 +140,16 @@ public class LineOrder {
     public String specialComment;
     /** @pdOid ac5cabc4-f167-49b7-9590-f036f58a74df */
     public Date postTime;
+    public BigDecimal profit;
+
+    @FieldDes(fieldDes = "毛利")
+    public BigDecimal getProfit() {
+        return profit;
+    }
+
+    public void setProfit(BigDecimal profit) {
+        this.profit = profit;
+    }
 
     @FieldDes(fieldDes = "团费总计")
     public BigDecimal getPriceSum() {
@@ -403,6 +413,7 @@ public class LineOrder {
         this.salesmanName = salesmanName;
     }
 
+    @FieldDes(fieldDes = "线路操作员")
     public String getLineOperatorName() {
         return lineOperatorName;
     }
@@ -411,6 +422,7 @@ public class LineOrder {
         this.lineOperatorName = lineOperatorName;
     }
 
+    @FieldDes(fieldDes = "签证操作员")
     public String getVisaOperatorName() {
         return visaOperatorName;
     }
@@ -427,6 +439,7 @@ public class LineOrder {
         this.signOperatorId = signOperatorId;
     }
 
+    @FieldDes(fieldDes = "送签员")
     public String getSignOperatorName() {
         return signOperatorName;
     }

@@ -49,6 +49,7 @@ public class StringUtil {
                 for (LinesSrvice linesSrvice : linesSrviceList) {
                     if (serviceListDB != null
                             && serviceListDB.get(linesSrvice.getServiceId()) != null) {
+                        result.append("修改服务：").append(linesSrvice.getServiceName()).append("<br/>");
                         result.append(compareChange(linesSrvice,
                                 serviceListDB.get(linesSrvice.getServiceId())));
                         serviceListDB.remove(linesSrvice.getServiceId());
@@ -68,6 +69,7 @@ public class StringUtil {
             if (linesNameList != null) {
                 for (LineNameList nameList : linesNameList) {
                     if (nameListDB != null && nameListDB.get(nameList.getId()) != null) {
+                        result.append("修改客户：").append(nameList.getName()).append("<br/>");
                         result.append(compareChange(nameList, nameListDB.get(nameList.getId())));
                         nameListDB.remove(nameList.getId());
                     } else {
