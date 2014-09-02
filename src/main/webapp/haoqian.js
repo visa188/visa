@@ -193,54 +193,56 @@ $(function() {
 	// 表单填写过程中的验证调用
 	$(".controls").each(function(){
 		var formItem_wrap = this;
-		var nan_flag = false;
-		var nonEmpty_flag = false;
-		var repeat_flag = false;
-		var phone_flag = false;
-		if($(".js_phone",formItem_wrap)[0]){
-			phone_flag = true;
-		}
-		if($(".js_repeat",formItem_wrap)[0]){
-			repeat_flag = true;
-		}
-		if($(".js_nan",formItem_wrap)[0]){
-			nan_flag = true;
-		}
-		if($(".js_non_empty",formItem_wrap)[0]){
-			nonEmpty_flag = true;
-		}
-		if(phone_flag || repeat_flag || nan_flag || nonEmpty_flag){
-			var formItem = nan_flag ? $(".js_nan",formItem_wrap)[0] : $(".js_non_empty",formItem_wrap)[0];
-			if(repeat_flag){
-				formItem = repeat_flag ? $(".js_repeat",formItem_wrap)[0] : $(".js_non_empty",formItem_wrap)[0];
+		$(":input",formItem_wrap).each(function(){
+			var nan_flag = false;
+			var nonEmpty_flag = false;
+			var repeat_flag = false;
+			var phone_flag = false;
+			if($(".js_phone",formItem_wrap)[0]){
+				phone_flag = true;
 			}
-			if(phone_flag){
-				formItem = phone_flag ? $(".js_phone",formItem_wrap)[0] : $(".js_non_empty",formItem_wrap)[0];
+			if($(".js_repeat",formItem_wrap)[0]){
+				repeat_flag = true;
 			}
-			$(formItem).bind("blur",function(e){
-				setVerify();
-			}).bind("change",function(e){
-				setVerify();
-			})
-			function setVerify(){
-				if($(".ico_error",formItem_wrap)[0]){
-		    		$(".ico_error",formItem_wrap).remove();
-		    		$(".error_tip",formItem_wrap).remove();
-		    	}  
-		    	if(nonEmpty_flag){
-		    		GLB.nonEmpty(formItem,formItem_wrap);
-		    	}
-		    	if(nan_flag){
-		    		GLB.notNun(formItem,formItem_wrap);
-		    	}
-		    	if(repeat_flag){
-		    		GLB.repeat(formItem,formItem_wrap);
-		    	}
-		    	if(phone_flag){
-		    		GLB.phone(formItem,formItem_wrap);
-		    	}
+			if($(".js_nan",formItem_wrap)[0]){
+				nan_flag = true;
 			}
-		}	
+			if($(".js_non_empty",formItem_wrap)[0]){
+				nonEmpty_flag = true;
+			}
+			if(phone_flag || repeat_flag || nan_flag || nonEmpty_flag){
+				var formItem = nan_flag ? $(".js_nan",formItem_wrap)[0] : $(".js_non_empty",formItem_wrap)[0];
+				if(repeat_flag){
+					formItem = repeat_flag ? $(".js_repeat",formItem_wrap)[0] : $(".js_non_empty",formItem_wrap)[0];
+				}
+				if(phone_flag){
+					formItem = phone_flag ? $(".js_phone",formItem_wrap)[0] : $(".js_non_empty",formItem_wrap)[0];
+				}
+				$(formItem).bind("blur",function(e){
+					setVerify();
+				}).bind("change",function(e){
+					setVerify();
+				})
+				function setVerify(){
+					if($(".ico_error",formItem_wrap)[0]){
+			    		$(".ico_error",formItem_wrap).remove();
+			    		$(".error_tip",formItem_wrap).remove();
+			    	}  
+			    	if(nonEmpty_flag){
+			    		GLB.nonEmpty(formItem,formItem_wrap);
+			    	}
+			    	if(nan_flag){
+			    		GLB.notNun(formItem,formItem_wrap);
+			    	}
+			    	if(repeat_flag){
+			    		GLB.repeat(formItem,formItem_wrap);
+			    	}
+			    	if(phone_flag){
+			    		GLB.phone(formItem,formItem_wrap);
+			    	}
+				}
+			}	
+		})
 	})
 
 	// 表单提交时的验证调用
