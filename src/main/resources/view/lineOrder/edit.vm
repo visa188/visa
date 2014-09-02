@@ -63,8 +63,6 @@
             jQuery("#endDate").attr("readonly","readonly");
             jQuery("#startDate").datepicker( "option", "disabled", true );
             jQuery("#endDate").datepicker( "option", "disabled", true );
-            
-            jQuery('#selectProductId').change();
         }
     }
     function setNamelistSize(){
@@ -151,14 +149,13 @@
                             <label class="control_label"><span class="ico_must">*</span>散拼团:</label>
                             <div class="controls">
                                 <span class="form_item"><select $fn.isReadOnly($userRoleId,1) id="selectProductId" class="text2" placeholder="散拼团" onchange="getProductId()">
-                                    <option value="" selected="selected">请选择</option>
+                                    <option value="">请选择</option>
                                     #foreach($one in $lineProductList)
-                                        <option value="$one.lineProductId">$one.lineProductName</option>
+                                        <option value="$one.lineProductId" $fn.selected(${lineOrder.lineProductId}, $one.lineProductId)>$one.lineProductName</option>
                                     #end
                                 </select></span>
                             </div>
                         </div>
-                        
                         <div class="control_group">
                             <label class="control_label"><span class="ico_must">*</span>机票订金时限:</label>
                             <div class="controls">
@@ -739,6 +736,7 @@
         </div>
     </div>
     <script>
+    getProductId();
     changeProductType();
     </script>
     <script>

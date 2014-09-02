@@ -326,12 +326,12 @@
                         jQuery('.ysdj').blur(function(){
                             var nameListSize = jQuery('#nameListSize').val();
                             var dj = jQuery(this).val();
-                            if(jQuery.isNumeric(nameListSize)&&jQuery.isNumeric(dj)){
+                            if(!isNaN(nameListSize)&&!isNaN(dj)){
                                 jQuery(jQuery(this).next()).val(nameListSize * dj);
                             }
                         });
                         jQuery('#nameListSize').change(function(){
-                            if(jQuery.isNumeric(jQuery(this).val())){
+                            if(!isNaN(jQuery(this).val())){
                                 jQuery('.ysdj').blur();
                             }
                         });
