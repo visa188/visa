@@ -486,7 +486,7 @@
                            <span class="form_item"><select name="yfjpkType" id="yfjpkType" class="text2 js_non_empty">
                                 <option value="1"  $fn.selected($!{jpService.serviceItem2}, 1)>定金</option>
                                 <option value="2"  $fn.selected($!{jpService.serviceItem2}, 2)>机票款</option>
-                            </select> 单价(含税)<input value="$!{jpService.servicePayPrice}" type="text"  class="text1 js_non_empty ysdj" name="yfjpkdj" id="yfjpkdj">元 合计<input value="$!{jpService.yfhj}" type="text"  class="text1 js_non_empty" name="yfjpkhj" id="yfjpkhj">元 航空公司:<select name="hkgs" id="hkgs" class="text2 js_non_empty">
+                            </select> 单价(含税)<input value="$!{jpService.servicePayPrice}" type="text"  class="text1 js_non_empty ysdj" name="yfjpkdj" id="yfjpkdj" placeholder="机票单价">元 合计<input value="$!{jpService.yfhj}" type="text"  class="text1 js_non_empty" name="yfjpkhj" id="yfjpkhj" placeholder="机票合计">元 航空公司:<select name="hkgs" id="hkgs" class="text2 js_non_empty">
                                 #foreach($one in $airlineList)
                                     <option value="$one.airlineId" $fn.selected($!{jpService.serviceItem3}, $one.airlineId)>$one.airlineName</option>
                                 #end
@@ -500,7 +500,7 @@
                           <label class="control_label"><span class="ico_must">*</span>地接费用合计:</label>
                           <div class="controls">
                            <span class="form_item">#if($djService.serviceItem1)酒店费用#end #if($djService.serviceItem4)特殊景点费用#end #if($djService.serviceType == $fn.getBsServicTypeId())巴士费用#else司兼导费用#end
-                           <input value="$!{djService.yfhj}" type="text" class="text1 js_non_empty" name="yfdjhj" id="yfdjhj">元</span>
+                           <input value="$!{djService.yfhj}" type="text" class="text1 js_non_empty" name="yfdjhj" id="yfdjhj" placeholder="地接费用合计">元</span>
                           </div>
                         </div>
                         #end  
@@ -509,7 +509,7 @@
                           <div class="controls">
                            #set($bxService = $!{lineServiceMap.get(7)})
                            <input type="hidden" name="bxServicId" value="$!{bxService.serviceId}" />  
-                           <span class="form_item"><input value="$!{bxService.servicePayPrice}" name="yfbxdj" id="yfbxdj" type="text" class="text1 js_non_empty js_nan ysdj">元  总计 <input value="$!{bxService.yfhj}" name="yfbxhj" id="yfbxhj" type="text" class="text1 js_non_empty js_nan">元</span>
+                           <span class="form_item"><input value="$!{bxService.servicePayPrice}" name="yfbxdj" id="yfbxdj" type="text" class="text1 js_non_empty js_nan ysdj" placeholder="保险单价">元  总计 <input value="$!{bxService.yfhj}" name="yfbxhj" id="yfbxhj" type="text" class="text1 js_non_empty js_nan" placeholder="保险合计">元</span>
                           </div>
                         </div>
                     </div>  
