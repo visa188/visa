@@ -617,6 +617,8 @@
 						sumVisaPay();
 						showGaranteePrice();
 					</script>
+				#elseif($visaService&&$userRoleId == $fn.getLineSignoperRoleId())
+					#parse("/view/lineOrder/signEdit.vm")
 				#end
                 <div class="widget_title">
                     <span class="ico_static_r"></span>
