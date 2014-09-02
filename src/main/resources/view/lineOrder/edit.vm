@@ -732,7 +732,7 @@
                           </div>
                         </div>
 						<script>
-							calculateProfit(){
+							function calculateProfit(){
 								//总计应收
 								var priceSum=jQuery("#priceSum").val()==''?0:jQuery("#priceSum").val();
 								//机票已付

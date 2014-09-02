@@ -350,15 +350,19 @@ public class LineOrderController {
                     serviceType = 4;
                 }
                 srvice = lineServiceMap.get(serviceType);
-                srvicedb.setAlreadyGot(srvice.getAlreadyGot());
-                srvicedb.setAlreadyPaid(srvice.getAlreadyPaid());
-                srvicedb.setNeedGot(srvice.getNeedGot());
-                srvicedb.setNeedPaid(srvice.getNeedPaid());
-                srvicedb.setPaidBank(srvice.getPaidBank());
-                srvicedb.setPaidDate(srvice.getPaidDate());
-                srvicedb.setGotBank(srvice.getGotBank());
-                srvicedb.setGotDate(srvice.getGotDate());
-                linesServiceDao.insert(srvicedb);
+                if (srvice != null) {
+                    srvicedb.setAlreadyGot(srvice.getAlreadyGot());
+                    srvicedb.setAlreadyPaid(srvice.getAlreadyPaid());
+                    srvicedb.setNeedGot(srvice.getNeedGot());
+                    srvicedb.setNeedPaid(srvice.getNeedPaid());
+                    srvicedb.setPaidBank(srvice.getPaidBank());
+                    srvicedb.setPaidDate(srvice.getPaidDate());
+                    srvicedb.setGotBank(srvice.getGotBank());
+                    srvicedb.setGotDate(srvice.getGotDate());
+                    linesServiceDao.insert(srvicedb);
+                } else {
+                    System.out.println(serviceType);
+                }
             }
         } else {
             linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId(), null);

@@ -23,11 +23,13 @@ GLB.nonEmpty = function(node,pnode){
 
 // 非数字
 GLB.notNun = function(node,pnode){
+	if(typeof node != "undefined"){
 	if(isNaN(node.value)){
 		var tips="只能是数字！"
 		GLB.setTips(node,pnode,tips);	
 		GLB.vari.submit_flag = false;
 		return;	
+	}
 	}
 }
 
@@ -220,12 +222,12 @@ $(function() {
 					formItem = phone_flag ? $(".js_phone",formItem_wrap)[i] : $(".js_non_empty",formItem_wrap)[i];
 				}
 				$(formItem).bind("blur",function(e){
-					setVerify(this);
+					setVerify(this,i);
 				}).bind("change",function(e){
-					setVerify(this);
+					setVerify(this,i);
 				})
-				function setVerify(formItem){
-					if($(".ico_error",formItem_wrap)[0]){
+				function setVerify(formItem,i){
+					if($(".ico_error",formItem_wrap)[i]){
 			    		$(".ico_error",formItem_wrap).remove();
 			    		$(".error_tip",formItem_wrap).remove();
 			    	}  
@@ -297,7 +299,7 @@ $(function() {
 						if(phone_flag){
 							formItem = phone_flag ? $(".js_phone",formItem_wrap)[i] : $(".js_non_empty",formItem_wrap)[i];
 						}
-						if($(".ico_error",formItem_wrap)[0]){
+						if($(".ico_error",formItem_wrap)[i]){
 				    		$(".ico_error",formItem_wrap).remove();
 				    		$(".error_tip",formItem_wrap).remove();
 				    	}  
