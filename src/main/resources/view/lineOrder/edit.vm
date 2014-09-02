@@ -704,7 +704,7 @@
                         <div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>其它费用合计:</label>
                           <div class="controls">
-							<span class="form_item">应付：<input value="$!fn.disPrice($!{qtService.yfhj})" type="text" class="text1 js_nan" name="qtPriceSum" id="qtPriceSum">元</span>
+							<span class="form_item">应付：<input value="$!fn.disPrice($!{qtService.yfhj})" type="text" class="text1 js_nan" name="qtPriceSum" id="qtPriceSum" onchange="calculateProfit();">元</span>
 							<span class="form_item">已付：<input value="$!fn.disPrice($!{qtService.alreadyPaid})" name="qtAlreadyPaid" id="qtAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收">元</span>
 							<span class="form_item">未付：<input value="$!fn.disPrice($!{qtService.needPaid})" name="qtNeedPaid" id="qtNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
 							<span class="form_item">转出银行：<input value="$!{qtService.paidBank}" name="qtPaidBank" id="qtPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
@@ -725,6 +725,36 @@
                           </div>
                         </div>
 						#end  
+						<div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>毛利:</label>
+                          <div class="controls">
+							<span class="form_item"><input value="$!fn.disPrice($!{lineOrder.profit})" name="profit" id="profit" type="text" class="text1 js_nan" readonly>元</span>
+                          </div>
+                        </div>
+						<script>
+							calculateProfit(){
+								//总计应收
+								var priceSum=jQuery("#priceSum").val()==''?0:jQuery("#priceSum").val();
+								//机票已付
+								var jpPriceSum=jQuery("#jpPriceSum").val()==''?0:jQuery("#jpPriceSum").val();
+								//签证已付
+								var qzPriceSum=jQuery("#qzPriceSum").val()==''?0:jQuery("#qzPriceSum").val();
+								//地接已付
+								var djPriceSum=jQuery("#djPriceSum").val()==''?0:jQuery("#djPriceSum").val();
+								//其它已付
+								var qtPriceSum=jQuery("#qtPriceSum").val()==''?0:jQuery("#qtPriceSum").val();
+								//保险已付
+								var bxPriceSum=jQuery("#bxPriceSum").val()==''?0:jQuery("#bxPriceSum").val();
+								
+								var profit = 0.0;
+								
+								if(priceSum&&jpPriceSum&&qzPriceSum&&djPriceSum&&qtPriceSum&&bxPriceSum){
+                        			profit = Math.round(parseFloat(priceSum*100-jpPriceSum*100-qzPriceSum*100-djPriceSum*100-qtPriceSum*100-bxPriceSum*100))/100;
+                        		}
+								jQuery("#profit").val(profit);
+							}
+							calculateProfit();
+						</script>
 					#end
                 </div>
               </div>

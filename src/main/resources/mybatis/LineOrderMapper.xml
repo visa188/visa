@@ -91,15 +91,16 @@
   <insert id="insert" useGeneratedKeys="true" keyProperty="orderId">
     insert into lineorder (orderDate,type,nameListSize,salesmanId,salesmanName,lineOperatorId,lineOperatorName,
     visaOperatorId,visaOperatorName,signOperatorId,signOperatorName,travelAgency,contact,contactNo,lineCountryId,
-    startDate,endDate,travelInfo,travelInfoFileUrl,aircorpId,price,priceSum,alreadyGot,needGot,gotBank,gotDate,status,lineProductId,specialComment,orderSeq, postTime)
+    startDate,endDate,travelInfo,travelInfoFileUrl,aircorpId,price,priceSum,alreadyGot,needGot,gotBank,gotDate,status,lineProductId,specialComment,orderSeq,profit, postTime)
     values (now(),
     #{type,jdbcType=INTEGER},#{nameListSize,jdbcType=INTEGER},#{salesmanId,jdbcType=VARCHAR},#{salesmanName,jdbcType=VARCHAR},
     #{lineOperatorId,jdbcType=VARCHAR},#{lineOperatorName,jdbcType=VARCHAR},#{visaOperatorId,jdbcType=VARCHAR},#{visaOperatorName,jdbcType=VARCHAR},
     #{signOperatorId,jdbcType=VARCHAR},#{signOperatorName,jdbcType=VARCHAR},#{travelAgency,jdbcType=VARCHAR},#{contact,jdbcType=VARCHAR},
     #{contactNo,jdbcType=VARCHAR},#{lineCountryId,jdbcType=INTEGER},#{startDate,jdbcType=DATE},
     #{endDate,jdbcType=DATE},#{travelInfo,jdbcType=VARCHAR},#{travelInfoFileUrl,jdbcType=VARCHAR},#{aircorpId,jdbcType=INTEGER},
-    #{price,jdbcType=DECIMAL},#{priceSum,jdbcType=DECIMAL},#{alreadyGot,jdbcType=DECIMAL},#{needGot,jdbcType=DECIMAL},#{gotBank,jdbcType=VARCHAR},#{gotDate,jdbcType=DATE},#{status,jdbcType=INTEGER},#{lineProductId,jdbcType=INTEGER},#{specialComment,jdbcType=VARCHAR},
-    #{orderSeq,jdbcType=VARCHAR}, now())
+    #{price,jdbcType=DECIMAL},#{priceSum,jdbcType=DECIMAL},#{alreadyGot,jdbcType=DECIMAL},#{needGot,jdbcType=DECIMAL},#{gotBank,jdbcType=VARCHAR},#{gotDate,jdbcType=DATE},
+    #{status,jdbcType=INTEGER},#{lineProductId,jdbcType=INTEGER},#{specialComment,jdbcType=VARCHAR},
+    #{orderSeq,jdbcType=VARCHAR},#{profit,jdbcType=DECIMAL}, now())
   </insert>
   
   <update id="updateByPrimaryKey">
@@ -131,6 +132,7 @@
 	    <if test="gotDate != null">gotDate = #{gotDate,jdbcType=DATE},</if>
 	    <if test="status != null">status = #{status,jdbcType=INTEGER},</if>
 	    <if test="lineProductId != null">lineProductId = #{lineProductId,jdbcType=INTEGER},</if>
+	    <if test="profit != null">profit = #{profit,jdbcType=DECIMAL},</if>
 	    <if test="specialComment != null">specialComment = #{specialComment,jdbcType=VARCHAR},</if>
     postTime = now()
     </set>
