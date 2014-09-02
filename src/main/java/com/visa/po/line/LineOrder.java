@@ -129,7 +129,7 @@ public class LineOrder {
     public BigDecimal alreadyGot;
     public BigDecimal needGot;
     public String gotBank;
-    public Date goaDate;
+    public Date gotDate;
     /**
      * 线路订单状态
      * 
@@ -178,12 +178,12 @@ public class LineOrder {
     }
 
     @FieldDes(fieldDes = "入账日期")
-    public Date getGoaDate() {
-        return goaDate;
+    public Date getGotDate() {
+        return gotDate;
     }
 
-    public void setGoaDate(Date goaDate) {
-        this.goaDate = goaDate;
+    public void setGotDate(Date gotDate) {
+        this.gotDate = gotDate;
     }
 
     public String getLineProductName() {

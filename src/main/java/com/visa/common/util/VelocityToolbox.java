@@ -1,5 +1,6 @@
 package com.visa.common.util;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 
@@ -85,9 +86,9 @@ public class VelocityToolbox {
      * @param price price
      * @return 如果为整数度数，显示整数，否则显示小数 36.0元，显示 36元
      */
-    public String disPrice(Float price) {
+    public String disPrice(BigDecimal price) {
         if (price == null) {
-            return "";
+            return "0";
         }
         Float fp = new Float(price.intValue());
         if (fp.floatValue() == price.floatValue()) {
@@ -101,8 +102,8 @@ public class VelocityToolbox {
      * @return role name
      */
     public String getRole(Integer roleId) {
-        return RoleEnumType.ROLE_MAP.get(roleId) != null ? RoleEnumType.ROLE_MAP.get(roleId).getName()
-                : LineRoleEnumType.ROLE_MAP.get(roleId).getName();
+        return RoleEnumType.ROLE_MAP.get(roleId) != null ? RoleEnumType.ROLE_MAP.get(roleId)
+                .getName() : LineRoleEnumType.ROLE_MAP.get(roleId).getName();
     }
 
     /**
@@ -202,7 +203,8 @@ public class VelocityToolbox {
     }
 
     public boolean isLineSalesmanRole(int roleId) {
-        if (LineRoleEnumType.SALESMAN.getId() == roleId || LineRoleEnumType.SALEMAN_MANAGER.getId() == roleId) {
+        if (LineRoleEnumType.SALESMAN.getId() == roleId
+                || LineRoleEnumType.SALEMAN_MANAGER.getId() == roleId) {
             return true;
         }
         return false;
@@ -220,7 +222,8 @@ public class VelocityToolbox {
     }
 
     public boolean isLineOperatorRole(int roleId) {
-        if (LineRoleEnumType.OPERATOR.getId() == roleId || LineRoleEnumType.OPERATOR_MANAGER.getId() == roleId) {
+        if (LineRoleEnumType.OPERATOR.getId() == roleId
+                || LineRoleEnumType.OPERATOR_MANAGER.getId() == roleId) {
             return true;
         }
         return false;
@@ -238,7 +241,8 @@ public class VelocityToolbox {
     }
 
     public boolean isLineFinanceRole(int roleId) {
-        if (LineRoleEnumType.FINANCE.getId() == roleId || LineRoleEnumType.FINANCE_MANAGER.getId() == roleId) {
+        if (LineRoleEnumType.FINANCE.getId() == roleId
+                || LineRoleEnumType.FINANCE_MANAGER.getId() == roleId) {
             return true;
         }
         return false;
@@ -253,7 +257,8 @@ public class VelocityToolbox {
     }
 
     public boolean isLineVisaoperRole(int roleId) {
-        if (LineRoleEnumType.VISAOPER.getId() == roleId || LineRoleEnumType.VISAOPER_MANAGER.getId() == roleId) {
+        if (LineRoleEnumType.VISAOPER.getId() == roleId
+                || LineRoleEnumType.VISAOPER_MANAGER.getId() == roleId) {
             return true;
         }
         return false;

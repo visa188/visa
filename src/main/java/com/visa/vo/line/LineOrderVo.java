@@ -2,6 +2,7 @@ package com.visa.vo.line;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -42,6 +43,45 @@ public class LineOrderVo extends LineOrder {
     private String bxServicId;
     private BigDecimal yfbxdj;
     private BigDecimal yfbxhj;
+
+    private BigDecimal garanteePriceSum;
+    private BigDecimal garanteeAlreadyGot;
+    private BigDecimal garanteeNeedGot;
+    private String garanteeGotBank;
+    private Date garanteeGotDate;
+    private BigDecimal garanteeAlreadyPaid;
+    private String garanteePaidBank;
+    private Date garanteePaidDate;
+
+    private BigDecimal djPriceSum;
+    private BigDecimal djAlreadyPaid;
+    private BigDecimal djNeedPaid;
+    private String djPaidBank;
+    private Date djPaidDate;
+
+    private BigDecimal jpPriceSum;
+    private BigDecimal jpAlreadyPaid;
+    private BigDecimal jpNeedPaid;
+    private String jpPaidBank;
+    private Date jpPaidDate;
+
+    private BigDecimal qzPriceSum;
+    private BigDecimal qzAlreadyPaid;
+    private BigDecimal qzNeedPaid;
+    private String qzPaidBank;
+    private Date qzPaidDate;
+
+    private BigDecimal qtPriceSum;
+    private BigDecimal qtAlreadyPaid;
+    private BigDecimal qtNeedPaid;
+    private String qtPaidBank;
+    private Date qtPaidDate;
+
+    private BigDecimal bxPriceSum;
+    private BigDecimal bxAlreadyPaid;
+    private BigDecimal bxNeedPaid;
+    private String bxPaidBank;
+    private Date bxPaidDate;
 
     public List<LinesSrvice> getLineOrderService() {
         List<LinesSrvice> serviceList = new ArrayList<LinesSrvice>();
@@ -88,6 +128,18 @@ public class LineOrderVo extends LineOrder {
             if (!StringUtils.isEmpty(this.getDatumLimitDate())) {
                 linesSrvice.setServiceItem3(this.getDatumLimitDate());
             }
+            if (this.getQzNeedPaid() != null) {
+                linesSrvice.setNeedPaid(this.getQzNeedPaid());
+            }
+            if (this.getQzAlreadyPaid() != null) {
+                linesSrvice.setAlreadyPaid(this.getQzAlreadyPaid());
+            }
+            if (!StringUtils.isEmpty(this.getQzPaidBank())) {
+                linesSrvice.setPaidBank(this.getQzPaidBank());
+            }
+            if (this.getQzPaidDate() != null) {
+                linesSrvice.setPaidDate(this.getQzPaidDate());
+            }
             serviceList.add(linesSrvice);
         }
         if (jp.startsWith("1")) {
@@ -106,6 +158,18 @@ public class LineOrderVo extends LineOrder {
             }
             if (!"#".equals(items[5])) {
                 linesSrvice.setServiceOperator(items[5]);
+            }
+            if (this.getJpNeedPaid() != null) {
+                linesSrvice.setNeedPaid(this.getJpNeedPaid());
+            }
+            if (this.getJpAlreadyPaid() != null) {
+                linesSrvice.setAlreadyPaid(this.getJpAlreadyPaid());
+            }
+            if (!StringUtils.isEmpty(this.getJpPaidBank())) {
+                linesSrvice.setPaidBank(this.getJpPaidBank());
+            }
+            if (this.getJpPaidDate() != null) {
+                linesSrvice.setPaidDate(this.getJpPaidDate());
             }
 
             linesSrvice.setServiceItem2(yfjpkType);
@@ -161,6 +225,19 @@ public class LineOrderVo extends LineOrder {
             if (!"#".equals(items[13])) {
                 linesSrvice.setServiceOperator(items[13]);
             }
+            if (this.getDjNeedPaid() != null) {
+                linesSrvice.setNeedPaid(this.getDjNeedPaid());
+            }
+            if (this.getDjAlreadyPaid() != null) {
+                linesSrvice.setAlreadyPaid(this.getDjAlreadyPaid());
+            }
+            if (!StringUtils.isEmpty(this.getDjPaidBank())) {
+                linesSrvice.setPaidBank(this.getDjPaidBank());
+            }
+            if (this.getDjPaidDate() != null) {
+                linesSrvice.setPaidDate(this.getDjPaidDate());
+            }
+
             linesSrvice.setYfhj(yfdjhj);
             serviceList.add(linesSrvice);
         }
@@ -179,6 +256,18 @@ public class LineOrderVo extends LineOrder {
             if (!"#".equals(items[4])) {
                 linesSrvice.setPriceSum(new BigDecimal(items[4])); // 合计
             }
+            if (this.getQtNeedPaid() != null) {
+                linesSrvice.setNeedPaid(this.getQtNeedPaid());
+            }
+            if (this.getQtAlreadyPaid() != null) {
+                linesSrvice.setAlreadyPaid(this.getQtAlreadyPaid());
+            }
+            if (!StringUtils.isEmpty(this.getQtPaidBank())) {
+                linesSrvice.setPaidBank(this.getQtPaidBank());
+            }
+            if (this.getQtPaidDate() != null) {
+                linesSrvice.setPaidDate(this.getQtPaidDate());
+            }
             serviceList.add(linesSrvice);
         }
         if (!StringUtils.isEmpty(getGaranteeType())) {
@@ -188,12 +277,48 @@ public class LineOrderVo extends LineOrder {
             if (getGaranteePrice() != null) {
                 linesSrvice.setPriceSum(getGaranteePrice());
             }
+            // 归国保证金或者是联保
+            if ("2".equals(getGaranteeType()) || "3".equals(getGaranteeType())) {
+                if (this.getGaranteeAlreadyPaid() != null) {
+                    linesSrvice.setAlreadyPaid(this.getGaranteeAlreadyPaid());
+                }
+                if (!StringUtils.isEmpty(this.getGaranteePaidBank())) {
+                    linesSrvice.setPaidBank(this.getGaranteePaidBank());
+                }
+                if (this.getGaranteePaidDate() != null) {
+                    linesSrvice.setPaidDate(this.getGaranteePaidDate());
+                }
+                if (this.getGaranteeAlreadyGot() != null) {
+                    linesSrvice.setAlreadyGot(this.getGaranteeAlreadyGot());
+                }
+                if (this.getGaranteeNeedGot() != null) {
+                    linesSrvice.setNeedGot(this.getGaranteeNeedGot());
+                }
+                if (!StringUtils.isEmpty(this.getGaranteeGotBank())) {
+                    linesSrvice.setGotBank(this.getGaranteeGotBank());
+                }
+                if (this.getGaranteeGotDate() != null) {
+                    linesSrvice.setGotDate(this.getGaranteeGotDate());
+                }
+            }
             serviceList.add(linesSrvice);
         }
 
         LinesSrvice bxSrvice = new LinesSrvice(orderId, LineSrviceEnumType.BX.getId());
         bxSrvice.setYfhj(yfbxhj);
         bxSrvice.setServicePayPrice(yfbxdj);
+        if (this.getBxNeedPaid() != null) {
+            bxSrvice.setNeedPaid(this.getBxNeedPaid());
+        }
+        if (this.getBxAlreadyPaid() != null) {
+            bxSrvice.setAlreadyPaid(this.getBxAlreadyPaid());
+        }
+        if (!StringUtils.isEmpty(this.getBxPaidBank())) {
+            bxSrvice.setPaidBank(this.getBxPaidBank());
+        }
+        if (this.getBxPaidDate() != null) {
+            bxSrvice.setPaidDate(this.getBxPaidDate());
+        }
         int bxId = 0;
         try {
             bxId = Integer.valueOf(bxServicId);
@@ -227,6 +352,270 @@ public class LineOrderVo extends LineOrder {
             }
         }
         return customList;
+    }
+
+    public BigDecimal getGaranteeAlreadyPaid() {
+        return garanteeAlreadyPaid;
+    }
+
+    public void setGaranteeAlreadyPaid(BigDecimal garanteeAlreadyPaid) {
+        this.garanteeAlreadyPaid = garanteeAlreadyPaid;
+    }
+
+    public String getGaranteePaidBank() {
+        return garanteePaidBank;
+    }
+
+    public void setGaranteePaidBank(String garanteePaidBank) {
+        this.garanteePaidBank = garanteePaidBank;
+    }
+
+    public Date getGaranteePaidDate() {
+        return garanteePaidDate;
+    }
+
+    public void setGaranteePaidDate(Date garanteePaidDate) {
+        this.garanteePaidDate = garanteePaidDate;
+    }
+
+    public BigDecimal getQzPriceSum() {
+        return qzPriceSum;
+    }
+
+    public void setQzPriceSum(BigDecimal qzPriceSum) {
+        this.qzPriceSum = qzPriceSum;
+    }
+
+    public BigDecimal getQzAlreadyPaid() {
+        return qzAlreadyPaid;
+    }
+
+    public void setQzAlreadyPaid(BigDecimal qzAlreadyPaid) {
+        this.qzAlreadyPaid = qzAlreadyPaid;
+    }
+
+    public BigDecimal getQzNeedPaid() {
+        return qzNeedPaid;
+    }
+
+    public void setQzNeedPaid(BigDecimal qzNeedPaid) {
+        this.qzNeedPaid = qzNeedPaid;
+    }
+
+    public String getQzPaidBank() {
+        return qzPaidBank;
+    }
+
+    public void setQzPaidBank(String qzPaidBank) {
+        this.qzPaidBank = qzPaidBank;
+    }
+
+    public Date getQzPaidDate() {
+        return qzPaidDate;
+    }
+
+    public void setQzPaidDate(Date qzPaidDate) {
+        this.qzPaidDate = qzPaidDate;
+    }
+
+    public BigDecimal getQtPriceSum() {
+        return qtPriceSum;
+    }
+
+    public void setQtPriceSum(BigDecimal qtPriceSum) {
+        this.qtPriceSum = qtPriceSum;
+    }
+
+    public BigDecimal getQtAlreadyPaid() {
+        return qtAlreadyPaid;
+    }
+
+    public void setQtAlreadyPaid(BigDecimal qtAlreadyPaid) {
+        this.qtAlreadyPaid = qtAlreadyPaid;
+    }
+
+    public BigDecimal getQtNeedPaid() {
+        return qtNeedPaid;
+    }
+
+    public void setQtNeedPaid(BigDecimal qtNeedPaid) {
+        this.qtNeedPaid = qtNeedPaid;
+    }
+
+    public String getQtPaidBank() {
+        return qtPaidBank;
+    }
+
+    public void setQtPaidBank(String qtPaidBank) {
+        this.qtPaidBank = qtPaidBank;
+    }
+
+    public Date getQtPaidDate() {
+        return qtPaidDate;
+    }
+
+    public void setQtPaidDate(Date qtPaidDate) {
+        this.qtPaidDate = qtPaidDate;
+    }
+
+    public BigDecimal getBxPriceSum() {
+        return bxPriceSum;
+    }
+
+    public void setBxPriceSum(BigDecimal bxPriceSum) {
+        this.bxPriceSum = bxPriceSum;
+    }
+
+    public BigDecimal getBxAlreadyPaid() {
+        return bxAlreadyPaid;
+    }
+
+    public void setBxAlreadyPaid(BigDecimal bxAlreadyPaid) {
+        this.bxAlreadyPaid = bxAlreadyPaid;
+    }
+
+    public BigDecimal getBxNeedPaid() {
+        return bxNeedPaid;
+    }
+
+    public void setBxNeedPaid(BigDecimal bxNeedPaid) {
+        this.bxNeedPaid = bxNeedPaid;
+    }
+
+    public String getBxPaidBank() {
+        return bxPaidBank;
+    }
+
+    public void setBxPaidBank(String bxPaidBank) {
+        this.bxPaidBank = bxPaidBank;
+    }
+
+    public Date getBxPaidDate() {
+        return bxPaidDate;
+    }
+
+    public void setBxPaidDate(Date bxPaidDate) {
+        this.bxPaidDate = bxPaidDate;
+    }
+
+    public BigDecimal getDjAlreadyPaid() {
+        return djAlreadyPaid;
+    }
+
+    public void setDjAlreadyPaid(BigDecimal djAlreadyPaid) {
+        this.djAlreadyPaid = djAlreadyPaid;
+    }
+
+    public BigDecimal getDjNeedPaid() {
+        return djNeedPaid;
+    }
+
+    public void setDjNeedPaid(BigDecimal djNeedPaid) {
+        this.djNeedPaid = djNeedPaid;
+    }
+
+    public String getDjPaidBank() {
+        return djPaidBank;
+    }
+
+    public void setDjPaidBank(String djPaidBank) {
+        this.djPaidBank = djPaidBank;
+    }
+
+    public Date getDjPaidDate() {
+        return djPaidDate;
+    }
+
+    public void setDjPaidDate(Date djPaidDate) {
+        this.djPaidDate = djPaidDate;
+    }
+
+    public BigDecimal getJpPriceSum() {
+        return jpPriceSum;
+    }
+
+    public void setJpPriceSum(BigDecimal jpPriceSum) {
+        this.jpPriceSum = jpPriceSum;
+    }
+
+    public BigDecimal getJpAlreadyPaid() {
+        return jpAlreadyPaid;
+    }
+
+    public void setJpAlreadyPaid(BigDecimal jpAlreadyPaid) {
+        this.jpAlreadyPaid = jpAlreadyPaid;
+    }
+
+    public BigDecimal getJpNeedPaid() {
+        return jpNeedPaid;
+    }
+
+    public void setJpNeedPaid(BigDecimal jpNeedPaid) {
+        this.jpNeedPaid = jpNeedPaid;
+    }
+
+    public String getJpPaidBank() {
+        return jpPaidBank;
+    }
+
+    public void setJpPaidBank(String jpPaidBank) {
+        this.jpPaidBank = jpPaidBank;
+    }
+
+    public Date getJpPaidDate() {
+        return jpPaidDate;
+    }
+
+    public void setJpPaidDate(Date jpPaidDate) {
+        this.jpPaidDate = jpPaidDate;
+    }
+
+    public BigDecimal getDjPriceSum() {
+        return djPriceSum;
+    }
+
+    public void setDjPriceSum(BigDecimal djPriceSum) {
+        this.djPriceSum = djPriceSum;
+    }
+
+    public BigDecimal getGaranteePriceSum() {
+        return garanteePriceSum;
+    }
+
+    public void setGaranteePriceSum(BigDecimal garanteePriceSum) {
+        this.garanteePriceSum = garanteePriceSum;
+    }
+
+    public BigDecimal getGaranteeAlreadyGot() {
+        return garanteeAlreadyGot;
+    }
+
+    public void setGaranteeAlreadyGot(BigDecimal garanteeAlreadyGot) {
+        this.garanteeAlreadyGot = garanteeAlreadyGot;
+    }
+
+    public BigDecimal getGaranteeNeedGot() {
+        return garanteeNeedGot;
+    }
+
+    public void setGaranteeNeedGot(BigDecimal garanteeNeedGot) {
+        this.garanteeNeedGot = garanteeNeedGot;
+    }
+
+    public String getGaranteeGotBank() {
+        return garanteeGotBank;
+    }
+
+    public void setGaranteeGotBank(String garanteeGotBank) {
+        this.garanteeGotBank = garanteeGotBank;
+    }
+
+    public Date getGaranteeGotDate() {
+        return garanteeGotDate;
+    }
+
+    public void setGaranteeGotDate(Date garanteeGotDate) {
+        this.garanteeGotDate = garanteeGotDate;
     }
 
     public Integer getGaranteeServiceId() {

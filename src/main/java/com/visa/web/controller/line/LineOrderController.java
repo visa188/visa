@@ -92,8 +92,8 @@ public class LineOrderController {
      * @param model model
      */
     @RequestMapping
-    public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page, ModelMap model,
-            @ModelAttribute LineOrderSearchBean bean) {
+    public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page,
+            ModelMap model, @ModelAttribute LineOrderSearchBean bean) {
         Map<String, Object> paraMap = new HashMap<String, Object>();
 
         String startDate = bean.getStartDate();
@@ -130,8 +130,8 @@ public class LineOrderController {
 
         // 记录总条数
         int recordCount = lineOrderDao.count(paraMap);
-        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount, page,
-                Constant.LINE_PAGE_OFFSET, model);
+        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount,
+                page, Constant.LINE_PAGE_OFFSET, model);
         paraMap.put("begin", recordRange[0]);
         paraMap.put("pageCount", Constant.LINE_PAGE_COUNT);
 
@@ -163,7 +163,8 @@ public class LineOrderController {
      * @return String
      */
     @RequestMapping
-    public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrder, ModelMap model) {
+    public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user,
+            LineOrderVo lineOrder, ModelMap model) {
         int orderSeq = seqDao.select("lineOrder");
         String prefix = StringUtil.paddingZeroToLeft(String.valueOf(orderSeq), 6);
         lineOrder.setOrderSeq(prefix);
@@ -171,7 +172,8 @@ public class LineOrderController {
         // 散拼团订单时，校验该产品下所有订单客人总量是否大于机位数
         if (lineOrder.getType() == 2) {
             LineProduct product = lineProductDao.selectByPrimaryKey(lineOrder.getLineProductId());
-            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(lineOrder.getLineProductId());
+            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(lineOrder
+                    .getLineProductId());
             int count = 0;
             for (LineOrder order : lineOrderList) {
                 count += order.getNameListSize();
@@ -188,15 +190,22 @@ public class LineOrderController {
                 return "result";
             }
         }
-        lineOrder.setSalesmanName(userDao.selectByPrimaryKey(lineOrder.getSalesmanId()).getUserName());
+        lineOrder.setSalesmanName(userDao.selectByPrimaryKey(lineOrder.getSalesmanId())
+                .getUserName());
         if (!StringUtils.isEmpty(lineOrder.getLineOperatorId())) {
-            lineOrder.setLineOperatorName(userDao.selectByPrimaryKey(lineOrder.getLineOperatorId()).getUserName());
+            lineOrder.setLineOperatorName(userDao.selectByPrimaryKey(lineOrder.getLineOperatorId())
+                    .getUserName());
         }
         if (!StringUtils.isEmpty(lineOrder.getVisaOperatorId())) {
-            lineOrder.setVisaOperatorName(userDao.selectByPrimaryKey(lineOrder.getVisaOperatorId()).getUserName());
+            lineOrder.setVisaOperatorName(userDao.selectByPrimaryKey(lineOrder.getVisaOperatorId())
+                    .getUserName());
         }
         if (!StringUtils.isEmpty(lineOrder.getSignOperatorId())) {
-            lineOrder.setSignOperatorName(userDao.selectByPrimaryKey(lineOrder.getSignOperatorId()).getUserName());
+            lineOrder.setSignOperatorName(userDao.selectByPrimaryKey(lineOrder.getSignOperatorId())
+                    .getUserName());
+        }
+        if (lineOrder.getPrice() != null) {
+            lineOrder.setPriceSum(lineOrder.getPrice().pow(lineOrder.getNameListSize()));
         }
         lineOrderDao.insert(lineOrder);
         for (LinesSrvice srvice : lineOrder.getLineOrderService()) {
@@ -225,8 +234,8 @@ public class LineOrderController {
      * @param model model
      */
     @RequestMapping
-    public void edit(@ModelAttribute(Constant.SESSION_USER) User user, Integer orderId, Integer currentPage,
-            ModelMap model) {
+    public void edit(@ModelAttribute(Constant.SESSION_USER) User user, Integer orderId,
+            Integer currentPage, ModelMap model) {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(orderId);
         List<LinesSrvice> lineServiceList = linesServiceDao.selectAllLinesSrvice(orderId);
         Map<Integer, LinesSrvice> lineServiceMap = new HashMap<Integer, LinesSrvice>();
@@ -260,26 +269,32 @@ public class LineOrderController {
      * @return String
      */
     @RequestMapping
-    public String update(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrderVo, Integer currentPage) {
+    public String update(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrderVo,
+            Integer currentPage) {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(lineOrderVo.getOrderId());
         Map<Integer, LinesSrvice> serviceListDB = VisaUtil.dealServiceList(linesServiceDao
                 .selectAllLinesSrvice(lineOrderVo.getOrderId()));
-        Map<Integer, LineNameList> nameListDB = VisaUtil.dealNameList(lineNameListDao.selectAllLineNameList(lineOrderVo
-                .getOrderId()));
+        Map<Integer, LineNameList> nameListDB = VisaUtil.dealNameList(lineNameListDao
+                .selectAllLineNameList(lineOrderVo.getOrderId()));
 
-        lineOrderVo.setSalesmanName(userDao.selectByPrimaryKey(lineOrderVo.getSalesmanId()).getUserName());
+        lineOrderVo.setSalesmanName(userDao.selectByPrimaryKey(lineOrderVo.getSalesmanId())
+                .getUserName());
         if (!StringUtils.isEmpty(lineOrderVo.getLineOperatorId())) {
-            lineOrderVo.setLineOperatorName(userDao.selectByPrimaryKey(lineOrderVo.getLineOperatorId()).getUserName());
+            lineOrderVo.setLineOperatorName(userDao.selectByPrimaryKey(
+                    lineOrderVo.getLineOperatorId()).getUserName());
         }
         if (!StringUtils.isEmpty(lineOrderVo.getVisaOperatorId())) {
-            lineOrderVo.setVisaOperatorName(userDao.selectByPrimaryKey(lineOrderVo.getVisaOperatorId()).getUserName());
+            lineOrderVo.setVisaOperatorName(userDao.selectByPrimaryKey(
+                    lineOrderVo.getVisaOperatorId()).getUserName());
         }
         if (!StringUtils.isEmpty(lineOrderVo.getSignOperatorId())) {
-            lineOrderVo.setSignOperatorName(userDao.selectByPrimaryKey(lineOrderVo.getSignOperatorId()).getUserName());
+            lineOrderVo.setSignOperatorName(userDao.selectByPrimaryKey(
+                    lineOrderVo.getSignOperatorId()).getUserName());
         }
 
         lineOrderDao.updateByPrimaryKey(lineOrderVo);
-        if (user.getRoleId() == LineRoleEnumType.OPERATOR.getId()) {
+        if (user.getRoleId() == LineRoleEnumType.OPERATOR.getId()
+                || user.getRoleId() == LineRoleEnumType.OPERATOR_MANAGER.getId()) {
             List<Integer> serviceTypeList = new ArrayList<Integer>();
             serviceTypeList.add(LineSrviceEnumType.LD.getId());
             serviceTypeList.add(LineSrviceEnumType.JP.getId());
@@ -299,7 +314,8 @@ public class LineOrderController {
                     linesServiceDao.insert(srvice);
                 }
             }
-        } else if (user.getRoleId() == LineRoleEnumType.VISAOPER.getId()) {
+        } else if (user.getRoleId() == LineRoleEnumType.VISAOPER.getId()
+                || user.getRoleId() == LineRoleEnumType.VISAOPER_MANAGER.getId()) {
             List<Integer> serviceTypeList = new ArrayList<Integer>();
             serviceTypeList.add(LineSrviceEnumType.QZ.getId());
             serviceTypeList.add(LineSrviceEnumType.GGBZ.getId());
@@ -310,6 +326,39 @@ public class LineOrderController {
                         || srvice.getServiceType() == LineSrviceEnumType.GGBZ.getId()) {
                     linesServiceDao.insert(srvice);
                 }
+            }
+        } else if (user.getRoleId() == LineRoleEnumType.FINANCE.getId()
+                || user.getRoleId() == LineRoleEnumType.FINANCE_MANAGER.getId()) {
+            List<LinesSrvice> lineServiceListDb = linesServiceDao.selectAllLinesSrvice(lineOrderVo
+                    .getOrderId());
+            linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId(), null);
+
+            List<LinesSrvice> lineServiceList = lineOrderVo.getLineOrderService();
+            Map<Integer, LinesSrvice> lineServiceMap = new HashMap<Integer, LinesSrvice>();
+            for (LinesSrvice linesSrvice : lineServiceList) {
+                int serviceType = linesSrvice.getServiceType();
+                if (serviceType == 41 || serviceType == 42) {
+                    serviceType = 4;
+                }
+                lineServiceMap.put(serviceType, linesSrvice);
+            }
+
+            LinesSrvice srvice;
+            for (LinesSrvice srvicedb : lineServiceListDb) {
+                int serviceType = srvicedb.getServiceType();
+                if (serviceType == 41 || serviceType == 42) {
+                    serviceType = 4;
+                }
+                srvice = lineServiceMap.get(serviceType);
+                srvicedb.setAlreadyGot(srvice.getAlreadyGot());
+                srvicedb.setAlreadyPaid(srvice.getAlreadyPaid());
+                srvicedb.setNeedGot(srvice.getNeedGot());
+                srvicedb.setNeedPaid(srvice.getNeedPaid());
+                srvicedb.setPaidBank(srvice.getPaidBank());
+                srvicedb.setPaidDate(srvice.getPaidDate());
+                srvicedb.setGotBank(srvice.getGotBank());
+                srvicedb.setGotDate(srvice.getGotDate());
+                linesServiceDao.insert(srvicedb);
             }
         } else {
             linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId(), null);
@@ -328,7 +377,8 @@ public class LineOrderController {
         operateLog.setUserId(user.getUserId());
         operateLog.setRoleId(user.getRoleId());
         operateLog.setOperateType(Constant.OPERATOR_TYPE_UPDATE);
-        operateLog.setOperateDes(StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder, serviceListDB, nameListDB));
+        operateLog.setOperateDes(StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder,
+                serviceListDB, nameListDB));
         operateLog.setOrderSeq(lineOrder.getOrderSeq());
         operateLogDao.insert(operateLog);
         return "redirect:list.do?page=" + currentPage;
@@ -392,8 +442,8 @@ public class LineOrderController {
             response.addHeader("Content-Disposition", "attachment;filename=" + fileName + ".xls");
             OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
             response.setContentType("application/octet-stream");
-            this.exportOrderData(toClient, year, month, salesman, yfhkStatus, yshkStatus, customerId, company,
-                    operatorId);
+            this.exportOrderData(toClient, year, month, salesman, yfhkStatus, yshkStatus,
+                    customerId, company, operatorId);
 
         } catch (IOException e) {
             logger.error(e, e);
@@ -406,10 +456,11 @@ public class LineOrderController {
      * @param type type
      * @param out out
      */
-    private void exportOrderData(OutputStream out, String year, String month, String salesmanId, String yfhkStatus,
-            String yshkStatus, String customerId, String company, String operatorId) {
-        String[] titles = { "订单序号", "销售员", "产品名称", "订单类型", "线路国家", "下单日期", "客人数量", "操作员", "送签员", "组团社", "联系人", "联系方式",
-                "备注" };
+    private void exportOrderData(OutputStream out, String year, String month, String salesmanId,
+            String yfhkStatus, String yshkStatus, String customerId, String company,
+            String operatorId) {
+        String[] titles = { "订单序号", "销售员", "产品名称", "订单类型", "线路国家", "下单日期", "客人数量", "操作员", "送签员",
+                "组团社", "联系人", "联系方式", "备注" };
         HSSFWorkbook wb = new HSSFWorkbook();
         Sheet s = wb.createSheet();
         // header row

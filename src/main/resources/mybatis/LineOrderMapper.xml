@@ -124,11 +124,11 @@
 	    <if test="travelInfoFileUrl != null">travelInfoFileUrl = #{travelInfoFileUrl,jdbcType=VARCHAR},</if>
 	    <if test="aircorpId != null">aircorpId = #{aircorpId,jdbcType=INTEGER},</if>
 	    <if test="price != null">price = #{price,jdbcType=DECIMAL},</if>
-	    <if test="priceSum != null">price = #{price,jdbcType=DECIMAL},</if>
-	    <if test="alreadyGot != null">price = #{price,jdbcType=DECIMAL},</if>
-	    <if test="needGot != null">price = #{price,jdbcType=DECIMAL},</if>
-	    <if test="gotBank != null">price = #{gotBank,jdbcType=VARCHAR},</if>
-	    <if test="gotDate != null">price = #{price,jdbcType=DATE},</if>
+	    <if test="priceSum != null">priceSum = #{priceSum,jdbcType=DECIMAL},</if>
+	    <if test="alreadyGot != null">alreadyGot = #{alreadyGot,jdbcType=DECIMAL},</if>
+	    <if test="needGot != null">needGot = #{needGot,jdbcType=DECIMAL},</if>
+	    <if test="gotBank != null">gotBank = #{gotBank,jdbcType=VARCHAR},</if>
+	    <if test="gotDate != null">gotDate = #{gotDate,jdbcType=DATE},</if>
 	    <if test="status != null">status = #{status,jdbcType=INTEGER},</if>
 	    <if test="lineProductId != null">lineProductId = #{lineProductId,jdbcType=INTEGER},</if>
 	    <if test="specialComment != null">specialComment = #{specialComment,jdbcType=VARCHAR},</if>

@@ -327,7 +327,7 @@
                        <input type="hidden" id="ld" name="ld" />
                        <input type="hidden" id="ldservId" name="ldservId" value="$!{lineServiceMap.get(1).serviceId}" />
                        #if($lineServiceMap.get(1))
-                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="ldserv" style="vertical-align: middle;"/> 领队服务 <select $fn.isReadOnly($userRoleId,1) id="ldtype"><option value="1" $fn.selected(${lineServiceMap.get(1).serviceItem1}, "1")>组团社派</option><option value="2" $fn.selected(${lineServiceMap.get(1).serviceItem1}, "2")>启航假期派</option></select>#if($userRoleId == $fn.getLineOperatorManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 操作员:<select name="ldpai" id="ldpai"><option value="1">日本</option></select>#end</span>
+                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="ldserv" style="vertical-align: middle;"/> 领队服务 <select $fn.isReadOnly($userRoleId,1) id="ldtype"><option value="1" $fn.selected(${lineServiceMap.get(1).serviceItem1}, "1")>组团社派</option><option value="2" $fn.selected(${lineServiceMap.get(1).serviceItem1}, "2")>启航假期派</option></select>#if($userRoleId == $fn.getLineOperatorManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 操作员:<select name="ldpai" id="ldpai"></select>#end</span>
                        #else
                        <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" id="ldserv" style="vertical-align: middle;"/> 领队服务 <select $fn.isReadOnly($userRoleId,1) id="ldtype"><option value="1">组团社派</option><option value="2">启航假期派</option></select>#if($userRoleId == $fn.getLineOperatorManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 操作员:<select name="ldpai" id="ldpai"><option value="1">日本</option></select>#end</span>
                        #end
@@ -335,7 +335,7 @@
                        <input type="hidden" id="qz" name="qz" />
                        <input type="hidden" id="qzservId" name="qzservId" value="$!{lineServiceMap.get(2).serviceId}" />
                        #if($lineServiceMap.get(2))
-                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="qzserv" style="vertical-align: middle;"/> 签证服务 <select $fn.isReadOnly($userRoleId,1) id="qztype"><option value="1" $fn.selected(${lineServiceMap.get(2).serviceItem1}, "1")>个签</option><option value="2" $fn.selected(${lineServiceMap.get(2).serviceItem1}, "2")>团签</option></select> 应收单价:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(2).servicePrice}" type="text" class="tb_text ysdj" id="qzysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(2).priceSum}" type="text" class="tb_text" id="qzyshj" style="width:12%;"/>#if($userRoleId == $fn.getLineVisaoperManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 签证员:<select name="qzpai" id="qzpai"><option value="1">日本</option></select>#end</span>
+                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="qzserv" style="vertical-align: middle;"/> 签证服务 <select $fn.isReadOnly($userRoleId,1) id="qztype"><option value="1" $fn.selected(${lineServiceMap.get(2).serviceItem1}, "1")>个签</option><option value="2" $fn.selected(${lineServiceMap.get(2).serviceItem1}, "2")>团签</option></select> 应收单价:<input $fn.isReadOnly($userRoleId) value="$!fn.disPrice(${lineServiceMap.get(2).servicePrice})" type="text" class="tb_text ysdj" id="qzysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) value="$!fn.disPrice(${lineServiceMap.get(2).priceSum})" type="text" class="tb_text" id="qzyshj" style="width:12%;"/>#if($userRoleId == $fn.getLineVisaoperManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 签证员:<select name="qzpai" id="qzpai"></select>#end</span>
                        #else
                        <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" id="qzserv" style="vertical-align: middle;"/> 签证服务 <select $fn.isReadOnly($userRoleId,1) id="qztype"><option value="1">个签</option><option value="2">团签</option></select> 应收单价:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text ysdj" id="qzysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="qzyshj" style="width:12%;"/>#if($userRoleId == $fn.getLineVisaoperManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 签证员:<select name="qzpai" id="qzpai"></select>#end</span>
                        #end
@@ -343,7 +343,7 @@
                        <input type="hidden" id="jp" name="jp" />
                        <input type="hidden" id="jpservId" name="jpservId" value="$!{lineServiceMap.get(3).serviceId}" />
                        #if($lineServiceMap.get(3))
-                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="jpserv" style="vertical-align: middle;"/> 机票服务 <select $fn.isReadOnly($userRoleId,1) id="jptype"><option value="1" $fn.selected(${lineServiceMap.get(3).serviceItem1}, "1")>团队机票</option><option value="2" $fn.selected(${lineServiceMap.get(3).serviceItem1}, "2")>散客机票</option></select> 应收单价:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(3).servicePrice}" type="text" class="tb_text ysdj" id="jpysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(3).priceSum}" type="text" class="tb_text" id="jpyshj" style="width:12%;"/>#if($userRoleId == $fn.getLineOperatorManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 操作员:<select name="jppai" id="jppai"><option value="1">日本</option></select>#end</span>
+                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="jpserv" style="vertical-align: middle;"/> 机票服务 <select $fn.isReadOnly($userRoleId,1) id="jptype"><option value="1" $fn.selected(${lineServiceMap.get(3).serviceItem1}, "1")>团队机票</option><option value="2" $fn.selected(${lineServiceMap.get(3).serviceItem1}, "2")>散客机票</option></select> 应收单价:<input $fn.isReadOnly($userRoleId) value="$!fn.disPrice(${lineServiceMap.get(3).servicePrice})" type="text" class="tb_text ysdj" id="jpysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) value="$!fn.disPrice(${lineServiceMap.get(3).priceSum})" type="text" class="tb_text" id="jpyshj" style="width:12%;"/>#if($userRoleId == $fn.getLineOperatorManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 操作员:<select name="jppai" id="jppai"></select>#end</span>
                        #else
                        <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" id="jpserv" style="vertical-align: middle;"/> 机票服务 <select $fn.isReadOnly($userRoleId,1) id="jptype"><option value="1">团队机票</option><option value="2">散客机票</option></select> 应收单价:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text ysdj" id="jpysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="jpyshj" style="width:12%;"/>#if($userRoleId == $fn.getLineOperatorManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 操作员:<select name="jppai" id="jppai"></select>#end</span>
                        #end
@@ -353,7 +353,7 @@
                        #if($lineServiceMap.get(4))
                        <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="djserv" style="vertical-align: middle;"/> 地接服务  酒店标准:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem1}" type="text" class="tb_text" id="djxing" style="width:4.3%;"/>星,房型:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem2}" type="text" class="tb_text" id="djfx" style="width:12%;"/> 备注:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem3}" type="text" class="tb_text" id="djbz" style="width:12%;" /> 特殊景点:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem4}" type="text" class="tb_text" id="djtsjd" style="width:12%;"/>#if($userRoleId == $fn.getLineOperatorManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 操作员:<select name="djpai" id="djpai"></select>#end</span>
                        <span class="form_item"><input $fn.isDisabled($userRoleId) type="radio" id="djdyra" name="djdy" style="vertical-align: middle;" #if("${lineServiceMap.get(4).serviceType}"=="41")checked#end/> 巴士: <input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem5}" type="text" class="tb_text" id="djbs" style="width:4.3%;"/> 备注:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem6}" type="text" class="tb_text" id="djbsbz" style="width:12%;" /> 导游:<select $fn.isReadOnly($userRoleId,1) id="djsfxydy"><option value="1" $fn.selected($!{lineServiceMap.get(4).serviceItem7}, "1")>需要</option><option value="2" $fn.selected($!{lineServiceMap.get(4).serviceItem7}, "2")>不需要</option></select> 备注:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(4).serviceItem8}" type="text" class="tb_text" id="djsfxydybz" style="width:12%;" /> <input $fn.isDisabled($userRoleId) type="radio" id="djdyrb" name="djdy" style="vertical-align: middle;" #if("${lineServiceMap.get(4).serviceType}"=="42")checked#end/> 司机兼导游: 备注:<input $fn.isReadOnly($userRoleId) value="#if("${lineServiceMap.get(4).serviceType}"=="42")${lineServiceMap.get(4).serviceItem5}#end" type="text" class="tb_text" id="djsjjdybz" style="width:12%;" /></span>
-                       <span class="form_item">应收单价:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(4).servicePrice}" type="text" class="tb_text ysdj" id="djysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(4).priceSum}" type="text" class="tb_text" id="djyshj" style="width:12%;"/></span>
+                       <span class="form_item">应收单价:<input $fn.isReadOnly($userRoleId) value="$!fn.disPrice(${lineServiceMap.get(4).servicePrice})" type="text" class="tb_text ysdj" id="djysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) value="$!fn.disPrice(${lineServiceMap.get(4).priceSum})" type="text" class="tb_text" id="djyshj" style="width:12%;"/></span>
                        #else
                        <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" id="djserv" style="vertical-align: middle;"/> 地接服务  酒店标准:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djxing" style="width:4.3%;"/>星,房型:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djfx" style="width:12%;"/> 备注:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djbz" style="width:12%;" /> 特殊景点:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djtsjd" style="width:12%;"/>#if($userRoleId == $fn.getLineOperatorManagerRoleId() || $fn.isLineAdminRole($userRoleId)) 操作员:<select name="djpai" id="djpai"></select>#end</span>
                        <span class="form_item"><input $fn.isDisabled($userRoleId) type="radio" id="djdyra" name="djdy" style="vertical-align: middle;" checked/> 巴士: <input type="text" class="tb_text" id="djbs" style="width:4.3%;"/> 备注:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djbsbz" style="width:12%;" /> 导游:<select $fn.isReadOnly($userRoleId,1) id="djsfxydy"><option value="1">需要</option><option value="2">不需要</option></select> 备注:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djsfxydybz" style="width:12%;" /> <input $fn.isDisabled($userRoleId) type="radio" id="djdyrb" name="djdy" style="vertical-align: middle;"/> 司机兼导游: 备注:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="djsjjdybz" style="width:12%;" /></span>
@@ -363,7 +363,7 @@
                        <input type="hidden" id="qt" name="qt" />
                        <input type="hidden" id="qtservId" name="qtservId" value="$!{lineServiceMap.get(5).serviceId}" />
                        #if($lineServiceMap.get(5))
-                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="qtserv" style="vertical-align: middle;"/> 其他服务 备注:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(5).serviceItem1}" type="text" class="tb_text" id="qtbz" style="width:10%;"/> 应收单价:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(5).servicePrice}" type="text" class="tb_text ysdj" id="qtysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) value="${lineServiceMap.get(5).priceSum}" type="text" class="tb_text" id="qtyshj" style="width:12%;"/></span>
+                       <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" checked id="qtserv" style="vertical-align: middle;"/> 其他服务 备注:<input $fn.isReadOnly($userRoleId) value="$!{lineServiceMap.get(5).serviceItem1}" type="text" class="tb_text" id="qtbz" style="width:10%;"/> 应收单价:<input $fn.isReadOnly($userRoleId) value="$!fn.disPrice(${lineServiceMap.get(5).servicePrice})" type="text" class="tb_text ysdj" id="qtysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) value="$!fn.disPrice(${lineServiceMap.get(5).priceSum})" type="text" class="tb_text" id="qtyshj" style="width:12%;"/></span>
                        #else
                        <span class="form_item"><input $fn.isDisabled($userRoleId) type="checkbox" id="qtserv" style="vertical-align: middle;"/> 其他服务 备注:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="qtbz" style="width:10%;"/> 应收单价:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text ysdj" id="qtysdj" style="width:12%;"/> 应收合计:<input $fn.isReadOnly($userRoleId) type="text" class="tb_text" id="qtyshj" style="width:12%;"/></span>
                        #end
@@ -500,7 +500,7 @@
                         #set($djService = $!{lineServiceMap.get(4)})  
                         #if($djService)
                         <div class="control_group">
-                          <label class="control_label"><span class="ico_must">*</span>地接费用总计:</label>
+                          <label class="control_label"><span class="ico_must">*</span>地接费用合计:</label>
                           <div class="controls">
                            <span class="form_item">#if($djService.serviceItem1)酒店费用#end #if($djService.serviceItem4)特殊景点费用#end #if($djService.serviceType == $fn.getBsServicTypeId())巴士费用#else司兼导费用#end
                            <input value="$!{djService.yfhj}" type="text" class="text1 js_non_empty" name="yfdjhj" id="yfdjhj">元</span>
@@ -570,7 +570,7 @@
                           <label class="control_label"><span class="ico_must">*</span>保证金额:</label>
                           <div class="controls">
 							<input type="hidden" name="garanteeServiceId" value="$!{garanteeService.serviceId}" />  
-                           <span class="form_item"><input value="$!{garanteeService.servicePrice}" name="garanteePrice" id="garanteePrice" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="保证金额"></span>
+                           <span class="form_item"><input value="$!{garanteeService.priceSum}" name="garanteePrice" id="garanteePrice" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="保证金额"></span>
                           </div>
                         </div>
 						<div class="control_group">
@@ -629,31 +629,103 @@
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>团费单价:</label>
                       <div class="controls">
-                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.price}" name="price" id="price" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="单价" readonly></span>
+                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!fn.disPrice($!{lineOrder.price})" name="price" id="price" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="单价" readonly>元</span>
                       </div>
                     </div>
 					#if($userRoleId == $fn.getLineFinanceRoleId() || $userRoleId == $fn.getLineFinanceManagerRoleId() || $fn.isLineAdminRole($userRoleId))
 						<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>团费合计:</label>
                           <div class="controls">
-							<span class="form_item">应收：<input value="" name="groupPriceSum" id="groupPriceSum" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应收" readonly></span>
-							<span class="form_item">已收：<input value="" name="groupAlreadyGot" id="groupAlreadyGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收"></span>
-							<span class="form_item">未收：<input value="" name="groupNeedGot" id="groupNeedGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收"></span>
-							<span class="form_item">入账银行：<input value="" name="groupGotBank" id="groupGotBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
-						    <span class="form_item">入账日期：<input value="" name="groupGotDate" id="groupGotDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
+							<span class="form_item">应收：<input value="$!fn.disPrice($!{lineOrder.priceSum})" name="priceSum" id="priceSum" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应收" readonly>元</span>
+							<span class="form_item">已收：<input value="$!fn.disPrice($!{lineOrder.alreadyGot})" name="alreadyGot" id="alreadyGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收">元</span>
+							<span class="form_item">未收：<input value="$!fn.disPrice($!{lineOrder.needGot})" name="needGot" id="needGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
+							<span class="form_item">入账银行：<input value="$!{lineOrder.gotBank}" name="gotBank" id="gotBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
+						    <span class="form_item">入账日期：<input value="$!fn.format($!{lineOrder.gotDate},'yyyy-MM-dd')" name="gotDate" id="gotDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
                         </div>
 						#set($garanteeService = $!{lineServiceMap.get(6)})
+						#if($!{garanteeService.serviceItem1}=='2'||$!{garanteeService.serviceItem1}=='3')
+						<input type="hidden" name="garanteeType" value="$!{garanteeService.serviceItem1}" />  
 						<div class="control_group">
-                          <label class="control_label"><span class="ico_must">*</span>归国保证金:</label>
+                          <label class="control_label"><span class="ico_must">*</span>#if($!{garanteeService.serviceItem1}=='2') 归国保证金  #end #if($!{garanteeService.serviceItem1}=='3') 联保  #end:</label>
                           <div class="controls">
-							<span class="form_item">应收：<input value="$!{garanteeService.priceSum}" name="garanteePriceSum" id="garanteePriceSum" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应收" readonly></span>
-							<span class="form_item">已收：<input value="$!{garanteeService.alreadyGot}" name="garanteeAlreadyGot" id="garanteeAlreadyGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收"></span>
-							<span class="form_item">未收：<input value="$!{garanteeService.needGot}" name="garanteeNeedGot" id="garanteeNeedGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收"></span>
+							<span class="form_item">应收：<input value="$!fn.disPrice($!{garanteeService.priceSum})" name="garanteePriceSum" id="garanteePriceSum" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应收" readonly>元</span>
+							<span class="form_item">已收：<input value="$!fn.disPrice($!{garanteeService.alreadyGot})" name="garanteeAlreadyGot" id="garanteeAlreadyGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收">元</span>
+							<span class="form_item">未收：<input value="$!fn.disPrice($!{garanteeService.needGot})" name="garanteeNeedGot" id="garanteeNeedGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
 							<span class="form_item">入账银行：<input value="$!{garanteeService.gotBank}" name="garanteeGotBank" id="garanteeGotBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
-						    <span class="form_item">入账日期：<input value="$!{garanteeService.gotDate}" name="garanteeGotDate" id="garanteeGotDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
+						    <span class="form_item">入账日期：<input value="$!fn.format($!{garanteeService.gotDate},'yyyy-MM-dd')" name="garanteeGotDate" id="garanteeGotDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
+							<span class="form_item">已退：<input value="$!fn.disPrice($!{garanteeService.alreadyPaid})" name="garanteeAlreadyPaid" id="garanteeAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
+							<span class="form_item">转出银行：<input value="$!{garanteeService.paidBank}" name="garanteePaidBank" id="garanteePaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
+						    <span class="form_item">付款日期：<input value="$!fn.format($!{garanteeService.paidDate},'yyyy-MM-dd')" name="garanteePaidDate" id="garanteePaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
                         </div>
+						#end
+						#set($jpService = $!{lineServiceMap.get(3)})
+						#if($!jpService)
+						<div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>机票费用合计:</label>
+                          <div class="controls">
+							<span class="form_item">应付：<input value="$!fn.disPrice($!{jpService.yfhj})" type="text" class="text1 js_nan" name="jpPriceSum" id="jpPriceSum" readonly>元</span>
+							<span class="form_item">已付：<input value="$!fn.disPrice($!{jpService.alreadyPaid})" name="jpAlreadyPaid" id="jpAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收">元</span>
+							<span class="form_item">未付：<input value="$!fn.disPrice($!{jpService.needPaid})" name="jpNeedPaid" id="jpNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
+							<span class="form_item">转出银行：<input value="$!{jpService.paidBank}" name="jpPaidBank" id="jpPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
+						    <span class="form_item">付款日期：<input value="$!fn.format($!{jpService.paidDate},'yyyy-MM-dd')" name="jpPaidDate" id="jpPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
+                          </div>
+                        </div>	
+						#end
+						#set($qzService = $!{lineServiceMap.get(2)})
+						#if($!qzService)
+						<div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>签证费用合计:</label>
+                          <div class="controls">
+							<span class="form_item">应付：<input value="$!fn.disPrice($!{qzService.yfhj})" type="text" class="text1 js_nan" name="qzPriceSum" id="qzPriceSum" readonly>元</span>
+							<span class="form_item">已付：<input value="$!fn.disPrice($!{qzService.alreadyPaid})" name="qzAlreadyPaid" id="qzAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收">元</span>
+							<span class="form_item">未付：<input value="$!fn.disPrice($!{qzService.needPaid})" name="qzNeedPaid" id="qzNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
+							<span class="form_item">转出银行：<input value="$!{qzService.paidBank}" name="qzPaidBank" id="qzPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
+						    <span class="form_item">付款日期：<input value="$!fn.format($!{qzService.paidDate},'yyyy-MM-dd')" name="qzPaidDate" id="qzPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
+                          </div>
+                        </div>	
+						#end
+						#set($djService = $!{lineServiceMap.get(4)})  
+                        #if($djService)
+                        <div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>地接费用合计:</label>
+                          <div class="controls">
+							<span class="form_item">#if($djService.serviceItem1)酒店费用#end #if($djService.serviceItem4)特殊景点费用#end #if($djService.serviceType == $fn.getBsServicTypeId())巴士费用#else司兼导费用#end
+							<input value="$!fn.disPrice($!{djService.yfhj})" type="text" class="text1 js_nan" name="djPriceSum" id="djPriceSum" readonly>元</span>
+							<span class="form_item">已付：<input value="$!fn.disPrice($!{djService.alreadyPaid})" name="djAlreadyPaid" id="djAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收">元</span>
+							<span class="form_item">未付：<input value="$!fn.disPrice($!{djService.needPaid})" name="djNeedPaid" id="djNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
+							<span class="form_item">转出银行：<input value="$!{djService.paidBank}" name="djPaidBank" id="djPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
+						    <span class="form_item">付款日期：<input value="$!fn.format($!{djService.paidDate},'yyyy-MM-dd')" name="djPaidDate" id="djPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
+                          </div>
+                        </div>
+						#end
+						#set($qtService = $!{lineServiceMap.get(5)})  
+                        #if($qtService)
+                        <div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>其它费用合计:</label>
+                          <div class="controls">
+							<span class="form_item">应付：<input value="$!fn.disPrice($!{qtService.yfhj})" type="text" class="text1 js_nan" name="qtPriceSum" id="qtPriceSum">元</span>
+							<span class="form_item">已付：<input value="$!fn.disPrice($!{qtService.alreadyPaid})" name="qtAlreadyPaid" id="qtAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收">元</span>
+							<span class="form_item">未付：<input value="$!fn.disPrice($!{qtService.needPaid})" name="qtNeedPaid" id="qtNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
+							<span class="form_item">转出银行：<input value="$!{qtService.paidBank}" name="qtPaidBank" id="qtPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
+						    <span class="form_item">付款日期：<input value="$!fn.format($!{qtService.paidDate},'yyyy-MM-dd')" name="qtPaidDate" id="qtPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
+                          </div>
+                        </div>
+                        #end  
+						#set($bxService = $!{lineServiceMap.get(7)})
+                        #if($bxService)
+                        <div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>保险费用:</label>
+                          <div class="controls">
+							<span class="form_item">应付：<input value="$!fn.disPrice($!{bxService.yfhj})" name="bxPriceSum" id="bxPriceSum" type="text" class="text1 js_nan" readonly>元</span>
+							<span class="form_item">已付：<input value="$!fn.disPrice($!{bxService.alreadyPaid})" name="bxAlreadyPaid" id="bxAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收">元</span>
+							<span class="form_item">未付：<input value="$!fn.disPrice($!{bxService.needPaid})" name="bxNeedPaid" id="bxNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
+							<span class="form_item">转出银行：<input value="$!{bxService.paidBank}" name="bxPaidBank" id="bxPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
+						    <span class="form_item">付款日期：<input value="$!fn.format($!{bxService.paidDate},'yyyy-MM-dd')" name="bxPaidDate" id="bxPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
+                          </div>
+                        </div>
+						#end  
 					#end
                 </div>
               </div>
