@@ -193,37 +193,38 @@ $(function() {
 	// 表单填写过程中的验证调用
 	$(".controls").each(function(){
 		var formItem_wrap = this;
-		$(":input",formItem_wrap).each(function(){
-			var nan_flag = false;
-			var nonEmpty_flag = false;
-			var repeat_flag = false;
-			var phone_flag = false;
-			if($(".js_phone",formItem_wrap)[0]){
+		var nan_flag = false;
+		var nonEmpty_flag = false;
+		var repeat_flag = false;
+		var phone_flag = false;
+		var len = $(":input",formItem_wrap).length;
+		for(var i = 0; i < len; i++){
+			if($(".js_phone",formItem_wrap)[i]){
 				phone_flag = true;
 			}
-			if($(".js_repeat",formItem_wrap)[0]){
+			if($(".js_repeat",formItem_wrap)[i]){
 				repeat_flag = true;
 			}
-			if($(".js_nan",formItem_wrap)[0]){
+			if($(".js_nan",formItem_wrap)[i]){
 				nan_flag = true;
 			}
-			if($(".js_non_empty",formItem_wrap)[0]){
+			if($(".js_non_empty",formItem_wrap)[i]){
 				nonEmpty_flag = true;
 			}
 			if(phone_flag || repeat_flag || nan_flag || nonEmpty_flag){
-				var formItem = nan_flag ? $(".js_nan",formItem_wrap)[0] : $(".js_non_empty",formItem_wrap)[0];
+				var formItem = nan_flag ? $(".js_nan",formItem_wrap)[i] : $(".js_non_empty",formItem_wrap)[i];
 				if(repeat_flag){
-					formItem = repeat_flag ? $(".js_repeat",formItem_wrap)[0] : $(".js_non_empty",formItem_wrap)[0];
+					formItem = repeat_flag ? $(".js_repeat",formItem_wrap)[i] : $(".js_non_empty",formItem_wrap)[i];
 				}
 				if(phone_flag){
-					formItem = phone_flag ? $(".js_phone",formItem_wrap)[0] : $(".js_non_empty",formItem_wrap)[0];
+					formItem = phone_flag ? $(".js_phone",formItem_wrap)[i] : $(".js_non_empty",formItem_wrap)[i];
 				}
 				$(formItem).bind("blur",function(e){
-					setVerify();
+					setVerify(this);
 				}).bind("change",function(e){
-					setVerify();
+					setVerify(this);
 				})
-				function setVerify(){
+				function setVerify(formItem){
 					if($(".ico_error",formItem_wrap)[0]){
 			    		$(".ico_error",formItem_wrap).remove();
 			    		$(".error_tip",formItem_wrap).remove();
@@ -241,8 +242,8 @@ $(function() {
 			    		GLB.phone(formItem,formItem_wrap);
 			    	}
 				}
-			}	
-		})
+			}
+		}
 	})
 
 	// 表单提交时的验证调用
@@ -268,49 +269,52 @@ $(function() {
 				var repeat_flag = false;
 				var phone_flag = false;
 				
-				if($(".ico_error",formItem_wrap).length>1){
-		    		$(".ico_error",formItem_wrap).remove();
-		    		$(".error_tip",formItem_wrap).remove();
-		    	}
-				
-				if($(".js_phone",formItem_wrap)[0]){
-					phone_flag = true;
-				}
-				if($(".js_repeat",formItem_wrap)[0]){
-					repeat_flag = true;
-				}
-				if($(".js_nan",formItem_wrap)[0]){
-					nan_flag = true;
-				}
-				$(".js_non_empty",formItem_wrap).each(function(){
-					GLB.nonEmpty(this,formItem_wrap);
-				})
-				
-				if(phone_flag || repeat_flag || nan_flag){
-					var formItem = nan_flag ? $(".js_nan",formItem_wrap)[0] : $(".js_non_empty",formItem_wrap)[0];
-					if(repeat_flag){
-						formItem = repeat_flag ? $(".js_repeat",formItem_wrap)[0] : $(".js_non_empty",formItem_wrap)[0];
-					}
-					if(phone_flag){
-						formItem = phone_flag ? $(".js_phone",formItem_wrap)[0] : $(".js_non_empty",formItem_wrap)[0];
-					}
-					if($(".ico_error",formItem_wrap)[0]){
+				var len = $(":input",formItem_wrap).length;
+				for(var i = 0; i < len; i++){
+					if($(".ico_error",formItem_wrap).length>1){
 			    		$(".ico_error",formItem_wrap).remove();
 			    		$(".error_tip",formItem_wrap).remove();
-			    	}  
-					if(nonEmpty_flag){
-			    		GLB.nonEmpty(formItem,formItem_wrap);
 			    	}
-			    	if(nan_flag){
-			    		GLB.notNun(formItem,formItem_wrap);
-			    	}	
-			    	if(repeat_flag){
-			    		GLB.repeat(formItem,formItem_wrap);
-			    	}
-			    	if(phone_flag){
-			    		GLB.phone(formItem,formItem_wrap);
-			    	}
-				}					
+					
+					if($(".js_phone",formItem_wrap)[i]){
+						phone_flag = true;
+					}
+					if($(".js_repeat",formItem_wrap)[i]){
+						repeat_flag = true;
+					}
+					if($(".js_nan",formItem_wrap)[i]){
+						nan_flag = true;
+					}
+					$(".js_non_empty",formItem_wrap).each(function(){
+						GLB.nonEmpty(this,formItem_wrap);
+					})
+					
+					if(phone_flag || repeat_flag || nan_flag){
+						var formItem = nan_flag ? $(".js_nan",formItem_wrap)[i] : $(".js_non_empty",formItem_wrap)[i];
+						if(repeat_flag){
+							formItem = repeat_flag ? $(".js_repeat",formItem_wrap)[i] : $(".js_non_empty",formItem_wrap)[i];
+						}
+						if(phone_flag){
+							formItem = phone_flag ? $(".js_phone",formItem_wrap)[i] : $(".js_non_empty",formItem_wrap)[i];
+						}
+						if($(".ico_error",formItem_wrap)[0]){
+				    		$(".ico_error",formItem_wrap).remove();
+				    		$(".error_tip",formItem_wrap).remove();
+				    	}  
+						if(nonEmpty_flag){
+				    		GLB.nonEmpty(formItem,formItem_wrap);
+				    	}
+				    	if(nan_flag){
+				    		GLB.notNun(formItem,formItem_wrap);
+				    	}	
+				    	if(repeat_flag){
+				    		GLB.repeat(formItem,formItem_wrap);
+				    	}
+				    	if(phone_flag){
+				    		GLB.phone(formItem,formItem_wrap);
+				    	}
+					}	
+				}
 			})
 			if (GLB.vari.submit_flag) {
 				if(confirm("确认提交?")){
