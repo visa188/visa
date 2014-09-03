@@ -264,6 +264,9 @@ public class LineOrderVo extends LineOrder {
             if (!"#".equals(items[4])) {
                 linesSrvice.setPriceSum(new BigDecimal(items[4])); // 合计
             }
+            if (this.getQtPriceSum() != null) {
+                linesSrvice.setYfhj(this.getQtPriceSum());
+            }
             if (this.getQtNeedPaid() != null) {
                 linesSrvice.setNeedPaid(this.getQtNeedPaid());
             }

@@ -130,6 +130,7 @@ public class LineOrder {
     public BigDecimal needGot;
     public String gotBank;
     public Date gotDate;
+    public BigDecimal paidPriceSum;
     /**
      * 线路订单状态
      * 
@@ -141,6 +142,15 @@ public class LineOrder {
     /** @pdOid ac5cabc4-f167-49b7-9590-f036f58a74df */
     public Date postTime;
     public BigDecimal profit;
+
+    @FieldDes(fieldDes = "总计应付")
+    public BigDecimal getPaidPriceSum() {
+        return paidPriceSum;
+    }
+
+    public void setPaidPriceSum(BigDecimal paidPriceSum) {
+        this.paidPriceSum = paidPriceSum;
+    }
 
     @FieldDes(fieldDes = "毛利")
     public BigDecimal getProfit() {

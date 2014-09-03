@@ -302,7 +302,7 @@ public class LineOrderController {
             serviceTypeList.add(LineSrviceEnumType.DJSJDY.getId());
             serviceTypeList.add(LineSrviceEnumType.BX.getId());
             serviceTypeList.add(LineSrviceEnumType.QT.getId());
-            linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId(), serviceTypeList);
+            // linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId(), serviceTypeList);
 
             for (LinesSrvice srvice : lineOrderVo.getLineOrderService()) {
                 if (srvice.getServiceType() == LineSrviceEnumType.LD.getId()
@@ -311,7 +311,7 @@ public class LineOrderController {
                         || srvice.getServiceType() == LineSrviceEnumType.DJSJDY.getId()
                         || srvice.getServiceType() == LineSrviceEnumType.BX.getId()
                         || srvice.getServiceType() == LineSrviceEnumType.QT.getId()) {
-                    linesServiceDao.insert(srvice);
+                    linesServiceDao.updateByPrimaryKey(srvice);
                 }
             }
         } else if (user.getRoleId() == LineRoleEnumType.VISAOPER.getId()
@@ -319,55 +319,58 @@ public class LineOrderController {
             List<Integer> serviceTypeList = new ArrayList<Integer>();
             serviceTypeList.add(LineSrviceEnumType.QZ.getId());
             serviceTypeList.add(LineSrviceEnumType.GGBZ.getId());
-            linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId(), serviceTypeList);
+            // linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId(), serviceTypeList);
 
             for (LinesSrvice srvice : lineOrderVo.getLineOrderService()) {
                 if (srvice.getServiceType() == LineSrviceEnumType.QZ.getId()
                         || srvice.getServiceType() == LineSrviceEnumType.GGBZ.getId()) {
-                    linesServiceDao.insert(srvice);
+                    linesServiceDao.updateByPrimaryKey(srvice);
                 }
             }
         } else if (user.getRoleId() == LineRoleEnumType.FINANCE.getId()
                 || user.getRoleId() == LineRoleEnumType.FINANCE_MANAGER.getId()) {
-            List<LinesSrvice> lineServiceListDb = linesServiceDao.selectAllLinesSrvice(lineOrderVo
-                    .getOrderId());
-            linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId(), null);
+            // List<LinesSrvice> lineServiceListDb = linesServiceDao.selectAllLinesSrvice(lineOrderVo
+            // .getOrderId());
+            // linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId(), null);
 
-            List<LinesSrvice> lineServiceList = lineOrderVo.getLineOrderService();
-            Map<Integer, LinesSrvice> lineServiceMap = new HashMap<Integer, LinesSrvice>();
-            for (LinesSrvice linesSrvice : lineServiceList) {
-                int serviceType = linesSrvice.getServiceType();
-                if (serviceType == 41 || serviceType == 42) {
-                    serviceType = 4;
-                }
-                lineServiceMap.put(serviceType, linesSrvice);
-            }
+            // List<LinesSrvice> lineServiceList = lineOrderVo.getLineOrderService();
+            // Map<Integer, LinesSrvice> lineServiceMap = new HashMap<Integer, LinesSrvice>();
+            // for (LinesSrvice linesSrvice : lineServiceList) {
+            // int serviceType = linesSrvice.getServiceType();
+            // if (serviceType == 41 || serviceType == 42) {
+            // serviceType = 4;
+            // }
+            // lineServiceMap.put(serviceType, linesSrvice);
+            // }
 
-            LinesSrvice srvice;
-            for (LinesSrvice srvicedb : lineServiceListDb) {
-                int serviceType = srvicedb.getServiceType();
-                if (serviceType == 41 || serviceType == 42) {
-                    serviceType = 4;
-                }
-                srvice = lineServiceMap.get(serviceType);
-                if (srvice != null) {
-                    srvicedb.setAlreadyGot(srvice.getAlreadyGot());
-                    srvicedb.setAlreadyPaid(srvice.getAlreadyPaid());
-                    srvicedb.setNeedGot(srvice.getNeedGot());
-                    srvicedb.setNeedPaid(srvice.getNeedPaid());
-                    srvicedb.setPaidBank(srvice.getPaidBank());
-                    srvicedb.setPaidDate(srvice.getPaidDate());
-                    srvicedb.setGotBank(srvice.getGotBank());
-                    srvicedb.setGotDate(srvice.getGotDate());
-                    linesServiceDao.insert(srvicedb);
-                } else {
-                    System.out.println("---------------" + serviceType);
-                }
+            // LinesSrvice srvice;
+            // for (LinesSrvice srvicedb : lineServiceListDb) {
+            // int serviceType = srvicedb.getServiceType();
+            // if (serviceType == 41 || serviceType == 42) {
+            // serviceType = 4;
+            // }
+            // srvice = lineServiceMap.get(serviceType);
+            // if (srvice != null) {
+            // srvicedb.setAlreadyGot(srvice.getAlreadyGot());
+            // srvicedb.setAlreadyPaid(srvice.getAlreadyPaid());
+            // srvicedb.setNeedGot(srvice.getNeedGot());
+            // srvicedb.setNeedPaid(srvice.getNeedPaid());
+            // srvicedb.setPaidBank(srvice.getPaidBank());
+            // srvicedb.setPaidDate(srvice.getPaidDate());
+            // srvicedb.setGotBank(srvice.getGotBank());
+            // srvicedb.setGotDate(srvice.getGotDate());
+            // linesServiceDao.updateByPrimaryKey(srvicedb);
+            // } else {
+            // System.out.println("---------------" + serviceType);
+            // }
+            // }
+            for (LinesSrvice srvice : lineOrderVo.getLineOrderService()) {
+                linesServiceDao.updateByPrimaryKey(srvice);
             }
         } else {
-            linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId(), null);
+            // linesServiceDao.deleteByOrderId(lineOrderVo.getOrderId(), null);
             for (LinesSrvice srvice : lineOrderVo.getLineOrderService()) {
-                linesServiceDao.insert(srvice);
+                linesServiceDao.updateByPrimaryKey(srvice);
             }
         }
 
@@ -464,7 +467,7 @@ public class LineOrderController {
             String yfhkStatus, String yshkStatus, String customerId, String company,
             String operatorId) {
         String[] titles = { "订单序号", "销售员", "产品名称", "订单类型", "线路国家", "下单日期", "客人数量", "操作员", "送签员",
-                "组团社", "联系人", "联系方式", "备注" };
+                "组团社", "联系人", "联系方式", "团费单价", "总计应收", "总计应付", "毛利", "备注" };
         HSSFWorkbook wb = new HSSFWorkbook();
         Sheet s = wb.createSheet();
         // header row

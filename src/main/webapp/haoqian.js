@@ -81,7 +81,7 @@ GLB.phone = function(node,pnode){
 // 写入提示信息
 GLB.setTips = function(node,pnode,tips){
 	var erroricoEle = GLB.createErroricoEle();
-	var errortx = node.getAttribute("placeholder")+tips;
+	var errortx = node.attr("placeholder")+tips;
 	var errortipEle = GLB.createErrortipEle(errortx);
 	pnode.appendChild(erroricoEle);
 	pnode.appendChild(errortipEle);	
@@ -227,7 +227,7 @@ $(function() {
 					setVerify(this,i);
 				})
 				function setVerify(formItem,i){
-					var placeholder = formItem.getAttribute("placeholder");
+					var placeholder = $(formItem).attr("placeholder");
 					$(".error_tip",formItem_wrap).each(function(){
 						var tip = $(this).text();
 						if(tip.indexOf(placeholder)==0){
@@ -299,7 +299,7 @@ $(function() {
 						if(phone_flag){
 							formItem = phone_flag ? $(".js_phone",formItem_wrap)[i] : $(".js_non_empty",formItem_wrap)[i];
 						}
-						var placeholder = formItem.getAttribute("placeholder");
+						var placeholder = $(formItem).attr("placeholder");
 						$(".error_tip",formItem_wrap).each(function(){
 							var tip = $(this).text();
 							if(tip.indexOf(placeholder)==0){
