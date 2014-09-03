@@ -24,6 +24,7 @@ public class LineOrderVo extends LineOrder {
 
     private String signDate;
     private BigDecimal servicePayPrice;
+    private BigDecimal sumServicePayPrice;
     private String datumLimitDate;
     private String datumIsready;
     private String garanteeType;
@@ -35,6 +36,8 @@ public class LineOrderVo extends LineOrder {
     private BigDecimal yfjpkdj;
     private BigDecimal yfjpkhj;
     private String hkgs;
+    private String jpdjType;
+    private BigDecimal jpdj;
 
     // 地接
     private BigDecimal yfdjhj;
@@ -140,6 +143,9 @@ public class LineOrderVo extends LineOrder {
             if (this.getQzPaidDate() != null) {
                 linesSrvice.setPaidDate(this.getQzPaidDate());
             }
+            if (this.getSumServicePayPrice() != null) {
+                linesSrvice.setYfhj(this.getSumServicePayPrice());
+            }
             serviceList.add(linesSrvice);
         }
         if (jp.startsWith("1")) {
@@ -174,7 +180,9 @@ public class LineOrderVo extends LineOrder {
 
             linesSrvice.setServiceItem2(yfjpkType);
             linesSrvice.setServiceItem3(hkgs);
+            linesSrvice.setServiceItem4(jpdjType);
             linesSrvice.setServicePayPrice(yfjpkdj);
+            linesSrvice.setServiceItem9(jpdj);
             linesSrvice.setYfhj(yfjpkhj);
 
             serviceList.add(linesSrvice);
@@ -352,6 +360,30 @@ public class LineOrderVo extends LineOrder {
             }
         }
         return customList;
+    }
+
+    public BigDecimal getJpdj() {
+        return jpdj;
+    }
+
+    public void setJpdj(BigDecimal jpdj) {
+        this.jpdj = jpdj;
+    }
+
+    public String getJpdjType() {
+        return jpdjType;
+    }
+
+    public void setJpdjType(String jpdjType) {
+        this.jpdjType = jpdjType;
+    }
+
+    public BigDecimal getSumServicePayPrice() {
+        return sumServicePayPrice;
+    }
+
+    public void setSumServicePayPrice(BigDecimal sumServicePayPrice) {
+        this.sumServicePayPrice = sumServicePayPrice;
     }
 
     public BigDecimal getGaranteeAlreadyPaid() {

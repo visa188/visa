@@ -361,7 +361,7 @@ public class LineOrderController {
                     srvicedb.setGotDate(srvice.getGotDate());
                     linesServiceDao.insert(srvicedb);
                 } else {
-                    System.out.println(serviceType);
+                    System.out.println("---------------" + serviceType);
                 }
             }
         } else {

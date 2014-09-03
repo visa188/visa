@@ -123,7 +123,7 @@
 			<form action="/lineOrder/addSubmit.do" method="post" class="form_horizontal hq_form line">
 				
 			  <input value="0" type="hidden" id="lineProductId" name="lineProductId">
-			  <input value="0" type="hidden" id="travelInfoFileUrl" name="travelInfoFileUrl">
+			  <input value="" type="hidden" id="travelInfoFileUrl" name="travelInfoFileUrl">
 				
 		      <div class="widget_box">
 		        <div class="widget_title">

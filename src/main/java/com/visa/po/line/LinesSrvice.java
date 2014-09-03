@@ -65,6 +65,7 @@ public class LinesSrvice {
     public String serviceItem6;
     public String serviceItem7;
     public String serviceItem8;
+    public BigDecimal serviceItem9;
     /**
      * 合计
      * 
@@ -249,6 +250,14 @@ public class LinesSrvice {
         this.serviceItem8 = serviceItem8;
     }
 
+    public BigDecimal getServiceItem9() {
+        return serviceItem9;
+    }
+
+    public void setServiceItem9(BigDecimal serviceItem9) {
+        this.serviceItem9 = serviceItem9;
+    }
+
     @FieldDes(fieldDes = "合计")
     public BigDecimal getPriceSum() {
         return priceSum;
@@ -257,6 +266,7 @@ public class LinesSrvice {
     public void setPriceSum(BigDecimal priceSum) {
         this.priceSum = priceSum;
     }
+
     @FieldDes(fieldDes = "应付合计")
     public BigDecimal getYfhj() {
         return yfhj;

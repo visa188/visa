@@ -480,19 +480,39 @@
                     <div class="widget_content">
                         #set($jpService = $!{lineServiceMap.get(3)}) 
                         #if($jpService)
-                        <div class="control_group">
-                          <label class="control_label"><span class="ico_must">*</span>应付机票款:</label>
-                          <div class="controls">
-                           <span class="form_item"><select name="yfjpkType" id="yfjpkType" class="text2 js_non_empty">
-                                <option value="1"  $fn.selected($!{jpService.serviceItem2}, 1)>定金</option>
-                                <option value="2"  $fn.selected($!{jpService.serviceItem2}, 2)>机票款</option>
-                            </select> 单价(含税)<input value="$!{jpService.servicePayPrice}" type="text"  class="text1 js_non_empty ysdj" name="yfjpkdj" id="yfjpkdj" placeholder="机票单价">元 合计<input value="$!{jpService.yfhj}" type="text"  class="text1 js_non_empty" name="yfjpkhj" id="yfjpkhj" placeholder="机票合计">元 航空公司:<select name="hkgs" id="hkgs" class="text2 js_non_empty">
-                                #foreach($one in $airlineList)
-                                    <option value="$one.airlineId" $fn.selected($!{jpService.serviceItem3}, $one.airlineId)>$one.airlineName</option>
-                                #end
-                            </select></span>
-                          </div>
-                        </div>
+    						<div class="control_group">
+                              <label class="control_label"><span class="ico_must">*</span> 航空公司:</label>
+                              <div class="controls">
+                               <span class="form_item">
+    								<select name="hkgs" id="hkgs" class="text2 js_non_empty">
+                                    #foreach($one in $airlineList)
+                                        <option value="$one.airlineId" $fn.selected($!{jpService.serviceItem3}, $one.airlineId)>$one.airlineName</option>
+                                    #end
+    								</select>
+    							</span>
+                              </div>
+                            </div>
+                            <div class="control_group">
+                              <label class="control_label"><span class="ico_must">*</span>机票订金:</label>
+                              <div class="controls">
+                               <span class="form_item">
+    								<input value="$!{jpService.serviceItem9}" type="text"  class="text1 js_non_empty" name="jpdj" id="jpdj" placeholder="机票订金">元
+                                    <select name="jpdjType" id="jpdjType" class="text2">
+                                        <option value="1"  $fn.selected($!{jpService.serviceItem4}, 1)>可退</option>
+                                        <option value="2"  $fn.selected($!{jpService.serviceItem4}, 2)>冲机票款</option>
+                                    </select>
+    							</span>
+                              </div>
+                            </div>
+    						<div class="control_group">
+                              <label class="control_label"><span class="ico_must">*</span>应付机票款:</label>
+                              <div class="controls">
+                               <span class="form_item">
+									单价(含税)<input value="$!{jpService.servicePayPrice}" type="text"  class="text1 js_non_empty ysdj" name="yfjpkdj" id="yfjpkdj" placeholder="机票单价">元 
+									合计<input value="$!{jpService.yfhj}" type="text"  class="text1 js_non_empty" name="yfjpkhj" id="yfjpkhj" placeholder="机票合计">元
+    							</span>
+                              </div>
+                            </div>
                         #end
                         #set($djService = $!{lineServiceMap.get(4)})  
                         #if($djService)
@@ -586,7 +606,7 @@
 						<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>应付签证费（合计）:</label>
                           <div class="controls">
-                           <span class="form_item"><input value="0" id="sumServicePayPrice" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应付签证费（合计）" readonly></span>
+                           <span class="form_item"><input value="$!fn.disPrice($!{visaService.yfhj})" id="sumServicePayPrice" name="sumServicePayPrice" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应付签证费（合计）" readonly></span>
                           </div>
                         </div>  
     				</div>	
@@ -614,7 +634,6 @@
 								jQuery("#garanteePrice").removeClass('js_non_empty');
 							}
 						}
-						sumVisaPay();
 						showGaranteePrice();
 					</script>
 				#elseif($visaService&&$userRoleId == $fn.getLineSignoperRoleId())
@@ -636,8 +655,8 @@
                           <label class="control_label"><span class="ico_must">*</span>团费合计:</label>
                           <div class="controls">
 							<span class="form_item">应收：<input value="$!fn.disPrice($!{lineOrder.priceSum})" name="priceSum" id="priceSum" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应收" readonly>元</span>
-							<span class="form_item">已收：<input value="$!fn.disPrice($!{lineOrder.alreadyGot})" name="alreadyGot" id="alreadyGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收">元</span>
-							<span class="form_item">未收：<input value="$!fn.disPrice($!{lineOrder.needGot})" name="needGot" id="needGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
+							<span class="form_item">已收：<input value="$!fn.disPrice($!{lineOrder.alreadyGot})" name="alreadyGot" id="alreadyGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收" onchange="calculateNeedPaid('tf');">元</span>
+							<span class="form_item">未收：<input value="$!fn.disPrice($!{lineOrder.needGot})" name="needGot" id="needGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收" readonly>元</span>
 							<span class="form_item">入账银行：<input value="$!{lineOrder.gotBank}" name="gotBank" id="gotBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
 						    <span class="form_item">入账日期：<input value="$!fn.format($!{lineOrder.gotDate},'yyyy-MM-dd')" name="gotDate" id="gotDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
@@ -646,16 +665,16 @@
 						#if($!{garanteeService.serviceItem1}=='2'||$!{garanteeService.serviceItem1}=='3')
 						<input type="hidden" name="garanteeType" value="$!{garanteeService.serviceItem1}" />  
 						<div class="control_group">
-                          <label class="control_label"><span class="ico_must">*</span>#if($!{garanteeService.serviceItem1}=='2') 归国保证金  #end #if($!{garanteeService.serviceItem1}=='3') 联保  #end:</label>
+                          <label class="control_label"><span class="ico_must">*</span>$!fn.getVisaTypeName($!{garanteeService.serviceItem1}):</label>
                           <div class="controls">
-							<span class="form_item">应收：<input value="$!fn.disPrice($!{garanteeService.priceSum})" name="garanteePriceSum" id="garanteePriceSum" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应收" readonly>元</span>
-							<span class="form_item">已收：<input value="$!fn.disPrice($!{garanteeService.alreadyGot})" name="garanteeAlreadyGot" id="garanteeAlreadyGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收">元</span>
-							<span class="form_item">未收：<input value="$!fn.disPrice($!{garanteeService.needGot})" name="garanteeNeedGot" id="garanteeNeedGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
+							<span class="form_item">应收：<input value="$!fn.disPrice($!{garanteeService.priceSum})" name="garanteePriceSum" id="garanteePriceSum" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应收">元</span>
+							<span class="form_item">已收：<input value="$!fn.disPrice($!{garanteeService.alreadyGot})" name="garanteeAlreadyGot" id="garanteeAlreadyGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收" onchange="calculateNeedPaid('garantee');">元</span>
+							<span class="form_item">未收：<input value="$!fn.disPrice($!{garanteeService.needGot})" name="garanteeNeedGot" id="garanteeNeedGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收" readonly>元</span>
 							<span class="form_item">入账银行：<input value="$!{garanteeService.gotBank}" name="garanteeGotBank" id="garanteeGotBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
 						    <span class="form_item">入账日期：<input value="$!fn.format($!{garanteeService.gotDate},'yyyy-MM-dd')" name="garanteeGotDate" id="garanteeGotDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
-							<span class="form_item">已退：<input value="$!fn.disPrice($!{garanteeService.alreadyPaid})" name="garanteeAlreadyPaid" id="garanteeAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
-							<span class="form_item">转出银行：<input value="$!{garanteeService.paidBank}" name="garanteePaidBank" id="garanteePaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
-						    <span class="form_item">付款日期：<input value="$!fn.format($!{garanteeService.paidDate},'yyyy-MM-dd')" name="garanteePaidDate" id="garanteePaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
+							<span class="form_item">已退：<input value="$!fn.disPrice($!{garanteeService.alreadyPaid})" name="garanteeAlreadyPaid" id="garanteeAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已退">元</span>
+							<span class="form_item">转出银行：<input value="$!{garanteeService.paidBank}" name="garanteePaidBank" id="garanteePaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
+						    <span class="form_item">付款日期：<input value="$!fn.format($!{garanteeService.paidDate},'yyyy-MM-dd')" name="garanteePaidDate" id="garanteePaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="付款日期"></span>
                           </div>
                         </div>
 						#end
@@ -664,11 +683,11 @@
 						<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>机票费用合计:</label>
                           <div class="controls">
-							<span class="form_item">应付：<input value="$!fn.disPrice($!{jpService.yfhj})" type="text" class="text1 js_nan" name="jpPriceSum" id="jpPriceSum" readonly>元</span>
-							<span class="form_item">已付：<input value="$!fn.disPrice($!{jpService.alreadyPaid})" name="jpAlreadyPaid" id="jpAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收">元</span>
-							<span class="form_item">未付：<input value="$!fn.disPrice($!{jpService.needPaid})" name="jpNeedPaid" id="jpNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
-							<span class="form_item">转出银行：<input value="$!{jpService.paidBank}" name="jpPaidBank" id="jpPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
-						    <span class="form_item">付款日期：<input value="$!fn.format($!{jpService.paidDate},'yyyy-MM-dd')" name="jpPaidDate" id="jpPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
+							<span class="form_item">应付：<input value="$!fn.disPrice($!{jpService.yfhj})" type="text" class="text1 js_nan" name="jpPriceSum" id="jpPriceSum" placeholder="应付">元</span>
+							<span class="form_item">已付：<input value="$!fn.disPrice($!{jpService.alreadyPaid})" name="jpAlreadyPaid" id="jpAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已付" onchange="calculateNeedPaid('jp');">元</span>
+							<span class="form_item">未付：<input value="$!fn.disPrice($!{jpService.needPaid})" name="jpNeedPaid" id="jpNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未付" readonly>元</span>
+							<span class="form_item">转出银行：<input value="$!{jpService.paidBank}" name="jpPaidBank" id="jpPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
+						    <span class="form_item">付款日期：<input value="$!fn.format($!{jpService.paidDate},'yyyy-MM-dd')" name="jpPaidDate" id="jpPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="付款日期"></span>
                           </div>
                         </div>	
 						#end
@@ -677,10 +696,10 @@
 						<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>签证费用合计:</label>
                           <div class="controls">
-							<span class="form_item">应付：<input value="$!fn.disPrice($!{qzService.yfhj})" type="text" class="text1 js_nan" name="qzPriceSum" id="qzPriceSum" readonly>元</span>
-							<span class="form_item">已付：<input value="$!fn.disPrice($!{qzService.alreadyPaid})" name="qzAlreadyPaid" id="qzAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收">元</span>
-							<span class="form_item">未付：<input value="$!fn.disPrice($!{qzService.needPaid})" name="qzNeedPaid" id="qzNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
-							<span class="form_item">转出银行：<input value="$!{qzService.paidBank}" name="qzPaidBank" id="qzPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
+							<span class="form_item">应付：<input value="$!fn.disPrice($!{qzService.yfhj})" type="text" class="text1 js_nan" name="qzPriceSum" id="qzPriceSum" placeholder="应付">元</span>
+							<span class="form_item">已付：<input value="$!fn.disPrice($!{qzService.alreadyPaid})" name="qzAlreadyPaid" id="qzAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已付" onchange="calculateNeedPaid('qz');">元</span>
+							<span class="form_item">未付：<input value="$!fn.disPrice($!{qzService.needPaid})" name="qzNeedPaid" id="qzNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未付" readonly>元</span>
+							<span class="form_item">转出银行：<input value="$!{qzService.paidBank}" name="qzPaidBank" id="qzPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
 						    <span class="form_item">付款日期：<input value="$!fn.format($!{qzService.paidDate},'yyyy-MM-dd')" name="qzPaidDate" id="qzPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
                         </div>	
@@ -691,10 +710,10 @@
                           <label class="control_label"><span class="ico_must">*</span>地接费用合计:</label>
                           <div class="controls">
 							<span class="form_item">#if($djService.serviceItem1)酒店费用#end #if($djService.serviceItem4)特殊景点费用#end #if($djService.serviceType == $fn.getBsServicTypeId())巴士费用#else司兼导费用#end
-							<input value="$!fn.disPrice($!{djService.yfhj})" type="text" class="text1 js_nan" name="djPriceSum" id="djPriceSum" readonly>元</span>
-							<span class="form_item">已付：<input value="$!fn.disPrice($!{djService.alreadyPaid})" name="djAlreadyPaid" id="djAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收">元</span>
-							<span class="form_item">未付：<input value="$!fn.disPrice($!{djService.needPaid})" name="djNeedPaid" id="djNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
-							<span class="form_item">转出银行：<input value="$!{djService.paidBank}" name="djPaidBank" id="djPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
+							<input value="$!fn.disPrice($!{djService.yfhj})" type="text" class="text1 js_nan" name="djPriceSum" id="djPriceSum" placeholder="应付">元</span>
+							<span class="form_item">已付：<input value="$!fn.disPrice($!{djService.alreadyPaid})" name="djAlreadyPaid" id="djAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已付" onchange="calculateNeedPaid('dj');">元</span>
+							<span class="form_item">未付：<input value="$!fn.disPrice($!{djService.needPaid})" name="djNeedPaid" id="djNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未付" readonly>元</span>
+							<span class="form_item">转出银行：<input value="$!{djService.paidBank}" name="djPaidBank" id="djPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
 						    <span class="form_item">付款日期：<input value="$!fn.format($!{djService.paidDate},'yyyy-MM-dd')" name="djPaidDate" id="djPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
                         </div>
@@ -704,10 +723,10 @@
                         <div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>其它费用合计:</label>
                           <div class="controls">
-							<span class="form_item">应付：<input value="$!fn.disPrice($!{qtService.yfhj})" type="text" class="text1 js_nan" name="qtPriceSum" id="qtPriceSum" onchange="calculateProfit();">元</span>
-							<span class="form_item">已付：<input value="$!fn.disPrice($!{qtService.alreadyPaid})" name="qtAlreadyPaid" id="qtAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收">元</span>
-							<span class="form_item">未付：<input value="$!fn.disPrice($!{qtService.needPaid})" name="qtNeedPaid" id="qtNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
-							<span class="form_item">转出银行：<input value="$!{qtService.paidBank}" name="qtPaidBank" id="qtPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
+							<span class="form_item">应付：<input value="$!fn.disPrice($!{qtService.yfhj})" type="text" class="text1 js_nan" name="qtPriceSum" id="qtPriceSum" onchange="calculateProfit();" placeholder="应付">元</span>
+							<span class="form_item">已付：<input value="$!fn.disPrice($!{qtService.alreadyPaid})" name="qtAlreadyPaid" id="qtAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已付" onchange="calculateNeedPaid('qt');">元</span>
+							<span class="form_item">未付：<input value="$!fn.disPrice($!{qtService.needPaid})" name="qtNeedPaid" id="qtNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未付" readonly>元</span>
+							<span class="form_item">转出银行：<input value="$!{qtService.paidBank}" name="qtPaidBank" id="qtPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
 						    <span class="form_item">付款日期：<input value="$!fn.format($!{qtService.paidDate},'yyyy-MM-dd')" name="qtPaidDate" id="qtPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
                         </div>
@@ -717,10 +736,10 @@
                         <div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>保险费用:</label>
                           <div class="controls">
-							<span class="form_item">应付：<input value="$!fn.disPrice($!{bxService.yfhj})" name="bxPriceSum" id="bxPriceSum" type="text" class="text1 js_nan" readonly>元</span>
-							<span class="form_item">已付：<input value="$!fn.disPrice($!{bxService.alreadyPaid})" name="bxAlreadyPaid" id="bxAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收">元</span>
-							<span class="form_item">未付：<input value="$!fn.disPrice($!{bxService.needPaid})" name="bxNeedPaid" id="bxNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收">元</span>
-							<span class="form_item">转出银行：<input value="$!{bxService.paidBank}" name="bxPaidBank" id="bxPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
+							<span class="form_item">应付：<input value="$!fn.disPrice($!{bxService.yfhj})" name="bxPriceSum" id="bxPriceSum" type="text" class="text1 js_nan" placeholder="应付">元</span>
+							<span class="form_item">已付：<input value="$!fn.disPrice($!{bxService.alreadyPaid})" name="bxAlreadyPaid" id="bxAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已付" onchange="calculateNeedPaid('bx');">元</span>
+							<span class="form_item">未付：<input value="$!fn.disPrice($!{bxService.needPaid})" name="bxNeedPaid" id="bxNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未付" readonly>元</span>
+							<span class="form_item">转出银行：<input value="$!{bxService.paidBank}" name="bxPaidBank" id="bxPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
 						    <span class="form_item">付款日期：<input value="$!fn.format($!{bxService.paidDate},'yyyy-MM-dd')" name="bxPaidDate" id="bxPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
                         </div>
@@ -732,22 +751,150 @@
                           </div>
                         </div>
 						<script>
+							function calculateNeedPaid(type){
+								if(type == "tf"){
+									var priceSumObj = jQuery("#priceSum");
+									//团费应收
+    								var priceSum=priceSumObj.val()==''?0:priceSumObj.val();
+    								//团费已收
+    								var alreadyGot=jQuery("#alreadyGot").val()==''?0:jQuery("#alreadyGot").val();
+									if(priceSum==0){
+										alert("团费应收款不应为0，请重新填写！");
+									}else{
+										var needGot = Math.round(parseFloat(priceSum*100-alreadyGot*100))/100;
+										if(needGot<0){
+											alert("团费已收款大于应收款，请重新填写");
+										}else{
+											jQuery("#needGot").val(needGot);
+										}
+									}
+								}
+								
+								if(type == "garantee"){
+									var garanteePriceSumObj = jQuery("#garanteePriceSum");
+									//保证金应收
+    								var garanteePriceSum=garanteePriceSumObj.val()==''?0:garanteePriceSumObj.val();
+    								//保证金已收
+    								var garanteeAlreadyGot=jQuery("#garanteeAlreadyGot").val()==''?0:jQuery("#garanteeAlreadyGot").val();
+									if(jpPriceSum==0){
+										alert("$!fn.getVisaTypeName($!{garanteeService.serviceItem1})应收款不应为0，请重新填写！");
+									}else{
+										var needGot = Math.round(parseFloat(garanteePriceSum*100-garanteeAlreadyGot*100))/100;
+										if(needGot<0){
+											alert("$!fn.getVisaTypeName($!{garanteeService.serviceItem1})已收款大于应收款，请重新填写");
+										}else{
+											jQuery("#garanteeNeedGot").val(needGot);
+										}
+									}
+								}
+							
+								if(type == "jp"){
+									var jpPriceSumObj = jQuery("#jpPriceSum");
+									//机票应付
+    								var jpPriceSum=jpPriceSumObj.val()==''?0:jpPriceSumObj.val();
+    								//机票已付
+    								var jpAlreadyPaid=jQuery("#jpAlreadyPaid").val()==''?0:jQuery("#jpAlreadyPaid").val();
+									if(jpPriceSum==0){
+										alert("机票应付款不应为0，请重新填写！");
+									}else{
+										var needPaid = Math.round(parseFloat(jpPriceSum*100-jpAlreadyPaid*100))/100;
+										if(needPaid<0){
+											alert("机票已付款大于应付款，请重新填写");
+										}else{
+											jQuery("#jpNeedPaid").val(needPaid);
+										}
+									}
+								}
+								
+								if(type == "qz"){
+									var qzPriceSumObj = jQuery("#qzPriceSum");
+									//签证应付
+									var qzPriceSum=jQuery("#qzPriceSum").val()==''?0:jQuery("#qzPriceSum").val();
+    								//签证已付
+									var qzAlreadyPaid=jQuery("#qzAlreadyPaid").val()==''?0:jQuery("#qzAlreadyPaid").val();
+									if(qzPriceSum==0){
+										alert("签证应付款不应为0，请重新填写！");
+									}else{
+										var needPaid = Math.round(parseFloat(qzPriceSum*100-qzAlreadyPaid*100))/100;
+										if(needPaid<0){
+											alert("签证已付款大于应付款，请重新填写");
+										}else{
+											jQuery("#qzNeedPaid").val(needPaid);
+										}
+									}
+								}
+								
+								if(type == "dj"){
+									var djPriceSumObj = jQuery("#djPriceSum");
+									//地接应付
+									var djPriceSum=jQuery("#djPriceSum").val()==''?0:jQuery("#djPriceSum").val();
+    								//地接已付
+									var djAlreadyPaid=jQuery("#djAlreadyPaid").val()==''?0:jQuery("#djAlreadyPaid").val();
+									if(djPriceSum==0){
+										alert("地接应付款不应为0，请重新填写！");
+									}else{
+										var needPaid = Math.round(parseFloat(djPriceSum*100-djAlreadyPaid*100))/100;
+										if(needPaid<0){
+											alert("地接已付款大于应付款，请重新填写");
+										}else{
+											jQuery("#djNeedPaid").val(needPaid);
+										}
+									}
+								}
+								
+								if(type == "qt"){
+									var qtPriceSumObj = jQuery("#qtPriceSum");
+									//其它应付
+									var qtPriceSum=jQuery("#qtPriceSum").val()==''?0:jQuery("#qtPriceSum").val();
+    								//其它已付
+									var qtAlreadyPaid=jQuery("#qtAlreadyPaid").val()==''?0:jQuery("#qtAlreadyPaid").val();
+									if(qtPriceSum==0){
+										alert("其它应付款不应为0，请重新填写！");
+									}else{
+										var needPaid = Math.round(parseFloat(qtPriceSum*100-qtAlreadyPaid*100))/100;
+										if(needPaid<0){
+											alert("其它已付款大于应付款，请重新填写");
+										}else{
+											jQuery("#qtNeedPaid").val(needPaid);
+										}
+									}
+								}
+								
+								if(type == "bx"){
+									var bxPriceSumObj = jQuery("#bxPriceSum");
+									//保险应付
+									var bxPriceSum=jQuery("#bxPriceSum").val()==''?0:jQuery("#bxPriceSum").val();
+    								//保险已付
+									var bxAlreadyPaid=jQuery("#bxAlreadyPaid").val()==''?0:jQuery("#bxAlreadyPaid").val();
+									if(bxPriceSum==0){
+										alert("保险应付款不应为0，请重新填写！");
+									}else{
+										var needPaid = Math.round(parseFloat(bxPriceSum*100-bxAlreadyPaid*100))/100;
+										if(needPaid<0){
+											alert("保险已付款大于应付款，请重新填写");
+										}else{
+											jQuery("#bxNeedPaid").val(needPaid);
+										}
+									}
+								}
+							}
+							
 							function calculateProfit(){
 								//总计应收
 								var priceSum=jQuery("#priceSum").val()==''?0:jQuery("#priceSum").val();
-								//机票已付
+								//机票应付
 								var jpPriceSum=jQuery("#jpPriceSum").val()==''?0:jQuery("#jpPriceSum").val();
-								//签证已付
+								//签证应付
 								var qzPriceSum=jQuery("#qzPriceSum").val()==''?0:jQuery("#qzPriceSum").val();
-								//地接已付
+								//地接应付
 								var djPriceSum=jQuery("#djPriceSum").val()==''?0:jQuery("#djPriceSum").val();
-								//其它已付
+								//其它应付
 								var qtPriceSum=jQuery("#qtPriceSum").val()==''?0:jQuery("#qtPriceSum").val();
-								//保险已付
+								//保险应付
 								var bxPriceSum=jQuery("#bxPriceSum").val()==''?0:jQuery("#bxPriceSum").val();
 								
 								var profit = 0.0;
-								
+								//毛利为总应收-总应付
 								if(priceSum&&jpPriceSum&&qzPriceSum&&djPriceSum&&qtPriceSum&&bxPriceSum){
                         			profit = Math.round(parseFloat(priceSum*100-jpPriceSum*100-qzPriceSum*100-djPriceSum*100-qtPriceSum*100-bxPriceSum*100))/100;
                         		}

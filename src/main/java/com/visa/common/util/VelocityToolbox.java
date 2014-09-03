@@ -393,4 +393,14 @@ public class VelocityToolbox {
         }
         return "style = \"display:none\"";
     }
+
+    public String getVisaTypeName(String visaType) {
+        if ("2".equals(visaType)) {
+            return "归国保证金";
+        }
+        if ("3".equals(visaType)) {
+            return "联保";
+        }
+        return "";
+    }
 }
