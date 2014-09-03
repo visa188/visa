@@ -520,6 +520,14 @@ public class LineOrderController {
                 headerCell = row.createCell(11);
                 headerCell.setCellValue(p.getContactNo());
                 headerCell = row.createCell(12);
+                headerCell.setCellValue(p.getPrice().toString());
+                headerCell = row.createCell(13);
+                headerCell.setCellValue(p.getPriceSum().toString());
+                headerCell = row.createCell(14);
+                headerCell.setCellValue(p.getPaidPriceSum().toString());
+                headerCell = row.createCell(15);
+                headerCell.setCellValue(p.getProfit().toString());
+                headerCell = row.createCell(16);
                 headerCell.setCellValue(p.getSpecialComment());
             }
         }
