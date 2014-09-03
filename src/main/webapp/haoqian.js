@@ -227,10 +227,15 @@ $(function() {
 					setVerify(this,i);
 				})
 				function setVerify(formItem,i){
-					if($(".ico_error",formItem_wrap)[i]){
-			    		$(".ico_error",formItem_wrap).remove();
-			    		$(".error_tip",formItem_wrap).remove();
-			    	}  
+					var placeholder = formItem.getAttribute("placeholder");
+					$(".error_tip",formItem_wrap).each(function(){
+						var tip = $(this).text();
+						if(tip.indexOf(placeholder)==0){
+							$(this).prev().remove();
+							$(this).remove();
+						}
+						
+					});  
 			    	if(nonEmpty_flag){
 			    		GLB.nonEmpty(formItem,formItem_wrap);
 			    	}
@@ -273,11 +278,6 @@ $(function() {
 				
 				var len = $(":input",formItem_wrap).length;
 				for(var i = 0; i < len; i++){
-					if($(".ico_error",formItem_wrap).length>1){
-			    		$(".ico_error",formItem_wrap).remove();
-			    		$(".error_tip",formItem_wrap).remove();
-			    	}
-					
 					if($(".js_phone",formItem_wrap)[i]){
 						phone_flag = true;
 					}
@@ -299,10 +299,15 @@ $(function() {
 						if(phone_flag){
 							formItem = phone_flag ? $(".js_phone",formItem_wrap)[i] : $(".js_non_empty",formItem_wrap)[i];
 						}
-						if($(".ico_error",formItem_wrap)[i]){
-				    		$(".ico_error",formItem_wrap).remove();
-				    		$(".error_tip",formItem_wrap).remove();
-				    	}  
+						var placeholder = formItem.getAttribute("placeholder");
+						$(".error_tip",formItem_wrap).each(function(){
+							var tip = $(this).text();
+							if(tip.indexOf(placeholder)==0){
+								$(this).prev().remove();
+								$(this).remove();
+							}
+							
+						}); 
 						if(nonEmpty_flag){
 				    		GLB.nonEmpty(formItem,formItem_wrap);
 				    	}
