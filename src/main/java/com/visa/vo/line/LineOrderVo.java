@@ -99,6 +99,9 @@ public class LineOrderVo extends LineOrder {
             if (!"#".equals(items[3])) {
                 linesSrvice.setServiceOperator(items[3]);
             }
+            if (!"#".equals(items[4])) {
+                linesSrvice.setServiceItem2(items[4]);
+            }
             serviceList.add(linesSrvice);
         }
         if (qz.startsWith("1")) {
@@ -164,6 +167,15 @@ public class LineOrderVo extends LineOrder {
             }
             if (!"#".equals(items[5])) {
                 linesSrvice.setServiceOperator(items[5]);
+            }
+            if (!"#".equals(items[6])) {
+                linesSrvice.setServiceItem5(items[6]);
+            }
+            if (!"#".equals(items[7])) {
+                linesSrvice.setServiceItem6(items[7]);
+            }
+            if (!"#".equals(items[8])) {
+                linesSrvice.setServiceItem7(items[8]);
             }
             if (this.getJpNeedPaid() != null) {
                 linesSrvice.setNeedPaid(this.getJpNeedPaid());
