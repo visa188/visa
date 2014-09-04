@@ -38,6 +38,8 @@ public class LineOrderVo extends LineOrder {
     private String hkgs;
     private String jpdjType;
     private BigDecimal jpdj;
+    private String alreadyPaidJpdj;
+    private String jpPaidJpdjDate;
 
     // 地接
     private BigDecimal yfdjhj;
@@ -181,6 +183,8 @@ public class LineOrderVo extends LineOrder {
             linesSrvice.setServiceItem2(yfjpkType);
             linesSrvice.setServiceItem3(hkgs);
             linesSrvice.setServiceItem4(jpdjType);
+            linesSrvice.setServiceItem5(alreadyPaidJpdj);
+            linesSrvice.setServiceItem6(jpPaidJpdjDate);
             linesSrvice.setServicePayPrice(yfjpkdj);
             linesSrvice.setServiceItem9(jpdj);
             linesSrvice.setYfhj(yfjpkhj);
@@ -363,6 +367,22 @@ public class LineOrderVo extends LineOrder {
             }
         }
         return customList;
+    }
+
+    public String getAlreadyPaidJpdj() {
+        return alreadyPaidJpdj;
+    }
+
+    public void setAlreadyPaidJpdj(String alreadyPaidJpdj) {
+        this.alreadyPaidJpdj = alreadyPaidJpdj;
+    }
+
+    public String getJpPaidJpdjDate() {
+        return jpPaidJpdjDate;
+    }
+
+    public void setJpPaidJpdjDate(String jpPaidJpdjDate) {
+        this.jpPaidJpdjDate = jpPaidJpdjDate;
     }
 
     public BigDecimal getJpdj() {

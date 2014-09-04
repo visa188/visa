@@ -498,8 +498,8 @@
                                <span class="form_item">
     								<input value="$!{jpService.serviceItem9}" type="text"  class="text1 js_non_empty" name="jpdj" id="jpdj" placeholder="机票订金">元
                                     <select name="jpdjType" id="jpdjType" class="text2">
-                                        <option value="1"  $fn.selected($!{jpService.serviceItem4}, 1)>可退</option>
-                                        <option value="2"  $fn.selected($!{jpService.serviceItem4}, 2)>冲机票款</option>
+                                        <option value="1"  $fn.selected($!{jpService.serviceItem4}, '1')>可退</option>
+                                        <option value="2"  $fn.selected($!{jpService.serviceItem4}, '2')>冲机票款</option>
                                     </select>
     							</span>
                               </div>
@@ -688,7 +688,14 @@
 							<span class="form_item">未付：<input value="$!fn.disPrice($!{jpService.needPaid})" name="jpNeedPaid" id="jpNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未付" readonly>元</span>
 							<span class="form_item">转出银行：<input value="$!{jpService.paidBank}" name="jpPaidBank" id="jpPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
 						    <span class="form_item">付款日期：<input value="$!fn.format($!{jpService.paidDate},'yyyy-MM-dd')" name="jpPaidDate" id="jpPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="付款日期"></span>
-                          </div>
+    						  #if($!{jpService.serviceItem4}=='1')
+								<span class="form_item">机票订金（可退）：<input value="$!fn.disPrice($!{jpService.serviceItem9})" name="jpPaidJpdj" id="jpPaidJpdj" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="机票订金（可退）"></span>
+								<span class="form_item">已退：<input value="$!{jpService.serviceItem5}" name="alreadyPaidJpdj" id="alreadyPaidJpdj" type="text" class="text1" maxlength="8" size="8" placeholder="机票订金（已退）"></span>
+								<span class="form_item">退款日期：<input value="$!{jpService.serviceItem6}" name="jpPaidJpdjDate" id="jpPaidJpdjDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="退款日期"></span>
+    						  #else
+								<span class="form_item">机票订金（冲机票款,自动加到已付款中）：<input value="$!fn.disPrice($!{jpService.serviceItem9})" name="jpdjAlreadyPaid" id="jpdjAlreadyPaid" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="机票订金（冲机票款）" onchange="calculateNeedPaid('jp');"></span>
+    						  #end
+						  </div>
                         </div>	
 						#end
 						#set($qzService = $!{lineServiceMap.get(2)})
@@ -766,7 +773,7 @@
 										if(needGot<0){
 											alert("团费已收款大于应收款，请重新填写");
 										}else{
-											jQuery("#needGot").val(needGot);
+											jQuery("#needGot").val(isNaN(needGot)?0:needGot);
 										}
 									}
 								}
@@ -784,7 +791,7 @@
 										if(needGot<0){
 											alert("$!fn.getVisaTypeName($!{garanteeService.serviceItem1})已收款大于应收款，请重新填写");
 										}else{
-											jQuery("#garanteeNeedGot").val(needGot);
+											jQuery("#garanteeNeedGot").val(isNaN(needGot)?0:needGot);
 										}
 									}
 								}
@@ -795,6 +802,10 @@
     								var jpPriceSum=jpPriceSumObj.val()==''?0:jpPriceSumObj.val();
     								//机票已付
     								var jpAlreadyPaid=jQuery("#jpAlreadyPaid").val()==''?0:jQuery("#jpAlreadyPaid").val();
+									var jpdjAlreadyPaid = jQuery("#jpdjAlreadyPaid");
+									if(typeof jpdjAlreadyPaid != "undefined"){
+										jpAlreadyPaid = Math.round(parseFloat(jpAlreadyPaid*100+jpdjAlreadyPaid*100))/100;
+									}
 									if(jpPriceSum==0){
 										alert("机票应付款不应为0，请重新填写！");
 									}else{
@@ -802,7 +813,7 @@
 										if(needPaid<0){
 											alert("机票已付款大于应付款，请重新填写");
 										}else{
-											jQuery("#jpNeedPaid").val(needPaid);
+											jQuery("#jpNeedPaid").val(isNaN(needPaid)?0:needPaid);
 										}
 									}
 								}
@@ -820,7 +831,7 @@
 										if(needPaid<0){
 											alert("签证已付款大于应付款，请重新填写");
 										}else{
-											jQuery("#qzNeedPaid").val(needPaid);
+											jQuery("#qzNeedPaid").val(isNaN(needPaid)?0:needPaid);
 										}
 									}
 								}
@@ -838,7 +849,7 @@
 										if(needPaid<0){
 											alert("地接已付款大于应付款，请重新填写");
 										}else{
-											jQuery("#djNeedPaid").val(needPaid);
+											jQuery("#djNeedPaid").val(isNaN(needPaid)?0:needPaid);
 										}
 									}
 								}
@@ -856,7 +867,7 @@
 										if(needPaid<0){
 											alert("其它已付款大于应付款，请重新填写");
 										}else{
-											jQuery("#qtNeedPaid").val(needPaid);
+											jQuery("#qtNeedPaid").val(isNaN(needPaid)?0:needPaid);
 										}
 									}
 								}
@@ -874,7 +885,7 @@
 										if(needPaid<0){
 											alert("保险已付款大于应付款，请重新填写");
 										}else{
-											jQuery("#bxNeedPaid").val(needPaid);
+											jQuery("#bxNeedPaid").val(isNaN(needPaid)?0:needPaid);
 										}
 									}
 								}
@@ -897,9 +908,10 @@
 								//毛利为总应收-总应付
                         		var profit = Math.round(parseFloat(priceSum*100-jpPriceSum*100-qzPriceSum*100-djPriceSum*100-qtPriceSum*100-bxPriceSum*100))/100;
 								var paidPriceSum = Math.round(parseFloat(jpPriceSum*100+qzPriceSum*100+djPriceSum*100+qtPriceSum*100+bxPriceSum*100))/100;
-								jQuery("#profit").val(profit);
-								jQuery("#paidPriceSum").val(paidPriceSum);
+								jQuery("#profit").val(isNaN(profit)?0:profit);
+								jQuery("#paidPriceSum").val(isNaN(paidPriceSum)?0:paidPriceSum);
 							}
+							calculateNeedPaid('jp');
 							calculateProfit();
 						</script>
 					#end
