@@ -104,6 +104,9 @@ public class LineOrderVo extends LineOrder {
             if (!"#".equals(items[4])) {
                 linesSrvice.setServiceItem2(items[4]);
             }
+            if (!"#".equals(items[4])) {
+                linesSrvice.setServiceItem2(items[4]);
+            }
             serviceList.add(linesSrvice);
         }
         if (qz.startsWith("1")) {

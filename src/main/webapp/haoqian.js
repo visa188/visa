@@ -472,6 +472,11 @@ $(function() {
 					ldpai = '#';
 				}
 				ldserv += '_'+ldpai;
+				var ldmz = $('#ldmz').val();
+				if(typeof ldmz == 'undefined' || ldmz == ''){
+					ldmz = '#';
+				}
+				ldserv += '_'+ldmz;
 			}
 			$('#ld').val(ldserv);
 			
@@ -506,6 +511,21 @@ $(function() {
 					jppai = '#';
 				}
 				jpserv += '_'+jppai;
+				var jphbxx = $('#jphbxx').val();
+				if(typeof jphbxx == 'undefined' || jphbxx == ''){
+					jphbxx = '#';
+				}
+				jpserv += '_'+jphbxx;
+				var jpdjsx = $('#jpdjsx').val();
+				if(typeof jpdjsx == 'undefined' || jpdjsx == ''){
+					jpdjsx = '#';
+				}
+				jpserv += '_'+jpdjsx;
+				var jpcpsx = $('#jpcpsx').val();
+				if(typeof jpcpsx == 'undefined' || jpcpsx == ''){
+					jpcpsx = '#';
+				}
+				jpserv += '_'+jpcpsx;
 			}
 			$('#jp').val(jpserv);
 			
