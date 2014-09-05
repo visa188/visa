@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PID=`ps -ef|grep 'com.caucho.boot.WatchdogManager'|grep -v perl|grep -v grep|awk '{print $2}'`
+PID=`ps -ef|grep 'com.caucho.boot.WatchdogManager'|grep 'resin_test'|grep -v perl|grep -v grep|awk '{print $2}'`
 if [ -n "${PID}" ]; then
     kill -9 ${PID}
 fi

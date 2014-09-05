@@ -85,7 +85,7 @@ public class LoginController {
             logger.info("Logout with userId: " + user.getUserId());
             session.invalidate();
         }
-        return "redirect:login.html";
+        return "redirect:http://cloud.haoqianwang.com:81/login.html";
     }
 
 }
