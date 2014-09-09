@@ -20,6 +20,7 @@ import com.visa.po.User;
  * @author user
  */
 @Controller
+@RequestMapping("/*")
 @SessionAttributes(Constant.SESSION_USER)
 public class LoginController {
     private final Log logger = LogFactory.getLog(this.getClass());
@@ -32,7 +33,7 @@ public class LoginController {
      * @param model model
      * @return string
      */
-    @RequestMapping("/login")
+    @RequestMapping
     public String login(String userId, String password, ModelMap model) {
         User user = userDao.selectByPrimaryKey(userId);
         if (user != null && password != null && password.equals(user.getPwd())) {
@@ -59,7 +60,7 @@ public class LoginController {
      * @param model model
      * @return string
      */
-    @RequestMapping("/validate")
+    @RequestMapping
     @ResponseBody
     public String validate(String userId, String password, ModelMap model) {
         User user = userDao.selectByPrimaryKey(userId);
@@ -76,7 +77,7 @@ public class LoginController {
      * @param request request
      * @return logout
      */
-    @RequestMapping("/logout")
+    @RequestMapping
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
