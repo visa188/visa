@@ -223,7 +223,7 @@ public class LineOrderController {
         operateLog.setOperateDes(StringUtil.generateAddOperLog(lineOrder));
         operateLog.setOrderSeq(prefix);
         operateLogDao.insert(operateLog);
-        return "redirect:list.do?page=1";
+        return "redirect:http://cloud.haoqianwang.com:81/lineOrder/list.do?page=1";
     }
 
     /**
@@ -388,7 +388,7 @@ public class LineOrderController {
                 serviceListDB, nameListDB));
         operateLog.setOrderSeq(lineOrder.getOrderSeq());
         operateLogDao.insert(operateLog);
-        return "redirect:list.do?page=" + currentPage;
+        return "redirect:http://cloud.haoqianwang.com:81/lineOrder/list.do?page=" + currentPage;
     }
 
     /**
@@ -410,7 +410,7 @@ public class LineOrderController {
         operateLog.setOperateDes(StringUtil.generateDeleteOperLog(lineOrder));
         operateLog.setOrderSeq(lineOrder.getOrderSeq());
         operateLogDao.insert(operateLog);
-        return "redirect:list.do?page=" + page;
+        return "redirect:http://cloud.haoqianwang.com:81/lineOrder/list.do?page=" + page;
     }
 
     /**
