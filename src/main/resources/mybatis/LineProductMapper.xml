@@ -40,7 +40,7 @@
     values (#{lineCountryId,jdbcType=INTEGER},
     #{lineProductName,jdbcType=VARCHAR},#{groupLeader,jdbcType=VARCHAR},#{aircorpId,jdbcType=VARCHAR},
     #{depositLimitDate,jdbcType=DATE},#{printTicketLimitDate,jdbcType=DATE},#{seatNum,jdbcType=INTEGER},#{leftSeatNum,jdbcType=INTEGER},
-    #{price,jdbcType=DECIMAL},#{des,jdbcType=VARCHAR}),#{startDate,jdbcType=DATE}),#{endDate,jdbcType=DATE})
+    #{price,jdbcType=DECIMAL},#{des,jdbcType=VARCHAR},#{startDate,jdbcType=DATE},#{endDate,jdbcType=DATE})
   </insert>
   
   <update id="updateByPrimaryKey">
