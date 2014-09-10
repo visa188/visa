@@ -147,7 +147,11 @@ public class LineOrderController {
      * @param model model
      */
     @RequestMapping
-    public void add(ModelMap model) {
+    public void add(Integer lineproductId, ModelMap model) {
+        if (lineproductId != null) {
+            LineProduct product = lineProductDao.selectByPrimaryKey(lineproductId);
+            model.put("product", product);
+        }
         List<Country> countryList = lineCountryDao.selectAllCountry();
         List<LineProduct> lineProductList = lineProductDao.selectAllLineProduct();
         model.put("lineProductList", lineProductList);

@@ -14,7 +14,6 @@ chmod +x src/shell/*
 
 echo "================== mvn =================="
 mvn
-chown web:web target/webapp/WEB-INF/
 
 echo "================== restart resin =================="
 su -c "/home/server/resin_test/bin/resin.sh start" resin
