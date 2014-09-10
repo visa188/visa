@@ -353,7 +353,7 @@
                     </div>
                 </div>	
 				
-				#if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRole($userRoleId)})
+				#if($userRoleId==${fn.getLineOperatorManagerRoleId()}||$userRoleId==${fn.getLineVisaoperManagerRoleId()}||${fn.isLineAdminRole($userRoleId)})
     				<script>
     					function getOperators(){
                     		var lineCountryId = jQuery("#lineCountryId").val();
@@ -363,7 +363,7 @@
                     		jQuery.ajax({
                         	   type: "POST",
                         	   url: "/user/getOperators.do",
-                        	   data:{lineCountryId:lineCountryId},
+                        	   data:{lineCountryId:lineCountryId,#if(!$fn.isLineAdminRole($userRoleId))managerId:$userUserId,#end roleId:$fn.getLineVisaoperRoleId()},
                         	   success: function(result){
                     		   		if(result!='error'){
                     					var operatorList=result;
@@ -371,10 +371,14 @@
                                         for(var i=0;i<operatorList.length;i++){
                                             options+='<option value='+operatorList[i].userId+'>'+operatorList[i].userName+'</option>';
                                         }
-                                        jQuery("#lineOperatorId option").remove();
-                                        jQuery("#lineOperatorId").append(options);
-                    					jQuery("#visaOperatorId option").remove();
-                                        jQuery("#visaOperatorId").append(options);
+										if(jQuery("#lineOperatorId")){
+                                            jQuery("#lineOperatorId option").remove();
+                                            jQuery("#lineOperatorId").append(options);
+										}
+										if(jQuery("#visaOperatorId")){
+                        					jQuery("#visaOperatorId option").remove();
+                                            jQuery("#visaOperatorId").append(options);
+										}
                     				}
                         	   }
                     		 });
@@ -385,6 +389,7 @@
     		        	<h3>操作信息</h3>
     		        </div>
     		        <div class="widget_content">
+						#if($userRoleId==${fn.getLineOperatorManagerRoleId()})
     					<div class="control_group">
     		              <label class="control_label"><span class="ico_must">*</span>线路操作员:</label>
     		              <div class="controls">
@@ -394,6 +399,8 @@
     						</select></span>
     		              </div>
     		            </div>
+						#end
+						#if($userRoleId==${fn.getLineVisaoperManagerRoleId()})
     					<div class="control_group">
     		              <label class="control_label"><span class="ico_must">*</span>签证操作员:</label>
     		              <div class="controls">
@@ -403,6 +410,7 @@
     						</select></span>
     		              </div>
     		            </div>  
+						#end
     				</div>
 				#end
 				
