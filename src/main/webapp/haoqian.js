@@ -194,7 +194,7 @@ $(function() {
 
 	// 表单填写过程中的验证调用
 	$(".controls").each(function(){
-		var formItem_wrap = this;
+		var formItem_wrap = $(this);
 		var nan_flag = false;
 		var nonEmpty_flag = false;
 		var repeat_flag = false;
@@ -270,7 +270,7 @@ $(function() {
 			}
 			e.preventDefault();
 			$(".controls").each(function(){
-				var formItem_wrap = this;
+				var formItem_wrap = $(this);
 				var nan_flag = false;
 				var nonEmpty_flag = false;
 				var repeat_flag = false;
