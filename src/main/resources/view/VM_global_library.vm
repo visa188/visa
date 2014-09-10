@@ -55,14 +55,16 @@
                     </dl>
                 </li>
 				#end
-				#if(${fn.isLineAdminRole($userRoleId)})
 				<li class="pro_mng#if($topNav==11) open#end">
                     <a class="pro_mng_tab" href="/lineproduct/list.do"><span class="ico_pro"></span><span class="sidenav_text">线路产品管理</span><span class="ico_fold"></span></a>
                     <dl>
                         <dd#if($secNav==111) class="on"#end><a href="/lineproduct/list.do">线路产品信息管理</a></dd>
-                        <dd#if($secNav==112) class="on"#end><a href="/lineproduct/add.do">新增线路产品信息</a></dd>
+						#if(${fn.isLineAdminRole($userRoleId)})
+							<dd#if($secNav==112) class="on"#end><a href="/lineproduct/add.do">新增线路产品信息</a></dd>
+						#end
                     </dl>
                 </li>
+				#if(${fn.isLineAdminRole($userRoleId)})
 				<li class="client_mng#if($topNav==7) open#end">
                     <a class="client_mng_tab" href="/linecountry/list.do"><span class="ico_setting"></span><span class="sidenav_text">线路国家管理</span><span class="ico_fold"></span></a>
                     <dl>
