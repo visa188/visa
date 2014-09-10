@@ -42,11 +42,11 @@
 		<if test="managerId != null">and ${role} in (select userId from user where managerId=#{managerId,jdbcType=VARCHAR})</if>
 		<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 		<if test="startDate != null">
-		  	and lineorder.orderDate >= #{startDate,jdbcType=VARCHAR}
+		  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
 		  </if>
 		  <if test="endDate != null">
 		  	<![CDATA[
-			and lineorder.orderDate <= #{endDate,jdbcType=VARCHAR}
+			and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
 			]]>
 		  </if>) tmp1 left OUTER join lineproduct on( tmp1.lineProductId = lineproduct.lineProductId)
 	</select>
@@ -63,11 +63,11 @@
 			<if test="managerId != null">and ${role} in (select userId from user where managerId=#{managerId,jdbcType=VARCHAR})</if>
 			<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 			<if test="startDate != null">
-			  	and lineorder.orderDate >= #{startDate,jdbcType=VARCHAR}
+			  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
 			  </if>
 			  <if test="endDate != null">
 			  	<![CDATA[
-				and lineorder.orderDate <= #{endDate,jdbcType=VARCHAR}
+				and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
 				]]>
 			  </if>)
 		 tmp1 left OUTER join lineproduct on( tmp1.lineProductId = lineproduct.lineProductId)
