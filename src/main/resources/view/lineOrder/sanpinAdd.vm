@@ -24,14 +24,14 @@
 	<div class="control_group">
 		<label class="control_label"><span class="ico_must">*</span>机票订金时限:</label>
         <div class="controls">
-            <span class="form_item"><input id="depositLimitDate" value="$!{product.depositLimitDate}" type="text" class="text1" placeholder="机票订金时限" readonly></span>
+            <span class="form_item"><input id="depositLimitDate" value="$fn.format($!{product.depositLimitDate},"yyyy-MM-dd")" type="text" class="text1" placeholder="机票订金时限" readonly></span>
         </div>   
 	</div>
 	
 	<div class="control_group">
 		<label class="control_label"><span class="ico_must">*</span>出票时限:</label>
         <div class="controls">
-            <span class="form_item"><input id="printTicketLimitDate" value="$!{product.printTicketLimitDate}" type="text" class="text1" placeholder="出票时限" readonly></span>
+            <span class="form_item"><input id="printTicketLimitDate" value="$fn.format($!{product.printTicketLimitDate},"yyyy-MM-dd")" type="text" class="text1" placeholder="出票时限" readonly></span>
         </div>  
 	</div>
 	
