@@ -194,7 +194,7 @@ $(function() {
 
 	// 表单填写过程中的验证调用
 	$(".controls").each(function(){
-		var formItem_wrap = $(this);
+		var formItem_wrap = this;
 		var nan_flag = false;
 		var nonEmpty_flag = false;
 		var repeat_flag = false;
@@ -222,9 +222,9 @@ $(function() {
 					formItem = phone_flag ? $(".js_phone",formItem_wrap)[i] : $(".js_non_empty",formItem_wrap)[i];
 				}
 				$(formItem).bind("blur",function(e){
-					setVerify($(formItem),i);
+					setVerify(formItem,i);
 				}).bind("change",function(e){
-					setVerify($(formItem),i);
+					setVerify(formItem,i);
 				})
 				function setVerify(formItem,i){
 					var placeholder = $(formItem).attr("placeholder");
@@ -237,16 +237,16 @@ $(function() {
 						
 					});  
 			    	if(nonEmpty_flag){
-			    		GLB.nonEmpty($(formItem),formItem_wrap);
+			    		GLB.nonEmpty(formItem,formItem_wrap);
 			    	}
 			    	if(nan_flag){
-			    		GLB.notNun($(formItem),formItem_wrap);
+			    		GLB.notNun(formItem,formItem_wrap);
 			    	}
 			    	if(repeat_flag){
-			    		GLB.repeat($(formItem),formItem_wrap);
+			    		GLB.repeat(formItem,formItem_wrap);
 			    	}
 			    	if(phone_flag){
-			    		GLB.phone($(formItem),formItem_wrap);
+			    		GLB.phone(formItem,formItem_wrap);
 			    	}
 				}
 			}
