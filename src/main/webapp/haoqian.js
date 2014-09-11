@@ -237,16 +237,16 @@ $(function() {
 						
 					});  
 			    	if(nonEmpty_flag){
-			    		GLB.nonEmpty(formItem,formItem_wrap);
+			    		GLB.nonEmpty($(formItem),formItem_wrap);
 			    	}
 			    	if(nan_flag){
-			    		GLB.notNun(formItem,formItem_wrap);
+			    		GLB.notNun($(formItem),formItem_wrap);
 			    	}
 			    	if(repeat_flag){
-			    		GLB.repeat(formItem,formItem_wrap);
+			    		GLB.repeat($(formItem),formItem_wrap);
 			    	}
 			    	if(phone_flag){
-			    		GLB.phone(formItem,formItem_wrap);
+			    		GLB.phone($(formItem),formItem_wrap);
 			    	}
 				}
 			}
