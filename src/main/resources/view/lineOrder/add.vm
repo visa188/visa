@@ -438,7 +438,7 @@
                             if('tj'==jQuery(this).attr('name')){
                                 jQuery('#status').val('8');                                
                             }
-                            jQuery(".hq_form")[0].submit();
+                            //jQuery(".hq_form")[0].submit();
                         });
                     </script>
 	            </div>			      
