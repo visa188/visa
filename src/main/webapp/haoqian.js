@@ -222,9 +222,9 @@ $(function() {
 					formItem = phone_flag ? $(".js_phone",formItem_wrap)[i] : $(".js_non_empty",formItem_wrap)[i];
 				}
 				$(formItem).bind("blur",function(e){
-					setVerify($(this),i);
+					setVerify($(formItem),i);
 				}).bind("change",function(e){
-					setVerify($(this),i);
+					setVerify($(formItem),i);
 				})
 				function setVerify(formItem,i){
 					var placeholder = $(formItem).attr("placeholder");
