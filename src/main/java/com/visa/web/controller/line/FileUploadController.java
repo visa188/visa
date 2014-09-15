@@ -27,7 +27,7 @@ public class FileUploadController {
     @RequestMapping
     public String upload(@RequestParam MultipartFile myfile, HttpServletRequest request,
             HttpServletResponse response) throws IOException {
-        String realPath = request.getSession().getServletContext().getRealPath("/upload");
+        String realPath = request.getSession().getServletContext().getRealPath("/userUpload");
         // 设置响应给前台内容的数据格式
         response.setContentType("text/plain; charset=UTF-8");
         // 设置响应给前台内容的PrintWriter对象
