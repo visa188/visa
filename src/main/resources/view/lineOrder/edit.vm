@@ -649,7 +649,7 @@
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>应收单价:</label>
                       <div class="controls">
-                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!fn.disPrice($!{lineOrder.price})" name="price" id="price" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应收单价" readonly>元</span>
+                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!fn.disPrice($!{lineOrder.price})" name="price" id="price" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应收单价" onchange="calculatePriceSum();" readonly>元</span>
                       </div>
                     </div>
 					<div class="control_group">
