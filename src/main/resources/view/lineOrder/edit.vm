@@ -658,15 +658,9 @@
 		               <span class="form_item"><input $fn.isReadOnly($userRoleId) name="qtys" id="qtys" type="text" value="$!fn.disPrice($!{lineOrder.qtys})" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="其它应收" onchange="calculatePriceSum();"></span>
 		              </div>
 		            </div>
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>应收合计:</label>
-		              <div class="controls">
-		               <span class="form_item"><input $fn.isReadOnly($userRoleId) name="priceSum" id="priceSum" type="text" value="$!fn.disPrice($!{lineOrder.priceSum})" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应收合计" readonly></span>
-		              </div>
-		            </div>
 					#if($userRoleId == $fn.getLineFinanceRoleId() || $userRoleId == $fn.getLineFinanceManagerRoleId() || $fn.isLineAdminRole($userRoleId))
 						<div class="control_group">
-                          <label class="control_label"><span class="ico_must">*</span>团费合计:</label>
+                          <label class="control_label"><span class="ico_must">*</span>应收合计:</label>
                           <div class="controls">
 							<span class="form_item">应收：<input value="$!fn.disPrice($!{lineOrder.priceSum})" name="priceSum" id="priceSum" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应收" readonly>元</span>
 							<span class="form_item">已收：<input value="$!fn.disPrice($!{lineOrder.alreadyGot})" name="alreadyGot" id="alreadyGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收" onchange="calculateNeedPaid('tf');">元</span>
