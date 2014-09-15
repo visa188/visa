@@ -27,7 +27,7 @@ public class FileUploadController {
     @RequestMapping
     public String upload(@RequestParam MultipartFile myfile, HttpServletRequest request,
             HttpServletResponse response) throws IOException {
-        String realPath = request.getSession().getServletContext().getRealPath("/userUpload");
+        String realPath = "/home/visa/userUpload/";
         // 设置响应给前台内容的数据格式
         response.setContentType("text/plain; charset=UTF-8");
         // 设置响应给前台内容的PrintWriter对象
@@ -75,8 +75,7 @@ public class FileUploadController {
         response.setContentType("application/x-msdownload");
         PrintWriter out = response.getWriter();
         FileInputStream in = null;
-        File f = new File(request.getSession().getServletContext().getRealPath("/userUpload/")
-                + fileName);
+        File f = new File("/home/visa/userUpload/" + fileName);
 
         try {
             in = new FileInputStream(f);
