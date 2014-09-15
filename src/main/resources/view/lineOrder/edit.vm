@@ -905,6 +905,14 @@
 								}
 							}
 							
+							function calculatePriceSum(){
+    							var price=jQuery('#price').val()==''?0:jQuery('#price').val();
+    							var qtys=jQuery('#qtys').val()==''?0:jQuery('#qtys').val();
+    							var nameListSize = jQuery('#nameListSize').val()==''?0:jQuery('#nameListSize').val();
+    							var priceSum = Math.round(parseFloat(price*100*nameListSize+qtys*100))/100;
+    							jQuery('#priceSum').val(priceSum);
+    						}
+							
 							function calculateProfit(){
 								//总计应收
 								var priceSum=(jQuery("#priceSum")&&jQuery("#priceSum").val()=='')?0:jQuery("#priceSum").val();
