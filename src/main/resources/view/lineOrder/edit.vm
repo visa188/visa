@@ -206,15 +206,6 @@
                     </div>  
                     
                     <div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>行程说明:</label>
-                      <div class="controls">
-                           <input value="$!{lineOrder.travelInfoFileUrl}" type="hidden" id="travelInfoFileUrl" name="travelInfoFileUrl">
-                           <img src="/images/loading.gif" id="loading" style="display: none;"><input id="myfile" name="myfile" type="file">
-                           <input $fn.isDisabled($userRoleId) type="button" id="fileSubmit" name="fileSubmit" value="上传" onclick="return ajaxFileUpload();"><div id="result">#if(${lineOrder.travelInfoFileUrl})<a href='/file/download.do?myfile=$!{lineOrder.travelInfoFileUrl}'>$fn.getFileName($!{lineOrder.travelInfoFileUrl})</a>#else无行程说明文件#end</div>
-                      </div>
-                    </div>
-                    
-                    <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
                       <div class="controls">
                        <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$fn.format($!{lineOrder.startDate},"yyyy-MM-dd")" type="text"  class="text1 $fn.isReadOnly($userRoleId,2) js_non_empty" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate"></span>
@@ -227,6 +218,15 @@
                        <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$fn.format($!{lineOrder.endDate},"yyyy-MM-dd")" type="text"  class="text1 $fn.isReadOnly($userRoleId,2) js_non_empty" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate"></span>
                       </div>
                     </div> 
+					
+					<div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>行程说明:</label>
+                      <div class="controls">
+                           <input value="$!{lineOrder.travelInfoFileUrl}" type="hidden" id="travelInfoFileUrl" name="travelInfoFileUrl">
+                           <img src="/images/loading.gif" id="loading" style="display: none;"><input id="myfile" name="myfile" type="file">
+                           <input $fn.isDisabled($userRoleId) type="button" id="fileSubmit" name="fileSubmit" value="上传" onclick="return ajaxFileUpload();"><div id="result">#if(${lineOrder.travelInfoFileUrl})<a href='/file/download.do?myfile=$!{lineOrder.travelInfoFileUrl}'>$fn.getFileName($!{lineOrder.travelInfoFileUrl})</a>#else无行程说明文件#end</div>
+                      </div>
+                    </div>
                     
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>行程简介:</label>
