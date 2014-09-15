@@ -71,7 +71,9 @@
         if(nameListSize>leftSeatNum){
             jQuery("#nameListSize").val("");
             alert('客人数量大于剩余机位数，请重新填写！');
+			return;
         }
+		calculatePriceSum();
     }
     function ajaxFileUpload()
     {
@@ -645,11 +647,23 @@
                 </div>
                 <div class="widget_content">
                     <div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>团费单价:</label>
+                      <label class="control_label"><span class="ico_must">*</span>应收单价:</label>
                       <div class="controls">
-                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!fn.disPrice($!{lineOrder.price})" name="price" id="price" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="单价" readonly>元</span>
+                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!fn.disPrice($!{lineOrder.price})" name="price" id="price" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应收单价" readonly>元</span>
                       </div>
                     </div>
+					<div class="control_group">
+		              <label class="control_label"><span class="ico_must">*</span>其它应收:</label>
+		              <div class="controls">
+		               <span class="form_item"><input $fn.isReadOnly($userRoleId) name="qtys" id="qtys" type="text" value="$!fn.disPrice($!{lineOrder.qtys})" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="其它应收" onchange="calculatePriceSum();"></span>
+		              </div>
+		            </div>
+					<div class="control_group">
+		              <label class="control_label"><span class="ico_must">*</span>应收合计:</label>
+		              <div class="controls">
+		               <span class="form_item"><input $fn.isReadOnly($userRoleId) name="priceSum" id="priceSum" type="text" value="$!fn.disPrice($!{lineOrder.priceSum})" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应收合计" readonly></span>
+		              </div>
+		            </div>
 					#if($userRoleId == $fn.getLineFinanceRoleId() || $userRoleId == $fn.getLineFinanceManagerRoleId() || $fn.isLineAdminRole($userRoleId))
 						<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>团费合计:</label>
