@@ -36,12 +36,8 @@
         //1 单团;2 散拼
         if(type==1){
             jQuery("#sanpinSelectDiv").hide();
-            jQuery("#dantuanSelectDiv").show();
             
             jQuery("#selectProductId").removeClass('js_non_empty');
-            jQuery("#travelAgency").addClass('js_non_empty');
-            jQuery("#contact").addClass('js_non_empty');
-            jQuery("#contactNo").addClass('js_non_empty');
             #if($userRoleId == $fn.getLineSalesmanRoleId() || $fn.isLineAdminRole($userRoleId))
             jQuery("#price").removeAttr("readonly");
             jQuery("#startDate").removeAttr("readonly");
@@ -51,13 +47,9 @@
             jQuery("#endDate").datepicker( "option", "disabled", false );
         }else{
             jQuery("#sanpinSelectDiv").show();
-            jQuery("#dantuanSelectDiv").hide();
             
 			jQuery("#lineProductId").val(jQuery("#selectProductId").val());
             jQuery("#selectProductId").addClass('js_non_empty');
-            jQuery("#travelAgency").removeClass('js_non_empty');
-            jQuery("#contact").removeClass('js_non_empty');
-            jQuery("#contactNo").removeClass('js_non_empty');
             jQuery("#price").attr("readonly","readonly");
             jQuery("#startDate").attr("readonly","readonly");
             jQuery("#endDate").attr("readonly","readonly");
@@ -187,27 +179,25 @@
                         </div>
                     </div>
                     
-                    <div id="dantuanSelectDiv"> 
-                        <div class="control_group">
-                          <label class="control_label"><span class="ico_must">*</span>组团社:</label>
-                          <div class="controls">
-                           <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.travelAgency}" name="travelAgency" id="travelAgency" type="text" class="text1" maxlength="50" size="50" placeholder="组团社"></span>
-                          </div>
-                        </div>  
-                        
-                        <div class="control_group">
-                          <label class="control_label"><span class="ico_must">*</span>联系人:</label>
-                          <div class="controls">
-                           <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.contact}" name="contact" id="contact" type="text" class="text1" maxlength="10" size="10" placeholder="联系人"></span>
-                          </div>
-                        </div>  
-                        
-                        <div class="control_group">
-                          <label class="control_label"><span class="ico_must">*</span>联系方式:</label>
-                          <div class="controls">
-                           <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.contactNo}" name="contactNo" id="contactNo" type="text" class="text1" maxlength="50" size="50" placeholder="联系方式"></span>
-                          </div>
-                        </div>  
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>组团社:</label>
+                      <div class="controls">
+                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.travelAgency}" name="travelAgency" id="travelAgency" type="text" class="text1" maxlength="50" size="50" placeholder="组团社"></span>
+                      </div>
+                    </div>  
+                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>联系人:</label>
+                      <div class="controls">
+                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.contact}" name="contact" id="contact" type="text" class="text1" maxlength="10" size="10" placeholder="联系人"></span>
+                      </div>
+                    </div>  
+                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>联系方式:</label>
+                      <div class="controls">
+                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.contactNo}" name="contactNo" id="contactNo" type="text" class="text1" maxlength="50" size="50" placeholder="联系方式"></span>
+                      </div>
                     </div>  
                     
                     <div class="control_group">

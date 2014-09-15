@@ -36,12 +36,8 @@
 		//1 单团;2 散拼
 		if(type==1){
 			jQuery("#sanpinSelectDiv").hide();
-			jQuery("#dantuanSelectDiv").show();
 			
 			jQuery("#selectProductId").removeClass('js_non_empty');
-			jQuery("#travelAgency").addClass('js_non_empty');
-			jQuery("#contact").addClass('js_non_empty');
-			jQuery("#contactNo").addClass('js_non_empty');
 			jQuery("#lineProductId").val(0);
 			jQuery("#price").removeAttr("readonly");
 			jQuery("#startDate").removeAttr("readonly");
@@ -50,13 +46,9 @@
 			jQuery("#endDate").datepicker( "option", "disabled", false );
 		}else{
 			jQuery("#sanpinSelectDiv").show();
-			jQuery("#dantuanSelectDiv").hide();
 			
 			jQuery("#lineProductId").val(jQuery("#selectProductId").val());
 			jQuery("#selectProductId").addClass('js_non_empty');
-			jQuery("#travelAgency").removeClass('js_non_empty');
-			jQuery("#contact").removeClass('js_non_empty');
-			jQuery("#contactNo").removeClass('js_non_empty');
 			jQuery("#price").attr("readonly","readonly");
 			jQuery("#startDate").attr("readonly","readonly");
 			jQuery("#endDate").attr("readonly","readonly");
@@ -186,30 +178,43 @@
                                 <span class="form_item"><input id="leftSeatNum" type="text" class="text1" placeholder="余位数" readonly></span>
                             </div>  
     					</div>
-					</div>
+						
+						<div class="control_group">
+    		              <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
+    		              <div class="controls">
+    		               <span class="form_item"><input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate" value=""></span>
+    		              </div>
+    		            </div> 
+    					
+                        <div class="control_group">
+    		              <label class="control_label"><span class="ico_must">*</span>归国日期:</label>
+    		              <div class="controls">
+    		               <span class="form_item"><input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate" value=""></span>
+    		              </div>
+    		            </div> 
+    					</div>
 					#end
-					<div id="dantuanSelectDiv"> 
-    		        	<div class="control_group">
-    		              <label class="control_label"><span class="ico_must">*</span>组团社:</label>
-    		              <div class="controls">
-    		               <span class="form_item"><input name="travelAgency" id="travelAgency" type="text" class="text1" maxlength="50" size="50" placeholder="组团社"></span>
-    		              </div>
-    		            </div>	
-    					
-    					<div class="control_group">
-    		              <label class="control_label"><span class="ico_must">*</span>联系人:</label>
-    		              <div class="controls">
-    		               <span class="form_item"><input name="contact" id="contact" type="text" class="text1" maxlength="10" size="10" placeholder="联系人"></span>
-    		              </div>
-    		            </div>	
-    					
-    					<div class="control_group">
-    		              <label class="control_label"><span class="ico_must">*</span>联系方式:</label>
-    		              <div class="controls">
-    		               <span class="form_item"><input name="contactNo" id="contactNo" type="text" class="text1" maxlength="50" size="50" placeholder="联系方式"></span>
-    		              </div>
-    		            </div>	
-					</div>	
+					
+		        	<div class="control_group">
+		              <label class="control_label"><span class="ico_must">*</span>组团社:</label>
+		              <div class="controls">
+		               <span class="form_item"><input name="travelAgency" id="travelAgency" type="text" class="text1" maxlength="50" size="50" placeholder="组团社"></span>
+		              </div>
+		            </div>	
+					
+					<div class="control_group">
+		              <label class="control_label"><span class="ico_must">*</span>联系人:</label>
+		              <div class="controls">
+		               <span class="form_item"><input name="contact" id="contact" type="text" class="text1" maxlength="10" size="10" placeholder="联系人"></span>
+		              </div>
+		            </div>	
+					
+					<div class="control_group">
+		              <label class="control_label"><span class="ico_must">*</span>联系方式:</label>
+		              <div class="controls">
+		               <span class="form_item"><input name="contactNo" id="contactNo" type="text" class="text1" maxlength="50" size="50" placeholder="联系方式"></span>
+		              </div>
+		            </div>	
 					
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>行程说明:</label>
@@ -217,20 +222,6 @@
                            <img src="/images/loading.gif" id="loading" style="display: none;"><input id="myfile" name="myfile" type="file">
                            <input type="button" id="fileSubmit" name="fileSubmit" value="上传" onclick="return ajaxFileUpload();"><div id="result"></div>
 					  </div>
-		            </div> 
-					
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
-		              <div class="controls">
-		               <span class="form_item"><input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate" value=""></span>
-		              </div>
-		            </div> 
-					
-                    <div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>归国日期:</label>
-		              <div class="controls">
-		               <span class="form_item"><input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate" value=""></span>
-		              </div>
 		            </div> 
 					
 					<div class="control_group">
