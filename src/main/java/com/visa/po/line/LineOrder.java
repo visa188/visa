@@ -142,6 +142,16 @@ public class LineOrder {
     /** @pdOid ac5cabc4-f167-49b7-9590-f036f58a74df */
     public Date postTime;
     public BigDecimal profit;
+    public BigDecimal qtys;
+
+    @FieldDes(fieldDes = "其它应收")
+    public BigDecimal getQtys() {
+        return qtys;
+    }
+
+    public void setQtys(BigDecimal qtys) {
+        this.qtys = qtys;
+    }
 
     @FieldDes(fieldDes = "总计应付")
     public BigDecimal getPaidPriceSum() {

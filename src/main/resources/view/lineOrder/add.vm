@@ -70,7 +70,9 @@
 		if(nameListSize>leftSeatNum){
 			jQuery("#nameListSize").val("");
 			alert('客人数量大于剩余机位数，请重新填写！');
+			return;
 		}
+		calculatePriceSum();
 	}
 	function ajaxFileUpload()
     {
@@ -420,9 +422,21 @@
 		        </div>
 				<div class="widget_content">
 					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>单价:</label>
+		              <label class="control_label"><span class="ico_must">*</span>应收单价:</label>
 		              <div class="controls">
-		               <span class="form_item"><input name="price" id="price" type="text" value="$!{product.price}" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="单价"></span>
+		               <span class="form_item"><input name="price" id="price" type="text" value="" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应收单价" onchange="calculatePriceSum();"></span>
+		              </div>
+		            </div>
+					<div class="control_group">
+		              <label class="control_label"><span class="ico_must">*</span>其它应收:</label>
+		              <div class="controls">
+		               <span class="form_item"><input name="qtys" id="qtys" type="text" value="" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="其它应收" onchange="calculatePriceSum();"></span>
+		              </div>
+		            </div>
+					<div class="control_group">
+		              <label class="control_label"><span class="ico_must">*</span>应收合计:</label>
+		              <div class="controls">
+		               <span class="form_item"><input name="priceSum" id="priceSum" type="text" value="" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应收合计" readonly></span>
 		              </div>
 		            </div>
 		        </div>         
@@ -440,6 +454,14 @@
                             }
                             jQuery(".hq_form")[0].submit();
                         });
+						
+						function calculatePriceSum(){
+							var price=jQuery('#price').val()==''?0:jQuery('#price').val();
+							var qtys=jQuery('#qtys').val()==''?0:jQuery('#qtys').val();
+							var nameListSize = jQuery('#nameListSize').val()==''?0:jQuery('#nameListSize').val();
+							var priceSum = Math.round(parseFloat(price*100*nameListSize+qtys*100))/100;
+							jQuery('#priceSum').val(priceSum);
+						}
                     </script>
 	            </div>			      
 		  	</form>
