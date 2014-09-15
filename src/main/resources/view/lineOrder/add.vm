@@ -26,6 +26,12 @@
 					jQuery("#endDate").val(endDate.getFullYear()+'-'+(endDate.getMonth()+1)+'-'+endDate.getDate());
 					jQuery("#seatNum").val(result.seatNum);
 					jQuery("#leftSeatNum").val(result.leftSeatNum);
+					if(result.travelInfoFileUrl!=''){
+						jQuery("#travelInfoFileUrl").val(result.travelInfoFileUrl);
+						jQuery('#result').html("文件上传成功<br/><a href='/file/download.do?myfile="+result.travelInfoFileUrl+"'>下载</a>");
+					}
+					jQuery("#travelInfo").val(result.travelInfo);
+					getOperators();
 				}
     	   }
 		 });
@@ -192,7 +198,34 @@
     		               <span class="form_item"><input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate" value=""></span>
     		              </div>
     		            </div> 
-    					</div>
+						
+						<div class="control_group">
+    		              <label class="control_label"><span class="ico_must">*</span>行程说明:</label>
+    		              <div class="controls">
+                               <img src="/images/loading.gif" id="loading" style="display: none;"><input id="myfile" name="myfile" type="file">
+                               <input type="button" id="fileSubmit" name="fileSubmit" value="上传" onclick="return ajaxFileUpload();"><div id="result"></div>
+    					  </div>
+    		            </div> 
+    					
+    					<div class="control_group">
+    		              <label class="control_label"><span class="ico_must">*</span>行程简介:</label>
+    		              <div class="controls">
+    		               <textarea class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100"></textarea>
+    		              </div>
+    		            </div>	
+    					
+                        <div class="control_group">
+                            <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
+                            <div class="controls">
+                                <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" #if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRole($userRoleId)}) onchange="getOperators()" #end>
+                                    <option value="" selected="selected">请选择</option>
+    								#foreach($one in $countryList)
+    									<option value="$one.countryId">$one.countryName</option>
+                                    #end
+                                </select></span>
+                            </div>                          
+                        </div>
+    				</div>
 					#end
 					
 		        	<div class="control_group">
@@ -215,33 +248,6 @@
 		               <span class="form_item"><input name="contactNo" id="contactNo" type="text" class="text1" maxlength="50" size="50" placeholder="联系方式"></span>
 		              </div>
 		            </div>	
-					
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>行程说明:</label>
-		              <div class="controls">
-                           <img src="/images/loading.gif" id="loading" style="display: none;"><input id="myfile" name="myfile" type="file">
-                           <input type="button" id="fileSubmit" name="fileSubmit" value="上传" onclick="return ajaxFileUpload();"><div id="result"></div>
-					  </div>
-		            </div> 
-					
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>行程简介:</label>
-		              <div class="controls">
-		               <textarea class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100"></textarea>
-		              </div>
-		            </div>	
-					
-                    <div class="control_group">
-                        <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
-                        <div class="controls">
-                            <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" #if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRole($userRoleId)}) onchange="getOperators()" #end>
-                                <option value="" selected="selected">请选择</option>
-								#foreach($one in $countryList)
-									<option value="$one.countryId">$one.countryName</option>
-                                #end
-                            </select></span>
-                        </div>                          
-                    </div>
 					
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>客人数量:</label>
