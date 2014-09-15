@@ -13,9 +13,9 @@ git pull
 chmod +x src/shell/*
 
 echo "================== mvn =================="
-mvn /home/workspace/visa/target/visa
+mvn 
 
-chown -R resin:resin 
+chown -R resin:resin /home/workspace/visa/target/visa
 
 echo "================== restart resin =================="
 su -c "/home/server/resin_test/bin/resin.sh start" resin
