@@ -41,8 +41,6 @@
 		var type=jQuery("#type").val();
 		//1 单团;2 散拼
 		if(type==1){
-			jQuery("#sanpinSelectDiv").hide();
-			
 			jQuery("#selectProductId").removeClass('js_non_empty');
 			jQuery("#lineProductId").val(0);
 			jQuery("#price").removeAttr("readonly");
@@ -51,8 +49,6 @@
 			jQuery("#startDate").datepicker( "option", "disabled", false );
 			jQuery("#endDate").datepicker( "option", "disabled", false );
 		}else{
-			jQuery("#sanpinSelectDiv").show();
-			
 			jQuery("#lineProductId").val(jQuery("#selectProductId").val());
 			jQuery("#selectProductId").addClass('js_non_empty');
 			jQuery("#price").attr("readonly","readonly");
