@@ -75,8 +75,8 @@ public class FileUploadController {
         response.setContentType("application/x-msdownload");
         PrintWriter out = response.getWriter();
         FileInputStream in = null;
-        File f = new File(request.getSession().getServletContext().getRealPath("/upload/") + "\\"
-                + fileName);
+        File f = new File(request.getSession().getServletContext().getRealPath("/userUpload/")
+                + "\\" + fileName);
 
         try {
             in = new FileInputStream(f);
