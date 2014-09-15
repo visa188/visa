@@ -76,7 +76,7 @@ public class FileUploadController {
         PrintWriter out = response.getWriter();
         FileInputStream in = null;
         File f = new File(request.getSession().getServletContext().getRealPath("/userUpload/")
-                + "\\" + fileName);
+                + fileName);
 
         try {
             in = new FileInputStream(f);
