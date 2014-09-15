@@ -82,7 +82,7 @@ public class FileUploadController {
             in = new FileInputStream(f);
             byte b[] = new byte[1024];
             while (in.read(b, 0, 1024) != -1) {
-                out.write(new String(b, "ISO-8859-1"));
+                out.write(new String(b, "utf-8"));
             }
             in.close();
 
