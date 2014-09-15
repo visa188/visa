@@ -87,7 +87,4 @@
             </select></span>
         </div>                          
     </div>
-	<script>
-		getOperators();
-	</script>
 </div>

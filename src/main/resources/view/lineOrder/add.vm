@@ -466,5 +466,6 @@
 	</div>
 	<script>
 	changeProductType();
+	getOperators();
 	</script>
 #footer()

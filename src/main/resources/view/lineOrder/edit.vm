@@ -26,6 +26,11 @@
                     jQuery("#endDate").val(endDate.getFullYear()+'-'+(endDate.getMonth()+1)+'-'+endDate.getDate());
                     jQuery("#seatNum").val(result.seatNum);
                     jQuery("#leftSeatNum").val(result.leftSeatNum);
+					if(result.travelInfoFileUrl!=''){
+						jQuery("#travelInfoFileUrl").val(result.travelInfoFileUrl);
+						jQuery('#result').html("文件上传成功<br/><a href='/file/download.do?myfile="+result.travelInfoFileUrl+"'>下载</a>");
+					}
+					jQuery("#travelInfo").val(result.travelInfo);
                 }
            }
          });
@@ -935,8 +940,6 @@
     <script>
     getProductId();
     changeProductType();
-    </script>
-    <script>
     jQuery('.ysdj').blur(function(){
         var nameListSize = jQuery('#nameListSize').val();
         var dj = jQuery(this).val();
