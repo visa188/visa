@@ -1,7 +1,7 @@
 <div class="control_group">
     <label class="control_label"><span class="ico_must">*</span>订单类型:</label>
     <div class="controls">
-        <span class="form_item"><select name="type" id="type" class="text2 js_non_empty" placeholder="订单类型" onchange="changeProductType()" readonly>
+        <span class="form_item"><select name="type" id="type" class="text2 js_non_empty" placeholder="订单类型" onchange="changeProductType()" disabled>
 			<option value="1">单团</option>
 			<option value="2" selected>散拼团</option>
         </select></span>
@@ -12,7 +12,7 @@
 	<div class="control_group">
         <label class="control_label"><span class="ico_must">*</span>散拼团:</label>
         <div class="controls">
-            <span class="form_item"><select id="selectProductId" class="text2" placeholder="散拼团" onchange="getProductId()" readonly>
+            <span class="form_item"><select id="selectProductId" class="text2" placeholder="散拼团" onchange="getProductId()" disabled>
 				<option value="">请选择</option>
 				#foreach($one in $lineProductList)
 					<option value="$one.lineProductId"  $fn.selected(${product.lineProductId}, $one.lineProductId)>$one.lineProductName</option>
