@@ -90,7 +90,7 @@ public class LineOrderVo extends LineOrder {
 
     public List<LinesSrvice> getLineOrderService() {
         List<LinesSrvice> serviceList = new ArrayList<LinesSrvice>();
-        if (ld.startsWith("1")) {
+        if (ld != null && ld.startsWith("1")) {
             LinesSrvice linesSrvice = new LinesSrvice(orderId, LineSrviceEnumType.LD.getId());
             String[] items = ld.split("_");
             if (!"#".equals(items[1])) {
@@ -109,7 +109,7 @@ public class LineOrderVo extends LineOrder {
             }
             serviceList.add(linesSrvice);
         }
-        if (qz.startsWith("1")) {
+        if (qz != null && qz.startsWith("1")) {
             LinesSrvice linesSrvice = new LinesSrvice(orderId, LineSrviceEnumType.QZ.getId());
             String[] items = qz.split("_");
             if (!"#".equals(items[1])) {
@@ -156,7 +156,7 @@ public class LineOrderVo extends LineOrder {
             }
             serviceList.add(linesSrvice);
         }
-        if (jp.startsWith("1")) {
+        if (jp != null && jp.startsWith("1")) {
             LinesSrvice linesSrvice = new LinesSrvice(orderId, LineSrviceEnumType.JP.getId());
             String[] items = jp.split("_");
             if (!"#".equals(items[1])) {
@@ -206,7 +206,7 @@ public class LineOrderVo extends LineOrder {
 
             serviceList.add(linesSrvice);
         }
-        if (dj.startsWith("1")) {
+        if (dj != null && dj.startsWith("1")) {
             String[] items = dj.split("_");
             // 41 地接 巴士 / 42 地接司机兼导游
             int serviceType = LineSrviceEnumType.DJBS.getId();
@@ -271,7 +271,7 @@ public class LineOrderVo extends LineOrder {
             linesSrvice.setYfhj(yfdjhj);
             serviceList.add(linesSrvice);
         }
-        if (qt.startsWith("1")) {
+        if (qt != null && qt.startsWith("1")) {
             LinesSrvice linesSrvice = new LinesSrvice(orderId, LineSrviceEnumType.QT.getId());
             String[] items = qt.split("_");
             if (!"#".equals(items[1])) {

@@ -26,6 +26,13 @@
 					jQuery("#endDate").val(endDate.getFullYear()+'-'+(endDate.getMonth()+1)+'-'+endDate.getDate());
 					jQuery("#seatNum").val(result.seatNum);
 					jQuery("#leftSeatNum").val(result.leftSeatNum);
+					if(result.travelInfoFileUrl!=''){
+						jQuery("#travelInfoFileUrl").val(result.travelInfoFileUrl);
+						var fileName = result.travelInfoFileUrl.substring(result.travelInfoFileUrl.lastIndexOf('/')+1);
+						jQuery('#result').html("<a href='/file/download.do?myfile="+result.travelInfoFileUrl+"'>"+fileName+"</a>");
+					}
+					jQuery("#travelInfo").val(result.travelInfo);
+					getOperators();
 				}
     	   }
 		 });
@@ -36,12 +43,8 @@
 		//1 单团;2 散拼
 		if(type==1){
 			jQuery("#sanpinSelectDiv").hide();
-			jQuery("#dantuanSelectDiv").show();
 			
 			jQuery("#selectProductId").removeClass('js_non_empty');
-			jQuery("#travelAgency").addClass('js_non_empty');
-			jQuery("#contact").addClass('js_non_empty');
-			jQuery("#contactNo").addClass('js_non_empty');
 			jQuery("#lineProductId").val(0);
 			jQuery("#price").removeAttr("readonly");
 			jQuery("#startDate").removeAttr("readonly");
@@ -50,13 +53,9 @@
 			jQuery("#endDate").datepicker( "option", "disabled", false );
 		}else{
 			jQuery("#sanpinSelectDiv").show();
-			jQuery("#dantuanSelectDiv").hide();
 			
 			jQuery("#lineProductId").val(jQuery("#selectProductId").val());
 			jQuery("#selectProductId").addClass('js_non_empty');
-			jQuery("#travelAgency").removeClass('js_non_empty');
-			jQuery("#contact").removeClass('js_non_empty');
-			jQuery("#contactNo").removeClass('js_non_empty');
 			jQuery("#price").attr("readonly","readonly");
 			jQuery("#startDate").attr("readonly","readonly");
 			jQuery("#endDate").attr("readonly","readonly");
@@ -70,7 +69,9 @@
 		if(nameListSize>leftSeatNum){
 			jQuery("#nameListSize").val("");
 			alert('客人数量大于剩余机位数，请重新填写！');
+			return;
 		}
+		calculatePriceSum();
 	}
 	function ajaxFileUpload()
     {
@@ -99,7 +100,7 @@
                     data = data.replace("</pre>", ''); //本例中设定上传文件完毕后,服务端会返回给前台[0`filepath]
                     if(data.substring(0, 1) == 0){     //0表示上传成功(后跟上传后的文件路径),1表示失败(后跟失败描述)
 						var result = data.split("#");
-                        jQuery('#result').html("文件上传成功<br/><a href='/file/download.do?myfile="+encodeURI(result[1])+"'>下载</a>");
+                        jQuery('#result').html("文件上传成功<br/><a href='/file/download.do?myfile="+result[1]+"'>"+result[2]+"</a>");
 						jQuery('#travelInfoFileUrl').val(result[1]);
                     }else{
                         jQuery('#result').html('文件上传失败，请重试！！');
@@ -184,71 +185,70 @@
                                 <span class="form_item"><input id="leftSeatNum" type="text" class="text1" placeholder="余位数" readonly></span>
                             </div>  
     					</div>
-					</div>
+    				</div>
+					
+						<div class="control_group">
+    		              <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
+    		              <div class="controls">
+    		               <span class="form_item"><input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate" value=""></span>
+    		              </div>
+    		            </div> 
+    					
+                        <div class="control_group">
+    		              <label class="control_label"><span class="ico_must">*</span>归国日期:</label>
+    		              <div class="controls">
+    		               <span class="form_item"><input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate" value=""></span>
+    		              </div>
+    		            </div> 
+						
+                        <div class="control_group">
+                            <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
+                            <div class="controls">
+                                <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" #if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRole($userRoleId)}) onchange="getOperators()" #end>
+                                    <option value="" selected="selected">请选择</option>
+    								#foreach($one in $countryList)
+    									<option value="$one.countryId">$one.countryName</option>
+                                    #end
+                                </select></span>
+                            </div>                          
+                        </div>
+					
+						<div class="control_group">
+    		              <label class="control_label"><span class="ico_must">*</span>行程说明:</label>
+    		              <div class="controls">
+                               <img src="/images/loading.gif" id="loading" style="display: none;"><input id="myfile" name="myfile" type="file">
+                               <input type="button" id="fileSubmit" name="fileSubmit" value="上传" onclick="return ajaxFileUpload();"><div id="result"></div>
+    					  </div>
+    		            </div> 
+    					
+    					<div class="control_group">
+    		              <label class="control_label"><span class="ico_must">*</span>行程简介:</label>
+    		              <div class="controls">
+    		               <textarea class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100"></textarea>
+    		              </div>
+    		            </div>	
 					#end
-					<div id="dantuanSelectDiv"> 
-    		        	<div class="control_group">
-    		              <label class="control_label"><span class="ico_must">*</span>组团社:</label>
-    		              <div class="controls">
-    		               <span class="form_item"><input name="travelAgency" id="travelAgency" type="text" class="text1" maxlength="50" size="50" placeholder="组团社"></span>
-    		              </div>
-    		            </div>	
-    					
-    					<div class="control_group">
-    		              <label class="control_label"><span class="ico_must">*</span>联系人:</label>
-    		              <div class="controls">
-    		               <span class="form_item"><input name="contact" id="contact" type="text" class="text1" maxlength="10" size="10" placeholder="联系人"></span>
-    		              </div>
-    		            </div>	
-    					
-    					<div class="control_group">
-    		              <label class="control_label"><span class="ico_must">*</span>联系方式:</label>
-    		              <div class="controls">
-    		               <span class="form_item"><input name="contactNo" id="contactNo" type="text" class="text1" maxlength="50" size="50" placeholder="联系方式"></span>
-    		              </div>
-    		            </div>	
-					</div>	
 					
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>行程说明:</label>
+		        	<div class="control_group">
+		              <label class="control_label"><span class="ico_must">*</span>组团社:</label>
 		              <div class="controls">
-                           <img src="/images/loading.gif" id="loading" style="display: none;"><input id="myfile" name="myfile" type="file">
-                           <input type="button" id="fileSubmit" name="fileSubmit" value="上传" onclick="return ajaxFileUpload();"><div id="result"></div>
-					  </div>
-		            </div> 
-					
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
-		              <div class="controls">
-		               <span class="form_item"><input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate" value=""></span>
-		              </div>
-		            </div> 
-					
-                    <div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>归国日期:</label>
-		              <div class="controls">
-		               <span class="form_item"><input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate" value=""></span>
-		              </div>
-		            </div> 
-					
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>行程简介:</label>
-		              <div class="controls">
-		               <textarea class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100"></textarea>
+		               <span class="form_item"><input name="travelAgency" id="travelAgency" type="text" class="text1" maxlength="50" size="50" placeholder="组团社"></span>
 		              </div>
 		            </div>	
 					
-                    <div class="control_group">
-                        <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
-                        <div class="controls">
-                            <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" #if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRole($userRoleId)}) onchange="getOperators()" #end>
-                                <option value="" selected="selected">请选择</option>
-								#foreach($one in $countryList)
-									<option value="$one.countryId">$one.countryName</option>
-                                #end
-                            </select></span>
-                        </div>                          
-                    </div>
+					<div class="control_group">
+		              <label class="control_label"><span class="ico_must">*</span>联系人:</label>
+		              <div class="controls">
+		               <span class="form_item"><input name="contact" id="contact" type="text" class="text1" maxlength="10" size="10" placeholder="联系人"></span>
+		              </div>
+		            </div>	
+					
+					<div class="control_group">
+		              <label class="control_label"><span class="ico_must">*</span>联系方式:</label>
+		              <div class="controls">
+		               <span class="form_item"><input name="contactNo" id="contactNo" type="text" class="text1" maxlength="50" size="50" placeholder="联系方式"></span>
+		              </div>
+		            </div>	
 					
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>客人数量:</label>
@@ -319,8 +319,7 @@
                        <input type="hidden" id="djservId" name="djservId" value="" />
                        <span class="form_item"><input type="checkbox" id="djserv" style="vertical-align: middle;"/> 地接服务  酒店标准: <select id="djxing"><option value="1">当地3星/四花</option><option value="2">当地3-4星</option><option value="3">当地四星/五花特二</option><option value="4">当地4-5星</option><option value="5">当地5星/五花特一</option></select> 其他标准:<input type="text" class="tb_text" id="djqtbz" style="width:4.3%;"/>,房型:<input type="text" class="tb_text" id="djfx" style="width:12%;"/> 备注:<input type="text" class="tb_text" id="djbz" style="width:12%;" /> 特殊景点:<input type="text" class="tb_text" id="djtsjd" style="width:12%;"/></span>
                        <span class="form_item"><input type="radio" id="djdyra" name="djdy" style="vertical-align: middle;" checked/> 巴士: <select id="djbs"><option value="1">大巴</option><option value="2">中巴</option><option value="3">小巴</option></select> 备注:<input type="text" class="tb_text" id="djbsbz" style="width:12%;" /> 导游:<select id="djsfxydy"><option value="1">需要</option><option value="2">不需要</option></select> 备注:<input type="text" class="tb_text" id="djsfxydybz" style="width:12%;" /> </span>
-                       <span class="form_item"><input type="radio" id="djdyrb" name="djdy" style="vertical-align: middle;"/> 司机兼导游: 备注:<input type="text" class="tb_text" id="djsjjdybz" style="width:12%;" /></span>
-                       <span class="form_item">应收单价:<input type="text" class="tb_text ysdj" id="djysdj" style="width:12%;"/> 应收合计:<input type="text" class="tb_text" id="djyshj" style="width:12%;"/></span>
+                       <span class="form_item"><input type="radio" id="djdyrb" name="djdy" style="vertical-align: middle;"/> 司机兼导游: 备注:<input type="text" class="tb_text" id="djsjjdybz" style="width:12%;" /></span><span class="form_item">应收单价:<input type="text" class="tb_text ysdj" id="djysdj" style="width:12%;"/> 应收合计:<input type="text" class="tb_text" id="djyshj" style="width:12%;"/></span>
                        </td></tr><tr><td>
                        <input type="hidden" id="qt" name="qt" />
                        <input type="hidden" id="qtservId" name="qtservId" value="" />
@@ -421,9 +420,21 @@
 		        </div>
 				<div class="widget_content">
 					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>单价:</label>
+		              <label class="control_label"><span class="ico_must">*</span>应收单价:</label>
 		              <div class="controls">
-		               <span class="form_item"><input name="price" id="price" type="text" value="$!{product.price}" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="单价"></span>
+		               <span class="form_item"><input name="price" id="price" type="text" value="$!{product.price}" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应收单价" onchange="calculatePriceSum();"></span>
+		              </div>
+		            </div>
+					<div class="control_group">
+		              <label class="control_label"><span class="ico_must">*</span>其它应收:</label>
+		              <div class="controls">
+		               <span class="form_item"><input name="qtys" id="qtys" type="text" value="" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="其它应收" onchange="calculatePriceSum();"></span>
+		              </div>
+		            </div>
+					<div class="control_group">
+		              <label class="control_label"><span class="ico_must">*</span>应收合计:</label>
+		              <div class="controls">
+		               <span class="form_item"><input name="priceSum" id="priceSum" type="text" value="" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应收合计" readonly></span>
 		              </div>
 		            </div>
 		        </div>         
@@ -435,10 +446,20 @@
 	              	<button type="button" class="btn btn_save" name="tj">提交</button>
 	              	<script>
                         jQuery('.btn_save').click(function(){
+                            var nameListSize = jQuery('#nameListSize').val();
                             if('tj'==jQuery(this).attr('name')){
-                                jQuery('#status').val('${userRoleId}');                                
+                                jQuery('#status').val('8');                                
                             }
+                            //jQuery(".hq_form")[0].submit();
                         });
+						
+						function calculatePriceSum(){
+							var price=jQuery('#price').val()==''?0:jQuery('#price').val();
+							var qtys=jQuery('#qtys').val()==''?0:jQuery('#qtys').val();
+							var nameListSize = jQuery('#nameListSize').val()==''?0:jQuery('#nameListSize').val();
+							var priceSum = Math.round(parseFloat(price*100*nameListSize+qtys*100))/100;
+							jQuery('#priceSum').val(priceSum);
+						}
                     </script>
 	            </div>			      
 		  	</form>
@@ -446,5 +467,6 @@
 	</div>
 	<script>
 	changeProductType();
+	getOperators();
 	</script>
 #footer()

@@ -26,6 +26,12 @@
                     jQuery("#endDate").val(endDate.getFullYear()+'-'+(endDate.getMonth()+1)+'-'+endDate.getDate());
                     jQuery("#seatNum").val(result.seatNum);
                     jQuery("#leftSeatNum").val(result.leftSeatNum);
+					if(result.travelInfoFileUrl!=''){
+						jQuery("#travelInfoFileUrl").val(result.travelInfoFileUrl);
+						var fileName = result.travelInfoFileUrl.substring(result.travelInfoFileUrl.lastIndexOf('/')+1);
+						jQuery('#result').html("<a href='/file/download.do?myfile="+result.travelInfoFileUrl+"'>"+fileName+"</a>");
+					}
+					jQuery("#travelInfo").val(result.travelInfo);
                 }
            }
          });
@@ -36,12 +42,8 @@
         //1 单团;2 散拼
         if(type==1){
             jQuery("#sanpinSelectDiv").hide();
-            jQuery("#dantuanSelectDiv").show();
             
             jQuery("#selectProductId").removeClass('js_non_empty');
-            jQuery("#travelAgency").addClass('js_non_empty');
-            jQuery("#contact").addClass('js_non_empty');
-            jQuery("#contactNo").addClass('js_non_empty');
             #if($userRoleId == $fn.getLineSalesmanRoleId() || $fn.isLineAdminRole($userRoleId))
             jQuery("#price").removeAttr("readonly");
             jQuery("#startDate").removeAttr("readonly");
@@ -51,13 +53,9 @@
             jQuery("#endDate").datepicker( "option", "disabled", false );
         }else{
             jQuery("#sanpinSelectDiv").show();
-            jQuery("#dantuanSelectDiv").hide();
             
 			jQuery("#lineProductId").val(jQuery("#selectProductId").val());
             jQuery("#selectProductId").addClass('js_non_empty');
-            jQuery("#travelAgency").removeClass('js_non_empty');
-            jQuery("#contact").removeClass('js_non_empty');
-            jQuery("#contactNo").removeClass('js_non_empty');
             jQuery("#price").attr("readonly","readonly");
             jQuery("#startDate").attr("readonly","readonly");
             jQuery("#endDate").attr("readonly","readonly");
@@ -71,7 +69,9 @@
         if(nameListSize>leftSeatNum){
             jQuery("#nameListSize").val("");
             alert('客人数量大于剩余机位数，请重新填写！');
+			return;
         }
+		calculatePriceSum();
     }
     function ajaxFileUpload()
     {
@@ -100,7 +100,7 @@
                     data = data.replace("</pre>", ''); //本例中设定上传文件完毕后,服务端会返回给前台[0`filepath]
                     if(data.substring(0, 1) == 0){     //0表示上传成功(后跟上传后的文件路径),1表示失败(后跟失败描述)
                         var result = data.split("#");
-                        jQuery('#result').html("文件上传成功<br/><a href='/file/download.do?myfile="+encodeURI(result[1])+"'>"+result[2]+"</a>");
+                        jQuery('#result').html("文件上传成功<br/><a href='/file/download.do?myfile="+result[1]+"'>"+result[2]+"</a>");
                         jQuery('#travelInfoFileUrl').val(result[1]);
                     }else{
                         jQuery('#result').html('文件上传失败，请重试！！');
@@ -185,38 +185,6 @@
                         </div>
                     </div>
                     
-                    <div id="dantuanSelectDiv"> 
-                        <div class="control_group">
-                          <label class="control_label"><span class="ico_must">*</span>组团社:</label>
-                          <div class="controls">
-                           <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.travelAgency}" name="travelAgency" id="travelAgency" type="text" class="text1" maxlength="50" size="50" placeholder="组团社"></span>
-                          </div>
-                        </div>  
-                        
-                        <div class="control_group">
-                          <label class="control_label"><span class="ico_must">*</span>联系人:</label>
-                          <div class="controls">
-                           <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.contact}" name="contact" id="contact" type="text" class="text1" maxlength="10" size="10" placeholder="联系人"></span>
-                          </div>
-                        </div>  
-                        
-                        <div class="control_group">
-                          <label class="control_label"><span class="ico_must">*</span>联系方式:</label>
-                          <div class="controls">
-                           <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.contactNo}" name="contactNo" id="contactNo" type="text" class="text1" maxlength="50" size="50" placeholder="联系方式"></span>
-                          </div>
-                        </div>  
-                    </div>  
-                    
-                    <div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>行程说明:</label>
-                      <div class="controls">
-                           <input value="$!{lineOrder.travelInfoFileUrl}" type="hidden" id="travelInfoFileUrl" name="travelInfoFileUrl">
-                           <img src="/images/loading.gif" id="loading" style="display: none;"><input id="myfile" name="myfile" type="file">
-                           <input $fn.isDisabled($userRoleId) type="button" id="fileSubmit" name="fileSubmit" value="上传" onclick="return ajaxFileUpload();"><div id="result">#if(${lineOrder.travelInfoFileUrl})<a href='/file/download.do?myfile=$!{lineOrder.travelInfoFileUrl}'>$fn.getFileName($!{lineOrder.travelInfoFileUrl})</a>#else无行程说明文件#end</div>
-                      </div>
-                    </div>
-                    
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
                       <div class="controls">
@@ -230,14 +198,7 @@
                        <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$fn.format($!{lineOrder.endDate},"yyyy-MM-dd")" type="text"  class="text1 $fn.isReadOnly($userRoleId,2) js_non_empty" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate"></span>
                       </div>
                     </div> 
-                    
-                    <div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>行程简介:</label>
-                      <div class="controls">
-                       <textarea $fn.isReadOnly($userRoleId) class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100">$!{lineOrder.travelInfo}</textarea>
-                      </div>
-                    </div>  
-                    
+					
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
                         <div class="controls">
@@ -249,6 +210,43 @@
                             </select></span>
                         </div>                          
                     </div>
+					
+					<div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>行程说明:</label>
+                      <div class="controls">
+                           <input value="$!{lineOrder.travelInfoFileUrl}" type="hidden" id="travelInfoFileUrl" name="travelInfoFileUrl">
+                           <img src="/images/loading.gif" id="loading" style="display: none;"><input id="myfile" name="myfile" type="file">
+                           <input $fn.isDisabled($userRoleId) type="button" id="fileSubmit" name="fileSubmit" value="上传" onclick="return ajaxFileUpload();"><div id="result">#if(${lineOrder.travelInfoFileUrl})<a href='/file/download.do?myfile=$!{lineOrder.travelInfoFileUrl}'>$fn.getFileName($!{lineOrder.travelInfoFileUrl})</a>#else无行程说明文件#end</div>
+                      </div>
+                    </div>
+                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>行程简介:</label>
+                      <div class="controls">
+                       <textarea $fn.isReadOnly($userRoleId) class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100">$!{lineOrder.travelInfo}</textarea>
+                      </div>
+                    </div>  
+					
+					<div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>组团社:</label>
+                      <div class="controls">
+                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.travelAgency}" name="travelAgency" id="travelAgency" type="text" class="text1" maxlength="50" size="50" placeholder="组团社"></span>
+                      </div>
+                    </div>  
+                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>联系人:</label>
+                      <div class="controls">
+                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.contact}" name="contact" id="contact" type="text" class="text1" maxlength="10" size="10" placeholder="联系人"></span>
+                      </div>
+                    </div>  
+                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>联系方式:</label>
+                      <div class="controls">
+                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.contactNo}" name="contactNo" id="contactNo" type="text" class="text1" maxlength="50" size="50" placeholder="联系方式"></span>
+                      </div>
+                    </div>  
                     
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>客人数量:</label>
@@ -647,14 +645,20 @@
                 </div>
                 <div class="widget_content">
                     <div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>团费单价:</label>
+                      <label class="control_label"><span class="ico_must">*</span>应收单价:</label>
                       <div class="controls">
-                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!fn.disPrice($!{lineOrder.price})" name="price" id="price" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="单价" readonly>元</span>
+                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!fn.disPrice($!{lineOrder.price})" name="price" id="price" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应收单价" onchange="calculatePriceSum();" readonly>元</span>
                       </div>
                     </div>
+					<div class="control_group">
+		              <label class="control_label"><span class="ico_must">*</span>其它应收:</label>
+		              <div class="controls">
+		               <span class="form_item"><input $fn.isReadOnly($userRoleId) name="qtys" id="qtys" type="text" value="$!fn.disPrice($!{lineOrder.qtys})" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="其它应收" onchange="calculatePriceSum();"></span>
+		              </div>
+		            </div>
 					#if($userRoleId == $fn.getLineFinanceRoleId() || $userRoleId == $fn.getLineFinanceManagerRoleId() || $fn.isLineAdminRole($userRoleId))
 						<div class="control_group">
-                          <label class="control_label"><span class="ico_must">*</span>团费合计:</label>
+                          <label class="control_label"><span class="ico_must">*</span>应收合计:</label>
                           <div class="controls">
 							<span class="form_item">应收：<input value="$!fn.disPrice($!{lineOrder.priceSum})" name="priceSum" id="priceSum" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应收" readonly>元</span>
 							<span class="form_item">已收：<input value="$!fn.disPrice($!{lineOrder.alreadyGot})" name="alreadyGot" id="alreadyGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收" onchange="calculateNeedPaid('tf');">元</span>
@@ -893,6 +897,14 @@
 								}
 							}
 							
+							function calculatePriceSum(){
+    							var price=jQuery('#price').val()==''?0:jQuery('#price').val();
+    							var qtys=jQuery('#qtys').val()==''?0:jQuery('#qtys').val();
+    							var nameListSize = jQuery('#nameListSize').val()==''?0:jQuery('#nameListSize').val();
+    							var priceSum = Math.round(parseFloat(price*100*nameListSize+qtys*100))/100;
+    							jQuery('#priceSum').val(priceSum);
+    						}
+							
 							function calculateProfit(){
 								//总计应收
 								var priceSum=(jQuery("#priceSum")&&jQuery("#priceSum").val()=='')?0:jQuery("#priceSum").val();
@@ -921,16 +933,9 @@
               </div>
                 <div class="form_actions">
                     <button type="reset" class="btn btn_reset">重置</button>
-                    <input type="hidden" id="status" name="status" value="$!{lineOrder.status}"/>
+                    <input type="hidden" id="status" name="status" value="0"/>
                     <button type="button" class="btn btn_save" name="bc">保存</button>
                     <button type="button" class="btn btn_save" name="tj">提交</button>
-                    <script>
-                        jQuery('.btn_save').click(function(){
-                            if('tj'==jQuery(this).attr('name')){
-                                jQuery('#status').val('${userRoleId}');                                
-                            }
-                        });
-                    </script>
                 </div>                
             </form>
         </div>
@@ -938,8 +943,6 @@
     <script>
     getProductId();
     changeProductType();
-    </script>
-    <script>
     jQuery('.ysdj').blur(function(){
         var nameListSize = jQuery('#nameListSize').val();
         var dj = jQuery(this).val();
