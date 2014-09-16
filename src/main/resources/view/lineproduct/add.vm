@@ -21,6 +21,48 @@
     	   }
 		});
 	}
+	
+	function ajaxFileUpload()
+    {
+        jQuery("#loading")
+        .ajaxStart(function(){
+            jQuery(this).show();
+        })//开始上传文件时显示一个图片
+        .ajaxComplete(function(){
+            jQuery(this).hide();
+        });//文件上传完成将图片隐藏起来
+        
+        jQuery.ajaxFileUpload
+        (
+            {
+                url:'/file/upload.do',//用于文件上传的服务器端请求地址
+                secureuri:false,//一般设置为false
+                fileElementId:'myfile',//文件上传空间的id属性  <input type="file" id="myfile" name="myfile" />
+                dataType: 'text',//返回值类型 一般设置为json
+                success: function (data, status)  //服务器成功响应处理函数
+                {
+					data = data.replace(/<pre.*?>/g, '');
+					data = data.replace(/<PRE.*?>/g, '');
+					data = data.replace("<PRE>", '');  //ajaxFileUpload会对服务器响应回来的text内容加上<pre>text</pre>前后缀
+                    data = data.replace("</PRE>", '');
+                    data = data.replace("<pre>", '');
+                    data = data.replace("</pre>", ''); //本例中设定上传文件完毕后,服务端会返回给前台[0`filepath]
+                    if(data.substring(0, 1) == 0){     //0表示上传成功(后跟上传后的文件路径),1表示失败(后跟失败描述)
+						var result = data.split("#");
+                        jQuery('#result').html("文件上传成功<br/><a href='/file/download.do?myfile="+result[1]+"'>"+result[2]+"</a>");
+						jQuery('#travelInfoFileUrl').val(result[1]);
+                    }else{
+                        jQuery('#result').html('文件上传失败，请重试！！');
+                    }
+                },
+                error: function (data, status, e)//服务器响应失败处理函数
+                {
+                    jQuery('#result').html('文件上传失败，请重试！！');
+                }
+            }
+        );
+        return false;
+    }
 </script>
 	<div class="miancon">
 		<div class="maincon_title">
@@ -72,6 +114,14 @@
                         <div class="controls">
                             <textarea class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100">$!{product.travelInfo}</textarea>
                         </div>                          
+                    </div>
+					<div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>行程说明:</label>
+                      <div class="controls">
+                           <input value="$!{product.travelInfoFileUrl}" type="hidden" id="travelInfoFileUrl" name="travelInfoFileUrl">
+                           <img src="/images/loading.gif" id="loading" style="display: none;"><input id="myfile" name="myfile" type="file">
+                           <input type="button" id="fileSubmit" name="fileSubmit" value="上传" onclick="return ajaxFileUpload();"><div id="result">#if(${product.travelInfoFileUrl})<a href='/file/download.do?myfile=$!{product.travelInfoFileUrl}'>$fn.getFileName($!{product.travelInfoFileUrl})</a>#else无行程说明文件#end</div>
+                      </div>
                     </div>
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>领队:</label>

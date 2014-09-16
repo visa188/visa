@@ -1,7 +1,7 @@
 <div class="control_group">
     <label class="control_label"><span class="ico_must">*</span>订单类型:</label>
     <div class="controls">
-        <span class="form_item"><select name="type" id="type" class="text2 js_non_empty" placeholder="订单类型" onchange="changeProductType()">
+        <span class="form_item"><select onfocus="this.defaultIndex=this.selectedIndex;" onchange="this.selectedIndex=this.defaultIndex;" name="type" id="type" class="text2 js_non_empty" placeholder="订单类型" onchange="changeProductType()" >
 			<option value="1">单团</option>
 			<option value="2" selected>散拼团</option>
         </select></span>
@@ -12,26 +12,28 @@
 	<div class="control_group">
         <label class="control_label"><span class="ico_must">*</span>散拼团:</label>
         <div class="controls">
-            <span class="form_item"><select id="selectProductId" class="text2" placeholder="散拼团" onchange="getProductId()">
-				<option value="">请选择</option>
-				#foreach($one in $lineProductList)
-					<option value="$one.lineProductId"  $fn.selected(${product.lineProductId}, $one.lineProductId)>$one.lineProductName</option>
-                #end
-            </select></span>
+            <span class="form_item">
+				<select  onfocus="this.defaultIndex=this.selectedIndex;" onchange="this.selectedIndex=this.defaultIndex;" id="selectProductId" class="text2" placeholder="散拼团" onchange="getProductId()">
+    				<option value="">请选择</option>
+    				#foreach($one in $lineProductList)
+    					<option value="$one.lineProductId"  $fn.selected(${product.lineProductId}, $one.lineProductId)>$one.lineProductName</option>
+                    #end
+                </select>
+			</span>
         </div>
     </div>
 	
 	<div class="control_group">
 		<label class="control_label"><span class="ico_must">*</span>机票订金时限:</label>
         <div class="controls">
-            <span class="form_item"><input id="depositLimitDate" value="$fn.format($!{product.depositLimitDate},"yyyy-MM-dd")" type="text" class="text1" placeholder="机票订金时限" readonly></span>
+            <span class="form_item"><input id="depositLimitDate" value="$!fn.format($!{product.depositLimitDate},"yyyy-MM-dd")" type="text" class="text1" placeholder="机票订金时限" readonly></span>
         </div>   
 	</div>
 	
 	<div class="control_group">
 		<label class="control_label"><span class="ico_must">*</span>出票时限:</label>
         <div class="controls">
-            <span class="form_item"><input id="printTicketLimitDate" value="$fn.format($!{product.printTicketLimitDate},"yyyy-MM-dd")" type="text" class="text1" placeholder="出票时限" readonly></span>
+            <span class="form_item"><input id="printTicketLimitDate" value="$!fn.format($!{product.printTicketLimitDate},"yyyy-MM-dd")" type="text" class="text1" placeholder="出票时限" readonly></span>
         </div>  
 	</div>
 	
@@ -48,4 +50,43 @@
             <span class="form_item"><input id="leftSeatNum" value="$!{product.leftSeatNum}" type="text" class="text1" placeholder="余位数" readonly></span>
         </div>  
 	</div>
+	
+	<div class="control_group">
+      <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
+      <div class="controls">
+       <span class="form_item"><input type="text"  class="text1" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate" value="$!fn.format($!{product.startDate},"yyyy-MM-dd")" readonly></span>
+      </div>
+    </div> 
+	
+    <div class="control_group">
+      <label class="control_label"><span class="ico_must">*</span>归国日期:</label>
+      <div class="controls">
+       <span class="form_item"><input type="text"  class="text1" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate" value="$!fn.format($!{product.endDate},"yyyy-MM-dd")" readonly></span>
+      </div>
+    </div> 
+	
+    <div class="control_group">
+        <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
+        <div class="controls">
+            <span class="form_item"><select  onfocus="this.defaultIndex=this.selectedIndex;" onchange="this.selectedIndex=this.defaultIndex;" name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称">
+				#foreach($one in $countryList)
+					<option value="$one.countryId" $fn.selected(${product.lineCountryId}, $one.countryId)>$one.countryName</option>
+                #end
+            </select></span>
+        </div>                          
+    </div>
+	
+	<div class="control_group">
+      <label class="control_label"><span class="ico_must">*</span>行程说明:</label>
+      <div class="controls">
+           <div id="result"><a href='/file/download.do?myfile=$!{product.travelInfoFileUrl}'>$!fn.getFileName($!{product.travelInfoFileUrl})</a></div>
+	  </div>
+    </div> 
+	
+	<div class="control_group">
+      <label class="control_label"><span class="ico_must">*</span>行程简介:</label>
+      <div class="controls">
+       <textarea class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100" readonly>$!{product.travelInfo}</textarea>
+      </div>
+    </div>	
 </div>

@@ -208,9 +208,6 @@ public class LineOrderController {
             lineOrder.setSignOperatorName(userDao.selectByPrimaryKey(lineOrder.getSignOperatorId())
                     .getUserName());
         }
-        if (lineOrder.getPrice() != null) {
-            lineOrder.setPriceSum(lineOrder.getPrice().pow(lineOrder.getNameListSize()));
-        }
         lineOrderDao.insert(lineOrder);
         for (LinesSrvice srvice : lineOrder.getLineOrderService()) {
             linesServiceDao.insert(srvice);

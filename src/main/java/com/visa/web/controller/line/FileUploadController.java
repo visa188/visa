@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.visa.common.util.StringUtil;
 
 /**
  * @author user
@@ -27,7 +30,7 @@ public class FileUploadController {
     @RequestMapping
     public String upload(@RequestParam MultipartFile myfile, HttpServletRequest request,
             HttpServletResponse response) throws IOException {
-        String realPath = request.getSession().getServletContext().getRealPath("/upload");
+        String realPath = "/home/visa/userUpload/";
         // 设置响应给前台内容的数据格式
         response.setContentType("text/plain; charset=UTF-8");
         // 设置响应给前台内容的PrintWriter对象
@@ -68,32 +71,43 @@ public class FileUploadController {
     @RequestMapping
     public String download(@RequestParam String myfile, HttpServletRequest request,
             HttpServletResponse response) throws IOException {
-        myfile = new String(myfile.getBytes("ISO-8859-1"), "utf-8");
         String fileName = myfile.substring(myfile.lastIndexOf('/') + 1);
-        response.addHeader("Content-Disposition",
-                "attachment;filename=" + new String(fileName.getBytes("utf-8"), "iso-8859-1"));
+        String agent = request.getHeader("User-Agent");
+        boolean isFireFox = (agent != null && agent.toLowerCase().indexOf("firefox") != -1);
+        if (isFireFox) {
+            fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
+        } else {
+            fileName = StringUtil.toUtf8String(fileName);
+            if ((agent != null && agent.indexOf("MSIE") != -1)) {
+                if (fileName.length() > 150) {
+                    fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
+                }
+            }
+        }
+
+        response.addHeader("Content-Disposition", "attachment;filename=" + fileName);
         response.setContentType("application/x-msdownload");
-        PrintWriter out = response.getWriter();
+        ServletOutputStream outStream = response.getOutputStream();
+        java.io.BufferedOutputStream bos = new java.io.BufferedOutputStream(outStream);
         FileInputStream in = null;
-        File f = new File(request.getSession().getServletContext().getRealPath("/upload/") + "\\"
-                + fileName);
+        File f = new File("/home/visa/userUpload/" + myfile.substring(myfile.lastIndexOf('/') + 1));
 
         try {
+            int bytesRead = 0;
             in = new FileInputStream(f);
             byte b[] = new byte[1024];
-            while (in.read(b, 0, 1024) != -1) {
-                out.write(new String(b, "ISO-8859-1"));
+            while ((bytesRead = in.read(b, 0, 1024)) != -1) {
+                bos.write(b, 0, bytesRead);
             }
             in.close();
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        out.flush();
-        out.close();
+        outStream.close();
+        bos.close();
         return null;
     }
 }
