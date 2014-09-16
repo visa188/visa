@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLEncoder;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -72,27 +71,26 @@ public class FileUploadController {
     @RequestMapping
     public String download(@RequestParam String myfile, HttpServletRequest request,
             HttpServletResponse response) throws IOException {
+        String fileName = myfile.substring(myfile.lastIndexOf('/') + 1);
         String agent = request.getHeader("User-Agent");
         boolean isFireFox = (agent != null && agent.toLowerCase().indexOf("firefox") != -1);
         if (isFireFox) {
-            myfile = new String(myfile.getBytes("UTF-8"), "ISO8859-1");
+            fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
         } else {
-            myfile = StringUtil.toUtf8String(myfile);
+            fileName = StringUtil.toUtf8String(fileName);
             if ((agent != null && agent.indexOf("MSIE") != -1)) {
-                // see http://support.microsoft.com/default.aspx?kbid=816868
-                if (myfile.length() > 150) {
-                    // 根据request的locale 得出可能的编码
-                    myfile = new String(myfile.getBytes("UTF-8"), "ISO8859-1");
+                if (fileName.length() > 150) {
+                    fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
                 }
             }
         }
-        String fileName = myfile.substring(myfile.lastIndexOf('/') + 1);
+
         response.addHeader("Content-Disposition", "attachment;filename=" + fileName);
         response.setContentType("application/x-msdownload");
         ServletOutputStream outStream = response.getOutputStream();
         java.io.BufferedOutputStream bos = new java.io.BufferedOutputStream(outStream);
         FileInputStream in = null;
-        File f = new File("/home/visa/userUpload/" + URLEncoder.encode(fileName, "UTF-8"));
+        File f = new File("/home/visa/userUpload/" + myfile.substring(myfile.lastIndexOf('/') + 1));
 
         try {
             int bytesRead = 0;
