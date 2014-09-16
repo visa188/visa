@@ -96,7 +96,7 @@
                     data = data.replace("</pre>", ''); //本例中设定上传文件完毕后,服务端会返回给前台[0`filepath]
                     if(data.substring(0, 1) == 0){     //0表示上传成功(后跟上传后的文件路径),1表示失败(后跟失败描述)
 						var result = data.split("#");
-                        jQuery('#result').html("文件上传成功<br/><a href='/file/download.do?myfile="+encodeURI(result[1])+"'>"+encodeURI(result[2])+"</a>");
+                        jQuery('#result').html("文件上传成功<br/><a href='/file/download.do?myfile="+result[1]+"'>"+result[2]+"</a>");
 						jQuery('#travelInfoFileUrl').val(result[1]);
                     }else{
                         jQuery('#result').html('文件上传失败，请重试！！');
