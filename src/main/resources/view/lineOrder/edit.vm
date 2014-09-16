@@ -28,7 +28,8 @@
                     jQuery("#leftSeatNum").val(result.leftSeatNum);
 					if(result.travelInfoFileUrl!=''){
 						jQuery("#travelInfoFileUrl").val(result.travelInfoFileUrl);
-						jQuery('#result').html("文件上传成功<br/><a href='/file/download.do?myfile="+result.travelInfoFileUrl+"'>下载</a>");
+						var fileName = travelInfoFileUrl.substring(travelInfoFileUrl.lastIndexOf('/')+1);
+						jQuery('#result').html("<a href='/file/download.do?myfile="+result.travelInfoFileUrl+"'>"+fileName+"</a>");
 					}
 					jQuery("#travelInfo").val(result.travelInfo);
                 }
