@@ -422,7 +422,7 @@
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>应收单价:</label>
 		              <div class="controls">
-		               <span class="form_item"><input name="price" id="price" type="text" value="" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应收单价" onchange="calculatePriceSum();"></span>
+		               <span class="form_item"><input name="price" id="price" type="text" value="$!{product.price}" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应收单价" onchange="calculatePriceSum();"></span>
 		              </div>
 		            </div>
 					<div class="control_group">
