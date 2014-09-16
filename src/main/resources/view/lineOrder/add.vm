@@ -317,8 +317,9 @@
                        </td></tr><tr><td>
                        <input type="hidden" id="dj" name="dj" />
                        <input type="hidden" id="djservId" name="djservId" value="" />
-                       <span class="form_item"><input type="checkbox" id="djserv" style="vertical-align: middle;"/> 地接服务  酒店标准:<input type="text" class="tb_text" id="djxing" style="width:4.3%;"/>星,房型:<input type="text" class="tb_text" id="djfx" style="width:12%;"/> 备注:<input type="text" class="tb_text" id="djbz" style="width:12%;" /> 特殊景点:<input type="text" class="tb_text" id="djtsjd" style="width:12%;"/></span>
-                       <span class="form_item"><input type="radio" id="djdyra" name="djdy" style="vertical-align: middle;" checked/> 巴士: <input type="text" class="tb_text" id="djbs" style="width:4.3%;"/> 备注:<input type="text" class="tb_text" id="djbsbz" style="width:12%;" /> 导游:<select id="djsfxydy"><option value="1">需要</option><option value="2">不需要</option></select> 备注:<input type="text" class="tb_text" id="djsfxydybz" style="width:12%;" /> <input type="radio" id="djdyrb" name="djdy" style="vertical-align: middle;"/> 司机兼导游: 备注:<input type="text" class="tb_text" id="djsjjdybz" style="width:12%;" /></span>
+                       <span class="form_item"><input type="checkbox" id="djserv" style="vertical-align: middle;"/> 地接服务  酒店标准: <select id="djxing"><option value="1">当地3星/四花</option><option value="2">当地3-4星</option><option value="3">当地四星/五花特二</option><option value="4">当地4-5星</option><option value="5">当地5星/五花特一</option></select> 其他标准:<input type="text" class="tb_text" id="djqtbz" style="width:4.3%;"/>,房型:<input type="text" class="tb_text" id="djfx" style="width:12%;"/> 备注:<input type="text" class="tb_text" id="djbz" style="width:12%;" /> 特殊景点:<input type="text" class="tb_text" id="djtsjd" style="width:12%;"/></span>
+                       <span class="form_item"><input type="radio" id="djdyra" name="djdy" style="vertical-align: middle;" checked/> 巴士: <select id="djbs"><option value="1">大巴</option><option value="2">中巴</option><option value="3">小巴</option></select> 备注:<input type="text" class="tb_text" id="djbsbz" style="width:12%;" /> 导游:<select id="djsfxydy"><option value="1">需要</option><option value="2">不需要</option></select> 备注:<input type="text" class="tb_text" id="djsfxydybz" style="width:12%;" /> </span>
+                       <span class="form_item"><input type="radio" id="djdyrb" name="djdy" style="vertical-align: middle;"/> 司机兼导游: 备注:<input type="text" class="tb_text" id="djsjjdybz" style="width:12%;" /></span>
                        <span class="form_item">应收单价:<input type="text" class="tb_text ysdj" id="djysdj" style="width:12%;"/> 应收合计:<input type="text" class="tb_text" id="djyshj" style="width:12%;"/></span>
                        </td></tr><tr><td>
                        <input type="hidden" id="qt" name="qt" />
@@ -434,11 +435,9 @@
 	              	<button type="button" class="btn btn_save" name="tj">提交</button>
 	              	<script>
                         jQuery('.btn_save').click(function(){
-                            var nameListSize = jQuery('#nameListSize').val();
                             if('tj'==jQuery(this).attr('name')){
-                                jQuery('#status').val('8');                                
+                                jQuery('#status').val('${userRoleId}');                                
                             }
-                            //jQuery(".hq_form")[0].submit();
                         });
                     </script>
 	            </div>			      

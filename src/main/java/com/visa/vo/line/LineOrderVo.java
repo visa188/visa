@@ -252,6 +252,9 @@ public class LineOrderVo extends LineOrder {
             if (!"#".equals(items[13])) {
                 linesSrvice.setServiceOperator(items[13]);
             }
+            if (!"#".equals(items[14])) {
+                linesSrvice.setServiceItem10(items[14]);
+            }
             if (this.getDjNeedPaid() != null) {
                 linesSrvice.setNeedPaid(this.getDjNeedPaid());
             }

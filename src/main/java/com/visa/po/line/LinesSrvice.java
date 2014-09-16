@@ -66,6 +66,7 @@ public class LinesSrvice {
     public String serviceItem7;
     public String serviceItem8;
     public BigDecimal serviceItem9;
+    public String serviceItem10;
     /**
      * 合计
      * 
@@ -256,6 +257,14 @@ public class LinesSrvice {
 
     public void setServiceItem9(BigDecimal serviceItem9) {
         this.serviceItem9 = serviceItem9;
+    }
+
+    public String getServiceItem10() {
+        return serviceItem10;
+    }
+
+    public void setServiceItem10(String serviceItem10) {
+        this.serviceItem10 = serviceItem10;
     }
 
     @FieldDes(fieldDes = "合计")
