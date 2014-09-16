@@ -185,7 +185,8 @@
                                 <span class="form_item"><input id="leftSeatNum" type="text" class="text1" placeholder="余位数" readonly></span>
                             </div>  
     					</div>
-						
+    				</div>
+					
 						<div class="control_group">
     		              <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
     		              <div class="controls">
@@ -211,7 +212,6 @@
                                 </select></span>
                             </div>                          
                         </div>
-    				</div>
 					
 						<div class="control_group">
     		              <label class="control_label"><span class="ico_must">*</span>行程说明:</label>
