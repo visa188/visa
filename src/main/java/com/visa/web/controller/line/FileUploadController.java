@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -91,7 +92,7 @@ public class FileUploadController {
         ServletOutputStream outStream = response.getOutputStream();
         java.io.BufferedOutputStream bos = new java.io.BufferedOutputStream(outStream);
         FileInputStream in = null;
-        File f = new File("/home/visa/userUpload/" + fileName);
+        File f = new File("/home/visa/userUpload/" + URLEncoder.encode(fileName, "UTF-8"));
 
         try {
             int bytesRead = 0;
