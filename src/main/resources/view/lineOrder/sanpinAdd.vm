@@ -12,12 +12,14 @@
 	<div class="control_group">
         <label class="control_label"><span class="ico_must">*</span>散拼团:</label>
         <div class="controls">
-            <span class="form_item"><select id="selectProductId" class="text2" placeholder="散拼团" onchange="getProductId()" disabled>
-				<option value="">请选择</option>
-				#foreach($one in $lineProductList)
-					<option value="$one.lineProductId"  $fn.selected(${product.lineProductId}, $one.lineProductId)>$one.lineProductName</option>
-                #end
-            </select></span>
+            <span class="form_item">
+				<select id="selectProductId" class="text2" placeholder="散拼团" onchange="getProductId()" disabled>
+    				<option value="">请选择</option>
+    				#foreach($one in $lineProductList)
+    					<option value="$one.lineProductId"  $fn.selected(${product.lineProductId}, $one.lineProductId)>$one.lineProductName</option>
+                    #end
+                </select>
+			</span>
         </div>
     </div>
 	
@@ -66,7 +68,7 @@
     <div class="control_group">
         <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
         <div class="controls">
-            <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" readonly>
+            <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" disabled>
 				#foreach($one in $countryList)
 					<option value="$one.countryId" $fn.selected(${product.lineCountryId}, $one.countryId)>$one.countryName</option>
                 #end

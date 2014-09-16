@@ -121,7 +121,7 @@
 			<div class="right"><a class="ico_order_w" title="订单信息管理" href="/lineOrder/list.do?page=1">+</a></div>
 		</div>
 		<div class="maincon_fluid">
-			<form action="/lineOrder/addSubmit.do" method="post" class="form_horizontal hq_form line">
+			<form action="/lineOrder/addSubmit.do" method="post" class="form_horizontal hq_form line" onsubmit="dealDisabled();">
 				
 			  <input value="0" type="hidden" id="lineProductId" name="lineProductId">
 			  <input value="" type="hidden" id="travelInfoFileUrl" name="travelInfoFileUrl">
