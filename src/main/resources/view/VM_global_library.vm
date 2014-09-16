@@ -19,9 +19,6 @@
 <script type="text/javascript" src="/jquery.boxy.js" charset='utf-8'></script>
 <script type="text/javascript" src="/ajaxfileupload.js" charset='utf-8'></script>
 <script>
-	function dealDisabled(){
-		jQuery("select").attr("disabled", false);
-	}
 	function conditionSearch(page){
 //		jQuery("#form1").attr("action","/orders/list.do");
 		jQuery("#page").val(page);
