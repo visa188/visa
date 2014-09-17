@@ -566,6 +566,8 @@ $(function() {
 					djpai = '#';
 				}
 				djserv += '_'+djpai;
+				var djqtbz = $('#djqtbz').val();
+				djserv += '_' + (djqtbz==''?'#':djqtbz);
 			}
 			$('#dj').val(djserv);
 			
