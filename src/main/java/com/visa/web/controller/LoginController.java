@@ -40,16 +40,16 @@ public class LoginController {
             model.addAttribute(Constant.SESSION_USER, user);
             logger.info("Login successfully with userId: " + userId);
             if (user.getRoleId() <= 5) {
-                return "redirect:orders/list.do?page=1";
+                return "redirect:/orders/list.do?page=1";
             } else {
-                return "redirect:lineOrder/list.do?page=1";
+                return "redirect:/lineOrder/list.do?page=1";
             }
         } else {
             logger.info("Login failed with userId: " + userId);
             if (user.getRoleId() <= 5) {
-                return "redirect:login.html";
+                return "redirect:/login.html";
             } else {
-                return "redirect:http://cloud.haoqianwang.com:81/login.html";
+                return "redirect:/login.html";
             }
         }
     }

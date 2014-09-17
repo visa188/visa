@@ -68,7 +68,7 @@ public class AirlineController {
     @RequestMapping
     public String insert(Airline Airline) {
         airlineDao.insert(Airline);
-        return "redirect:http://cloud.haoqianwang.com:81/airline/list.do";
+        return "redirect:list.do";
     }
 
     /**
@@ -101,7 +101,7 @@ public class AirlineController {
     @RequestMapping
     public String update(Airline Airline, Integer page) {
         airlineDao.updateByPrimaryKey(Airline);
-        return "redirect:http://cloud.haoqianwang.com:81/airline/list.do?page=" + page;
+        return "redirect:list.do?page=" + page;
     }
 
     /**
@@ -117,7 +117,7 @@ public class AirlineController {
         int count = productDao.selectByCountryIdCount(airlineId);
         if (count == 0) {
             airlineDao.deleteByPrimaryKey(airlineId);
-            return "redirect:http://cloud.haoqianwang.com:81/airline/list.do?page=" + page;
+            return "redirect:list.do?page=" + page;
         } else {
             model.put("msg", "产品中用到此航空公司信息，不能删除！");
             model.put("code", 404);
