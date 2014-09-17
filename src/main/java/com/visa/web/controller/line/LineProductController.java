@@ -105,7 +105,7 @@ public class LineProductController {
             product.setLeftSeatNum(seatNum - count);
         }
         lineProductDao.insert(product);
-        return "redirect:http://cloud.haoqianwang.com:81/lineproduct/list.do";
+        return "redirect:list.do";
     }
 
     /**
@@ -146,7 +146,7 @@ public class LineProductController {
         if (seatNum - count >= 0) {
             product.setLeftSeatNum(seatNum - count);
             lineProductDao.updateByPrimaryKey(product);
-            return "redirect:http://cloud.haoqianwang.com:81/lineproduct/list.do?page=" + page;
+            return "redirect:list.do?page=" + page;
         } else {
             model.put("msg", "机位数：" + seatNum + "小于该产品下所有订单的客人总数：" + count + "，修改失败！");
             model.put("code", 404);
@@ -171,7 +171,7 @@ public class LineProductController {
         int count = lineOrderDao.selectByProductIdCount(productId);
         if (count == 0) {
             lineProductDao.deleteByPrimaryKey(productId);
-            return "redirect:http://cloud.haoqianwang.com:81/lineproduct/list.do?page=" + page;
+            return "redirect:list.do?page=" + page;
         } else {
             model.put("msg", "订单中用到，此产品信息不能被删除！");
             model.put("code", 404);

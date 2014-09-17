@@ -68,7 +68,7 @@ public class LineCountryController {
     @RequestMapping
     public String insert(Country country) {
         lineCountryDao.insert(country);
-        return "redirect:http://cloud.haoqianwang.com:81/linecountry/list.do";
+        return "redirect:list.do";
     }
 
     /**
@@ -101,7 +101,7 @@ public class LineCountryController {
     @RequestMapping
     public String update(Country country, Integer page) {
         lineCountryDao.updateByPrimaryKey(country);
-        return "redirect:http://cloud.haoqianwang.com:81/linecountry/list.do?page=" + page;
+        return "redirect:list.do?page=" + page;
     }
 
     /**
@@ -117,7 +117,7 @@ public class LineCountryController {
         int count = productDao.selectByCountryIdCount(countryId);
         if (count == 0) {
             lineCountryDao.deleteByPrimaryKey(countryId);
-            return "redirect:http://cloud.haoqianwang.com:81/linecountry/list.do?page=" + page;
+            return "redirect:list.do?page=" + page;
         } else {
             model.put("msg", "产品中用到此国家信息，不能删除！");
             model.put("code", 404);
