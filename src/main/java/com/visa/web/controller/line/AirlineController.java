@@ -40,8 +40,8 @@ public class AirlineController {
     public void list(Airline Airline, Integer page, ModelMap model) {
         List<Airline> airlineList = new ArrayList<Airline>();
         Integer recordCount = airlineDao.selectAllCount(Airline);
-        int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page, Constant.PAGE_OFFSET,
-                model);
+        int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page,
+                Constant.PAGE_OFFSET, model);
         airlineList = airlineDao.selectAll(recordRange[0], Constant.PAGE_COUNT, Airline);
         model.put("airlineList", airlineList);
     }
@@ -68,7 +68,7 @@ public class AirlineController {
     @RequestMapping
     public String insert(Airline Airline) {
         airlineDao.insert(Airline);
-        return "redirect:http://cloud.haoqianwang.com:81/airline/list.do";
+        return "redirect:airline/list.do";
     }
 
     /**
