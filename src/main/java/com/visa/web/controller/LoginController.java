@@ -42,7 +42,7 @@ public class LoginController {
             if (user.getRoleId() <= 5) {
                 return "redirect:orders/list.do?page=1";
             } else {
-                return "redirect:http://cloud.haoqianwang.com:81/lineOrder/list.do?page=1";
+                return "redirect:lineOrder/list.do?page=1";
             }
         } else {
             logger.info("Login failed with userId: " + userId);
