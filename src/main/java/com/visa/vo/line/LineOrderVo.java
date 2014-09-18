@@ -182,6 +182,9 @@ public class LineOrderVo extends LineOrder {
             if (!"#".equals(items[8])) {
                 linesSrvice.setServiceItem7(items[8]);
             }
+            if (!"#".equals(items[9])) {
+                linesSrvice.setServiceItem8(items[9]);
+            }
             if (this.getJpNeedPaid() != null) {
                 linesSrvice.setNeedPaid(this.getJpNeedPaid());
             }
@@ -254,6 +257,9 @@ public class LineOrderVo extends LineOrder {
             }
             if (!"#".equals(items[14])) {
                 linesSrvice.setServiceItem10(items[14]);
+            }
+            if (!"#".equals(items[15])) {
+                linesSrvice.setServiceItem11(items[15]);
             }
             if (this.getDjNeedPaid() != null) {
                 linesSrvice.setNeedPaid(this.getDjNeedPaid());

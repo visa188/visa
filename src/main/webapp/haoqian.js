@@ -526,6 +526,11 @@ $(function() {
 					jpcpsx = '#';
 				}
 				jpserv += '_'+jpcpsx;
+				var jpzt = $('#jpzt').val();
+				if(typeof jpzt == 'undefined' || jpzt == ''){
+					jpzt = '0';
+				}
+				jpserv += '_'+jpzt;
 			}
 			$('#jp').val(jpserv);
 			
@@ -568,6 +573,12 @@ $(function() {
 				djserv += '_'+djpai;
 				var djqtbz = $('#djqtbz').val();
 				djserv += '_' + (djqtbz==''?'#':djqtbz);
+				
+				var djzt = $('#djzt').val();
+				if(typeof djzt == 'undefined' || djzt == ''){
+					djzt = '0';
+				}
+				djserv += '_'+djzt;
 			}
 			$('#dj').val(djserv);
 			
