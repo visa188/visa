@@ -38,6 +38,18 @@ public class LineOrder {
      */
     public int nameListSize;
     /**
+     * 双人房数量
+     */
+    public int srf;
+    /**
+     * 单人房数量
+     */
+    public int drf;
+    /**
+     * 拼房数量
+     */
+    public int pf;
+    /**
      * 销售id
      * 
      * @pdOid 704cf255-fb37-4469-b283-ac94cabf63e9
@@ -278,6 +290,33 @@ public class LineOrder {
     @FieldDes(fieldDes = "客人数量")
     public int getNameListSize() {
         return nameListSize;
+    }
+
+    @FieldDes(fieldDes = "双人房数量")
+    public int getSrf() {
+        return srf;
+    }
+
+    public void setSrf(int srf) {
+        this.srf = srf;
+    }
+
+    @FieldDes(fieldDes = "单人房数量")
+    public int getDrf() {
+        return drf;
+    }
+
+    public void setDrf(int drf) {
+        this.drf = drf;
+    }
+
+    @FieldDes(fieldDes = "拼房数量")
+    public int getPf() {
+        return pf;
+    }
+
+    public void setPf(int pf) {
+        this.pf = pf;
     }
 
     public void setNameListSize(int nameListSize) {

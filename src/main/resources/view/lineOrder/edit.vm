@@ -256,6 +256,31 @@
                     </div>
                     
                     <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>房间类型:</label>
+                      <div class="controls">
+                       <span class="form_item">双人房:<input $fn.isReadOnly($userRoleId) value="$!{lineOrder.srf}" name="srf" id="srf" type="text" class="text1 js_non_empty js_nan" placeholder="双人房数量" style="width:60px;"> 单人房:<input $fn.isReadOnly($userRoleId) value="$!{lineOrder.drf}" name="drf" id="drf" type="text" class="text1 js_non_empty js_nan" placeholder="单人房数量" style="width:60px;"> 拼房:<input $fn.isReadOnly($userRoleId) value="$!{lineOrder.pf}" name="pf" id="pf" type="text" class="text1 js_non_empty js_nan" placeholder="拼房数量" style="width:60px;"></span>
+                      </div>
+                    </div>
+                    #set($ops="")
+                    #if(${lineOrder.srf} && ${lineOrder.srf}>0)
+                        #foreach($i in [1..${lineOrder.srf}])
+                            #set($ops=$ops + "<option value=1@"+$i+">双人房"+$i+"</option>")
+                        #end
+                    #end
+                    #if(${lineOrder.drf} && ${lineOrder.drf}>0)
+                        #foreach($i in [1..${lineOrder.drf}])
+                            #set($ops=$ops + "<option value=2@"+$i+">单人房"+$i+"</option>")
+                        #end
+                    #end
+                    #if(${lineOrder.pf} && ${lineOrder.pf}>0)
+                        #foreach($i in [1..${lineOrder.pf}])
+                            #set($ops=$ops + "<option value=3@"+$i+">拼房"+$i+"</option>")
+                        #end
+                    #end
+                    <script>
+                    var roomOptions ='$!{ops}';
+                    </script>
+                    <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>客人信息:</label>
                         <div class="controls" id="customTab">
                             <div class="client_operate js_line_client_operate">
@@ -274,14 +299,19 @@
                                                                                                                                     姓名:<input $fn.isReadOnly($userRoleId) value="$!{custom.name}" type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>
                                                                                                                                     性别:<select $fn.isReadOnly($userRoleId,1) name="tempSex" placeholder="客人性别"><option value="1" $fn.selected(${custom.sex}, "1")>男</option><option value="2" $fn.selected(${custom.sex}, "2")>女</option></select>
                                                                                                                                     类型:<select $fn.isReadOnly($userRoleId,1) name="tempAgeType" placeholder="客人类型"><option value="1" $fn.selected(${custom.ageType}, "1")>成人</option><option value="2" $fn.selected(${custom.ageType}, "2")>儿童(占床)</option><option value="3"  $fn.selected(${custom.ageType}, "3")>儿童(不占床)</option></select>                            
-                                                                                                                                    押金:<input $fn.isReadOnly($userRoleId) value="$!{custom.deposit}" type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>
-                                                                                                                                    资料:<input $fn.isReadOnly($userRoleId) value="$!{custom.datum}" type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>
-                                                                                                                                    房间数:<input $fn.isReadOnly($userRoleId) value="$!{custom.room}" type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>
+                                       <!--input $fn.isReadOnly($userRoleId) value="$!{custom.deposit}" type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/-->
+                                                                                                                                    房间:<select $fn.isReadOnly($userRoleId,1)  dbvalue="$!{custom.datum}" id="tempDatum" name="tempDatum" class="tempDatum" placeholder="房间">$!{ops}</select>
+                                       <!--input $fn.isReadOnly($userRoleId) value="$!{custom.room}" type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/-->
                                                                                                                                     备注:<input $fn.isReadOnly($userRoleId) value="$!{custom.comment}" type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
                                           <span $fn.isDisplay($userRoleId) name="delName" class="client_delete" title="删除行" style="margin-left:5%">-</span>
                                                 </td>
                                             </tr> 
                                         #end
+                                        <script>
+                                        jQuery(".tempDatum").each(function(){
+                                            jQuery("option[value='"+jQuery(this).attr("dbvalue")+"']",this).attr('selected', true);
+                                        });
+                                        </script>
                                     #else
                                         <tr>
                                                 <td>
@@ -289,9 +319,9 @@
                                                                                                                                     姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>
                                                                                                                                     性别:<select name="tempSex" placeholder="客人性别"><option value="1">男</option><option value="2">女</option></select>
                                                                                                                                     类型:<select name="tempAgeType" placeholder="客人类型"><option value="1">成人</option><option value="2">儿童(占床)</option><option value="3">儿童(不占床)</option></select>                            
-                                                                                                                                    押金:<input type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>
-                                                                                                                                    资料:<input type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>
-                                                                                                                                    房间数:<input type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>
+                                       <!--input type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/-->
+                                                                                                                                    房间:<select id="tempDatum" name="tempDatum" class="tempDatum" placeholder="房间"></select>
+                                       <!--input type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/-->
                                                                                                                                     备注:<input type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
                                           <span name="delName" class="client_delete" title="删除行" style="margin-left:5%">-</span>
                                                 </td>

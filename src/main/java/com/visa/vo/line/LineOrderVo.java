@@ -376,7 +376,7 @@ public class LineOrderVo extends LineOrder {
                 nameListPo.setAgeType(Integer.valueOf(items[2].replace("#", "")));
                 nameListPo.setDeposit(items[3].replace("#", ""));
                 nameListPo.setDatum(items[4].replace("#", ""));
-                nameListPo.setRoom(Integer.valueOf(items[5].replace("#", "")));
+                nameListPo.setRoom(Integer.valueOf(items[5].replace("#", "0")));
                 nameListPo.setComment(items[6].replace("#", ""));
                 if (!"#".equals(items[7])) {
                     nameListPo.setId(Integer.valueOf(items[7]));

@@ -89,11 +89,12 @@
   </delete>
   
   <insert id="insert" useGeneratedKeys="true" keyProperty="orderId">
-    insert into lineorder (orderDate,type,nameListSize,salesmanId,salesmanName,lineOperatorId,lineOperatorName,
+    insert into lineorder (orderDate,type,nameListSize,srf,drf,pf,salesmanId,salesmanName,lineOperatorId,lineOperatorName,
     visaOperatorId,visaOperatorName,signOperatorId,signOperatorName,travelAgency,contact,contactNo,lineCountryId,
     startDate,endDate,travelInfo,travelInfoFileUrl,aircorpId,price,priceSum,alreadyGot,needGot,gotBank,gotDate,paidPriceSum,status,lineProductId,specialComment,orderSeq,profit,qtys, postTime)
     values (now(),
-    #{type,jdbcType=INTEGER},#{nameListSize,jdbcType=INTEGER},#{salesmanId,jdbcType=VARCHAR},#{salesmanName,jdbcType=VARCHAR},
+    #{type,jdbcType=INTEGER},#{nameListSize,jdbcType=INTEGER},#{srf,jdbcType=VARCHAR},#{drf,jdbcType=VARCHAR},#{pf,jdbcType=VARCHAR}
+    #{salesmanId,jdbcType=VARCHAR},#{salesmanName,jdbcType=VARCHAR},
     #{lineOperatorId,jdbcType=VARCHAR},#{lineOperatorName,jdbcType=VARCHAR},#{visaOperatorId,jdbcType=VARCHAR},#{visaOperatorName,jdbcType=VARCHAR},
     #{signOperatorId,jdbcType=VARCHAR},#{signOperatorName,jdbcType=VARCHAR},#{travelAgency,jdbcType=VARCHAR},#{contact,jdbcType=VARCHAR},
     #{contactNo,jdbcType=VARCHAR},#{lineCountryId,jdbcType=INTEGER},#{startDate,jdbcType=DATE},
@@ -108,6 +109,9 @@
     <set>
 		<if test="type != null">type = #{type,jdbcType=INTEGER},</if>
 	    <if test="nameListSize != null">nameListSize = #{nameListSize,jdbcType=INTEGER},</if>
+	    <if test="srf != null">srf = #{srf,jdbcType=VARCHAR},</if>
+	    <if test="drf != null">drf = #{drf,jdbcType=VARCHAR},</if>
+	    <if test="pf != null">pf = #{pf,jdbcType=VARCHAR},</if>
 	    <if test="salesmanName != null">salesmanName = #{salesmanName,jdbcType=VARCHAR},</if>
 	    <if test="lineOperatorId != null">lineOperatorId = #{lineOperatorId,jdbcType=VARCHAR},</if>
 	    <if test="lineOperatorName != null">lineOperatorName = #{lineOperatorName,jdbcType=VARCHAR},</if>

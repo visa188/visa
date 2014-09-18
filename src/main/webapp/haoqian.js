@@ -157,9 +157,9 @@ GLB.clientOpr = function(node,addBtn,delBtn,type){
 			$(t_tr).html('<td><input type="hidden" id="tempId" name="tempId" value="" />姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>' +
 					'&nbsp;性别:<select name="tempSex" placeholder="客人性别"><option value="1">男</option><option value="2">女</option></select>' +
 					'&nbsp;类型:<select name="tempAgeType" placeholder="客人类型"><option value="1">成人</option><option value="2">儿童(占床)</option><option value="3">儿童(不占床)</option></select>'+                            
-					'&nbsp;押金:<input type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/>'+
-					'&nbsp;资料:<input type="text" class="tb_text" name="tempDatum" value="" placeholder="资料" style="width:10%;"/>'+
-					'&nbsp;房间数:<input type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/>'+
+					'<!--input type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/-->'+
+					'&nbsp;房间:<select id="tempDatum" name="tempDatum" class="tempDatum" placeholder="房间">'+ roomOptions +'</select>'+
+					'<!--input type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/-->'+
 					'&nbsp;备注:<input type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>'+
 					'&nbsp;<span class="client_delete" style="margin-left:5%" title="删除行" onclick="delTempRow(this,'+type+')">-</span></td>');
 		}
@@ -452,9 +452,9 @@ $(function() {
 				result+=($(names)[i].value==''?'#':$(names)[i].value)+
 				"_"+($(sexs)[i].value==''?'#':$(sexs)[i].value)+
 				"_"+($(agetypes)[i].value==''?'#':$(agetypes)[i].value)+
-				"_"+($(deposits)[i].value==''?'#':$(deposits)[i].value)+
+				"_#"+//($(deposits)[i].value==''?'#':$(deposits)[i].value)+
 				"_"+($(datums)[i].value==''?'#':$(datums)[i].value)+
-				"_"+($(rooms)[i].value==''?'#':$(rooms)[i].value)+
+				"_#"+//($(rooms)[i].value==''?'#':$(rooms)[i].value)+
 				"_"+($(comments)[i].value==''?'#':$(comments)[i].value)+
 				"_"+($(ids)[i].value==''?'#':$(ids)[i].value)+",";
 			});
@@ -588,4 +588,27 @@ $(function() {
 	}
 });
 
+jQuery('#srf,#drf,#pf').change(function(){
+    jQuery(".tempDatum option").remove();
+    roomOptions ='';
+    var srf = jQuery('#srf').val();
+    var drf = jQuery('#drf').val();
+    var pf = jQuery('#pf').val();
+    if(!isNaN(srf)){
+        for(i=1;i<=srf;i++){
+            roomOptions += '<option value="1@'+i+'">双人房'+i+'</option>';
+        }
+    }
+    if(!isNaN(drf)){
+        for(i=1;i<=drf;i++){
+            roomOptions += '<option value="2@'+i+'">单人房'+i+'</option>';
+        }
+    }
+    if(!isNaN(pf)){
+        for(i=1;i<=pf;i++){
+            roomOptions += '<option value="3@'+i+'">拼房'+i+'</option>';
+        }
+    }
+    jQuery(".tempDatum").append(roomOptions);
+});
 
