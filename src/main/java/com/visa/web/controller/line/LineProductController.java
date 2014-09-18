@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.visa.common.constant.Constant;
 import com.visa.common.util.PagingUtil;
+import com.visa.common.util.StringUtil;
+import com.visa.dao.SeqDao;
 import com.visa.dao.line.AirlineDao;
 import com.visa.dao.line.LineCountryDao;
 import com.visa.dao.line.LineOrderDao;
@@ -40,6 +42,8 @@ public class LineProductController {
     private AirlineDao airlineDao;
     @Resource
     private LineOrderDao lineOrderDao;
+    @Resource
+    private SeqDao seqDao;
 
     private final Log logger = LogFactory.getLog(getClass());
 
@@ -104,6 +108,9 @@ public class LineProductController {
         if (seatNum - count >= 0) {
             product.setLeftSeatNum(seatNum - count);
         }
+        int orderSeq = seqDao.select("lineProduct");
+        String prefix = StringUtil.paddingZeroToLeft(String.valueOf(orderSeq), 6);
+        product.setOrderSeq(prefix);
         lineProductDao.insert(product);
         return "redirect:list.do";
     }

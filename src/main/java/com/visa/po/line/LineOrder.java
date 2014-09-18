@@ -76,6 +76,7 @@ public class LineOrder {
 
     public Integer lineProductId;
     public String lineProductName;
+    public String lineProductOrderSeq;
     /**
      * 组团社
      * 
@@ -505,6 +506,14 @@ public class LineOrder {
 
     public void setSignOperatorName(String signOperatorName) {
         this.signOperatorName = signOperatorName;
+    }
+
+    public String getLineProductOrderSeq() {
+        return lineProductOrderSeq;
+    }
+
+    public void setLineProductOrderSeq(String lineProductOrderSeq) {
+        this.lineProductOrderSeq = lineProductOrderSeq;
     }
 
 }

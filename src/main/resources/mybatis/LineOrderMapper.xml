@@ -52,7 +52,7 @@
 	</select>
 	
 	<select id="selectByPage" parameterType="java.util.Map" resultType="LineOrder">
-       	select tmp1.*,lineproduct.lineProductName
+       	select tmp1.*,lineproduct.lineProductName,lineproduct.orderSeq as lineProductOrderSeq
 		from (select lineorder.*,linecountry.countryName lineCountryName
 		    from lineorder,linecountry
 		    where lineorder.lineCountryId = linecountry.countryId  

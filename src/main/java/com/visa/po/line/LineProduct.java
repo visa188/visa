@@ -79,6 +79,7 @@ public class LineProduct {
      * @pdOid dd766152-10e2-4418-95f5-74c9f2d6cc04
      */
     public String travelInfoFileUrl;
+    public String orderSeq;
 
     public Date getStartDate() {
         return startDate;
@@ -206,6 +207,14 @@ public class LineProduct {
 
     public void setDes(String des) {
         this.des = des;
+    }
+
+    public String getOrderSeq() {
+        return orderSeq;
+    }
+
+    public void setOrderSeq(String orderSeq) {
+        this.orderSeq = orderSeq;
     }
 
 }
