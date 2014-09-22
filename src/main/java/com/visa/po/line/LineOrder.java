@@ -32,11 +32,14 @@ public class LineOrder {
      */
     public int type;
     /**
-     * 客人数量
+     * 占位数量
      * 
      * @pdOid 5e14ffc9-fda7-4aec-b56a-a9f0c9c6cf38
      */
     public int nameListSize;
+    public int nameListType;
+    public int nameListState;
+    public Date nameListlimitDate;
     /**
      * 双人房数量
      */
@@ -156,6 +159,33 @@ public class LineOrder {
     public Date postTime;
     public BigDecimal profit;
     public BigDecimal qtys;
+
+    @FieldDes(fieldDes = "占位类型")
+    public int getNameListType() {
+        return nameListType;
+    }
+
+    public void setNameListType(int nameListType) {
+        this.nameListType = nameListType;
+    }
+
+    @FieldDes(fieldDes = "占位状态")
+    public int getNameListState() {
+        return nameListState;
+    }
+
+    public void setNameListState(int nameListState) {
+        this.nameListState = nameListState;
+    }
+
+    @FieldDes(fieldDes = "占位取消时限")
+    public Date getNameListlimitDate() {
+        return nameListlimitDate;
+    }
+
+    public void setNameListlimitDate(Date nameListlimitDate) {
+        this.nameListlimitDate = nameListlimitDate;
+    }
 
     @FieldDes(fieldDes = "其它应收")
     public BigDecimal getQtys() {
