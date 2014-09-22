@@ -100,6 +100,7 @@ public class LineOrderController {
         String startDate = bean.getStartDate();
         String endDate = bean.getEndDate();
         String orderSeq = bean.getOrderSeq();
+        Integer alarmOrders = bean.getAlarmOrders();
 
         if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate)) {
             // 如果未选择起止日期，默认为本月一号到当日
@@ -115,6 +116,7 @@ public class LineOrderController {
         paraMap.put("startDate", StringUtils.isEmpty(startDate) ? null : startDate);
         paraMap.put("endDate", StringUtils.isEmpty(endDate) ? null : endDate);
         paraMap.put("orderSeq", StringUtils.isEmpty(orderSeq) ? null : orderSeq);
+        paraMap.put("alarmOrders", (alarmOrders == null || alarmOrders == 0) ? null : alarmOrders);
 
         if (LineRoleEnumType.SALESMAN.getId() == user.getRoleId()) {
             paraMap.put("salesmanId", user.getUserId());

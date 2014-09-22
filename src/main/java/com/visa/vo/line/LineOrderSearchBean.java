@@ -11,8 +11,14 @@ public class LineOrderSearchBean implements Serializable {
     private String startDate = "";
     private String endDate = "";
     private String orderSeq;
+    private Integer alarmOrders;
 
-    public LineOrderSearchBean() {
+    public Integer getAlarmOrders() {
+        return alarmOrders;
+    }
+
+    public void setAlarmOrders(Integer alarmOrders) {
+        this.alarmOrders = alarmOrders;
     }
 
     public String getOrderSeq() {

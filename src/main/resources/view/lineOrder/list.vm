@@ -28,6 +28,12 @@
     					</select>
     				</label>
 				#end
+				<label for="s_client">报警订单：
+					<select name="alarmOrders" id="alarmOrders" class="text" onchange="conditionSearch(1)">
+						<option value="0" selected="selected">全部</option>
+						<option value="1">报警订单</option>
+					</select>
+				</label>
 			</div>
 			<div class="searchbox">
 				<label for="s_ordertime">开始时间：<input id="startDate" name="startDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="开始时间" value="$!{searchBean.startDate}"></label>
