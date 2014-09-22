@@ -35,6 +35,7 @@
 		(select lineorder.*,linecountry.countryName lineCountryName
 		    from lineorder,linecountry
 		    where lineorder.lineCountryId = linecountry.countryId  
+			<if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 			<if test="salesmanId != null">and lineorder.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
 			<if test="lineOperatorId != null">and lineorder.lineOperatorId=#{lineOperatorId,jdbcType=VARCHAR}</if>
 			<if test="visaOperatorId != null">and lineorder.visaOperatorId=#{visaOperatorId,jdbcType=VARCHAR}</if>
@@ -55,10 +56,12 @@
 	</select>
 	
 	<select id="selectByPage" parameterType="java.util.Map" resultType="LineOrder">
-       	select tmp1.*,lineproduct.lineProductName,lineproduct.orderSeq as lineProductOrderSeq
+       	select tmp1.*,lineproduct.lineProductName,lineproduct.orderSeq as lineProductOrderSeq, lineproduct.groupLeader,lineproduct.aircorpId,
+       	lineproduct.depositLimitDate,lineproduct.printTicketLimitDate
 		from (select lineorder.*,linecountry.countryName lineCountryName
 		    from lineorder,linecountry
 		    where lineorder.lineCountryId = linecountry.countryId  
+		    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 			<if test="salesmanId != null">and lineorder.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
 			<if test="lineOperatorId != null">and lineorder.lineOperatorId=#{lineOperatorId,jdbcType=VARCHAR}</if>
 			<if test="visaOperatorId != null">and lineorder.visaOperatorId=#{visaOperatorId,jdbcType=VARCHAR}</if>
