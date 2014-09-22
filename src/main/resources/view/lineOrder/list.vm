@@ -1,4 +1,9 @@
-#header(10,101,"线路订单信息管理")
+#if($type==1)
+	#set($navtype=101)
+#else
+	#set($navtype=105)
+#end
+#header(10,$navtype,"线路订单信息管理")
 <script>
 	function updateOrder(formUrl){
 		jQuery("#form1").attr("action",formUrl);
@@ -40,12 +45,39 @@
 				<table cellpadding="0" cellspacing="0" width="100%" class="table_data tcenter">
 	                <thead>
 	                    <tr>
-							<th width="">订单号</th>
-							<th width="">客人数量</th>
-	                        <th width="">下单日期</th>
-							<th width="">国家名称</th>
-							<th width="">产品名称</th>
-	                        <th width="">线路操作员</th>
+	                       #if(${type}=="2")
+	                        <th width="">团队编号</th>
+                            <th width="">线路</th>
+                            <th width="">航空公司</th>
+                            <th width="">总位</th>
+                            <th width="">领队</th>
+                            <th width="">余位</th>
+                            <th width="">已收</th>
+                            <th width="">切位</th>
+                            <th width="">占位</th>
+							<th width="">预报</th>
+							<th width="">同业价</th>
+	                        <th width="">机票定金时限</th>
+							<th width="">出票时限</th>
+							<th width="">签证状态</th>
+	                        <th width="">机票状态</th>
+	                        <th width="">酒店状态</th>
+                            <th width="">巴士状态</th>
+                            <th width="">团队状态</th>
+                           #else
+                            <th width="">订单号</th>
+                            <th width="">销售</th>
+                            <th width="">组团社</th>
+                            <th width="">人数</th>
+                            <th width="">下单日期</th>
+                            <th width="">签证状态</th>
+                            <th width="">机票状态</th>
+                            <th width="">酒店状态</th>
+                            <th width="">巴士状态</th>
+                            <th width="">团队状态</th>
+                            <th width="">应收合计</th>
+                            <th width="">到款状态</th>
+                           #end 
 	                        <th width="">修改</th>
 	                        <th width="">删除</th>
 							<th width="">查看日志</th>
@@ -54,12 +86,39 @@
 	                <tbody>
 						#foreach($order in $orderList)
     	                    <tr>
+    	                    	#if(${type}=="2")
+								<td><a href="/lineOrder/list.do?lineProductOrderSeq=$!{order.lineProductOrderSeq}">$!{order.lineProductOrderSeq}</a></td>
+								<td>$!{order.lineProductName}</td>
+								<td>$!{order.aircorpId}</td>
+								<td width="">总位</td>
+	                            <td>$!{order.groupLeader}</td>
+	                            <td width="">余位</td>
+	                            <td width="">已收</td>
+	                            <td width="">切位</td>
+	                            <td width="">占位</td>
+								<td width="">预报</td>
+								<td>$!{order.price}</td>
+    	                        <td>$fn.format($!{order.depositLimitDate},'yyyy-MM-dd')</td>
+    	                        <td>$fn.format($!{order.printTicketLimitDate},'yyyy-MM-dd')</td>
+								<td width="">签证状态</td>
+		                        <td width="">机票状态</td>
+		                        <td width="">酒店状态</td>
+	                            <td width="">巴士状态</td>
+	                            <td width="">团队状态</td>
+								#else
 								<td>$!{order.orderSeq}</td>
+								<td>$!{order.salesmanName}</td>
+								<td>$!{order.travelAgency}</td>
 								<td>$!{order.nameListSize}人</td>
-    	                        <td>$fn.format($!{order.orderDate},'yyyy-MM-dd')</td>
-								<td>$!{order.lineCountryName}</td>
-    	                        <td>$!{order.lineProductName}</td>
-								<td>$!{order.lineOperatorName}</td>
+								<td>$fn.format($!{order.postTime},'yyyy-MM-dd')</td>
+								<td width="">签证状态</td>
+		                        <td width="">机票状态</td>
+		                        <td width="">酒店状态</td>
+	                            <td width="">巴士状态</td>
+	                            <td width="">团队状态</td>
+	                            <td>$!{order.priceSum}</td>
+	                            <td width="">到款状态</td>
+								#end
     	                        <td><a class="ico_edit_g" href="javascript:updateOrder('/lineOrder/edit.do?orderId=$!{order.orderId}&currentPage=${page}')"></a></td>
     	                        <td><a class="ico_delete_r" onclick="return confirm('是否将此订单删除?')" href="/lineOrder/delete.do?orderId=$!{order.orderId}&page=${page}"></a></td>
 								<td><a class="ico_edit_g" href="/operatelog/list.do?orderSeq=$!{order.orderSeq}&currentPage=1"></a></td>

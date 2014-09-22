@@ -42,7 +42,7 @@ public class LoginController {
             if (user.getRoleId() <= 5) {
                 return "redirect:/orders/list.do?page=1";
             } else {
-                return "redirect:/lineOrder/list.do?page=1";
+                return "redirect:/lineOrder/list.do?page=1&type=1";
             }
         } else {
             logger.info("Login failed with userId: " + userId);

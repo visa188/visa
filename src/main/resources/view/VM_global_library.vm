@@ -105,9 +105,10 @@
 				#end
 				#if($userRoleId==0||$userRoleId>=6)
 				<li class="order_mng#if($topNav==10) open#end">
-                    <a class="order_mng_tab" href="/lineOrder/list.do?page=1"><span class="ico_order"></span><span class="sidenav_text">路线订单管理</span><span class="ico_fold"></span></a>
+                    <a class="order_mng_tab" href="/lineOrder/list.do?page=1&type=1"><span class="ico_order"></span><span class="sidenav_text">路线订单管理</span><span class="ico_fold"></span></a>
                     <dl>
-                        <dd#if($secNav==101) class="on"#end><a href="/lineOrder/list.do?page=1">路线订单信息管理</a></dd>
+                        <dd#if($secNav==101) class="on"#end><a href="/lineOrder/list.do?page=1&type=1">单团路线订单信息管理</a></dd>
+                        <dd#if($secNav==105) class="on"#end><a href="/lineOrder/list.do?page=1&type=2">散拼路线订单信息管理</a></dd>
 						#if($userRoleId==${fn.getLineSalesmanRoleId()})
 							<dd#if($secNav==102) class="on"#end><a href="/lineOrder/add.do">新增路线订单信息</a></dd>
 						#end
