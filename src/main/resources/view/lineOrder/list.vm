@@ -21,37 +21,39 @@
 		<form id="form1" name="form1" action="/lineOrder/list.do" method="post" class="form_horizontal">
 			<input type="hidden" id="page" name="page" value="1">
 			#if(!$hideSearch)	
-    		<div class="searchbox">
-   				<label for="s_client">订单号：<input type="text" name="orderSeq" value="$!{searchBean.orderSeq}" />
-   				</label>
-				#if(${fn.isLineAdminRole($userRoleId)})
-    				<label for="s_client">所属销售：
-    					<select name="salesman" id="salesman" class="text" onchange="conditionSearch(1)">
-    						<option value="" selected="selected">全部</option>
-    						#foreach($one in $salesmanList)
-    							<option value="$one.userId"$fn.selected(${searchBean.salesman}, $one.userId)>$one.userName</option>
-                            #end
-    					</select>
-    				</label>
-				#end
-				#if($alarmCount>0)
+    			#if($alarmCount>0)
+    				<div class="searchbox">
     				<label for="s_client">
     					<input type="hidden" id="alarmOrders" name="alarmOrders" value="">
-    					<a href="#" onclick="getAlarmOrders();">您有即将超过占位取消时限的订单，请处理！</a>
+    					<div id="sidebar"><a href="#" onclick="getAlarmOrders();">您有即将超过占位取消时限的订单，请处理！</a></div>
     				</label>
+    				</div>
     				<script>
     					function getAlarmOrders(){
     						jQuery("#alarmOrders").val("1");
     						jQuery("#form1").submit();
     					}
     				</script>
-				#end
-			</div>
-			<div class="searchbox">
-				<label for="s_ordertime">开始时间：<input id="startDate" name="startDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="开始时间" value="$!{searchBean.startDate}"></label>
-    			<label for="s_ordertime">结束时间：<input id="endDate" name="endDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="结束时间" value="$!{searchBean.endDate}"></label>
-    			<label for="searchbtn"><input id="searchbtn" type="submit" name="" class="searchbtn" value="搜索" ></label>	
-			</div>
+    			#end			
+        		<div class="searchbox">
+       				<label for="s_client">订单号：<input type="text" name="orderSeq" value="$!{searchBean.orderSeq}" />
+       				</label>
+    				#if(${fn.isLineAdminRole($userRoleId)})
+        				<label for="s_client">所属销售：
+        					<select name="salesman" id="salesman" class="text" onchange="conditionSearch(1)">
+        						<option value="" selected="selected">全部</option>
+        						#foreach($one in $salesmanList)
+        							<option value="$one.userId"$fn.selected(${searchBean.salesman}, $one.userId)>$one.userName</option>
+                                #end
+        					</select>
+        				</label>
+    				#end
+    			</div>
+    			<div class="searchbox">
+    				<label for="s_ordertime">开始时间：<input id="startDate" name="startDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="开始时间" value="$!{searchBean.startDate}"></label>
+        			<label for="s_ordertime">结束时间：<input id="endDate" name="endDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="结束时间" value="$!{searchBean.endDate}"></label>
+        			<label for="searchbtn"><input id="searchbtn" type="submit" name="" class="searchbtn" value="搜索" ></label>	
+    			</div>
 			#end
 		</form>
 		<hr class="hr_a">
