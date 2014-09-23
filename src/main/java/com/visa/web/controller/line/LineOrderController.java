@@ -95,7 +95,7 @@ public class LineOrderController {
     public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page,
             ModelMap model, @ModelAttribute LineOrderSearchBean bean, Integer type,
             String lineProductOrderSeq) {
-        logger.info("==============进入line order list");
+        Integer alarmCount = lineOrderDao.countAlarmOrders();
         if (StringUtils.isEmpty(lineProductOrderSeq)) {
 
             Map<String, Object> paraMap = new HashMap<String, Object>();
@@ -147,6 +147,7 @@ public class LineOrderController {
             model.addAttribute("page", page);
             model.addAttribute("searchBean", bean);
             model.addAttribute("type", type);
+            model.addAttribute("alarmCount", alarmCount);
         } else {
             Map<String, Object> paraMap = new HashMap<String, Object>();
             paraMap.put("begin", 0);
@@ -159,6 +160,8 @@ public class LineOrderController {
             }
             model.addAttribute("orderList", orderList);
             model.addAttribute("page", 1);
+            model.addAttribute("hideSearch", "1");
+            model.addAttribute("alarmCount", alarmCount);
         }
     }
 
