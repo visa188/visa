@@ -1151,3 +1151,7 @@ a:hover {
 	font-size: 0;
 	background: url(images/importboxbottom.png) no-repeat left top;
 }
+#sidebar a:link,a:visited,a:hover,a:active   {
+  color:#FF0000;
+  text-decoration:none;
+  }

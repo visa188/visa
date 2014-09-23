@@ -29,4 +29,6 @@ public interface LineOrderDao {
     List<String> selectOrderYears();
 
     List<String> selectOrderMonths();
+
+    int countAlarmOrders();
 }
