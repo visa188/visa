@@ -22,6 +22,7 @@ public class LineOrderVo extends LineOrder {
 
     private String nameList;
 
+    private String visaState;
     private String signDate;
     private BigDecimal servicePayPrice;
     private BigDecimal sumServicePayPrice;
@@ -138,6 +139,9 @@ public class LineOrderVo extends LineOrder {
             }
             if (!StringUtils.isEmpty(this.getDatumLimitDate())) {
                 linesSrvice.setServiceItem3(this.getDatumLimitDate());
+            }
+            if (!StringUtils.isEmpty(this.getVisaState())) {
+                linesSrvice.setServiceItem5(this.getVisaState());
             }
             if (this.getQzNeedPaid() != null) {
                 linesSrvice.setNeedPaid(this.getQzNeedPaid());
@@ -391,6 +395,14 @@ public class LineOrderVo extends LineOrder {
             }
         }
         return customList;
+    }
+
+    public String getVisaState() {
+        return visaState;
+    }
+
+    public void setVisaState(String visaState) {
+        this.visaState = visaState;
     }
 
     public String getAlreadyPaidJpdj() {

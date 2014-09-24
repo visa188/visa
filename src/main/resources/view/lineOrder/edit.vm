@@ -653,6 +653,18 @@
                           </div>
                         </div>  
 						<div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>签证状态:</label>
+                          <div class="controls">
+                           <span class="form_item">
+								<select name="visaState" id="visaState" class="text2 js_non_empty" placeholder="签证状态">
+									<option value="1" $fn.selected($!{visaService.serviceItem5}, "1")>未送签</option>
+                                    <option value="2" $fn.selected($!{visaService.serviceItem5}, "2")>已送签</option>
+									<option value="2" $fn.selected($!{visaService.serviceItem5}, "3")>已出签</option>
+								</select>
+						   </span>
+                          </div>
+                        </div>
+						<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>应付签证费（单价）:</label>
                           <div class="controls">
                            <span class="form_item"><input value="$!{visaService.servicePayPrice}" name="servicePayPrice" id="servicePayPrice" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应付签证费（单价）" onchange="sumVisaPay();"></span>
