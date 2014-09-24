@@ -403,4 +403,14 @@ public class VelocityToolbox {
         }
         return "";
     }
+    public int getNext(int roleId){
+    	switch (roleId) {
+			case 7:return 71;
+			case 71:return 81;
+			case 81:return 8;
+			case 8:return 101;
+			case 91:return 71;
+			default:return -1;
+		}
+    }
 }
