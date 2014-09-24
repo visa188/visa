@@ -54,13 +54,32 @@
 		  	<![CDATA[
 			and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
 			]]>
-		  </if>) tmp1 left OUTER join lineproduct on( tmp1.lineProductId = lineproduct.lineProductId)
+		  </if>
+		  <if test="serviceOperatorId != null">
+			  UNION
+			  select lineorder.*,linecountry.countryName lineCountryName
+			    from lineorder,linecountry,linessrvice service
+			    where lineorder.lineCountryId = linecountry.countryId  and  service.orderId = lineorder.orderId 
+			    and (#{serviceOperatorId,jdbcType=VARCHAR} =  service.serviceOperator )
+			    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
+				<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
+				<if test="startDate != null">
+				  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
+				  </if>
+				  <if test="endDate != null">
+				  	<![CDATA[
+					and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
+					]]>
+				  </if>
+		   </if>
+		  ) tmp1 left OUTER join lineproduct on( tmp1.lineProductId = lineproduct.lineProductId)
 	</select>
 	
 	<select id="selectByPage" parameterType="java.util.Map" resultType="LineOrder">
        	select tmp1.*,lineproduct.lineProductName,lineproduct.orderSeq as lineProductOrderSeq, lineproduct.groupLeader,lineproduct.aircorpId,
        	lineproduct.depositLimitDate,lineproduct.printTicketLimitDate
-		from (select lineorder.*,linecountry.countryName lineCountryName
+		from (
+			select lineorder.*,linecountry.countryName lineCountryName
 		    from lineorder,linecountry
 		    where lineorder.lineCountryId = linecountry.countryId  
 		    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
@@ -82,7 +101,25 @@
 			  	<![CDATA[
 				and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
 				]]>
-			  </if>)
+			  </if>
+			  <if test="serviceOperatorId != null">
+				  UNION
+				  select lineorder.*,linecountry.countryName lineCountryName
+				    from lineorder,linecountry,linessrvice service
+				    where lineorder.lineCountryId = linecountry.countryId  and  service.orderId = lineorder.orderId 
+				    and (#{serviceOperatorId,jdbcType=VARCHAR} =  service.serviceOperator )
+				    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
+					<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
+					<if test="startDate != null">
+					  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
+					  </if>
+					  <if test="endDate != null">
+					  	<![CDATA[
+						and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
+						]]>
+					  </if>
+			   </if>
+			  )
 		 tmp1 left OUTER join lineproduct on( tmp1.lineProductId = lineproduct.lineProductId)
 		order by orderDate desc,orderId desc
 		limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
