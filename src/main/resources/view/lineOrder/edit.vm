@@ -510,8 +510,9 @@
                             </select></span>
                           </div>
                         </div>
-                        #end
-                        #if($userRoleId == $fn.getLineVisaoperManagerRoleId() || $fn.isLineAdminRole($userRoleId))
+						#end
+						#set($visaService = $!{lineServiceMap.get(2)})
+                        #if($visaService && ($userRoleId == $fn.getLineVisaoperManagerRoleId() || $fn.isLineAdminRole($userRoleId)))
                         <div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>签证操作员:</label>
                           <div class="controls">
@@ -608,12 +609,23 @@
                           </div>
                         </div>  
 						<div class="control_group">
-                          <label class="control_label"><span class="ico_must">*</span>资料已全:</label>
+                          <label class="control_label"><span class="ico_must">*</span>资料:</label>
                           <div class="controls">
                            <span class="form_item">
-								<select name="datumIsready" id="datumIsready" class="text2 js_non_empty" placeholder="资料已全">
-									<option value="否">否</option>
-                                    <option value="是" $fn.selected($!{visaService.serviceItem4}, "是")>是</option>
+								<select name="datumIsready" id="datumIsready" class="text2 js_non_empty" placeholder="资料">
+									<option value="未收" $fn.selected($!{visaService.serviceItem4}, "未收")>未收</option>
+                                    <option value="已收" $fn.selected($!{visaService.serviceItem4}, "已收")>已收</option>
+								</select>
+						   </span>
+                          </div>
+                        </div>
+						<div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>消签资料:</label>
+                          <div class="controls">
+                           <span class="form_item">
+								<select name="cancelDatumIsready" id="cancelDatumIsready" class="text2 js_non_empty" placeholder="消签资料">
+									<option value="未收" $fn.selected($!{visaService.serviceItem6}, "未收")>未收</option>
+                                    <option value="已收" $fn.selected($!{visaService.serviceItem6}, "已收")>已收</option>
 								</select>
 						   </span>
                           </div>
