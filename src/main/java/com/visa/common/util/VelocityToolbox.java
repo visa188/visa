@@ -406,10 +406,15 @@ public class VelocityToolbox {
     public int getNext(int roleId){
     	switch (roleId) {
 			case 7:return 71;
-			case 71:return 81;
-			case 81:return 8;
+			case 71:return 81; //销售经理 通过
+			case 711:return 81; //销售副总经理 通过
+			case 6:return 81; //总经理 通过
+			case 81:return 8; //操作经理 通过
+			case 811:return 8; //操作副总经理 通过
 			case 8:return 101;
-			case 91:return 71;
+			case 101:return 10;
+			case 10:return 9;
+			case 9:return 91;
 			default:return -1;
 		}
     }
