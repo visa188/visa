@@ -20,11 +20,11 @@
 		<if test="orderSeq != null">and operatelog.orderSeq = #{orderSeq,jdbcType=VARCHAR}</if>
 		<if test="userName != null">and user.userName ${operator} #{userName,jdbcType=VARCHAR}</if>
 		<if test="startDate != null">
-	  		and operatelog.operateTime >= #{startDate,jdbcType=VARCHAR}
+	  		and date_format(operatelog.operateTime,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
 		  </if>
 		  <if test="endDate != null">
 		  	<![CDATA[
-			and operatelog.operateTime <= #{endDate,jdbcType=VARCHAR}
+			and date_format(operatelog.operateTime,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
 			]]>
 		  </if>
 	</select>
@@ -36,11 +36,11 @@
 		<if test="orderSeq != null">and operatelog.orderSeq = #{orderSeq,jdbcType=VARCHAR}</if>
 		<if test="userName != null">and user.userName ${operator} #{userName,jdbcType=VARCHAR}</if>
 		<if test="startDate != null">
-		  	and operatelog.operateTime >= #{startDate,jdbcType=VARCHAR}
+		  	and date_format(operatelog.operateTime,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
 		  </if>
 		  <if test="endDate != null">
 		  	<![CDATA[
-			and operatelog.operateTime <= #{endDate,jdbcType=VARCHAR}
+			and date_format(operatelog.operateTime,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
 			]]>
 		  </if>
 		order by operateTime desc

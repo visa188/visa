@@ -260,7 +260,7 @@
 							<option value="3">预报</option>
                         </select>
 						<select $fn.isReadOnly($userRoleId,1) name="nameListState" id="nameListState" class="text2" placeholder="占位状态">
-							<option value="">请选择</option>
+							<option value="0">请选择</option>
 							<option value="1">已收定金</option>
 							<option value="2">已收资料</option>
                         </select>

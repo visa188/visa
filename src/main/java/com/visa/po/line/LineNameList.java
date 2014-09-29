@@ -90,7 +90,7 @@ public class LineNameList {
         this.name = name;
     }
 
-    @FieldDes(fieldDes = "客户性别")
+    @FieldDes(fieldDes = "客户性别#1&男@2&女")
     public int getSex() {
         return sex;
     }
@@ -99,7 +99,7 @@ public class LineNameList {
         this.sex = sex;
     }
 
-    @FieldDes(fieldDes = "客户类型")
+    @FieldDes(fieldDes = "客户类型#1&成人@2&儿童(占床)@3&儿童(不占床)")
     public int getAgeType() {
         return ageType;
     }

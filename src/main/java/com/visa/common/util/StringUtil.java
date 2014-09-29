@@ -39,7 +39,7 @@ public class StringUtil {
     public static String generateUpdateOperLog(LineOrderVo lineOrder, LineOrder lineOrderDB,
             Map<Integer, LinesSrvice> serviceListDB, Map<Integer, LineNameList> nameListDB) {
         StringBuffer result = new StringBuffer();
-        result.append("修改订单，编号：").append(lineOrder.getOrderSeq()).append("<br/>");
+        StringBuffer result1 = new StringBuffer();
         try {
             if (lineOrder != null && lineOrderDB != null) {
                 result.append(compareChange(lineOrder, lineOrderDB));
@@ -49,9 +49,13 @@ public class StringUtil {
                 for (LinesSrvice linesSrvice : linesSrviceList) {
                     if (serviceListDB != null
                             && serviceListDB.get(linesSrvice.getServiceId()) != null) {
-                        result.append("修改服务：").append(linesSrvice.getServiceName()).append("<br/>");
-                        result.append(compareChange(linesSrvice,
-                                serviceListDB.get(linesSrvice.getServiceId())));
+                        String log = compareChange(linesSrvice,
+                                serviceListDB.get(linesSrvice.getServiceId()));
+                        if (!StringUtils.isEmpty(log)) {
+                            result.append("修改服务：").append(linesSrvice.getServiceName())
+                                    .append("<br/>");
+                            result.append(log);
+                        }
                         serviceListDB.remove(linesSrvice.getServiceId());
                     } else {
                         result.append("新增服务：").append(linesSrvice.getServiceName()).append("<br/>");
@@ -69,8 +73,11 @@ public class StringUtil {
             if (linesNameList != null) {
                 for (LineNameList nameList : linesNameList) {
                     if (nameListDB != null && nameListDB.get(nameList.getId()) != null) {
-                        result.append("修改客户：").append(nameList.getName()).append("<br/>");
-                        result.append(compareChange(nameList, nameListDB.get(nameList.getId())));
+                        String log = compareChange(nameList, nameListDB.get(nameList.getId()));
+                        if (!StringUtils.isEmpty(log)) {
+                            result.append("修改客户：").append(nameList.getName()).append("<br/>");
+                            result.append(log);
+                        }
                         nameListDB.remove(nameList.getId());
                     } else {
                         result.append("新增客户：").append(nameList.getName()).append("<br/>");
@@ -82,10 +89,15 @@ public class StringUtil {
                     }
                 }
             }
+
+            if (!StringUtils.isEmpty(result.toString())) {
+                result1.append("修改订单，编号：").append(lineOrder.getOrderSeq()).append("<br/>")
+                        .append(result);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return result.toString();
+        return result1.toString();
     }
 
     public static String generateDeleteOperLog(LineOrder lineOrder) {
@@ -113,29 +125,84 @@ public class StringUtil {
                     String str1 = (String) mth.invoke(db);
                     String str2 = (String) mth.invoke(o);
 
-                    if (str1 != null && str2 != null && !str1.equals(str2)) {
-                        result += "将" + fieldDes + "由\"" + str1 + "\"修改为\"" + str2 + "\"";
-                        result += "<br/>";
+                    if (str1 != null && str2 != null && str1.compareTo(str2) != 0) {
+                        if (fieldDes.indexOf("#") == -1) {
+                            result += "将" + fieldDes + "由\"" + str1 + "\"修改为\"" + str2 + "\"";
+                            result += "<br/>";
+                        } else {
+                            if (o instanceof LinesSrvice) {
+                                Integer serviceType = ((LinesSrvice) o).getServiceType();
+                                String t1 = "", t2 = "", des = "";
+                                String[] array = fieldDes.split("#");
+                                for (String temp : array) {
+                                    String[] array1 = temp.split("\\*");
+                                    for (String temp1 : array1) {
+                                        if (!temp1.contains("@")) {
+                                            if (serviceType.toString().equals(temp1.split("&")[0])) {
+                                                des = temp1.split("&")[1];
+                                            }
+                                        } else {
+                                            for (String temp2 : temp1.split("@")) {
+                                                if (str1.toString().equals(temp2.split("&")[0])) {
+                                                    t1 = temp2.split("&")[1];
+                                                }
+                                                if (str2.toString().equals(temp2.split("&")[0])) {
+                                                    t2 = temp2.split("&")[1];
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                if (!StringUtils.isEmpty(t1) || !StringUtils.isEmpty(t2)) {
+                                    result += "将" + des.replace("tab", "") + "由\"" + t1 + "\"修改为\""
+                                            + t2 + "\"";
+                                    result += "<br/>";
+                                } else {
+                                    result += "将" + des.replace("tab", "") + "由\"" + str1
+                                            + "\"修改为\"" + str2 + "\"";
+                                    result += "<br/>";
+                                }
+                            }
+                        }
                     }
                 } else if ("java.lang.Integer".equals(rtnTypeName) || "int".equals(rtnTypeName)) {
                     Integer str1 = (Integer) mth.invoke(o);
                     Integer str2 = (Integer) mth.invoke(db);
                     if (str1 != null && str2 != null && str1.compareTo(str2) != 0) {
-                        result += "将" + fieldDes + "由\"" + str1 + "\"修改为\"" + str2 + "\"";
-                        result += "<br/>";
+                        if (fieldDes.indexOf("#") == -1) {
+                            result += "将" + fieldDes + "由\"" + str1 + "\"修改为\"" + str2 + "\"";
+                            result += "<br/>";
+                        } else {
+                            String t1 = "", t2 = "";
+                            String[] array = fieldDes.split("#")[1].split("@");
+                            for (String temp : array) {
+                                if (str1.toString().equals(temp.split("&")[0])) {
+                                    t1 = temp.split("&")[1];
+                                }
+                                if (str2.toString().equals(temp.split("&")[0])) {
+                                    t2 = temp.split("&")[1];
+                                }
+                            }
+                            result += "将" + fieldDes.split("#")[0] + "由\"" + t1 + "\"修改为\"" + t2
+                                    + "\"";
+                            result += "<br/>";
+                        }
                     }
                 } else if ("java.util.Date".equals(rtnTypeName)) {
                     Date str1 = (Date) mth.invoke(o);
                     Date str2 = (Date) mth.invoke(db);
                     if (str1 != null && str2 != null && str1.compareTo(str2) != 0) {
-                        result += "将" + fieldDes + "由\"" + str1 + "\"修改为\"" + str2 + "\"";
+                        result += "将" + fieldDes + "由\""
+                                + DateUtil.format(str1, DateUtil.FORMAT_DATE) + "\"修改为\""
+                                + DateUtil.format(str2, DateUtil.FORMAT_DATE) + "\"";
                         result += "<br/>";
                     }
                 } else if ("java.math.BigDecimal".equals(rtnTypeName)) {
                     BigDecimal str1 = (BigDecimal) mth.invoke(o);
                     BigDecimal str2 = (BigDecimal) mth.invoke(db);
                     if (str1 != null && str2 != null && str1.compareTo(str2) != 0) {
-                        result += "将" + fieldDes + "由\"" + str1 + "\"修改为\"" + str2 + "\"";
+                        result += "将" + fieldDes + "由\"" + str1.toString() + "\"修改为\""
+                                + str2.toString() + "\"";
                         result += "<br/>";
                     }
                 }

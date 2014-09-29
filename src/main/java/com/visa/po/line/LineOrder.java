@@ -160,7 +160,7 @@ public class LineOrder {
     public BigDecimal profit;
     public BigDecimal qtys;
 
-    @FieldDes(fieldDes = "占位类型")
+    @FieldDes(fieldDes = "占位类型#1&切位@2&占位@3&预报")
     public int getNameListType() {
         return nameListType;
     }
@@ -169,7 +169,7 @@ public class LineOrder {
         this.nameListType = nameListType;
     }
 
-    @FieldDes(fieldDes = "占位状态")
+    @FieldDes(fieldDes = "占位状态#1&已收定金@2&已收资料")
     public int getNameListState() {
         return nameListState;
     }

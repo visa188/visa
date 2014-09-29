@@ -411,14 +411,17 @@ public class LineOrderController {
         }
 
         // 记录操作日志
-        OperateLog operateLog = new OperateLog();
-        operateLog.setUserId(user.getUserId());
-        operateLog.setRoleId(user.getRoleId());
-        operateLog.setOperateType(Constant.OPERATOR_TYPE_UPDATE);
-        operateLog.setOperateDes(StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder,
-                serviceListDB, nameListDB));
-        operateLog.setOrderSeq(lineOrder.getOrderSeq());
-        operateLogDao.insert(operateLog);
+        String log = StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder, serviceListDB,
+                nameListDB);
+        if (!StringUtils.isEmpty(log)) {
+            OperateLog operateLog = new OperateLog();
+            operateLog.setUserId(user.getUserId());
+            operateLog.setRoleId(user.getRoleId());
+            operateLog.setOperateType(Constant.OPERATOR_TYPE_UPDATE);
+            operateLog.setOperateDes(log);
+            operateLog.setOrderSeq(lineOrder.getOrderSeq());
+            operateLogDao.insert(operateLog);
+        }
         return "redirect:list.do?page=" + currentPage + "&type=" + lineOrderVo.getType();
     }
 
