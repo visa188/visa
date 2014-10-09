@@ -76,17 +76,17 @@ public class StringUtil {
                     if (nameListDB != null && nameListDB.get(nameList.getId()) != null) {
                         String log = compareChange(nameList, nameListDB.get(nameList.getId()));
                         if (!StringUtils.isEmpty(log)) {
-                            result.append("修改：").append(nameList.getName()).append("<br/>");
+                            result.append("修改客户：").append(nameList.getName()).append("<br/>");
                             result.append(log);
                         }
                         nameListDB.remove(nameList.getId());
                     } else {
-                        result.append("新增：").append(nameList.getName()).append("<br/>");
+                        result.append("新增客户：").append(nameList.getName()).append("<br/>");
                     }
                 }
                 if (nameListDB != null) {
                     for (Entry<Integer, LineNameList> entry : nameListDB.entrySet()) {
-                        result.append("删除：").append(entry.getValue().getName()).append("<br/>");
+                        result.append("删除客户：").append(entry.getValue().getName()).append("<br/>");
                     }
                 }
             }
