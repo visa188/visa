@@ -48,24 +48,29 @@ public class StringUtil {
             List<LinesSrvice> linesSrviceList = lineOrder.getLineOrderService();
             if (linesSrviceList != null) {
                 for (LinesSrvice linesSrvice : linesSrviceList) {
-                    if (serviceListDB != null
-                            && serviceListDB.get(linesSrvice.getServiceId()) != null) {
-                        String log = compareChange(linesSrvice,
-                                serviceListDB.get(linesSrvice.getServiceId()));
-                        if (!StringUtils.isEmpty(log)) {
-                            result.append("修改：").append(linesSrvice.getServiceName())
+                    if (linesSrvice.getServiceType() != LineSrviceEnumType.BX.getId()) {
+                        if (serviceListDB != null
+                                && serviceListDB.get(linesSrvice.getServiceId()) != null) {
+                            String log = compareChange(linesSrvice,
+                                    serviceListDB.get(linesSrvice.getServiceId()));
+                            if (!StringUtils.isEmpty(log)) {
+                                result.append("修改：").append(linesSrvice.getServiceName())
+                                        .append("<br/>");
+                                result.append(log);
+                            }
+                            serviceListDB.remove(linesSrvice.getServiceId());
+                        } else {
+                            result.append("新增：").append(linesSrvice.getServiceName())
                                     .append("<br/>");
-                            result.append(log);
                         }
-                        serviceListDB.remove(linesSrvice.getServiceId());
-                    } else {
-                        result.append("新增：").append(linesSrvice.getServiceName()).append("<br/>");
                     }
                 }
                 if (serviceListDB != null) {
                     for (Entry<Integer, LinesSrvice> entry : serviceListDB.entrySet()) {
-                        result.append("删除：").append(entry.getValue().getServiceName())
-                                .append("<br/>");
+                        if (entry.getValue().getServiceType() != LineSrviceEnumType.BX.getId()) {
+                            result.append("删除：").append(entry.getValue().getServiceName())
+                                    .append("<br/>");
+                        }
                     }
                 }
             }
@@ -122,7 +127,7 @@ public class StringUtil {
                 // 获取myAnnotation
                 fieldDes = myAnnotation.fieldDes();
 
-                if ("java.lang.String".equals(rtnTypeName)) {
+                if (String.class.getName().equals(rtnTypeName)) {
                     String str1 = (String) mth.invoke(db);
                     String str2 = (String) mth.invoke(o);
 
@@ -133,38 +138,32 @@ public class StringUtil {
                         } else {
                             if (o instanceof LinesSrvice) {
                                 Integer serviceType = ((LinesSrvice) o).getServiceType();
-                                // 保险服务不记日志
-                                if (serviceType != LineSrviceEnumType.BX.getId()) {
-                                    String t1 = "", t2 = "", des = "";
-                                    String[] array = fieldDes.split("#");
-                                    for (String temp : array) {
-                                        String[] array1 = temp.split("\\*");
-                                        for (String temp1 : array1) {
-                                            if (!temp1.contains("@")) {
-                                                if (temp1.split("&")[0].startsWith(serviceType
-                                                        .toString())) {
-                                                    des = temp1.split("&")[1];
-                                                }
-                                            } else {
-                                                for (String temp2 : temp1.split("@")) {
-                                                    if (str1.toString().equals(temp2.split("&")[0])) {
-                                                        t1 = temp2.split("&")[1];
-                                                    }
-                                                    if (str2.toString().equals(temp2.split("&")[0])) {
-                                                        t2 = temp2.split("&")[1];
-                                                    }
-                                                }
+                                String t1 = "", t2 = "", des = "";
+                                String[] array = fieldDes.split("#");
+                                for (String temp : array) {
+                                    String[] array1 = temp.split("\\*");
+                                    if (array1[0].split("&")[0].startsWith(serviceType.toString())) {
+                                        des = array1[0].split("&")[1];
+
+                                        for (String temp2 : array1[1].split("@")) {
+                                            if (str1.toString().equals(temp2.split("&")[0])) {
+                                                t1 = temp2.split("&")[1];
+                                            }
+                                            if (str2.toString().equals(temp2.split("&")[0])) {
+                                                t2 = temp2.split("&")[1];
                                             }
                                         }
-                                    }
-                                    if (!StringUtils.isEmpty(t1) || !StringUtils.isEmpty(t2)) {
-                                        result += "将" + des.replace("tab", "") + "由\"" + t1
-                                                + "\"修改为\"" + t2 + "\"";
-                                        result += "<br/>";
-                                    } else {
-                                        result += "将" + des.replace("tab", "") + "由\"" + str1
-                                                + "\"修改为\"" + str2 + "\"";
-                                        result += "<br/>";
+
+                                        if (!StringUtils.isEmpty(t1) || !StringUtils.isEmpty(t2)) {
+                                            result += "将" + des.replace("tab", "") + "由\"" + t1
+                                                    + "\"修改为\"" + t2 + "\"";
+                                            result += "<br/>";
+                                        } else {
+                                            result += "将" + des.replace("tab", "") + "由\"" + str1
+                                                    + "\"修改为\"" + str2 + "\"";
+                                            result += "<br/>";
+                                        }
+                                        break;
                                     }
                                 }
                             }
