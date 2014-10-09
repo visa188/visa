@@ -188,7 +188,7 @@ public class LinesSrvice {
         this.serviceOperator = serviceOperator;
     }
 
-    @FieldDes(fieldDes = "1&tab*1& 组团社派@2&起航假期派#2&tab*1&个签@2&团签")
+    @FieldDes(fieldDes = "1&tab*1&组团社派@2&起航假期派#2&tab*1&个签@2&团签#3&tab*1&团队机票@2&散客机票#4&tab*1&当地3星/四花@2&当地3-4星@3&当地四星/五花特二@4&当地4-5星@5&当地5星/五花特一#5&备注*tab#6&tab*1&承诺函@2&归国保证金@3&联保")
     public String getServiceItem1() {
         return serviceItem1;
     }
