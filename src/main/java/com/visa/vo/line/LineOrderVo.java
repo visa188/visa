@@ -209,8 +209,8 @@ public class LineOrderVo extends LineOrder {
             linesSrvice.setServiceItem2(yfjpkType);
             linesSrvice.setServiceItem3(hkgs);
             linesSrvice.setServiceItem4(jpdjType);
-            linesSrvice.setServiceItem5(alreadyPaidJpdj);
-            linesSrvice.setServiceItem6(jpPaidJpdjDate);
+            linesSrvice.setServiceItem10(alreadyPaidJpdj);
+            linesSrvice.setServiceItem11(jpPaidJpdjDate);
             linesSrvice.setServicePayPrice(yfjpkdj);
             linesSrvice.setServiceItem9(jpdj);
             linesSrvice.setYfhj(yfjpkhj);
@@ -243,7 +243,11 @@ public class LineOrderVo extends LineOrder {
                 linesSrvice.setServiceItem4(items[5]); // 特殊景点
             }
             if (!"#".equals(items[7])) {
-                linesSrvice.setServiceItem5(items[7]); // 41 巴士 / 42 备注
+            	if (serviceType == LineSrviceEnumType.DJBS.getId()) {
+            		linesSrvice.setServiceItem5(items[7]); // 41 巴士
+				}else{
+					linesSrvice.setServiceItem12(items[7]); // 42 备注
+				}
             }
             if (!"#".equals(items[8])) {
                 linesSrvice.setServiceItem6(items[8]); // 41 的备注

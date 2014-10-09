@@ -68,6 +68,7 @@ public class LinesSrvice {
     public BigDecimal serviceItem9;
     public String serviceItem10;
     public String serviceItem11;
+    public String serviceItem12;
     /**
      * 合计
      * 
@@ -196,7 +197,7 @@ public class LinesSrvice {
     public void setServiceItem1(String serviceItem1) {
         this.serviceItem1 = serviceItem1;
     }
-
+    @FieldDes(fieldDes = "1&领队名字*tab#2&送签日期*tab#4&房型*tab")
     public String getServiceItem2() {
         return serviceItem2;
     }
@@ -204,7 +205,7 @@ public class LinesSrvice {
     public void setServiceItem2(String serviceItem2) {
         this.serviceItem2 = serviceItem2;
     }
-
+    @FieldDes(fieldDes = "2&资料上交期限*tab#3&tab*1&动态opt@2&动态opt#4&备注*tab")
     public String getServiceItem3() {
         return serviceItem3;
     }
@@ -212,7 +213,7 @@ public class LinesSrvice {
     public void setServiceItem3(String serviceItem3) {
         this.serviceItem3 = serviceItem3;
     }
-
+    @FieldDes(fieldDes = "2&资料*未收&未收@已收&已收#3&tab*1&可退@2&冲机票款#4&特殊景点*tab")
     public String getServiceItem4() {
         return serviceItem4;
     }
@@ -220,7 +221,7 @@ public class LinesSrvice {
     public void setServiceItem4(String serviceItem4) {
         this.serviceItem4 = serviceItem4;
     }
-
+    @FieldDes(fieldDes = "2&tab*1&未送签@2&已送签@3&已出签#3&已退*tab#4&tab*1&大巴@2&中巴@3&小巴")
     public String getServiceItem5() {
         return serviceItem5;
     }
@@ -228,7 +229,7 @@ public class LinesSrvice {
     public void setServiceItem5(String serviceItem5) {
         this.serviceItem5 = serviceItem5;
     }
-
+    @FieldDes(fieldDes = "2&消签资料*未收&未收@已收&已收#3&定金时限*tab#4&备注*tab")
     public String getServiceItem6() {
         return serviceItem6;
     }
@@ -236,7 +237,7 @@ public class LinesSrvice {
     public void setServiceItem6(String serviceItem6) {
         this.serviceItem6 = serviceItem6;
     }
-
+    @FieldDes(fieldDes = "3&出票时限*tab#4&导游*1&需要@2&不需要")
     public String getServiceItem7() {
         return serviceItem7;
     }
@@ -244,7 +245,7 @@ public class LinesSrvice {
     public void setServiceItem7(String serviceItem7) {
         this.serviceItem7 = serviceItem7;
     }
-
+    @FieldDes(fieldDes = "3&机票状态*0&未出票@1&已出票#4&导游备注*tab")
     public String getServiceItem8() {
         return serviceItem8;
     }
@@ -252,7 +253,7 @@ public class LinesSrvice {
     public void setServiceItem8(String serviceItem8) {
         this.serviceItem8 = serviceItem8;
     }
-
+    @FieldDes(fieldDes = "3&机票订金*tab")
     public BigDecimal getServiceItem9() {
         return serviceItem9;
     }
@@ -260,7 +261,7 @@ public class LinesSrvice {
     public void setServiceItem9(BigDecimal serviceItem9) {
         this.serviceItem9 = serviceItem9;
     }
-
+    @FieldDes(fieldDes = "3&机票费用已退*tab#4&其他标准*tab")
     public String getServiceItem10() {
         return serviceItem10;
     }
@@ -268,7 +269,7 @@ public class LinesSrvice {
     public void setServiceItem10(String serviceItem10) {
         this.serviceItem10 = serviceItem10;
     }
-
+    @FieldDes(fieldDes = "3&机票费用退款日期*tab#4&地接状态*0&未操作@1&操作中@2&已落实")
     public String getServiceItem11() {
         return serviceItem11;
     }
@@ -276,8 +277,16 @@ public class LinesSrvice {
     public void setServiceItem11(String serviceItem11) {
         this.serviceItem11 = serviceItem11;
     }
+    @FieldDes(fieldDes = "4&司机兼导游备注*tab")
+    public String getServiceItem12() {
+		return serviceItem12;
+	}
 
-    @FieldDes(fieldDes = "合计")
+	public void setServiceItem12(String serviceItem12) {
+		this.serviceItem12 = serviceItem12;
+	}
+
+	@FieldDes(fieldDes = "合计")
     public BigDecimal getPriceSum() {
         return priceSum;
     }
