@@ -390,6 +390,10 @@ public class LineOrderController {
                 return;
             }
         }
+        if (srvice.getServiceType() == LineSrviceEnumType.DJBS.getId()
+                || srvice.getServiceType() == LineSrviceEnumType.DJSJDY.getId()) {
+            linesServiceDao.deleteByPrimaryKey(srvice.getServiceId());
+        }
         linesServiceDao.insert(srvice);
     }
 
