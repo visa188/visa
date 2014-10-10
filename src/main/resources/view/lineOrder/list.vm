@@ -20,6 +20,7 @@
 		<div class="maincon_fluid">
 		<form id="form1" name="form1" action="/lineOrder/list.do" method="post" class="form_horizontal">
 			<input type="hidden" id="page" name="page" value="1">
+			<input type="hidden" id="type" name="type" value="$!{type}">
 			#if(!$hideSearch)	
     			#if($alarmCount>0)
     				<div class="searchbox">

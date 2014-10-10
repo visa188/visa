@@ -16,28 +16,27 @@ import com.visa.po.line.LinesSrvice;
  */
 public final class VisaUtil {
 
-	private VisaUtil() {
-	}
+    private VisaUtil() {
+    }
 
-	public static Map<Integer, LinesSrvice> dealServiceList(
-			List<LinesSrvice> serviceList) {
-		Map<Integer, LinesSrvice> map = new HashMap<Integer, LinesSrvice>();
-		for (LinesSrvice service : serviceList) {
-			map.put(service.getServiceId(), service);
-		}
-		return map;
-	}
+    public static Map<Integer, LinesSrvice> dealServiceList(List<LinesSrvice> serviceList) {
+        Map<Integer, LinesSrvice> map = new HashMap<Integer, LinesSrvice>();
+        for (LinesSrvice service : serviceList) {
+            map.put(service.getServiceId(), service);
+        }
+        return map;
+    }
 
-	public static Map<Integer, LineNameList> dealNameList(
-			List<LineNameList> nameList) {
-		Map<Integer, LineNameList> map = new HashMap<Integer, LineNameList>();
-		for (LineNameList service : nameList) {
-			map.put(service.getId(), service);
-		}
-		return map;
-	}
+    public static Map<Integer, LineNameList> dealNameList(List<LineNameList> nameList) {
+        Map<Integer, LineNameList> map = new HashMap<Integer, LineNameList>();
+        for (LineNameList service : nameList) {
+            map.put(service.getId(), service);
+        }
+        return map;
+    }
 
-	List<Integer> flow = new ArrayList<Integer>();
+    List<Integer> flow = new ArrayList<Integer>();
+
 
 	/**
 	 * 
@@ -90,8 +89,7 @@ public final class VisaUtil {
 				return 101;
 			}
 		default:
-			return 0;
+			return 71;
 		}
-
-	}
+    }
 }
