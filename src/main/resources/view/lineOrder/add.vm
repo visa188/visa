@@ -378,7 +378,41 @@
                             </div>
                         </div>                
                     </div>
-                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>第一操作部:</label>
+                      <div class="controls">
+                       <span class="form_item">
+		                    <select name="dyczb" id="dyczb" class="text2 js_non_empty" placeholder="第一操作部">
+		                    	<option value="1">操作部</option>
+		                    	<option value="2">采购部</option>
+	                            <option value="3">无</option>
+	                        </select>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>第二操作部:</label>
+                      <div class="controls">
+                       <span class="form_item">
+		                    <select name="deczb" id="deczb" class="text2 js_non_empty" placeholder="第二操作部">
+	                            <option value="1">采购部</option>
+	                            <option value="2">操作部</option>
+	                            <option value="3">无</option>
+	                        </select>
+                        </span>
+                      </div>
+                    </div>
+                    <script>
+                        jQuery('#dyczb,#deczb').change(function(){
+                            if((jQuery('#dyczb').val()==1 && jQuery('#deczb').val()==2) || (jQuery('#dyczb').val()==2 && jQuery('#deczb').val()==1)){
+                            	alert('两个操作部不能相同');
+                            }else{
+                            	if(jQuery('#dyczb').val()==3 && jQuery('#deczb').val()==3){
+                            		alert('两个操作部至少选一个');
+                            	}
+                            }
+                        });
+                    </script>
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>特殊说明:</label>
                       <div class="controls">
@@ -485,9 +519,8 @@
                         jQuery('.btn_save').click(function(){
                             var nameListSize = jQuery('#nameListSize').val();
                             if('tj'==jQuery(this).attr('name')){
-                                jQuery('#status').val('8');                                
+                                jQuery('#status').val('81');                                
                             }
-                            //jQuery(".hq_form")[0].submit();
                         });
 						
 						function calculatePriceSum(){

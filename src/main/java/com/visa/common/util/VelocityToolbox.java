@@ -422,21 +422,72 @@ public class VelocityToolbox {
 		return "";
 	}
 
-	public int getNext(int roleId) {
-		switch (roleId) {
-		case 7:
+	public boolean hasButton(int currentFlow, int roleId) {
+		if (roleId == currentFlow) {
+			return true;
+		} else {
+			switch (currentFlow) {
+			case 0:
+				if (LineRoleEnumType.SALESMAN.getId() == roleId) {
+					return true;
+				} else {
+					return false;
+				}
+			case -1:
+				if (LineRoleEnumType.OPERATOR.getId() == roleId
+						|| LineRoleEnumType.PROCUREMENT.getId() == roleId) {
+					return true;
+				} else {
+					return false;
+				}
+			case -11:
+				if (LineRoleEnumType.PROCUREMENT.getId() == roleId) {
+					return true;
+				} else {
+					return false;
+				}
+			case -111:
+				if (LineRoleEnumType.OPERATOR.getId() == roleId) {
+					return true;
+				} else {
+					return false;
+				}
+			default:
+				return false;
+			}
+
+		}
+
+	}
+
+	/**
+	 * 
+	 * @param currentFlow
+	 * @param isParallel
+	 *            0 只有操作 1 只有采购 2 操作主采购次 采购主操作次
+	 * @return
+	 */
+	public static int nextFlow(int currentFlow, int isParallel, int roleId) {
+		switch (currentFlow) {
+		case 0:
 			return 71;
-		case 71:
-			return 81; // 销售经理 通过
-		case 711:
-			return 81; // 销售副总经理 通过
-		case 6:
-			return 81; // 总经理 通过
+		case 71: {
+			switch (isParallel) {
+			case 0:
+				return 81;
+			case 1:
+				return 12;
+			case 2:
+				return -1;
+			default:
+				break;
+			}
+		}
 		case 81:
-			return 8; // 操作经理 通过
-		case 811:
-			return 8; // 操作副总经理 通过
+			return 8;
 		case 8:
+			return 101;
+		case 12:
 			return 101;
 		case 101:
 			return 10;
@@ -444,8 +495,47 @@ public class VelocityToolbox {
 			return 9;
 		case 9:
 			return 91;
+		case -1: {
+			if (LineRoleEnumType.OPERATOR.getId() == roleId) {
+				return -11;
+			} else if (LineRoleEnumType.PROCUREMENT.getId() == roleId) {
+				return -111;
+			}
+		}
+		case -11:
+			if (LineRoleEnumType.PROCUREMENT.getId() == roleId) {
+				return 101;
+			}
+		case -111:
+			if (LineRoleEnumType.OPERATOR.getId() == roleId) {
+				return 101;
+			}
 		default:
-			return -1;
+			return 71;
+		}
+	}
+
+	public int getParallel(String dyczb, String deczb) {
+		if (dyczb.equals("1")) {
+			if (deczb.equals("3") || deczb.equals("1")) {
+				return 0;
+			} else {
+				return 2;
+			}
+		} else if (dyczb.equals("2")) {
+			if (deczb.equals("3") || deczb.equals("2")) {
+				return 1;
+			} else {
+				return 2;
+			}
+		} else {
+			if (deczb.equals("1")) {
+				return 0;
+			} else if (deczb.equals("2")) {
+				return 1;
+			} else {
+				return 0;
+			}
 		}
 	}
 }
