@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.visa.common.constant.LineRoleEnumType;
 import com.visa.po.line.LineNameList;
 import com.visa.po.line.LinesSrvice;
 
@@ -45,7 +46,7 @@ public final class VisaUtil {
 	 *            0 只有操作 1 只有采购 2 操作主采购次 采购主操作次
 	 * @return
 	 */
-	public static int nextFlow(int currentFlow, int isParallel, String deptId) {
+	public static int nextFlow(int currentFlow, int isParallel, int roleId) {
 		switch (currentFlow) {
 		case 0:
 			return 71;
@@ -54,7 +55,7 @@ public final class VisaUtil {
 			case 0:
 				return 81;
 			case 1:
-				return -81;
+				return 12;
 			case 2:
 				return -1;
 			default:
@@ -65,6 +66,8 @@ public final class VisaUtil {
 			return 8;
 		case 8:
 			return 101;
+		case 12:
+			return 101;
 		case 101:
 			return 10;
 		case 10:
@@ -72,18 +75,18 @@ public final class VisaUtil {
 		case 9:
 			return 91;
 		case -1: {
-			if ("北京操作部".equals(deptId)) {
+			if (LineRoleEnumType.OPERATOR.getId() == roleId) {
 				return -11;
-			} else if ("北京采购部".equals(deptId)) {
+			} else if (LineRoleEnumType.PROCUREMENT.getId() == roleId) {
 				return -111;
 			}
 		}
 		case -11:
-			if ("北京采购部".equals(deptId)) {
+			if (LineRoleEnumType.PROCUREMENT.getId() == roleId) {
 				return 101;
 			}
 		case -111:
-			if ("北京操作部".equals(deptId)) {
+			if (LineRoleEnumType.OPERATOR.getId() == roleId) {
 				return 101;
 			}
 		default:
