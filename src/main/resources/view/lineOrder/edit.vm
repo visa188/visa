@@ -276,7 +276,7 @@
 					<div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>占位取消时限:</label>
                       <div class="controls">
-                       <span class="form_item"><input value="$!fn.format($!{lineOrder.nameListlimitDate},"yyyy-MM-dd")" name="nameListlimitDate" id="nameListlimitDate" type="text" class="text1 js_non_empty " maxlength="8" size="8" placeholder="占位取消时限"></span>
+                       <span class="form_item"><input value="$!fn.format($!{lineOrder.nameListlimitDate},"yyyy-MM-dd")" name="nameListlimitDate" id="nameListlimitDate" type="text" class="text1 " maxlength="10" size="10" placeholder="占位取消时限"></span>
                       </div>
                     </div>
                     
@@ -425,7 +425,30 @@
                             </div>
                         </div>                
                     </div>
-                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>第一操作部:</label>
+                      <div class="controls">
+                       <span class="form_item">
+		                    <select $fn.isReadOnly($userRoleId,1) name="dyczb" id="dyczb" class="text2 js_non_empty" placeholder="第一操作部">
+		                    	<option value="1" $fn.selected(${lineOrder.dyczb}, "1")>操作部</option>
+		                    	<option value="2" $fn.selected(${lineOrder.dyczb}, "2")>采购部</option>
+	                            <option value="3" $fn.selected(${lineOrder.dyczb}, "3")>无</option>
+	                        </select>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>第二操作部:</label>
+                      <div class="controls">
+                       <span class="form_item">
+		                    <select $fn.isReadOnly($userRoleId,1) name="deczb" id="deczb" class="text2 js_non_empty" placeholder="第二操作部">
+	                            <option value="1" $fn.selected(${lineOrder.deczb}, "1")>采购部</option>
+	                            <option value="2" $fn.selected(${lineOrder.deczb}, "2")>操作部</option>
+	                            <option value="3" $fn.selected(${lineOrder.deczb}, "3")>无</option>
+	                        </select>
+                        </span>
+                      </div>
+                    </div>
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>特殊说明:</label>
                       <div class="controls">
@@ -1008,12 +1031,21 @@
 					#end
                 </div>
               </div>
-                <div class="form_actions">
+              #if($fn.hasButton($!{lineOrder.status},${userRoleId}))
+              <div class="form_actions">
                     <button type="reset" class="btn btn_reset">重置</button>
-                    <input type="hidden" id="status" name="status" value="0"/>
+                    <input type="hidden" id="status" name="status" value="$!{lineOrder.status}"/>
                     <button type="button" class="btn btn_save" name="bc">保存</button>
                     <button type="button" class="btn btn_save" name="tj">提交</button>
-                </div>                
+                    <script>
+                        jQuery('.btn_save').click(function(){
+                            if('tj'==jQuery(this).attr('name')){
+                                jQuery('#status').val('$fn.nextFlow($!{lineOrder.status},$fn.getParallel('$!{lineOrder.dyczb}','$!{lineOrder.deczb}'),${userRoleId})');                                
+                            }
+                        });
+                    </script>
+                </div>  
+                #end              
             </form>
         </div>
     </div>
