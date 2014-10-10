@@ -142,7 +142,7 @@ public class StringUtil {
                                 String[] array = fieldDes.split("#");
                                 for (String temp : array) {
                                     String[] array1 = temp.split("\\*");
-                                    if (array1[0].split("&")[0].startsWith(serviceType.toString())) {
+                                    if (serviceType.toString().startsWith(array1[0].split("&")[0])) {
                                         des = array1[0].split("&")[1];
 
                                         for (String temp2 : array1[1].split("@")) {
