@@ -89,7 +89,16 @@
     select *  
     FROM user , operatorcountry
     where user.userId = operatorcountry.userId 
-    <if test="lineCountryId != 0">and lineCountryId = #{lineCountryId,jdbcType=INTEGER} </if>
+    and lineCountryId = #{lineCountryId,jdbcType=INTEGER} 
+    <if test="managerId != null">and managerId = #{managerId,jdbcType=INTEGER}</if>
+    and roleId = #{roleId,jdbcType=INTEGER} 
+    and enable = 1
+  </select>
+  
+  <select id="selectVisaOperators" resultType="User">
+    select *  
+    FROM user
+    where 1=1
     <if test="managerId != null">and managerId = #{managerId,jdbcType=INTEGER}</if>
     and roleId = #{roleId,jdbcType=INTEGER} 
     and enable = 1

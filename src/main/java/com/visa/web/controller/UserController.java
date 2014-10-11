@@ -285,8 +285,12 @@ public class UserController {
      */
     @RequestMapping
     @ResponseBody
-    public List<User> getOperators(Integer lineCountryId, String managerId, int roleId) {
-        return userDao.selectByLineCountryId(lineCountryId, managerId, roleId);
+    public List<User> getOperators(int lineCountryId, String managerId, int roleId) {
+        if (lineCountryId == 0) {
+            return userDao.selectVisaOperators(managerId, roleId);
+        } else {
+            return userDao.selectByLineCountryId(lineCountryId, managerId, roleId);
+        }
     }
 
     /**
