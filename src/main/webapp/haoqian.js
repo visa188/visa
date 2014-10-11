@@ -258,9 +258,9 @@ $(function() {
 		var thisForm = this;
 		var submitBtn = $(".btn_save",thisForm);
 		submitBtn.bind("click",function(e){
-			if('tj'==jQuery(this).attr('name')){
-                jQuery('#status').val('8');                                
-            }
+			//if('tj'==jQuery(this).attr('name')){
+            //    jQuery('#status').val('8');                                
+            //}
 			$(this).attr("disabled",true);
 			GLB.vari.submit_flag = true;
 			if($(thisForm).attr('class').indexOf("line") >=0){
