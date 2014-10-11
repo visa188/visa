@@ -923,7 +923,7 @@
 									if(typeof jpdjAlreadyPaid != "undefined"){
 										jpAlreadyPaid = Math.round(parseFloat(jpAlreadyPaid*100+jpdjAlreadyPaid*100))/100;
 									}
-									if(jpPriceSum!=0)
+									if(jpPriceSum!=0){
 										var needPaid = Math.round(parseFloat(jpPriceSum*100-jpAlreadyPaid*100))/100;
 										if(needPaid<0){
 											alert("机票已付款大于应付款，请重新填写");
@@ -1015,18 +1015,20 @@
     						}
 							
 							function calculateProfit(){
+								 var priceSumObj = jQuery("#priceSum");
+								 var djPriceSumObj = jQuery("#djPriceSum");
 								//总计应收
-								var priceSum=(jQuery("#priceSum")&&jQuery("#priceSum").val()=='')?0:jQuery("#priceSum").val();
+								var priceSum=(typeof priceSumObj== "undefined"||jQuery("#priceSum").val()=='')?0:jQuery("#priceSum").val();
 								//机票应付
-								var jpPriceSum=(jQuery("#jpPriceSum")&&jQuery("#jpPriceSum").val()=='')?0:jQuery("#jpPriceSum").val();
+								var jpPriceSum=(typeof  jQuery("#jpPriceSum")== "undefined"||jQuery("#jpPriceSum").val()=='')?0:jQuery("#jpPriceSum").val();
 								//签证应付
-								var qzPriceSum=(jQuery("#qzPriceSum")&&jQuery("#qzPriceSum").val()=='')?0:jQuery("#qzPriceSum").val();
+								var qzPriceSum=(typeof  jQuery("#qzPriceSum")== "undefined"||jQuery("#qzPriceSum").val()=='')?0:jQuery("#qzPriceSum").val();
 								//地接应付
-								var djPriceSum=(jQuery("#djPriceSum")&&jQuery("#djPriceSum").val()=='')?0:jQuery("#djPriceSum").val();
+								var djPriceSum=(typeof  djPriceSumObj== "undefined"||jQuery("#djPriceSum").val()=='')?0:jQuery("#djPriceSum").val();
 								//其它应付
-								var qtPriceSum=(jQuery("#qtPriceSum")&&jQuery("#qtPriceSum").val()=='')?0:jQuery("#qtPriceSum").val();
+								var qtPriceSum=(typeof  jQuery("#qtPriceSum")== "undefined"||jQuery("#qtPriceSum").val()=='')?0:jQuery("#qtPriceSum").val();
 								//保险应付
-								var bxPriceSum=(jQuery("#bxPriceSum")&&jQuery("#bxPriceSum").val()=='')?0:jQuery("#bxPriceSum").val();
+								var bxPriceSum=(typeof  jQuery("#bxPriceSum")== "undefined"||jQuery("#bxPriceSum").val()=='')?0:jQuery("#bxPriceSum").val();
 								
 								//毛利为总应收-总应付
                         		var profit = Math.round(parseFloat(priceSum*100-jpPriceSum*100-qzPriceSum*100-djPriceSum*100-qtPriceSum*100-bxPriceSum*100))/100;
