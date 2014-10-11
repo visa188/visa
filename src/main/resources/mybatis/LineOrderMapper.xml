@@ -35,6 +35,8 @@
 		(select lineorder.*,linecountry.countryName lineCountryName
 		    from lineorder,linecountry
 		    where lineorder.lineCountryId = linecountry.countryId  
+	    <if test="userRoleId == 81">and (lineorder.status!=7 or lineorder.status!=71)</if> 
+	    <if test="userRoleId == 101">and (lineorder.status==10 or lineorder.status==9 or lineorder.status==91)</if>
 		<if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 		<if test="salesmanId != null">and lineorder.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
 		<if test="lineOperatorId != null">and lineorder.lineOperatorId=#{lineOperatorId,jdbcType=VARCHAR}</if>
@@ -82,6 +84,8 @@
 			select lineorder.*,linecountry.countryName lineCountryName
 		    from lineorder,linecountry
 		    where lineorder.lineCountryId = linecountry.countryId  
+		    <if test="userRoleId == 81">and (lineorder.status!=7 or lineorder.status!=71)</if> 
+		    <if test="userRoleId == 101">and (lineorder.status==10 or lineorder.status==9 or lineorder.status==91)</if> 
 		    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 			<if test="salesmanId != null">and lineorder.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
 			<if test="lineOperatorId != null">and lineorder.lineOperatorId=#{lineOperatorId,jdbcType=VARCHAR}</if>
@@ -151,7 +155,7 @@
     insert into lineorder (orderDate,type,nameListSize,nameListType,nameListState,nameListlimitDate,srf,drf,pf,salesmanId,salesmanName,lineOperatorId,lineOperatorName,
     visaOperatorId,visaOperatorName,signOperatorId,signOperatorName,travelAgency,contact,contactNo,lineCountryId,
     startDate,endDate,travelInfo,travelInfoFileUrl,aircorpId,price,priceSum,alreadyGot,needGot,gotBank,gotDate,paidPriceSum,status,lineProductId,specialComment,orderSeq,profit,qtys, postTime,
-    dyczb,deczb)
+    dyczb,deczb,jdstatus,busstatus,tuanstatus)
     values (now(),
     #{type,jdbcType=INTEGER},#{nameListSize,jdbcType=INTEGER},#{nameListType,jdbcType=INTEGER},#{nameListState,jdbcType=INTEGER},#{nameListlimitDate,jdbcType=DATE},
     #{srf,jdbcType=VARCHAR},#{drf,jdbcType=VARCHAR},#{pf,jdbcType=VARCHAR},
@@ -162,7 +166,8 @@
     #{endDate,jdbcType=DATE},#{travelInfo,jdbcType=VARCHAR},#{travelInfoFileUrl,jdbcType=VARCHAR},#{aircorpId,jdbcType=INTEGER},
     #{price,jdbcType=DECIMAL},#{priceSum,jdbcType=DECIMAL},#{alreadyGot,jdbcType=DECIMAL},#{needGot,jdbcType=DECIMAL},#{gotBank,jdbcType=VARCHAR},#{gotDate,jdbcType=DATE},
     #{priceSum,jdbcType=DECIMAL},#{status,jdbcType=INTEGER},#{lineProductId,jdbcType=INTEGER},#{specialComment,jdbcType=VARCHAR},
-    #{orderSeq,jdbcType=VARCHAR},#{profit,jdbcType=DECIMAL},#{qtys,jdbcType=DECIMAL}, now(),#{dyczb,jdbcType=VARCHAR},#{deczb,jdbcType=VARCHAR})
+    #{orderSeq,jdbcType=VARCHAR},#{profit,jdbcType=DECIMAL},#{qtys,jdbcType=DECIMAL}, now(),#{dyczb,jdbcType=VARCHAR},#{deczb,jdbcType=VARCHAR},
+    #{jdstatus,jdbcType=INTEGER},#{busstatus,jdbcType=INTEGER},#{tuanstatus,jdbcType=INTEGER})
   </insert>
   
   <update id="updateByPrimaryKey">
@@ -206,6 +211,9 @@
 	    <if test="specialComment != null">specialComment = #{specialComment,jdbcType=VARCHAR},</if>
 	    <if test="dyczb != null">dyczb = #{dyczb,jdbcType=VARCHAR},</if>
 	    <if test="deczb != null">dyczb = #{deczb,jdbcType=VARCHAR},</if>
+	    <if test="jdstatus != null">jdstatus = #{jdstatus,jdbcType=INTEGER},</if>
+	    <if test="busstatus != null">busstatus = #{busstatus,jdbcType=INTEGER},</if>
+	    <if test="tuanstatus != null">tuanstatus = #{tuanstatus,jdbcType=INTEGER},</if>
     postTime = now()
     </set>
     where orderId = #{orderId,jdbcType=INTEGER}

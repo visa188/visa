@@ -134,6 +134,8 @@ public class LineOrderController {
             } else if (LineRoleEnumType.SIGNOPERATOR.getId() == user.getRoleId()) {
                 paraMap.put("signOperatorId", user.getUserId());
             }
+            
+            paraMap.put("userRoleId", user.getRoleId());
 
             paraMap.put("type", type);
             // 记录总条数

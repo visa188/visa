@@ -465,7 +465,43 @@
                       </div>
                     </div>
                 </div>  
-                
+                #if($userRoleId == $fn.getLineOperatorRoleId() || $fn.isLineAdminRole($userRoleId))
+            	<div class="control_group">
+                  <label class="control_label"><span class="ico_must">*</span>酒店状态:</label>
+                  <div class="controls">
+                   <span class="form_item">
+						<select name="jdstatus" id="jdstatus" class="text2 js_non_empty" placeholder="酒店状态">
+							<option value="1" $fn.selected($!{lineOrder.jdstatus}, "1")>未操作</option>
+                            <option value="2" $fn.selected($!{lineOrder.jdstatus}, "2")>操作中</option>
+							<option value="3" $fn.selected($!{lineOrder.jdstatus}, "3")>已落实</option>
+						</select>
+				   </span>
+                  </div>
+                </div>
+                <div class="control_group">
+                  <label class="control_label"><span class="ico_must">*</span>巴士状态:</label>
+                  <div class="controls">
+                   <span class="form_item">
+						<select name="busstatus" id="busstatus" class="text2 js_non_empty" placeholder="巴士状态">
+							<option value="1" $fn.selected($!{lineOrder.busstatus}, "1")>未操作</option>
+                            <option value="2" $fn.selected($!{lineOrder.busstatus}, "2")>操作中</option>
+							<option value="3" $fn.selected($!{lineOrder.busstatus}, "3")>已落实</option>
+						</select>
+				   </span>
+                  </div>
+                </div>
+                <div class="control_group">
+                  <label class="control_label"><span class="ico_must">*</span>团队状态:</label>
+                  <div class="controls">
+                   <span class="form_item">
+						<select name="tuanstatus" id="tuanstatus" class="text2 js_non_empty" placeholder="团队状态">
+							<option value="1" $fn.selected($!{lineOrder.jdstatus}, "1")>未出团</option>
+                            <option value="2" $fn.selected($!{lineOrder.jdstatus}, "2")>已出团</option>
+						</select>
+				   </span>
+                  </div>
+                </div>
+                #end
                 #if($userRoleId == $fn.getLineOperatorManagerRoleId() || $userRoleId == $fn.getLineVisaoperManagerRoleId() || $fn.isLineAdminRole($userRoleId))
                     <script>
                         function getOperators(isedit){
@@ -703,7 +739,7 @@
 								<select name="visaState" id="visaState" class="text2 js_non_empty" placeholder="签证状态">
 									<option value="1" $fn.selected($!{visaService.serviceItem5}, "1")>未送签</option>
                                     <option value="2" $fn.selected($!{visaService.serviceItem5}, "2")>已送签</option>
-									<option value="2" $fn.selected($!{visaService.serviceItem5}, "3")>已出签</option>
+									<option value="3" $fn.selected($!{visaService.serviceItem5}, "3")>已出签</option>
 								</select>
 						   </span>
                           </div>

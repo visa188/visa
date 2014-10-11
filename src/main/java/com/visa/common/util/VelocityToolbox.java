@@ -515,7 +515,7 @@ public class VelocityToolbox {
 		}
 	}
 
-	public int getParallel(String dyczb, String deczb) {
+	public static int getParallel(String dyczb, String deczb) {
 		if (dyczb.equals("1")) {
 			if (deczb.equals("3") || deczb.equals("1")) {
 				return 0;
