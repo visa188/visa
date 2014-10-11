@@ -35,7 +35,7 @@
 		(select lineorder.*,linecountry.countryName lineCountryName
 		    from lineorder,linecountry
 		    where lineorder.lineCountryId = linecountry.countryId  
-	    <if test="userRoleId == 81">and (lineorder.status!=7 or lineorder.status!=71)</if> 
+	    <if test="userRoleId == 81">and (lineorder.status!=7 AND lineorder.status!=71)</if> 
 	    <if test="userRoleId == 101">and (lineorder.status==10 or lineorder.status==9 or lineorder.status==91)</if>
 		<if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 		<if test="salesmanId != null">and lineorder.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
@@ -84,7 +84,7 @@
 			select lineorder.*,linecountry.countryName lineCountryName
 		    from lineorder,linecountry
 		    where lineorder.lineCountryId = linecountry.countryId  
-		    <if test="userRoleId == 81">and (lineorder.status!=7 or lineorder.status!=71)</if> 
+		    <if test="userRoleId == 81">and (lineorder.status!=7 AND lineorder.status!=71)</if> 
 		    <if test="userRoleId == 101">and (lineorder.status==10 or lineorder.status==9 or lineorder.status==91)</if> 
 		    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 			<if test="salesmanId != null">and lineorder.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
