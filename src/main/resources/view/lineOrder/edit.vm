@@ -505,7 +505,7 @@
                              jQuery.ajax({
                                type: "POST",
                                url: "/user/getOperators.do",
-                               data:{lineCountryId:lineCountryId,#if(!$fn.isLineAdminRole($userRoleId))managerId:'$userUserId',#end roleId:$fn.getLineVisaoperRoleId()},
+                               data:{lineCountryId:0,#if(!$fn.isLineAdminRole($userRoleId))managerId:'$userUserId',#end roleId:$fn.getLineVisaoperRoleId()},
                                success: function(result){
                                     if(result!='error'){
                                         var operatorList=result;

@@ -89,7 +89,7 @@
     select *  
     FROM user , operatorcountry
     where user.userId = operatorcountry.userId 
-    and lineCountryId = #{lineCountryId,jdbcType=INTEGER} 
+    <if test="lineCountryId != 0">and lineCountryId = #{lineCountryId,jdbcType=INTEGER} </if>
     <if test="managerId != null">and managerId = #{managerId,jdbcType=INTEGER}</if>
     and roleId = #{roleId,jdbcType=INTEGER} 
     and enable = 1

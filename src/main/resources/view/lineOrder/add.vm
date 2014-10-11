@@ -125,6 +125,7 @@
 				
 			  <input value="0" type="hidden" id="lineProductId" name="lineProductId">
 			  <input value="" type="hidden" id="travelInfoFileUrl" name="travelInfoFileUrl">
+			  <input value="$!{type}" type="hidden" id="type" name="type">
 				
 		      <div class="widget_box">
 		        <div class="widget_title">
@@ -227,6 +228,13 @@
     		               <textarea class="text3" id="travelInfo" name="travelInfo" cols="80" rows="5" placeholder="行程简介" maxlength="100"></textarea>
     		              </div>
     		            </div>	
+    		            
+    		             <div class="control_group">
+	                      <label class="control_label"><span class="ico_must">*</span>客人数量:</label>
+	                      <div class="controls">
+	                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.nameListSize}" name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="客人数量" onchange="setNamelistSize()"></span>
+	                      </div>
+	                    </div>
 					#end
 					
 		        	<div class="control_group">
@@ -250,47 +258,6 @@
 		              </div>
 		            </div>	
 					
-					#if(${lineOrder.type}==2)
-						<div class="control_group">
-	                      <label class="control_label"><span class="ico_must">*</span>占位类型:</label>
-	                      <div class="controls">
-	                       <span class="form_item">
-							<select $fn.isReadOnly($userRoleId,1) name="nameListType" id="nameListType" class="text2 js_non_empty" placeholder="占位类型">
-	                            <option value="1">切位</option>
-	                            <option value="2">占位</option>
-								<option value="3">预报</option>
-	                        </select>
-							<select $fn.isReadOnly($userRoleId,1) name="nameListState" id="nameListState" class="text2" placeholder="占位状态">
-								<option value="0">请选择</option>
-								<option value="1">已收定金</option>
-								<option value="2">已收资料</option>
-	                        </select>
-						   </span>
-	                      </div>
-	                    </div>
-						
-						<div class="control_group">
-			              <label class="control_label"><span class="ico_must">*</span>占位数:</label>
-			              <div class="controls">
-			               <span class="form_item"><input name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="占位数" onchange="setNamelistSize()"></span>
-			              </div>
-			            </div>
-						
-						<div class="control_group">
-	                      <label class="control_label"><span class="ico_must">*</span>占位取消时限:</label>
-	                      <div class="controls">
-	                       <span class="form_item"><input $fn.isReadOnly($userRoleId) name="nameListlimitDate" id="nameListlimitDate" type="text" class="text1 js_non_empty js_datepicker" maxlength="8" size="8" placeholder="占位取消时限"></span>
-	                      </div>
-	                    </div>
-                    #elseif(${lineOrder.type}==1)
-	                	 <div class="control_group">
-	                      <label class="control_label"><span class="ico_must">*</span>客人数量:</label>
-	                      <div class="controls">
-	                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.nameListSize}" name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="客人数量" onchange="setNamelistSize()"></span>
-	                      </div>
-	                    </div>
-                    #end
-		            
 		            <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>房间类型:</label>
                       <div class="controls">
