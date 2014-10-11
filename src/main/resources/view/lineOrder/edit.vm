@@ -247,38 +247,47 @@
                        <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.contactNo}" name="contactNo" id="contactNo" type="text" class="text1" maxlength="50" size="50" placeholder="联系方式"></span>
                       </div>
                     </div>  
-					
-					<div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>占位类型:</label>
-                      <div class="controls">
-                       <span class="form_item">
-							<select $fn.isReadOnly($userRoleId,1) name="nameListType" id="nameListType" class="text2 js_non_empty" placeholder="占位类型">
-                                <option value="1" $fn.selected(${lineOrder.nameListType}, "1")>切位</option>
-                                <option value="2" $fn.selected(${lineOrder.nameListType}, "2")>占位</option>
-								<option value="3" $fn.selected(${lineOrder.nameListType}, "3")>预报</option>
-                            </select>
-							<select $fn.isReadOnly($userRoleId,1) name="nameListState" id="nameListState" class="text2" placeholder="占位状态">
-    							<option value="0">请选择</option>
-    							<option value="1" $fn.selected(${lineOrder.nameListState}, "1")>已收定金</option>
-    							<option value="2" $fn.selected(${lineOrder.nameListState}, "2")>已收资料</option>
-                            </select>
-					   </span>
-                      </div>
-                    </div>
                     
-                    <div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>占位数:</label>
-                      <div class="controls">
-                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.nameListSize}" name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="占位数" onchange="setNamelistSize()"></span>
-                      </div>
-                    </div>
-					
-					<div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>占位取消时限:</label>
-                      <div class="controls">
-                       <span class="form_item"><input value="$!fn.format($!{lineOrder.nameListlimitDate},"yyyy-MM-dd")" name="nameListlimitDate" id="nameListlimitDate" type="text" class="text1 " maxlength="10" size="10" placeholder="占位取消时限"></span>
-                      </div>
-                    </div>
+					#if(${lineOrder.type}==2)
+						<div class="control_group">
+	                      <label class="control_label"><span class="ico_must">*</span>占位类型:</label>
+	                      <div class="controls">
+	                       <span class="form_item">
+								<select $fn.isReadOnly($userRoleId,1) name="nameListType" id="nameListType" class="text2 js_non_empty" placeholder="占位类型">
+	                                <option value="1" $fn.selected(${lineOrder.nameListType}, "1")>切位</option>
+	                                <option value="2" $fn.selected(${lineOrder.nameListType}, "2")>占位</option>
+									<option value="3" $fn.selected(${lineOrder.nameListType}, "3")>预报</option>
+	                            </select>
+								<select $fn.isReadOnly($userRoleId,1) name="nameListState" id="nameListState" class="text2" placeholder="占位状态">
+	    							<option value="0">请选择</option>
+	    							<option value="1" $fn.selected(${lineOrder.nameListState}, "1")>已收定金</option>
+	    							<option value="2" $fn.selected(${lineOrder.nameListState}, "2")>已收资料</option>
+	                            </select>
+						   </span>
+	                      </div>
+	                    </div>
+	                    
+	                    <div class="control_group">
+	                      <label class="control_label"><span class="ico_must">*</span>占位数:</label>
+	                      <div class="controls">
+	                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.nameListSize}" name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="占位数" onchange="setNamelistSize()"></span>
+	                      </div>
+	                    </div>
+						
+						<div class="control_group">
+	                      <label class="control_label"><span class="ico_must">*</span>占位取消时限:</label>
+	                      <div class="controls">
+	                       <span class="form_item"><input value="$!fn.format($!{lineOrder.nameListlimitDate},"yyyy-MM-dd")" name="nameListlimitDate" id="nameListlimitDate" type="text" class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="占位取消时限"></span>
+	                      </div>
+	                    </div>
+	                #elseif(${lineOrder.type}==1)
+	                	 <div class="control_group">
+	                      <label class="control_label"><span class="ico_must">*</span>客人数量:</label>
+	                      <div class="controls">
+	                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.nameListSize}" name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="客人数量" onchange="setNamelistSize()"></span>
+	                      </div>
+	                    </div>
+                    #end
                     
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>房间类型:</label>
@@ -425,7 +434,30 @@
                             </div>
                         </div>                
                     </div>
-                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>第一操作部:</label>
+                      <div class="controls">
+                       <span class="form_item">
+		                    <select $fn.isReadOnly($userRoleId,1) name="dyczb" id="dyczb" class="text2 js_non_empty" placeholder="第一操作部">
+		                    	<option value="1" $fn.selected(${lineOrder.dyczb}, "1")>操作部</option>
+		                    	<option value="2" $fn.selected(${lineOrder.dyczb}, "2")>采购部</option>
+	                            <option value="3" $fn.selected(${lineOrder.dyczb}, "3")>无</option>
+	                        </select>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>第二操作部:</label>
+                      <div class="controls">
+                       <span class="form_item">
+		                    <select $fn.isReadOnly($userRoleId,1) name="deczb" id="deczb" class="text2 js_non_empty" placeholder="第二操作部">
+	                            <option value="1" $fn.selected(${lineOrder.deczb}, "1")>采购部</option>
+	                            <option value="2" $fn.selected(${lineOrder.deczb}, "2")>操作部</option>
+	                            <option value="3" $fn.selected(${lineOrder.deczb}, "3")>无</option>
+	                        </select>
+                        </span>
+                      </div>
+                    </div>
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>特殊说明:</label>
                       <div class="controls">
@@ -444,7 +476,7 @@
                             jQuery.ajax({
                                type: "POST",
                                url: "/user/getOperators.do",
-                               data:{lineCountryId:lineCountryId,#if(!$fn.isLineAdminRole($userRoleId))managerId:$userUserId,#end roleId:$fn.getLineOperatorRoleId()},
+                               data:{lineCountryId:lineCountryId,#if(!$fn.isLineAdminRole($userRoleId))managerId:'$userUserId',#end roleId:$fn.getLineOperatorRoleId()},
                                success: function(result){
                                     if(result!='error'){
                                         var operatorList=result;
@@ -1008,12 +1040,21 @@
 					#end
                 </div>
               </div>
-                <div class="form_actions">
+              #if($fn.hasButton($!{lineOrder.status},${userRoleId}))
+              <div class="form_actions">
                     <button type="reset" class="btn btn_reset">重置</button>
-                    <input type="hidden" id="status" name="status" value="0"/>
+                    <input type="hidden" id="status" name="status" value="$!{lineOrder.status}"/>
                     <button type="button" class="btn btn_save" name="bc">保存</button>
                     <button type="button" class="btn btn_save" name="tj">提交</button>
-                </div>                
+                    <script>
+                        jQuery('.btn_save').click(function(){
+                            if('tj'==jQuery(this).attr('name')){
+                                jQuery('#status').val('$fn.nextFlow($!{lineOrder.status},$fn.getParallel('$!{lineOrder.dyczb}','$!{lineOrder.deczb}'),${userRoleId})');                                
+                            }
+                        });
+                    </script>
+                </div>  
+                #end              
             </form>
         </div>
     </div>

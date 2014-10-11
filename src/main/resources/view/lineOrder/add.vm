@@ -250,37 +250,46 @@
 		              </div>
 		            </div>	
 					
-					<div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>占位类型:</label>
-                      <div class="controls">
-                       <span class="form_item">
-						<select $fn.isReadOnly($userRoleId,1) name="nameListType" id="nameListType" class="text2 js_non_empty" placeholder="占位类型">
-                            <option value="1">切位</option>
-                            <option value="2">占位</option>
-							<option value="3">预报</option>
-                        </select>
-						<select $fn.isReadOnly($userRoleId,1) name="nameListState" id="nameListState" class="text2" placeholder="占位状态">
-							<option value="0">请选择</option>
-							<option value="1">已收定金</option>
-							<option value="2">已收资料</option>
-                        </select>
-					   </span>
-                      </div>
-                    </div>
-					
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>占位数:</label>
-		              <div class="controls">
-		               <span class="form_item"><input name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="占位数" onchange="setNamelistSize()"></span>
-		              </div>
-		            </div>
-					
-					<div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>占位取消时限:</label>
-                      <div class="controls">
-                       <span class="form_item"><input $fn.isReadOnly($userRoleId) name="nameListlimitDate" id="nameListlimitDate" type="text" class="text1 js_non_empty js_datepicker" maxlength="8" size="8" placeholder="占位取消时限"></span>
-                      </div>
-                    </div>
+					#if(${lineOrder.type}==2)
+						<div class="control_group">
+	                      <label class="control_label"><span class="ico_must">*</span>占位类型:</label>
+	                      <div class="controls">
+	                       <span class="form_item">
+							<select $fn.isReadOnly($userRoleId,1) name="nameListType" id="nameListType" class="text2 js_non_empty" placeholder="占位类型">
+	                            <option value="1">切位</option>
+	                            <option value="2">占位</option>
+								<option value="3">预报</option>
+	                        </select>
+							<select $fn.isReadOnly($userRoleId,1) name="nameListState" id="nameListState" class="text2" placeholder="占位状态">
+								<option value="0">请选择</option>
+								<option value="1">已收定金</option>
+								<option value="2">已收资料</option>
+	                        </select>
+						   </span>
+	                      </div>
+	                    </div>
+						
+						<div class="control_group">
+			              <label class="control_label"><span class="ico_must">*</span>占位数:</label>
+			              <div class="controls">
+			               <span class="form_item"><input name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="占位数" onchange="setNamelistSize()"></span>
+			              </div>
+			            </div>
+						
+						<div class="control_group">
+	                      <label class="control_label"><span class="ico_must">*</span>占位取消时限:</label>
+	                      <div class="controls">
+	                       <span class="form_item"><input $fn.isReadOnly($userRoleId) name="nameListlimitDate" id="nameListlimitDate" type="text" class="text1 js_non_empty js_datepicker" maxlength="8" size="8" placeholder="占位取消时限"></span>
+	                      </div>
+	                    </div>
+                    #elseif(${lineOrder.type}==1)
+	                	 <div class="control_group">
+	                      <label class="control_label"><span class="ico_must">*</span>客人数量:</label>
+	                      <div class="controls">
+	                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.nameListSize}" name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="客人数量" onchange="setNamelistSize()"></span>
+	                      </div>
+	                    </div>
+                    #end
 		            
 		            <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>房间类型:</label>
@@ -378,7 +387,41 @@
                             </div>
                         </div>                
                     </div>
-                    
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>第一操作部:</label>
+                      <div class="controls">
+                       <span class="form_item">
+		                    <select name="dyczb" id="dyczb" class="text2 js_non_empty" placeholder="第一操作部">
+		                    	<option value="1">操作部</option>
+		                    	<option value="2">采购部</option>
+	                            <option value="3">无</option>
+	                        </select>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>第二操作部:</label>
+                      <div class="controls">
+                       <span class="form_item">
+		                    <select name="deczb" id="deczb" class="text2 js_non_empty" placeholder="第二操作部">
+	                            <option value="1">采购部</option>
+	                            <option value="2">操作部</option>
+	                            <option value="3">无</option>
+	                        </select>
+                        </span>
+                      </div>
+                    </div>
+                    <script>
+                        jQuery('#dyczb,#deczb').change(function(){
+                            if((jQuery('#dyczb').val()==1 && jQuery('#deczb').val()==2) || (jQuery('#dyczb').val()==2 && jQuery('#deczb').val()==1)){
+                            	alert('两个操作部不能相同');
+                            }else{
+                            	if(jQuery('#dyczb').val()==3 && jQuery('#deczb').val()==3){
+                            		alert('两个操作部至少选一个');
+                            	}
+                            }
+                        });
+                    </script>
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>特殊说明:</label>
                       <div class="controls">
@@ -485,9 +528,8 @@
                         jQuery('.btn_save').click(function(){
                             var nameListSize = jQuery('#nameListSize').val();
                             if('tj'==jQuery(this).attr('name')){
-                                jQuery('#status').val('8');                                
+                                jQuery('#status').val('81');                                
                             }
-                            //jQuery(".hq_form")[0].submit();
                         });
 						
 						function calculatePriceSum(){
