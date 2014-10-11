@@ -388,7 +388,7 @@
                         jQuery('.btn_save').click(function(){
                             var nameListSize = jQuery('#nameListSize').val();
                             if('tj'==jQuery(this).attr('name')){
-                                jQuery('#status').val('81');                                
+                                jQuery('#status').val('71');                                
                             }
                         });
 						
