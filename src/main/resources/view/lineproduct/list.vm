@@ -51,7 +51,7 @@
                             <td>$!{one.seatNum}</td>
                             <td>$!{one.leftSeatNum}</td>
                             <td>$!{one.price}</td>
-							<td><a class="ico_edit_g" href="/lineOrder/add.do?lineproductId=${one.lineProductId}"></a></td>
+							<td><a class="ico_edit_g" href="/lineOrder/add.do?lineproductId=${one.lineProductId}&type=2"></a></td>
 							#if(${fn.isLineAdminRole($userRoleId)})
 	                        <td><a class="ico_edit_g" href="edit.do?productId=${one.lineProductId}&page=$page"></a></td>
 	                        <td><a class="ico_delete_r" onclick="return confirm('是否将此产品删除?')" href="delete.do?productId=${one.lineProductId}&page=$page"></a></td>

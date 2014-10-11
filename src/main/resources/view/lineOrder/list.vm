@@ -15,7 +15,7 @@
 	<div class="miancon">
 		<div class="maincon_title">
 			<span class="ico_order_w"></span><h2>订单信息管理</h2>
-				<div class="right"><a class="ico_order_add" title="新增订单信息" href="/lineOrder/add.do">+</a></div>
+				<div class="right"><a class="ico_order_add" title="新增订单信息" href="/lineOrder/add.do?type=$!{type}">+</a></div>
 		</div>
 		<div class="maincon_fluid">
 		<form id="form1" name="form1" action="/lineOrder/list.do" method="post" class="form_horizontal">

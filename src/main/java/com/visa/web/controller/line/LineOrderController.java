@@ -172,7 +172,7 @@ public class LineOrderController {
      * @param model model
      */
     @RequestMapping
-    public void add(Integer lineproductId, ModelMap model) {
+    public void add(Integer lineproductId, ModelMap model, int type) {
         if (lineproductId != null) {
             LineProduct product = lineProductDao.selectByPrimaryKey(lineproductId);
             model.put("product", product);
@@ -181,6 +181,7 @@ public class LineOrderController {
         List<LineProduct> lineProductList = lineProductDao.selectAllLineProduct();
         model.put("lineProductList", lineProductList);
         model.put("countryList", countryList);
+        model.put("type", type);
     }
 
     /**

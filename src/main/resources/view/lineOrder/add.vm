@@ -32,7 +32,7 @@
 						jQuery('#result').html("<a href='/file/download.do?myfile="+result.travelInfoFileUrl+"'>"+fileName+"</a>");
 					}
 					jQuery("#travelInfo").val(result.travelInfo);
-					getOperators();
+					//getOperators();
 				}
     	   }
 		 });
@@ -133,60 +133,17 @@
 		        	<h3>订单基本信息</h3>
 		        </div>
 		        <div class="widget_content">
-					#if($!product)
+					#if($!type==2)
 						#parse("/view/lineOrder/sanpinAdd.vm")
 					#else
 					<div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>订单类型:</label>
                         <div class="controls">
-                            <span class="form_item"><select name="type" id="type" class="text2 js_non_empty" placeholder="订单类型" onchange="changeProductType()">
-								<option value="1" selected>单团</option>
-								<option value="2">散拼团</option>
-                            </select></span>
+                            <span class="form_item">
+								<input  type="text" value="单团" class="text1" readonly>
+                            </span>
                         </div>                          
                     </div>
-					
-					<div id="sanpinSelectDiv"> 
-    					<div class="control_group">
-                            <label class="control_label"><span class="ico_must">*</span>散拼团:</label>
-                            <div class="controls">
-                                <span class="form_item"><select id="selectProductId" class="text2" placeholder="散拼团" onchange="getProductId()">
-    								<option value="" selected="selected">请选择</option>
-    								#foreach($one in $lineProductList)
-    									<option value="$one.lineProductId">$one.lineProductName</option>
-                                    #end
-                                </select></span>
-                            </div>
-                        </div>
-    					
-    					<div class="control_group">
-        					<label class="control_label"><span class="ico_must">*</span>机票订金时限:</label>
-                            <div class="controls">
-                                <span class="form_item"><input id="depositLimitDate" type="text" class="text1" placeholder="机票订金时限" readonly></span>
-                            </div>   
-    					</div>
-    					
-    					<div class="control_group">
-        					<label class="control_label"><span class="ico_must">*</span>出票时限:</label>
-                            <div class="controls">
-                                <span class="form_item"><input id="printTicketLimitDate" type="text" class="text1" placeholder="出票时限" readonly></span>
-                            </div>  
-    					</div>
-						
-						<div class="control_group">
-        					<label class="control_label"><span class="ico_must">*</span>座位数:</label>
-                            <div class="controls">
-                                <span class="form_item"><input id="seatNum" type="text" class="text1" placeholder="座位数" readonly></span>
-                            </div>  
-    					</div>
-						
-						<div class="control_group">
-        					<label class="control_label"><span class="ico_must">*</span>余位数:</label>
-                            <div class="controls">
-                                <span class="form_item"><input id="leftSeatNum" type="text" class="text1" placeholder="余位数" readonly></span>
-                            </div>  
-    					</div>
-    				</div>
 					
 						<div class="control_group">
     		              <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
@@ -205,7 +162,7 @@
                         <div class="control_group">
                             <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
                             <div class="controls">
-                                <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" #if($userRoleId==${fn.getLineManagerRoleId()}||${fn.isLineAdminRole($userRoleId)}) onchange="getOperators()" #end>
+                                <span class="form_item"><select name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" >
                                     <option value="" selected="selected">请选择</option>
     								#foreach($one in $countryList)
     									<option value="$one.countryId">$one.countryName</option>
@@ -396,71 +353,7 @@
                       </div>
                     </div>
                 </div>	
-				
-				#if($userRoleId==${fn.getLineOperatorManagerRoleId()}||$userRoleId==${fn.getLineVisaoperManagerRoleId()}||${fn.isLineAdminRole($userRoleId)})
-    				<script>
-    					function getOperators(){
-                    		var lineCountryId = jQuery("#lineCountryId").val();
-                    		if(lineCountryId==''){
-                    			return;
-                    		}
-                    		jQuery.ajax({
-                        	   type: "POST",
-                        	   url: "/user/getOperators.do",
-                        	   data:{lineCountryId:lineCountryId,#if(!$fn.isLineAdminRole($userRoleId))managerId:$userUserId,#end roleId:$fn.getLineVisaoperRoleId()},
-                        	   success: function(result){
-                    		   		if(result!='error'){
-                    					var operatorList=result;
-                                        var options='<option value="" selected="selected">请选择</option>';
-                                        for(var i=0;i<operatorList.length;i++){
-                                            options+='<option value='+operatorList[i].userId+'>'+operatorList[i].userName+'</option>';
-                                        }
-										if(jQuery("#lineOperatorId")){
-                                            jQuery("#lineOperatorId option").remove();
-                                            jQuery("#lineOperatorId").append(options);
-										}
-										if(jQuery("#visaOperatorId")){
-                        					jQuery("#visaOperatorId option").remove();
-                                            jQuery("#visaOperatorId").append(options);
-										}
-                    				}
-                        	   }
-                    		 });
-                    	}
-    				</script>
-    				<div class="widget_title">
-    		        	<span class="ico_static_r"></span>
-    		        	<h3>操作信息</h3>
-    		        </div>
-    		        <div class="widget_content">
-						#if($userRoleId==${fn.getLineOperatorManagerRoleId()}||${fn.isLineAdminRole($userRoleId)})
-    					<div class="control_group">
-    		              <label class="control_label"><span class="ico_must">*</span>线路操作员:</label>
-    		              <div class="controls">
-    		               <span class="form_item"><select name="lineOperatorId" id="lineOperatorId" class="text2 js_non_empty" placeholder="线路操作员">
-    							<option value="" selected="selected">请选择</option>
-    							
-    						</select></span>
-    		              </div>
-    		            </div>
-						#end
-						#if($userRoleId==${fn.getLineVisaoperManagerRoleId()}||${fn.isLineAdminRole($userRoleId)})
-    					<div class="control_group">
-    		              <label class="control_label"><span class="ico_must">*</span>签证操作员:</label>
-    		              <div class="controls">
-    		               <span class="form_item"><select name="visaOperatorId" id="visaOperatorId" class="text2 js_non_empty" placeholder="签证操作员">
-    							<option value="" selected="selected">请选择</option>
-    							
-    						</select></span>
-    		              </div>
-    		            </div>  
-						#end
-    				</div>
-    				<script>
-    				getOperators();
-    				</script>
-				#end
-				
+                
 		        <div class="widget_title">
 		        	<span class="ico_static_r"></span>
 		        	<h3>费用计算</h3>
@@ -511,7 +404,4 @@
 		  	</form>
 		</div>
 	</div>
-	<script>
-	changeProductType();
-	</script>
 #footer()
