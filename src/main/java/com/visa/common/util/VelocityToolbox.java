@@ -417,7 +417,7 @@ public class VelocityToolbox {
                     return false;
                 }
             case -1:
-                if (LineRoleEnumType.OPERATOR.getId() == roleId
+                if (LineRoleEnumType.OPERATOR_MANAGER.getId() == roleId
                         || LineRoleEnumType.PROCUREMENT.getId() == roleId) {
                     return true;
                 } else {
@@ -429,8 +429,14 @@ public class VelocityToolbox {
                 } else {
                     return false;
                 }
-            case -111:
+            case -12:
                 if (LineRoleEnumType.OPERATOR.getId() == roleId) {
+                    return true;
+                } else {
+                    return false;
+                }
+            case -111:
+                if (LineRoleEnumType.OPERATOR_MANAGER.getId() == roleId) {
                     return true;
                 } else {
                     return false;
