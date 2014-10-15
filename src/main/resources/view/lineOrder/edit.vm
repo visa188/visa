@@ -439,9 +439,9 @@
                       <div class="controls">
                        <span class="form_item">
 		                    <select $fn.isReadOnly($userRoleId,1) name="dyczb" id="dyczb" class="text2 js_non_empty" placeholder="第一操作部">
-		                    	<option value="1" $fn.selected("${lineOrder.dyczb}", "1")>操作部</option>
-		                    	<option value="2" $fn.selected("${lineOrder.dyczb}", "2")>采购部</option>
-	                            <option value="3" $fn.selected("${lineOrder.dyczb}", "3")>无</option>
+		                    	<option value="1" $fn.selected(${lineOrder.dyczb}, "1")>操作部</option>
+		                    	<option value="2" $fn.selected(${lineOrder.dyczb}, "2")>采购部</option>
+	                            <option value="3" $fn.selected(${lineOrder.dyczb}, "3")>无</option>
 	                        </select>
                         </span>
                       </div>
@@ -451,9 +451,9 @@
                       <div class="controls">
                        <span class="form_item">
 		                    <select $fn.isReadOnly($userRoleId,1) name="deczb" id="deczb" class="text2 js_non_empty" placeholder="第二操作部">
-	                            <option value="1" $fn.selected("${lineOrder.deczb}", "1")>操作部</option>
-	                            <option value="2" $fn.selected("${lineOrder.deczb}", "2")>采购部</option>
-	                            <option value="3" $fn.selected("${lineOrder.deczb}", "3")>无</option>
+	                            <option value="1" $fn.selected(${lineOrder.deczb}, "1")>操作部</option>
+	                            <option value="2" $fn.selected(${lineOrder.deczb}, "2")>采购部</option>
+	                            <option value="3" $fn.selected(${lineOrder.deczb}, "3")>无</option>
 	                        </select>
                         </span>
                       </div>
