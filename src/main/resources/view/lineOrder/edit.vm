@@ -1098,7 +1098,7 @@
                     <script>
                         jQuery('.btn_save').click(function(){
                             if('tj'==jQuery(this).attr('name')){
-                                jQuery('#status').val('$fn.nextFlow($!{lineOrder.status},$fn.getParallel($!{lineOrder.dyczb},$!{lineOrder.deczb}),${userRoleId})');                                
+                                jQuery('#status').val('$fn.nextFlow($!{lineOrder.status},$fn.getParallel($!{lineOrder.dyczb},$!{lineOrder.deczb}),${userRoleId},$visaService)');                                
                             }
                         });
                     </script>
