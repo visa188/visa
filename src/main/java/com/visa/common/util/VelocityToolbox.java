@@ -479,19 +479,23 @@ public class VelocityToolbox {
         case 91:
             return 99;
         case -1: {
-            if (LineRoleEnumType.OPERATOR.getId() == roleId) {
-                return -11;
+            if (LineRoleEnumType.OPERATOR_MANAGER.getId() == roleId) {
+                return -12;
             } else if (LineRoleEnumType.PROCUREMENT.getId() == roleId) {
                 return -111;
             }
         }
+        case -12:
+            if (LineRoleEnumType.OPERATOR.getId() == roleId) {
+                return -11;
+            }
         case -11:
             if (LineRoleEnumType.PROCUREMENT.getId() == roleId) {
                 return 101;
             }
         case -111:
-            if (LineRoleEnumType.OPERATOR.getId() == roleId) {
-                return 101;
+            if (LineRoleEnumType.OPERATOR_MANAGER.getId() == roleId) {
+                return -12;
             }
         default:
             return 71;

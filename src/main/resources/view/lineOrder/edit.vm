@@ -465,15 +465,15 @@
                       </div>
                     </div>
                 </div>  
-                #if($userRoleId == $fn.getLineOperatorRoleId() || $fn.isLineAdminRole($userRoleId))
+                #if($fn.isLineOperatorRole($userRoleId ) || $fn.isLineAdminRole($userRoleId))
             	<div class="control_group">
                   <label class="control_label"><span class="ico_must">*</span>酒店状态:</label>
                   <div class="controls">
                    <span class="form_item">
 						<select name="jdstatus" id="jdstatus" class="text2 js_non_empty" placeholder="酒店状态">
-							<option value="1" $fn.selected($!{lineOrder.jdstatus}, "1")>未操作</option>
-                            <option value="2" $fn.selected($!{lineOrder.jdstatus}, "2")>操作中</option>
-							<option value="3" $fn.selected($!{lineOrder.jdstatus}, "3")>已落实</option>
+							<option value="1" $fn.selected($!{lineOrder.jdstatus}, 1)>未操作</option>
+                            <option value="2" $fn.selected($!{lineOrder.jdstatus}, 2)>操作中</option>
+							<option value="3" $fn.selected($!{lineOrder.jdstatus}, 3)>已落实</option>
 						</select>
 				   </span>
                   </div>
@@ -483,9 +483,9 @@
                   <div class="controls">
                    <span class="form_item">
 						<select name="busstatus" id="busstatus" class="text2 js_non_empty" placeholder="巴士状态">
-							<option value="1" $fn.selected($!{lineOrder.busstatus}, "1")>未操作</option>
-                            <option value="2" $fn.selected($!{lineOrder.busstatus}, "2")>操作中</option>
-							<option value="3" $fn.selected($!{lineOrder.busstatus}, "3")>已落实</option>
+							<option value="1" $fn.selected($!{lineOrder.busstatus}, 1)>未操作</option>
+                            <option value="2" $fn.selected($!{lineOrder.busstatus}, 2)>操作中</option>
+							<option value="3" $fn.selected($!{lineOrder.busstatus}, 3)>已落实</option>
 						</select>
 				   </span>
                   </div>
@@ -1096,7 +1096,6 @@
                     <button type="button" class="btn btn_save" name="bc">保存</button>
                     <button type="button" class="btn btn_save" name="tj">提交</button>
                     <script>
-                     var a = $fn.getParallel($!{lineOrder.dyczb},$!{lineOrder.deczb});
                         jQuery('.btn_save').click(function(){
                             if('tj'==jQuery(this).attr('name')){
                                 jQuery('#status').val('$fn.nextFlow($!{lineOrder.status},$fn.getParallel($!{lineOrder.dyczb},$!{lineOrder.deczb}),${userRoleId})');                                
