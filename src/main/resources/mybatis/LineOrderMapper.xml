@@ -31,14 +31,13 @@
 	</select>
 	
 	<select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
-	<![CDATA[
       	select count(*) from 
 		(select lineorder.*,linecountry.countryName lineCountryName
 		    from lineorder,linecountry
 		    where lineorder.lineCountryId = linecountry.countryId  
 	    <if test="userRoleId == 81">and (lineorder.status!=7 AND lineorder.status!=71)</if> 
 	    <if test="userRoleId == 101">and (lineorder.status==10 or lineorder.status==9 or lineorder.status==91)</if>
-	    <if test="userRoleId == 12">and (lineorder.status==-1 or lineorder.status==-11)</if> 
+	    <if test="userRoleId == 12"><![CDATA[and (lineorder.status== -11 or lineorder.status== -1)]]></if> 
 		<if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 		<if test="salesmanId != null">and lineorder.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
 		<if test="lineOperatorId != null">and lineorder.lineOperatorId=#{lineOperatorId,jdbcType=VARCHAR}</if>
@@ -55,7 +54,9 @@
 		  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
 		  </if>
 		  <if test="endDate != null">
+		  	<![CDATA[
 			and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
+			]]>
 		  </if>
 		  <if test="serviceOperatorId != null">
 			  UNION
@@ -69,15 +70,15 @@
 				  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
 				  </if>
 				  <if test="endDate != null">
+				  	<![CDATA[
 					and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
+					]]>
 				  </if>
 		   </if>
 		  ) tmp1 left OUTER join lineproduct on( tmp1.lineProductId = lineproduct.lineProductId)
-		  ]]>
 	</select>
 	
 	<select id="selectByPage" parameterType="java.util.Map" resultType="LineOrder">
-	<![CDATA[
        	select tmp1.*,lineproduct.lineProductName,lineproduct.orderSeq as lineProductOrderSeq, lineproduct.groupLeader,lineproduct.aircorpId,
        	lineproduct.depositLimitDate,lineproduct.printTicketLimitDate
 		from (
@@ -85,8 +86,8 @@
 		    from lineorder,linecountry
 		    where lineorder.lineCountryId = linecountry.countryId  
 		    <if test="userRoleId == 81">and (lineorder.status!=7 AND lineorder.status!=71)</if> 
-		    <if test="userRoleId == 101">and (lineorder.status==10 or lineorder.status==9 or lineorder.status==91)</if> 
-		    <if test="userRoleId == 12">and (lineorder.status==-1 or lineorder.status==-11)</if> 
+		    <if test="userRoleId == 101">and (lineorder.status==10 or lineorder.status==9 or lineorder.status==91)</if>
+		    <if test="userRoleId == 12"><![CDATA[and (lineorder.status== -11 or lineorder.status== -1)]]></if> 
 		    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 			<if test="salesmanId != null">and lineorder.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
 			<if test="lineOperatorId != null">and lineorder.lineOperatorId=#{lineOperatorId,jdbcType=VARCHAR}</if>
@@ -103,7 +104,9 @@
 			  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
 			  </if>
 			  <if test="endDate != null">
+			  	<![CDATA[
 				and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
+				]]>
 			  </if>
 			  <if test="serviceOperatorId != null">
 				  UNION
@@ -117,15 +120,15 @@
 					  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
 					  </if>
 					  <if test="endDate != null">
+					  	<![CDATA[
 						and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
-						
+						]]>
 					  </if>
 			   </if>
 			  )
 		 tmp1 left OUTER join lineproduct on( tmp1.lineProductId = lineproduct.lineProductId)
 		order by orderDate desc,orderId desc
 		limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
-		]]>
 	</select>
 	
 	<select id="countAlarmOrders" resultType="java.lang.Integer">
