@@ -479,6 +479,8 @@ public class VelocityToolbox {
         case 101:
             return 10;
         case 10:
+            return 11;
+        case 11:
             return 9;
         case 9:
             return 91;
