@@ -1,4 +1,9 @@
-#header(10,101,"修改线路订单信息")
+#if($lineOrder.type==1)
+	#set($menu = 101)
+#else
+	#set($menu = 105)
+#end
+#header(10, $menu ,"修改线路订单信息")
 <script>
 	function searchCustomer(){
 		jQuery("#dropbox").hide();
@@ -157,9 +162,10 @@
             <form action="/lineOrder/update.do" method="post" class="form_horizontal hq_form line">
               <input type="hidden" name="orderId" value="$!{lineOrder.orderId}" />  
               <input type="hidden" name="orderSeq" value="$!{lineOrder.orderSeq}" /> 
-              <input type="hidden" name="salesmanId" value="$!{lineOrder.salesmanId}" />  
+              <input type="hidden" name="salesmanId" value="$!{lineOrder.salesmanId}" /> 
+              <input type="hidden" name="type" value="$!{lineOrder.type}" />  
               <input type="hidden" name="currentPage" value="$!{currentPage}" />   
-              <input name="customerId" id="customerId" type="hidden" value=""/>
+              <input name="customerId" id="customerId" type="hidden" value="$!{customer.customerId}"/>
               <input value="$!{lineOrder.lineProductId}" type="hidden" id="lineProductId" name="lineProductId">
                 
               <div class="widget_box">
@@ -171,10 +177,11 @@
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>订单类型:</label>
                         <div class="controls">
-                            <span class="form_item"><select $fn.isReadOnly($userRoleId,1) name="type" id="type" class="text2 js_non_empty" placeholder="订单类型" onchange="changeProductType()">
-                                <option value="1" $fn.selected(${lineOrder.type}, "1")>单团</option>
-                                <option value="2" $fn.selected(${lineOrder.type}, "2")>散拼团</option>
-                            </select></span>
+                        	#if($lineOrder.type==1)
+                            <span class="form_item"><input  type="text" value="单团" class="text1" readonly></span>
+                            #else
+                            <span class="form_item"><input  type="text" value="散拼" class="text1" readonly></span>
+                            #end
                         </div>                          
                     </div>
                     
@@ -265,7 +272,7 @@
 	        			<label class="control_label"><span class="ico_must">*</span>客户:</label>
 						<div class="controls">
 							<span class="form_item">
-								<input name="customerShowName" id="customerShowName" type="text" class="text1 js_non_empty" placeholder="客户" value="$!{orders.customerName}" onkeydown="searchCustomer()" disabled>
+								<input name="customerShowName" id="customerShowName" type="text" class="text1 js_non_empty" placeholder="客户" value="$!{customer.customerName}" onkeydown="searchCustomer()" disabled>
 							</span>
 		              	</div>
 						<label class="control_label"><span class="ico_must"></span>客户搜素框:</label>
@@ -403,7 +410,7 @@
                             </div>
                         </div>                          
                     </div>
-                    
+                    #if($lineOrder.type==1)
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>服务:</label>
                       <div class="controls">
@@ -468,6 +475,7 @@
                             </div>
                         </div>                
                     </div>
+                    #end
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>第一操作部:</label>
                       <div class="controls">

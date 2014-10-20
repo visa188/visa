@@ -155,7 +155,7 @@
   
   <insert id="insert" useGeneratedKeys="true" keyProperty="orderId">
     insert into lineorder (orderDate,type,nameListSize,nameListType,nameListState,nameListlimitDate,srf,drf,pf,salesmanId,salesmanName,lineOperatorId,lineOperatorName,
-    visaOperatorId,visaOperatorName,signOperatorId,signOperatorName,travelAgency,contact,contactNo,lineCountryId,
+    visaOperatorId,visaOperatorName,signOperatorId,signOperatorName,customerId,lineCountryId,
     startDate,endDate,travelInfo,travelInfoFileUrl,aircorpId,price,priceSum,alreadyGot,needGot,gotBank,gotDate,paidPriceSum,status,lineProductId,specialComment,orderSeq,profit,qtys, postTime,
     dyczb,deczb,jdstatus,busstatus,tuanstatus)
     values (now(),
@@ -163,8 +163,7 @@
     #{srf,jdbcType=VARCHAR},#{drf,jdbcType=VARCHAR},#{pf,jdbcType=VARCHAR},
     #{salesmanId,jdbcType=VARCHAR},#{salesmanName,jdbcType=VARCHAR},
     #{lineOperatorId,jdbcType=VARCHAR},#{lineOperatorName,jdbcType=VARCHAR},#{visaOperatorId,jdbcType=VARCHAR},#{visaOperatorName,jdbcType=VARCHAR},
-    #{signOperatorId,jdbcType=VARCHAR},#{signOperatorName,jdbcType=VARCHAR},#{travelAgency,jdbcType=VARCHAR},#{contact,jdbcType=VARCHAR},
-    #{contactNo,jdbcType=VARCHAR},#{lineCountryId,jdbcType=INTEGER},#{startDate,jdbcType=DATE},
+    #{signOperatorId,jdbcType=VARCHAR},#{signOperatorName,jdbcType=VARCHAR},#{customerId,jdbcType=INTEGER},#{lineCountryId,jdbcType=INTEGER},#{startDate,jdbcType=DATE},
     #{endDate,jdbcType=DATE},#{travelInfo,jdbcType=VARCHAR},#{travelInfoFileUrl,jdbcType=VARCHAR},#{aircorpId,jdbcType=INTEGER},
     #{price,jdbcType=DECIMAL},#{priceSum,jdbcType=DECIMAL},#{alreadyGot,jdbcType=DECIMAL},#{needGot,jdbcType=DECIMAL},#{gotBank,jdbcType=VARCHAR},#{gotDate,jdbcType=DATE},
     #{priceSum,jdbcType=DECIMAL},#{status,jdbcType=INTEGER},#{lineProductId,jdbcType=INTEGER},#{specialComment,jdbcType=VARCHAR},
@@ -190,9 +189,7 @@
 	    <if test="visaOperatorName != null">visaOperatorName = #{visaOperatorName,jdbcType=VARCHAR},</if>
 	    <if test="signOperatorId != null">signOperatorId = #{signOperatorId,jdbcType=VARCHAR},</if>
 	    <if test="signOperatorName != null">signOperatorName = #{signOperatorName,jdbcType=VARCHAR},</if>
-	    <if test="travelAgency != null">travelAgency = #{travelAgency,jdbcType=VARCHAR},</if>
-	    <if test="contact != null">contact = #{contact,jdbcType=VARCHAR},</if>
-	    <if test="contactNo != null">contactNo = #{contactNo,jdbcType=VARCHAR},</if>
+	    <if test="customerId != null">customerId = #{customerId,jdbcType=INTEGER},</if>
 	    <if test="lineCountryId != null">lineCountryId = #{lineCountryId,jdbcType=INTEGER},</if>
 	    <if test="startDate != null">startDate = #{startDate,jdbcType=DATE},</if>
 	    <if test="endDate != null">endDate = #{endDate,jdbcType=DATE},</if>

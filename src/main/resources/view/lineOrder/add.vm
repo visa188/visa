@@ -1,4 +1,9 @@
-#header(10,102,"新增线路订单信息")
+#if($!type==1)
+	#set($menu = 101)
+#else
+	#set($menu = 105)
+#end
+#header(10,$menu,"新增线路订单信息")
 <script>
 	function searchCustomer(){
 		jQuery("#dropbox").hide();
@@ -223,7 +228,7 @@
     		             <div class="control_group">
 	                      <label class="control_label"><span class="ico_must">*</span>客人数量:</label>
 	                      <div class="controls">
-	                       <span class="form_item"><input $fn.isReadOnly($userRoleId) value="$!{lineOrder.nameListSize}" name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="客人数量" onchange="setNamelistSize()"></span>
+	                       <span class="form_item"><input value="" name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="客人数量" onchange="setNamelistSize()"></span>
 	                      </div>
 	                    </div>
 					#end
@@ -232,7 +237,7 @@
 	        			<label class="control_label"><span class="ico_must">*</span>客户:</label>
 						<div class="controls">
 							<span class="form_item">
-								<input name="customerShowName" id="customerShowName" type="text" class="text1 js_non_empty" placeholder="客户" value="$!{orders.customerName}" onkeydown="searchCustomer()" disabled>
+								<input name="customerShowName" id="customerShowName" type="text" class="text1 js_non_empty" placeholder="客户" value="" onkeydown="searchCustomer()" disabled>
 							</span>
 		              	</div>
 						<label class="control_label"><span class="ico_must"></span>客户搜素框:</label>
@@ -290,7 +295,7 @@
                             </div>
                         </div>                          
                     </div>
-                    
+                    #if($!type==1)
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>服务:</label>
                       <div class="controls">
@@ -345,6 +350,7 @@
                             </div>
                         </div>                
                     </div>
+                    #end
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>第一操作部:</label>
                       <div class="controls">
