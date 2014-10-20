@@ -59,7 +59,7 @@
                     <a class="pro_mng_tab" href="/lineproduct/list.do"><span class="ico_pro"></span><span class="sidenav_text">线路产品管理</span><span class="ico_fold"></span></a>
                     <dl>
                         <dd#if($secNav==111) class="on"#end><a href="/lineproduct/list.do">线路产品信息管理</a></dd>
-						#if(${fn.isLineAdminRole($userRoleId)})
+						#if(${fn.isLineAdminRole($userRoleId)}||${fn.isLineOperatorRole($userRoleId)})
 							<dd#if($secNav==112) class="on"#end><a href="/lineproduct/add.do">新增线路产品信息</a></dd>
 						#end
                     </dl>
@@ -80,7 +80,7 @@
                     </dl>                   
                 </li>
 				#end
-				#if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)})
+				#if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||${fn.isLineSalesmanRole($userRoleId)}||${fn.isLineAdminRole($userRoleId)})
                 <li class="client_mng#if($topNav==2) open#end">
                     <a class="client_mng_tab" href="/customer/list.do"><span class="ico_client"></span><span class="sidenav_text">客户管理</span><span class="ico_fold"></span></a>
                     <dl>

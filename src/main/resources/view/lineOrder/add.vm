@@ -1,5 +1,38 @@
 #header(10,102,"新增线路订单信息")
 <script>
+	function searchCustomer(){
+		jQuery("#dropbox").hide();
+		var customerName=jQuery("#tempCustomerName").val();
+		if(customerName==''){
+			return;
+		}
+		jQuery.ajax({
+    	   type: "POST",
+    	   url: "/customer/searchCustomer.do",
+    	   data:{customerName:customerName},
+    	   success: function(result){
+		   		var searchResult=jQuery("#searchResult");
+    			var customerList=result;
+				if(customerList&&customerList.length>0){
+    				var html='';
+    				for(var i=0;i<customerList.length;i++){
+    					html+='<li><a href="javascript:setProductId('+customerList[i].customerId+',\''+customerList[i].customerName+'\')">'+customerList[i].customerName+'</a></li>';
+    				}
+    				searchResult.empty();
+    				searchResult.append(html);
+    				jQuery("#dropbox").show();
+				}
+    	   }
+		});
+	}
+	
+	function setProductId(customerId,customerName){
+		jQuery("#customerId").val(customerId);
+		jQuery("#tempCustomerName").val(customerName);
+		jQuery("#customerShowName").val(customerName);
+		jQuery("#dropbox").hide();
+	}
+	
 	function getProductId(){
 		var selectProductId=jQuery("#selectProductId").val();
 		jQuery("#lineProductId").val(selectProductId);
@@ -125,6 +158,7 @@
 				
 			  <input value="0" type="hidden" id="lineProductId" name="lineProductId">
 			  <input value="" type="hidden" id="travelInfoFileUrl" name="travelInfoFileUrl">
+			  <input name="customerId" id="customerId" type="hidden" value=""/>
 			  <input value="$!{type}" type="hidden" id="type" name="type">
 				
 		      <div class="widget_box">
@@ -195,25 +229,25 @@
 					#end
 					
 		        	<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>组团社:</label>
-		              <div class="controls">
-		               <span class="form_item"><input name="travelAgency" id="travelAgency" type="text" class="text1" maxlength="50" size="50" placeholder="组团社"></span>
-		              </div>
-		            </div>	
-					
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>联系人:</label>
-		              <div class="controls">
-		               <span class="form_item"><input name="contact" id="contact" type="text" class="text1" maxlength="10" size="10" placeholder="联系人"></span>
-		              </div>
-		            </div>	
-					
-					<div class="control_group">
-		              <label class="control_label"><span class="ico_must">*</span>联系方式:</label>
-		              <div class="controls">
-		               <span class="form_item"><input name="contactNo" id="contactNo" type="text" class="text1" maxlength="50" size="50" placeholder="联系方式"></span>
-		              </div>
-		            </div>	
+	        			<label class="control_label"><span class="ico_must">*</span>客户:</label>
+						<div class="controls">
+							<span class="form_item">
+								<input name="customerShowName" id="customerShowName" type="text" class="text1 js_non_empty" placeholder="客户" value="$!{orders.customerName}" onkeydown="searchCustomer()" disabled>
+							</span>
+		              	</div>
+						<label class="control_label"><span class="ico_must"></span>客户搜素框:</label>
+						<div class="controls">
+							<label class="dropcontrol">
+    							<span class="form_item dd">
+									<input name="tempCustomerName" id="tempCustomerName" type="text" class="text1" placeholder="客户" value="" onkeyup="searchCustomer()">
+        							<div id="dropbox" class="dropbox" style="display:none">
+            							<ul id="searchResult">
+            							</ul>
+        							</div>
+    							</span>
+							</label>
+		              	</div>	        			
+		        	</div>
 					
 		            <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>房间类型:</label>
