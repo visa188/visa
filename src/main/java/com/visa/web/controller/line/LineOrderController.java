@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.visa.common.constant.Constant;
 import com.visa.common.constant.LineRoleEnumType;
 import com.visa.common.constant.LineSrviceEnumType;
+import com.visa.common.constant.PriceStatusEnum;
+import com.visa.common.constant.YshkStatusEnum;
 import com.visa.common.util.DateUtil;
 import com.visa.common.util.PagingUtil;
 import com.visa.common.util.StringUtil;
@@ -125,21 +127,21 @@ public class LineOrderController {
             paraMap.put("orderSeq", StringUtils.isEmpty(orderSeq) ? null : orderSeq);
             paraMap.put("alarmOrders", alarmOrders == null || alarmOrders == 0 ? null : alarmOrders);
 
-            if (LineRoleEnumType.SALESMAN.getId() == user.getRoleId()) {
+            if (LineRoleEnumType.SALESMAN.getId() == user.getLineRoleId()) {
                 paraMap.put("salesmanId", user.getUserId());
-            } else if (LineRoleEnumType.SALEMAN_MANAGER.getId() == user.getRoleId()) {
+            } else if (LineRoleEnumType.SALEMAN_MANAGER.getId() == user.getLineRoleId()) {
                 paraMap.put("managerId", user.getUserId());
                 paraMap.put("role", "salesmanId");
-            } else if (LineRoleEnumType.OPERATOR.getId() == user.getRoleId()) {
+            } else if (LineRoleEnumType.OPERATOR.getId() == user.getLineRoleId()) {
                 paraMap.put("lineOperatorId", user.getUserId());
                 paraMap.put("serviceOperatorId", user.getUserId());
-            } else if (LineRoleEnumType.VISAOPER.getId() == user.getRoleId()) {
+            } else if (LineRoleEnumType.VISAOPER.getId() == user.getLineRoleId()) {
                 paraMap.put("visaOperatorId", user.getUserId());
-            } else if (LineRoleEnumType.SIGNOPERATOR.getId() == user.getRoleId()) {
+            } else if (LineRoleEnumType.SIGNOPERATOR.getId() == user.getLineRoleId()) {
                 paraMap.put("signOperatorId", user.getUserId());
             }
 
-            paraMap.put("userRoleId", user.getRoleId());
+            paraMap.put("userRoleId", user.getLineRoleId());
 
             paraMap.put("type", type);
             // 记录总条数
@@ -240,6 +242,10 @@ public class LineOrderController {
             lineOrder.setSignOperatorName(userDao.selectByPrimaryKey(lineOrder.getSignOperatorId())
                     .getUserName());
         }
+        if (LineRoleEnumType.SALESMAN.getId() == user.getLineRoleId()) {
+            lineOrder.setYshkstatus(PriceStatusEnum.NOTYET.getId());
+            lineOrder.setYfhkstatus(YshkStatusEnum.NOTYET.getId());
+        }
         lineOrderDao.insert(lineOrder);
         for (LinesSrvice srvice : lineOrder.getLineOrderService()) {
             linesServiceDao.insert(srvice);
@@ -251,7 +257,7 @@ public class LineOrderController {
         // 记录操作日志
         OperateLog operateLog = new OperateLog();
         operateLog.setUserId(user.getUserId());
-        operateLog.setRoleId(user.getRoleId());
+        operateLog.setRoleId(user.getLineRoleId());
         operateLog.setOperateType(Constant.OPERATOR_TYPE_ADD);
         operateLog.setOperateDes(StringUtil.generateAddOperLog(lineOrder));
         operateLog.setOrderSeq(prefix);
@@ -329,8 +335,8 @@ public class LineOrderController {
         }
 
         lineOrderDao.updateByPrimaryKey(lineOrderVo);
-        if (user.getRoleId() == LineRoleEnumType.OPERATOR.getId()
-                || user.getRoleId() == LineRoleEnumType.OPERATOR_MANAGER.getId()) {
+        if (user.getLineRoleId() == LineRoleEnumType.OPERATOR.getId()
+                || user.getLineRoleId() == LineRoleEnumType.OPERATOR_MANAGER.getId()) {
             List<Integer> serviceTypeList = new ArrayList<Integer>();
             serviceTypeList.add(LineSrviceEnumType.LD.getId());
             serviceTypeList.add(LineSrviceEnumType.JP.getId());
@@ -349,8 +355,8 @@ public class LineOrderController {
                     dealService(tempServiceListDB, srvice);
                 }
             }
-        } else if (user.getRoleId() == LineRoleEnumType.VISAOPER.getId()
-                || user.getRoleId() == LineRoleEnumType.VISAOPER_MANAGER.getId()) {
+        } else if (user.getLineRoleId() == LineRoleEnumType.VISAOPER.getId()
+                || user.getLineRoleId() == LineRoleEnumType.VISAOPER_MANAGER.getId()) {
             List<Integer> serviceTypeList = new ArrayList<Integer>();
             serviceTypeList.add(LineSrviceEnumType.QZ.getId());
             serviceTypeList.add(LineSrviceEnumType.GGBZ.getId());
@@ -361,8 +367,8 @@ public class LineOrderController {
                     dealService(tempServiceListDB, srvice);
                 }
             }
-        } else if (user.getRoleId() == LineRoleEnumType.FINANCE.getId()
-                || user.getRoleId() == LineRoleEnumType.FINANCE_MANAGER.getId()) {
+        } else if (user.getLineRoleId() == LineRoleEnumType.FINANCE.getId()
+                || user.getLineRoleId() == LineRoleEnumType.FINANCE_MANAGER.getId()) {
             for (LinesSrvice srvice : lineOrderVo.getLineOrderService()) {
                 dealService(tempServiceListDB, srvice);
             }
@@ -383,7 +389,7 @@ public class LineOrderController {
         if (!StringUtils.isEmpty(log)) {
             OperateLog operateLog = new OperateLog();
             operateLog.setUserId(user.getUserId());
-            operateLog.setRoleId(user.getRoleId());
+            operateLog.setRoleId(user.getLineRoleId());
             operateLog.setOperateType(Constant.OPERATOR_TYPE_UPDATE);
             operateLog.setOperateDes(log);
             operateLog.setOrderSeq(lineOrder.getOrderSeq());
@@ -420,7 +426,7 @@ public class LineOrderController {
         // 记录操作日志
         OperateLog operateLog = new OperateLog();
         operateLog.setUserId(user.getUserId());
-        operateLog.setRoleId(user.getRoleId());
+        operateLog.setRoleId(user.getLineRoleId());
         operateLog.setOperateType(Constant.OPERATOR_TYPE_DELETE);
         operateLog.setOperateDes(StringUtil.generateDeleteOperLog(lineOrder));
         operateLog.setOrderSeq(lineOrder.getOrderSeq());
