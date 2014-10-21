@@ -40,6 +40,7 @@
         </div>
     </div>
 </div>
+#set($userLineRoleId=${session.getAttribute("session_user").lineRoleId})
 #set($userRoleId=${session.getAttribute("session_user").roleId})
 #set($userUserId=${session.getAttribute("session_user").userId})
 <div class="pbody">
@@ -59,12 +60,12 @@
                     <a class="pro_mng_tab" href="/lineproduct/list.do"><span class="ico_pro"></span><span class="sidenav_text">线路产品管理</span><span class="ico_fold"></span></a>
                     <dl>
                         <dd#if($secNav==111) class="on"#end><a href="/lineproduct/list.do">线路产品信息管理</a></dd>
-						#if(${fn.isLineAdminRole($userRoleId)}||${fn.isLineOperatorRole($userRoleId)})
+						#if(${fn.isLineAdminRole($userLineRoleId)}||${fn.isLineOperatorRole($userLineRoleId)})
 							<dd#if($secNav==112) class="on"#end><a href="/lineproduct/add.do">新增线路产品信息</a></dd>
 						#end
                     </dl>
                 </li>
-				#if(${fn.isLineAdminRole($userRoleId)})
+				#if(${fn.isLineAdminRole($userLineRoleId)})
 				<li class="client_mng#if($topNav==7) open#end">
                     <a class="client_mng_tab" href="/linecountry/list.do"><span class="ico_setting"></span><span class="sidenav_text">线路国家管理</span><span class="ico_fold"></span></a>
                     <dl>
@@ -80,7 +81,7 @@
                     </dl>                   
                 </li>
 				#end
-				#if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||${fn.isLineSalesmanRole($userRoleId)}||${fn.isLineAdminRole($userRoleId)})
+				#if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||${fn.isLineSalesmanRole($userLineRoleId)}||${fn.isLineAdminRole($userLineRoleId)})
                 <li class="client_mng#if($topNav==2) open#end">
                     <a class="client_mng_tab" href="/customer/list.do"><span class="ico_client"></span><span class="sidenav_text">客户管理</span><span class="ico_fold"></span></a>
                     <dl>
@@ -103,16 +104,16 @@
                     </dl>
                 </li>
 				#end
-				#if($userRoleId==0||$userRoleId>=6)
+				#if($userLineRoleId==0||$userLineRoleId>=6)
 				<li class="order_mng#if($topNav==10) open#end">
                     <a class="order_mng_tab" href="/lineOrder/list.do?page=1&type=1"><span class="ico_order"></span><span class="sidenav_text">路线订单管理</span><span class="ico_fold"></span></a>
                     <dl>
                         <dd#if($secNav==101) class="on"#end><a href="/lineOrder/list.do?page=1&type=1">单团路线订单信息管理</a></dd>
                         <dd#if($secNav==105) class="on"#end><a href="/lineOrder/list.do?page=1&type=2">散拼路线订单信息管理</a></dd>
-						#if($userRoleId==${fn.getLineSalesmanRoleId()})
+						#if($userLineRoleId==${fn.getLineSalesmanRoleId()})
 							<dd#if($secNav==102) class="on"#end><a href="/lineOrder/add.do">新增路线订单信息</a></dd>
 						#end
-						#if(${fn.isLineAdminRole($userRoleId)})
+						#if(${fn.isLineAdminRole($userLineRoleId)})
 							<dd#if($secNav==103) class="on"#end><a href="/lineOrder/export.do">导出路线订单信息</a></dd>
 							<dd#if($secNav==104) class="on"#end><a href="/operatelog/list.do?page=1">路线订单操作日志</a></dd>
 						#end
@@ -146,9 +147,9 @@
 				#end
                 
                 <li class="client_mng#if($topNav==4) open#end">
-                    <a class="client_mng_tab" href="#if(${fn.isAdminRoleId($userRoleId)}||${fn.isLineAdminRole($userRoleId)}) /user/list.do #else /user/changepwd.do #end"><span class="ico_setting"></span><span class="sidenav_text">系统管理</span><span class="ico_fold"></span></a>
+                    <a class="client_mng_tab" href="#if(${fn.isAdminRoleId($userRoleId)}||${fn.isLineAdminRole($userLineRoleId)}) /user/list.do #else /user/changepwd.do #end"><span class="ico_setting"></span><span class="sidenav_text">系统管理</span><span class="ico_fold"></span></a>
                     <dl>
-                        #if(${fn.isAdminRoleId($userRoleId)}||${fn.isLineAdminRole($userRoleId)})
+                        #if(${fn.isAdminRoleId($userRoleId)}||${fn.isLineAdminRole($userLineRoleId)})
                         <dd#if($secNav==41) class="on"#end><a href="/user/list.do">用户信息管理</a></dd>
                         <dd#if($secNav==42) class="on"#end><a href="/user/add.do">新增用户信息</a></dd>
                         #end

@@ -77,7 +77,7 @@
     where user.userId = operatorcountry.userId 
     and lineCountryId = #{lineCountryId,jdbcType=INTEGER} 
     <if test="managerId != null">and managerId = #{managerId,jdbcType=INTEGER}</if>
-    and (roleId = #{roleId,jdbcType=INTEGER} or lineRoleId = #{lineRoleId,jdbcType=INTEGER} ) 
+    and lineRoleId = #{roleId,jdbcType=INTEGER} 
     and enable = 1
   </select>
   
@@ -86,7 +86,7 @@
     FROM user
     where 1=1
     <if test="managerId != null">and managerId = #{managerId,jdbcType=INTEGER}</if>
-    and (roleId = #{roleId,jdbcType=INTEGER} or lineRoleId = #{lineRoleId,jdbcType=INTEGER} ) 
+    and roleId = #{roleId,jdbcType=INTEGER} 
     and enable = 1
   </select>
   

@@ -11,19 +11,21 @@
     		<input type="hidden" id="page" name="page" value="1">
 			<div class="searchbox">
     			<label for="s_client">用户姓名：<input value="$!user.userName" id="userName" name="searchUserName" type="text" class="s_client searchtx" placeholder="用户姓名"></label>			
-    			<label for="s_guest">用户角色：
+    			<label for="s_guest">用户签证系统角色：
                     <select name="searchRoleId" id="" class="text">
 						<option value="0">全部</option>
-                        #if(${fn.isAdminRoleId($userRoleId)})
-                            #foreach($one in $fn.roleOptions().entrySet())
-								<option value="$one.key">签证$one.value.name</option>
-							#end
-						#else if(${fn.isLineAdminRole($userRoleId)})
-							#foreach($one in $fn.lineRoleOptions().entrySet())
-								<option value="$one.key">线路$one.value.name</option>
-							#end
+                        #foreach($one in $fn.roleOptions().entrySet())
+							<option value="$one.key"$fn.selected(${user.roleId}, $one.key)>签证$one.value.name</option>
 						#end
-                    </select>
+					</select>
+				</label>
+				<label for="s_guest">用户线路系统角色：
+					<select name="searchLineRoleId" id="" class="text">
+						<option value="0">全部</option>
+						#foreach($one in $fn.lineRoleOptions().entrySet())
+							<option value="$one.key"$fn.selected(${user.lineRoleId}, $one.key)>线路$one.value.name</option>
+						#end
+                	</select>
                 </label>	
     			<label for="searchbtn"><input onclick="conditionSearch(1);" id="searchbtn" type="button" name="" class="searchbtn" value="搜索" ></label>	
     		</div>

@@ -34,7 +34,7 @@
                             <th width="">余位数</th>
                             <th width="">价格</th>
 							<th width="">下单</th>
-							#if(${fn.isLineAdminRole($userRoleId)})
+							#if(${fn.isLineAdminRole($userLineRoleId)})
 	                        <th width="">修改</th>
 	                        <th width="">删除</th>
 							#end
@@ -52,7 +52,7 @@
                             <td>$!{one.leftSeatNum}</td>
                             <td>$!{one.price}</td>
 							<td><a class="ico_edit_g" href="/lineOrder/add.do?lineproductId=${one.lineProductId}&type=2"></a></td>
-							#if(${fn.isLineAdminRole($userRoleId)}||${fn.isLineOperatorRole($userRoleId)})
+							#if(${fn.isLineAdminRole($userLineRoleId)}||${fn.isLineOperatorRole($userLineRoleId)})
 	                        <td><a class="ico_edit_g" href="edit.do?productId=${one.lineProductId}&page=$page"></a></td>
 	                        <td><a class="ico_delete_r" onclick="return confirm('是否将此产品删除?')" href="delete.do?productId=${one.lineProductId}&page=$page"></a></td>
 							#end
