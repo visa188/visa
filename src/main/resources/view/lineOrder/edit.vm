@@ -946,7 +946,12 @@
                           </div>
                         </div>
 						#end  
-						<input type="hidden" id="paidPriceSum" name="paidPriceSum" value="$!fn.disPrice($!{lineOrder.paidPriceSum})" />
+						<div class="control_group">
+                          <label class="control_label"><span class="ico_must">*</span>应付合计:</label>
+                          <div class="controls">
+							<span class="form_item"><input value="$!fn.disPrice($!{lineOrder.paidPriceSum})" name="paidPriceSum" id="paidPriceSum" type="text" class="text1 js_nan"  placeholder="应付合计" readonly>元</span>
+                          </div>
+                        </div>
 						<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>毛利:</label>
                           <div class="controls">
