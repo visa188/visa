@@ -93,12 +93,12 @@
       <label class="control_label"><span class="ico_must">*</span>占位类型:</label>
       <div class="controls">
        <span class="form_item">
-		<select $fn.isReadOnly($userRoleId,1) name="nameListType" id="nameListType" class="text2 js_non_empty" placeholder="占位类型">
+		<select $fn.isReadOnly($userLineRoleId,1) name="nameListType" id="nameListType" class="text2 js_non_empty" placeholder="占位类型">
             <option value="1">切位</option>
             <option value="2">占位</option>
 			<option value="3">预报</option>
         </select>
-		<select $fn.isReadOnly($userRoleId,1) name="nameListState" id="nameListState" class="text2" placeholder="占位状态">
+		<select $fn.isReadOnly($userLineRoleId,1) name="nameListState" id="nameListState" class="text2" placeholder="占位状态">
 			<option value="0">请选择</option>
 			<option value="1">已收定金</option>
 			<option value="2">已收资料</option>
@@ -117,7 +117,7 @@
 	<div class="control_group">
       <label class="control_label"><span class="ico_must">*</span>占位取消时限:</label>
       <div class="controls">
-       <span class="form_item"><input $fn.isReadOnly($userRoleId) name="nameListlimitDate" id="nameListlimitDate" type="text" class="text1 js_non_empty js_datepicker" maxlength="8" size="8" placeholder="占位取消时限"></span>
+       <span class="form_item"><input $fn.isReadOnly($userLineRoleId) name="nameListlimitDate" id="nameListlimitDate" type="text" class="text1 js_non_empty js_datepicker" maxlength="8" size="8" placeholder="占位取消时限"></span>
       </div>
     </div>
 </div>

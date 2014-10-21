@@ -39,7 +39,7 @@
         		<div class="searchbox">
        				<label for="s_client">订单号：<input type="text" name="orderSeq" value="$!{searchBean.orderSeq}" />
        				</label>
-    				#if(${fn.isLineAdminRole($userRoleId)})
+    				#if(${fn.isLineAdminRole($userLineRoleId)})
         				<label for="s_client">所属销售：
         					<select name="salesman" id="salesman" class="text" onchange="conditionSearch(1)">
         						<option value="" selected="selected">全部</option>
