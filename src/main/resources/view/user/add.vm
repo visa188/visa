@@ -34,13 +34,14 @@
 		            <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>用户权限:</label>
                         <div class="controls">
-                            <select name="roleId" id="roleId" class="text2" #if(${fn.isLineAdminRole($userRoleId)}) onchange="selectCountry()" #end>
 								#if(${fn.isAdminRoleId($userRoleId)})
+								<select name="roleId" id="roleId" class="text2" #if(${fn.isLineAdminRole($userRoleId)}) onchange="selectCountry()" #end>
                                     #foreach($one in $fn.roleOptions().entrySet())
                                     <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>$one.value.name</option>
 									#end
 								#end
 								#if(${fn.isLineAdminRole($userRoleId)})
+								<select name="lineRoleId" id="roleId" class="text2" #if(${fn.isLineAdminRole($userRoleId)}) onchange="selectCountry()" #end>
 									#foreach($one in $fn.lineRoleOptions().entrySet())
                                     <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>$one.value.name</option>
     								#end
