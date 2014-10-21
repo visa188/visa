@@ -15,12 +15,6 @@ public interface UserDao {
 
     Integer insert(User record);
 
-    Integer selectByManagerIdCount(@Param("managerId") String managerId, @Param("user") User user);
-
-    List<UserVo> selectByManagerId(@Param("managerId") String managerId,
-            @Param("start") Integer start, @Param("pageCount") Integer pageCount,
-            @Param("user") User user);
-
     Integer selectAllCount(User user);
 
     List<UserVo> selectAll(@Param("start") Integer start, @Param("pageCount") Integer pageCount,

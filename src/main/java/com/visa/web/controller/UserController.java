@@ -77,12 +77,6 @@ public class UserController {
             int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page,
                     Constant.PAGE_OFFSET, model);
             userList = userDao.selectLineAll(recordRange[0], Constant.PAGE_COUNT, user);
-        } else {
-            Integer recordCount = userDao.selectByManagerIdCount(sessionUser.getUserId(), user);
-            int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page,
-                    Constant.PAGE_OFFSET, model);
-            userList = userDao.selectByManagerId(sessionUser.getUserId(), recordRange[0],
-                    Constant.PAGE_COUNT, user);
         }
         model.put("userList", userList);
         model.put("user", user);

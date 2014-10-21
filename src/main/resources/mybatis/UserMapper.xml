@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.visa.dao.UserDao" >
-  <select id="selectByManagerIdCount" resultType="java.lang.Integer" parameterType="java.lang.String">
-    select count(*) from user 
-    where managerId = #{managerId,jdbcType=VARCHAR} 
-    <if test="user.userName != null">and userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
-    <if test="user.roleId != null and user.roleId != 0">and roleId = #{user.roleId,jdbcType=INTEGER}</if>
-    and enable = 1
-  </select>
-  
-  <select id="selectByManagerId" resultType="UserVo">
-    select u1.*,u2.userName as managerName  
-    FROM user u1 
-    LEFT JOIN user u2 ON u1.managerId=u2.userId 
-    where u1.managerId = #{managerId,jdbcType=VARCHAR} 
-    <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
-    <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
-    and enable = 1
-    limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
-  </select>
   
   <select id="selectAllCount" resultType="java.lang.Integer">
     select count(*) from user 
@@ -41,9 +23,10 @@
   
   <select id="selectVisaAllCount" resultType="java.lang.Integer">
     select count(*) from user 
-    where roleId in (1,2,3,4,5) 
+    where 1=1
     <if test="userName != null">and userName like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')</if>
     <if test="roleId != null and roleId != 0">and roleId = #{roleId,jdbcType=INTEGER}</if>
+    <if test="lineRoleId != null and lineRoleId != 0">and lineRoleId = #{lineRoleId,jdbcType=INTEGER}</if>
     order by postDt desc 
   </select>
   
@@ -51,18 +34,20 @@
     select u1.*,u2.userName as managerName  
     FROM user u1 
     LEFT JOIN user u2 ON u1.managerId=u2.userId  
-    where u1.roleId in (1,2,3,4,5) 
+    where 1=1
     <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
+    <if test="user.lineRoleId != null and user.lineRoleId != 0">and u1.lineRoleId = #{user.lineRoleId,jdbcType=INTEGER}</if>
     order by  enable desc,postDt desc 
     limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
   </select>
   
   <select id="selectLineAllCount" resultType="java.lang.Integer">
     select count(*) from user 
-    where roleId >5
+    where 1=1
     <if test="userName != null">and userName like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')</if>
     <if test="roleId != null and roleId != 0">and roleId = #{roleId,jdbcType=INTEGER}</if>
+     <if test="lineRoleId != null and lineRoleId != 0">and lineRoleId = #{lineRoleId,jdbcType=INTEGER}</if>
     order by postDt desc 
   </select>
   
@@ -70,9 +55,10 @@
     select u1.*,u2.userName as managerName  
     FROM user u1 
     LEFT JOIN user u2 ON u1.managerId=u2.userId  
-    where u1.roleId >5
+    where 1=1
     <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
+     <if test="user.lineRoleId != null and user.lineRoleId != 0">and u1.lineRoleId = #{user.lineRoleId,jdbcType=INTEGER}</if>
     order by  enable desc,postDt desc 
     limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
   </select>
@@ -80,7 +66,7 @@
   <select id="selectByRoleId" resultType="User">
     select *  
     FROM user 
-    where roleId = #{roleId,jdbcType=INTEGER} 
+    where roleId = #{roleId,jdbcType=INTEGER}  or lineRoleId = #{lineRoleId,jdbcType=INTEGER} 
     order by userName
     and enable = 1
   </select>
@@ -91,7 +77,7 @@
     where user.userId = operatorcountry.userId 
     and lineCountryId = #{lineCountryId,jdbcType=INTEGER} 
     <if test="managerId != null">and managerId = #{managerId,jdbcType=INTEGER}</if>
-    and roleId = #{roleId,jdbcType=INTEGER} 
+    and (roleId = #{roleId,jdbcType=INTEGER} or lineRoleId = #{lineRoleId,jdbcType=INTEGER} ) 
     and enable = 1
   </select>
   
@@ -100,7 +86,7 @@
     FROM user
     where 1=1
     <if test="managerId != null">and managerId = #{managerId,jdbcType=INTEGER}</if>
-    and roleId = #{roleId,jdbcType=INTEGER} 
+    and (roleId = #{roleId,jdbcType=INTEGER} or lineRoleId = #{lineRoleId,jdbcType=INTEGER} ) 
     and enable = 1
   </select>
   
@@ -120,17 +106,18 @@
     where userId = #{userId,jdbcType=VARCHAR}
   </delete>
   
-  <insert id="insert" parameterType="User"  useGeneratedKeys="true" keyProperty="userId">
-    insert into user (userId, userName, roleId, 
+ <insert id="insert" parameterType="User"  useGeneratedKeys="true" keyProperty="userId">
+    insert into user (userId, userName, roleId, lineRoleId,
       pwd, managerId, postDt, deptId)
-    values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, 
+    values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, #{lineRoleId,jdbcType=INTEGER}, 
       '123456', #{managerId,jdbcType=INTEGER}, now(),#{deptId,jdbcType=VARCHAR})
   </insert>
   
   <update id="updateByPrimaryKey" parameterType="User" >
     update user
     set userName = #{userName,jdbcType=VARCHAR},
-      roleId = #{roleId,jdbcType=INTEGER},
+      <if test="roleId != null">roleId = #{roleId,jdbcType=INTEGER},</if>
+      <if test="lineRoleId != null">lineRoleId = #{lineRoleId,jdbcType=INTEGER},</if>
       managerId = #{managerId,jdbcType=INTEGER},
       <if test="pwd != null">pwd = #{pwd,jdbcType=VARCHAR},</if>
       deptId = #{deptId,jdbcType=VARCHAR}
