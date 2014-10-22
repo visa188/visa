@@ -157,7 +157,7 @@
     insert into lineorder (orderDate,type,nameListSize,nameListType,nameListState,nameListlimitDate,srf,drf,pf,salesmanId,salesmanName,lineOperatorId,lineOperatorName,
     visaOperatorId,visaOperatorName,signOperatorId,signOperatorName,customerId,lineCountryId,
     startDate,endDate,travelInfo,travelInfoFileUrl,aircorpId,price,priceSum,alreadyGot,needGot,gotBank,gotDate,paidPriceSum,status,lineProductId,specialComment,orderSeq,profit,qtys, postTime,
-    dyczb,deczb,jdstatus,busstatus,tuanstatus,yshkStatus,yfhkStatus)
+    dyczb,deczb,jdstatus,busstatus,tuanstatus,yshkstatus,yfhkstatus)
     values (now(),
     #{type,jdbcType=INTEGER},#{nameListSize,jdbcType=INTEGER},#{nameListType,jdbcType=INTEGER},#{nameListState,jdbcType=INTEGER},#{nameListlimitDate,jdbcType=DATE},
     #{srf,jdbcType=VARCHAR},#{drf,jdbcType=VARCHAR},#{pf,jdbcType=VARCHAR},
@@ -168,7 +168,7 @@
     #{price,jdbcType=DECIMAL},#{priceSum,jdbcType=DECIMAL},#{alreadyGot,jdbcType=DECIMAL},#{needGot,jdbcType=DECIMAL},#{gotBank,jdbcType=VARCHAR},#{gotDate,jdbcType=DATE},
     #{priceSum,jdbcType=DECIMAL},#{status,jdbcType=INTEGER},#{lineProductId,jdbcType=INTEGER},#{specialComment,jdbcType=VARCHAR},
     #{orderSeq,jdbcType=VARCHAR},#{profit,jdbcType=DECIMAL},#{qtys,jdbcType=DECIMAL}, now(),#{dyczb,jdbcType=VARCHAR},#{deczb,jdbcType=VARCHAR},
-    #{jdstatus,jdbcType=INTEGER},#{busstatus,jdbcType=INTEGER},#{tuanstatus,jdbcType=INTEGER},#{yshkStatus,jdbcType=INTEGER},#{yfhkStatus,jdbcType=INTEGER})
+    #{jdstatus,jdbcType=INTEGER},#{busstatus,jdbcType=INTEGER},#{tuanstatus,jdbcType=INTEGER},#{yshkstatus,jdbcType=INTEGER},#{yfhkstatus,jdbcType=INTEGER})
   </insert>
   
   <update id="updateByPrimaryKey">
@@ -213,8 +213,8 @@
 	    <if test="jdstatus != null">jdstatus = #{jdstatus,jdbcType=INTEGER},</if>
 	    <if test="busstatus != null">busstatus = #{busstatus,jdbcType=INTEGER},</if>
 	    <if test="tuanstatus != null">tuanstatus = #{tuanstatus,jdbcType=INTEGER},</if>
-	    <if test="yshkStatus != null">yshkStatus = #{yshkStatus,jdbcType=INTEGER},</if>
-	    <if test="yfhkStatus != null">yfhkStatus = #{yfhkStatus,jdbcType=INTEGER},</if>
+	    <if test="yshkstatus != null">yshkStatus = #{yshkstatus,jdbcType=INTEGER},</if>
+	    <if test="yfhkstatus != null">yfhkStatus = #{yfhkstatus,jdbcType=INTEGER},</if>
     postTime = now()
     </set>
     where orderId = #{orderId,jdbcType=INTEGER}

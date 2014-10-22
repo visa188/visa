@@ -856,6 +856,17 @@
 						    <span class="form_item">入账日期：<input value="$!fn.format($!{lineOrder.gotDate},'yyyy-MM-dd')" name="gotDate" id="gotDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
                         </div>
+                        <div class="control_group">
+	                        <label class="control_label"><span class="ico_must">*</span>收款状态:</label>
+							<div class="controls">
+			               		<span class="form_item"><select name="yshkstatus" id="yshkstatus" class="text2 js_non_empty" placeholder="收款状态">
+									<option value="" selected="selected">请选择</option>
+	    							<option value="1" #if($lineOrder.yshkstatus=='1') selected #end>未收款</option>
+									<option value="2" #if($lineOrder.yshkstatus=='2') selected #end>部分收款</option>
+									<option value="3" #if($lineOrder.yshkstatus=='3') selected #end>已收全款</option>
+								</select></span>
+			              	</div>
+		              	 </div>	
 						#set($garanteeService = $!{lineServiceMap.get(6)})
 						#if($!{garanteeService.serviceItem1}=='2'||$!{garanteeService.serviceItem1}=='3')
 						<input type="hidden" name="garanteeType" value="$!{garanteeService.serviceItem1}" />  
@@ -952,6 +963,17 @@
 							<span class="form_item"><input value="$!fn.disPrice($!{lineOrder.paidPriceSum})" name="paidPriceSum" id="paidPriceSum" type="text" class="text1 js_nan"  placeholder="应付合计" readonly>元</span>
                           </div>
                         </div>
+                        <div class="control_group">
+	                        <label class="control_label"><span class="ico_must">*</span>付款状态:</label>
+							<div class="controls">
+			               		<span class="form_item"><select name="yfhkstatus" id="yfhkstatus" class="text2 js_non_empty" placeholder="付款状态">
+									<option value="" selected="selected">请选择</option>
+	    							<option value="1" #if($lineOrder.yfhkstatus=='1') selected #end>未付款</option>
+									<option value="2" #if($lineOrder.yfhkstatus=='2') selected #end>部分付款</option>
+									<option value="3" #if($lineOrder.yfhkstatus=='3') selected #end>已付全款</option>
+								</select></span>
+			              	</div>	
+		              	 </div>	
 						<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>毛利:</label>
                           <div class="controls">
