@@ -160,6 +160,16 @@ public class LineOrder {
     public int yshkstatus;
     public int yfhkstatus;
 
+    public String garanteeFileUrl;
+
+    public String getGaranteeFileUrl() {
+        return garanteeFileUrl;
+    }
+
+    public void setGaranteeFileUrl(String garanteeFileUrl) {
+        this.garanteeFileUrl = garanteeFileUrl;
+    }
+
     public int getYshkstatus() {
         return yshkstatus;
     }
