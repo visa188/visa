@@ -160,7 +160,17 @@ public class LineOrder {
     public int yshkstatus;
     public int yfhkstatus;
 
+    public String qtysRemark;
+
     public String garanteeFileUrl;
+
+    public String getQtysRemark() {
+        return qtysRemark;
+    }
+
+    public void setQtysRemark(String qtysRemark) {
+        this.qtysRemark = qtysRemark;
+    }
 
     public String getGaranteeFileUrl() {
         return garanteeFileUrl;
