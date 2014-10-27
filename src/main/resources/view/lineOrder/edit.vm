@@ -919,6 +919,21 @@
 								</select></span>
 			              	</div>
 		              	 </div>	
+		              	 
+		              	 <div class="control_group">
+	                        <label class="control_label"><span class="ico_must">*</span>押金:</label>
+							<div class="controls">
+			               		<span class="form_item"><input value="$!fn.disPrice($!{lineOrder.lineOrderDeposit})" name="lineOrderDeposit" id="lineOrderDeposit" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="押金">元</span>
+			              	</div>
+		              	 </div>	
+		              	 
+		              	 <div class="control_group">
+	                        <label class="control_label"><span class="ico_must">*</span>返佣:</label>
+							<div class="controls">
+			               		<span class="form_item"><input value="$!fn.disPrice($!{lineOrder.commission})" name="commission" id="commission" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="返佣">元</span>
+			              	</div>
+		              	 </div>	
+		              	 
 						#set($garanteeService = $!{lineServiceMap.get(6)})
 						#if($!{garanteeService.serviceItem1}=='2'||$!{garanteeService.serviceItem1}=='3')
 						<input type="hidden" name="garanteeType" value="$!{garanteeService.serviceItem1}" />  
@@ -980,6 +995,10 @@
 							<span class="form_item">转出银行：<input value="$!{djService.paidBank}" name="djPaidBank" id="djPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
 						    <span class="form_item">付款日期：<input value="$!fn.format($!{djService.paidDate},'yyyy-MM-dd')" name="djPaidDate" id="djPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
+                          <label class="control_label">备注:</label>
+                       	  <div class="controls">
+                       	  	<textarea name="djFeeComment" id="djFeeComment" class="text3" cols="80" rows="3" placeholder="备注" maxlength="300">$!{djService.feeComment}</textarea>
+                       	  </div>      	
                         </div>
 						#end
 						#set($qtService = $!{lineServiceMap.get(5)})  

@@ -65,6 +65,7 @@ public class LineOrderVo extends LineOrder {
     private BigDecimal djNeedPaid;
     private String djPaidBank;
     private Date djPaidDate;
+    private String djFeeComment;
 
     private BigDecimal jpPriceSum;
     private BigDecimal jpAlreadyPaid;
@@ -285,6 +286,9 @@ public class LineOrderVo extends LineOrder {
             if (this.getDjPaidDate() != null) {
                 linesSrvice.setPaidDate(this.getDjPaidDate());
             }
+            if (this.getDjFeeComment() != null) {
+                linesSrvice.setFeeComment(this.getDjFeeComment());
+            }
 
             linesSrvice.setYfhj(yfdjhj);
             serviceList.add(linesSrvice);
@@ -403,6 +407,14 @@ public class LineOrderVo extends LineOrder {
             }
         }
         return customList;
+    }
+
+    public String getDjFeeComment() {
+        return djFeeComment;
+    }
+
+    public void setDjFeeComment(String djFeeComment) {
+        this.djFeeComment = djFeeComment;
     }
 
     public String getCancelDatumIsready() {

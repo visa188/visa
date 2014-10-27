@@ -154,6 +154,9 @@ public class LineOrder {
     public BigDecimal profit;
     public BigDecimal qtys;
 
+    public BigDecimal lineOrderDeposit;
+    public BigDecimal commission;
+
     private String dyczb;
     private String deczb;
 
@@ -163,6 +166,22 @@ public class LineOrder {
     public String qtysRemark;
 
     public String garanteeFileUrl;
+
+    public BigDecimal getLineOrderDeposit() {
+        return lineOrderDeposit;
+    }
+
+    public void setLineOrderDeposit(BigDecimal lineOrderDeposit) {
+        this.lineOrderDeposit = lineOrderDeposit;
+    }
+
+    public BigDecimal getCommission() {
+        return commission;
+    }
+
+    public void setCommission(BigDecimal commission) {
+        this.commission = commission;
+    }
 
     public String getQtysRemark() {
         return qtysRemark;
