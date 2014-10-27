@@ -141,6 +141,18 @@
                             <span class="form_item"><input type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="出票时限" name="printTicketLimitDate" id="printTicketLimitDate" value="$fn.format($!{product.printTicketLimitDate},'yyyy-MM-dd')"></span>
                         </div>                          
                     </div>
+                    <div class="control_group">
+                      <label class="control_label"><span class="ico_must">*</span>机票订金:</label>
+                      <div class="controls">
+                       <span class="form_item">
+							<input value="$!{product.jpdj}" type="text"  class="text1 js_non_empty" name="jpdj" id="jpdj" placeholder="机票订金">元
+                            <select name="jpdjType" id="jpdjType" class="text2">
+                                <option value="1"  $fn.selected($!{product.jpdjType}, '1')>可退</option>
+                                <option value="2"  $fn.selected($!{product.jpdjType}, '2')>冲机票款</option>
+                            </select>
+						</span>
+                      </div>
+                    </div>
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
 		              <div class="controls">

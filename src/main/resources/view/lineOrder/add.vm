@@ -161,7 +161,7 @@
 		<div class="maincon_fluid">
 			<form action="/lineOrder/addSubmit.do" method="post" class="form_horizontal hq_form line">
 				
-			  <input value="0" type="hidden" id="lineProductId" name="lineProductId">
+			  <input value="$!{product.lineProductId}" type="hidden" id="lineProductId" name="lineProductId">
 			  <input value="" type="hidden" id="travelInfoFileUrl" name="travelInfoFileUrl">
 			  <input name="customerId" id="customerId" type="hidden" value=""/>
 			  <input value="$!{type}" type="hidden" id="type" name="type">

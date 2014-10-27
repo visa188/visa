@@ -300,6 +300,8 @@ public class LineOrderController {
         model.put("customer", customer);
         List<Airline> airlineList = airlineDao.selectAllAirline();
         model.put("airlineList", airlineList);
+        LineProduct product = lineProductDao.selectByPrimaryKey(lineOrder.getLineProductId());
+        model.put("product", product);
     }
 
     /**

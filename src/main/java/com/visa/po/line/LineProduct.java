@@ -81,6 +81,25 @@ public class LineProduct {
     public String travelInfoFileUrl;
     public String orderSeq;
 
+    private String jpdjType;
+    private BigDecimal jpdj;
+
+    public String getJpdjType() {
+        return jpdjType;
+    }
+
+    public void setJpdjType(String jpdjType) {
+        this.jpdjType = jpdjType;
+    }
+
+    public BigDecimal getJpdj() {
+        return jpdj;
+    }
+
+    public void setJpdj(BigDecimal jpdj) {
+        this.jpdj = jpdj;
+    }
+
     public Date getStartDate() {
         return startDate;
     }
