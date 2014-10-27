@@ -409,7 +409,7 @@ public class VelocityToolbox {
     }
 
     public boolean hasButton(int currentFlow, int roleId) {
-        if (roleId == currentFlow) {
+        if (roleId == currentFlow || roleId == LineRoleEnumType.ADMIN.getId()) {
             return true;
         } else {
             switch (currentFlow) {

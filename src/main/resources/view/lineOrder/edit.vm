@@ -713,10 +713,10 @@
                               <label class="control_label"><span class="ico_must">*</span>机票订金:</label>
                               <div class="controls">
                                <span class="form_item">
-    								<input value="$!{jpService.serviceItem9}" type="text"  class="text1 js_non_empty" name="jpdj" id="jpdj" placeholder="机票订金">元
+    								<input value="$!{product.jpdj}" type="text"  class="text1 js_non_empty" name="jpdj" id="jpdj" placeholder="机票订金">元
                                     <select name="jpdjType" id="jpdjType" class="text2">
-                                        <option value="1"  $fn.selected($!{jpService.serviceItem4}, '1')>可退</option>
-                                        <option value="2"  $fn.selected($!{jpService.serviceItem4}, '2')>冲机票款</option>
+                                        <option value="1"  $fn.selected($!{product.jpdjType}, '1')>可退</option>
+                                        <option value="2"  $fn.selected($!{product.jpdjType}, '2')>冲机票款</option>
                                     </select>
     							</span>
                               </div>
@@ -894,6 +894,7 @@
 		              <label class="control_label"><span class="ico_must">*</span>其它应收:</label>
 		              <div class="controls">
 		               <span class="form_item"><input $fn.isReadOnly($userLineRoleId) name="qtys" id="qtys" type="text" value="$!fn.disPrice($!{lineOrder.qtys})" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="其它应收" onchange="calculatePriceSum();"></span>
+		               <span class="form_item">其它应收备注:<input type="text" class="text1" maxlength="200" size="50" id="qtysRemark" name="qtysRemark" placeholder="其它应收备注" value="$!{lineOrder.qtysRemark}""></span>
 		              </div>
 		            </div>
 					#if($userLineRoleId == $fn.getLineFinanceRoleId() || $userLineRoleId == $fn.getLineFinanceManagerRoleId() )
@@ -973,8 +974,7 @@
                         <div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>地接费用合计:</label>
                           <div class="controls">
-							<span class="form_item">#if($djService.serviceItem1)酒店费用#end #if($djService.serviceItem4)特殊景点费用#end #if($djService.serviceType == $fn.getBsServicTypeId())巴士费用#else司兼导费用#end
-							<input value="$!fn.disPrice($!{djService.yfhj})" type="text" class="text1 js_nan" name="djPriceSum" id="djPriceSum" placeholder="应付" onchange="calculateProfit();">元</span>
+							<span class="form_item">应付：<input value="$!fn.disPrice($!{djService.yfhj})" type="text" class="text1 js_nan" name="djPriceSum" id="djPriceSum" placeholder="应付" onchange="calculateProfit();">元</span>
 							<span class="form_item">已付：<input value="$!fn.disPrice($!{djService.alreadyPaid})" name="djAlreadyPaid" id="djAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已付" onchange="calculateNeedPaid('dj');">元</span>
 							<span class="form_item">未付：<input value="$!fn.disPrice($!{djService.needPaid})" name="djNeedPaid" id="djNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未付" readonly>元</span>
 							<span class="form_item">转出银行：<input value="$!{djService.paidBank}" name="djPaidBank" id="djPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
