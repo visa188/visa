@@ -84,6 +84,7 @@ public class LineOrderVo extends LineOrder {
     private BigDecimal qtNeedPaid;
     private String qtPaidBank;
     private Date qtPaidDate;
+    private String qtFeeComment;
 
     private BigDecimal bxPriceSum;
     private BigDecimal bxAlreadyPaid;
@@ -323,6 +324,9 @@ public class LineOrderVo extends LineOrder {
             if (this.getQtPaidDate() != null) {
                 linesSrvice.setPaidDate(this.getQtPaidDate());
             }
+            if (this.getQtFeeComment() != null) {
+                linesSrvice.setFeeComment(this.getQtFeeComment());
+            }
             serviceList.add(linesSrvice);
         }
         if (!StringUtils.isEmpty(getGaranteeType())) {
@@ -407,6 +411,14 @@ public class LineOrderVo extends LineOrder {
             }
         }
         return customList;
+    }
+
+    public String getQtFeeComment() {
+        return qtFeeComment;
+    }
+
+    public void setQtFeeComment(String qtFeeComment) {
+        this.qtFeeComment = qtFeeComment;
     }
 
     public String getDjFeeComment() {

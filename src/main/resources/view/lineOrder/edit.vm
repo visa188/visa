@@ -1012,6 +1012,10 @@
 							<span class="form_item">转出银行：<input value="$!{qtService.paidBank}" name="qtPaidBank" id="qtPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
 						    <span class="form_item">付款日期：<input value="$!fn.format($!{qtService.paidDate},'yyyy-MM-dd')" name="qtPaidDate" id="qtPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
+                          <label class="control_label">备注:</label>
+                       	  <div class="controls">
+                       	  	<textarea name="qtFeeComment" id="qtFeeComment" class="text3" cols="80" rows="3" placeholder="备注" maxlength="300">$!{qtService.feeComment}</textarea>
+                       	  </div>
                         </div>
                         #end  
 						#set($bxService = $!{lineServiceMap.get(7)})
