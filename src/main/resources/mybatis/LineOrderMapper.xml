@@ -80,7 +80,8 @@
 	
 	<select id="selectByPage" parameterType="java.util.Map" resultType="LineOrder">
        	select tmp1.*,lineproduct.lineProductName,lineproduct.orderSeq as lineProductOrderSeq, lineproduct.groupLeader,lineproduct.aircorpId,
-       	lineproduct.depositLimitDate,lineproduct.printTicketLimitDate
+       	lineproduct.depositLimitDate,lineproduct.printTicketLimitDate,lineproduct.qw,lineproduct.zw,lineproduct.yb,lineproduct.seatNum,
+       	lineproduct.leftSeatNum
 		from (
 			select lineorder.*,linecountry.countryName lineCountryName
 		    from lineorder,linecountry

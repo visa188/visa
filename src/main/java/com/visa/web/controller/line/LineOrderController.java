@@ -393,6 +393,22 @@ public class LineOrderController {
                     int yb = p.yb - lineOrder.nameListSize;
                     p.setYb(yb);
                 }
+                p.setLeftSeatNum(p.seatNum - p.qw - p.zw - p.yb);
+                lineProductDao.updateByPrimaryKey(p);
+
+                p = lineProductDao.selectByPrimaryKey(lineOrderVo.getLineProductId());
+                if (lineOrderVo.nameListType == 1) {
+                    int qw = p.qw + lineOrderVo.nameListSize;
+                    p.setQw(qw);
+                } else if (lineOrderVo.nameListType == 2) {
+                    int zw = p.zw + lineOrderVo.nameListSize;
+                    p.setZw(zw);
+                } else if (lineOrderVo.nameListType == 3) {
+                    int yb = p.yb + lineOrderVo.nameListSize;
+                    p.setYb(yb);
+                }
+                p.setLeftSeatNum(p.seatNum - p.qw - p.zw - p.yb);
+                lineProductDao.updateByPrimaryKey(p);
             }
         }
 
