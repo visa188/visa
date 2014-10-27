@@ -50,6 +50,18 @@ public class LineProduct {
      */
     public int seatNum;
     /**
+     * 切位
+     */
+    public int qw;
+    /**
+     * 占位
+     */
+    public int zw;
+    /**
+     * 预报
+     */
+    public int yb;
+    /**
      * 剩余机位数
      * 
      * @pdOid 1ee2a17b-5931-440d-b1e1-10c20db5d6a2
@@ -80,6 +92,25 @@ public class LineProduct {
      */
     public String travelInfoFileUrl;
     public String orderSeq;
+
+    private String jpdjType;
+    private BigDecimal jpdj;
+
+    public String getJpdjType() {
+        return jpdjType;
+    }
+
+    public void setJpdjType(String jpdjType) {
+        this.jpdjType = jpdjType;
+    }
+
+    public BigDecimal getJpdj() {
+        return jpdj;
+    }
+
+    public void setJpdj(BigDecimal jpdj) {
+        this.jpdj = jpdj;
+    }
 
     public Date getStartDate() {
         return startDate;
@@ -215,6 +246,30 @@ public class LineProduct {
 
     public void setOrderSeq(String orderSeq) {
         this.orderSeq = orderSeq;
+    }
+
+    public int getQw() {
+        return qw;
+    }
+
+    public void setQw(int qw) {
+        this.qw = qw;
+    }
+
+    public int getZw() {
+        return zw;
+    }
+
+    public void setZw(int zw) {
+        this.zw = zw;
+    }
+
+    public int getYb() {
+        return yb;
+    }
+
+    public void setYb(int yb) {
+        this.yb = yb;
     }
 
 }

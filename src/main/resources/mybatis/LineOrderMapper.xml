@@ -127,7 +127,12 @@
 			   </if>
 			  )
 		 tmp1 left OUTER join lineproduct on( tmp1.lineProductId = lineproduct.lineProductId)
-		order by orderDate desc,orderId desc
+		 <if test="type == 1">
+		     order by startDate desc
+		</if>
+		<if test="type == 2">
+		     order by startDate,lineProductOrderSeq desc
+		</if>
 		limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
 	</select>
 	
@@ -157,7 +162,7 @@
     insert into lineorder (orderDate,type,nameListSize,nameListType,nameListState,nameListlimitDate,srf,drf,pf,salesmanId,salesmanName,lineOperatorId,lineOperatorName,
     visaOperatorId,visaOperatorName,signOperatorId,signOperatorName,customerId,lineCountryId,
     startDate,endDate,travelInfo,travelInfoFileUrl,aircorpId,price,priceSum,alreadyGot,needGot,gotBank,gotDate,paidPriceSum,status,lineProductId,specialComment,orderSeq,profit,qtys, postTime,
-    dyczb,deczb,jdstatus,busstatus,tuanstatus,yshkstatus,yfhkstatus,garanteeFileUrl)
+    dyczb,deczb,jdstatus,busstatus,tuanstatus,yshkstatus,yfhkstatus,garanteeFileUrl,qtysRemark)
     values (now(),
     #{type,jdbcType=INTEGER},#{nameListSize,jdbcType=INTEGER},#{nameListType,jdbcType=INTEGER},#{nameListState,jdbcType=INTEGER},#{nameListlimitDate,jdbcType=DATE},
     #{srf,jdbcType=VARCHAR},#{drf,jdbcType=VARCHAR},#{pf,jdbcType=VARCHAR},
@@ -168,7 +173,8 @@
     #{price,jdbcType=DECIMAL},#{priceSum,jdbcType=DECIMAL},#{alreadyGot,jdbcType=DECIMAL},#{needGot,jdbcType=DECIMAL},#{gotBank,jdbcType=VARCHAR},#{gotDate,jdbcType=DATE},
     #{priceSum,jdbcType=DECIMAL},#{status,jdbcType=INTEGER},#{lineProductId,jdbcType=INTEGER},#{specialComment,jdbcType=VARCHAR},
     #{orderSeq,jdbcType=VARCHAR},#{profit,jdbcType=DECIMAL},#{qtys,jdbcType=DECIMAL}, now(),#{dyczb,jdbcType=VARCHAR},#{deczb,jdbcType=VARCHAR},
-    #{jdstatus,jdbcType=INTEGER},#{busstatus,jdbcType=INTEGER},#{tuanstatus,jdbcType=INTEGER},#{yshkstatus,jdbcType=INTEGER},#{yfhkstatus,jdbcType=INTEGER},#{garanteeFileUrl,jdbcType=VARCHAR)
+    #{jdstatus,jdbcType=INTEGER},#{busstatus,jdbcType=INTEGER},#{tuanstatus,jdbcType=INTEGER},#{yshkstatus,jdbcType=INTEGER},#{yfhkstatus,jdbcType=INTEGER}
+    ,#{garanteeFileUrl,jdbcType=VARCHAR},#{qtysRemark,jdbcType=VARCHAR})
   </insert>
   
   <update id="updateByPrimaryKey">
@@ -216,6 +222,7 @@
 	    <if test="yshkstatus != null">yshkStatus = #{yshkstatus,jdbcType=INTEGER},</if>
 	    <if test="yfhkstatus != null">yfhkStatus = #{yfhkstatus,jdbcType=INTEGER},</if>
 	    <if test="garanteeFileUrl != null">garanteeFileUrl = #{garanteeFileUrl,jdbcType=VARCHAR},</if>
+	    <if test="qtysRemark != null">qtysRemark = #{qtysRemark,jdbcType=VARCHAR},</if>
     postTime = now()
     </set>
     where orderId = #{orderId,jdbcType=INTEGER}

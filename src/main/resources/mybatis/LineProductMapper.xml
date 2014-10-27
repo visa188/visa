@@ -36,11 +36,11 @@
   </delete>
   
   <insert id="insert">
-    insert into lineproduct (lineCountryId,lineProductName,groupLeader,aircorpId,depositLimitDate,printTicketLimitDate,seatNum,leftSeatNum,price,des,startDate,endDate,travelInfo,travelInfoFileUrl,orderSeq)
+    insert into lineproduct (lineCountryId,lineProductName,groupLeader,aircorpId,depositLimitDate,printTicketLimitDate,seatNum,qw,zw,yb,leftSeatNum,price,des,startDate,endDate,travelInfo,travelInfoFileUrl,orderSeq,jpdj,jpdjType)
     values (#{lineCountryId,jdbcType=INTEGER},
     #{lineProductName,jdbcType=VARCHAR},#{groupLeader,jdbcType=VARCHAR},#{aircorpId,jdbcType=VARCHAR},
-    #{depositLimitDate,jdbcType=DATE},#{printTicketLimitDate,jdbcType=DATE},#{seatNum,jdbcType=INTEGER},#{leftSeatNum,jdbcType=INTEGER},
-    #{price,jdbcType=DECIMAL},#{des,jdbcType=VARCHAR},#{startDate,jdbcType=DATE},#{endDate,jdbcType=DATE},#{travelInfo,jdbcType=VARCHAR},#{travelInfoFileUrl,jdbcType=VARCHAR},#{orderSeq,jdbcType=VARCHAR})
+    #{depositLimitDate,jdbcType=DATE},#{printTicketLimitDate,jdbcType=DATE},#{seatNum,jdbcType=INTEGER},0,0,0,#{leftSeatNum,jdbcType=INTEGER},
+    #{price,jdbcType=DECIMAL},#{des,jdbcType=VARCHAR},#{startDate,jdbcType=DATE},#{endDate,jdbcType=DATE},#{travelInfo,jdbcType=VARCHAR},#{travelInfoFileUrl,jdbcType=VARCHAR},#{orderSeq,jdbcType=VARCHAR},#{jpdj,jdbcType=DECIMAL},#{jpdjType,jdbcType=VARCHAR})
   </insert>
   
   <update id="updateByPrimaryKey">
@@ -54,11 +54,16 @@
     startDate = #{startDate,jdbcType=DATE},
     endDate = #{endDate,jdbcType=DATE},
     seatNum = #{seatNum,jdbcType=INTEGER},
+    qw = #{qw,jdbcType=INTEGER},
+    zw = #{zw,jdbcType=INTEGER},
+    yb = #{yb,jdbcType=INTEGER},
     leftSeatNum = #{leftSeatNum,jdbcType=INTEGER},
     price = #{price,jdbcType=DECIMAL},
     travelInfo = #{travelInfo,jdbcType=VARCHAR},
     travelInfoFileUrl = #{travelInfoFileUrl,jdbcType=VARCHAR},
-    des = #{des,jdbcType=VARCHAR}
+    jpdj = #{jpdj,jdbcType=VARCHAR},
+    jpdjType = #{jpdjType,jdbcType=VARCHAR},
+    des = #{des,jdbcType=DECIMAL}
     where lineProductId = #{lineProductId,jdbcType=INTEGER}
   </update>
 </mapper>
