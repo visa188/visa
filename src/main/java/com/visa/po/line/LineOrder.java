@@ -40,6 +40,26 @@ public class LineOrder {
     public int nameListType;
     public int nameListState;
     public Date nameListlimitDate;
+
+    public int seatNum;
+    /**
+     * 切位
+     */
+    public int qw;
+    /**
+     * 占位
+     */
+    public int zw;
+    /**
+     * 预报
+     */
+    public int yb;
+    /**
+     * 剩余机位数
+     * 
+     * @pdOid 1ee2a17b-5931-440d-b1e1-10c20db5d6a2
+     */
+    public int leftSeatNum;
     /**
      * 双人房数量
      */
@@ -621,6 +641,46 @@ public class LineOrder {
 
     public void setDeczb(String deczb) {
         this.deczb = deczb;
+    }
+
+    public int getSeatNum() {
+        return seatNum;
+    }
+
+    public void setSeatNum(int seatNum) {
+        this.seatNum = seatNum;
+    }
+
+    public int getQw() {
+        return qw;
+    }
+
+    public void setQw(int qw) {
+        this.qw = qw;
+    }
+
+    public int getZw() {
+        return zw;
+    }
+
+    public void setZw(int zw) {
+        this.zw = zw;
+    }
+
+    public int getYb() {
+        return yb;
+    }
+
+    public void setYb(int yb) {
+        this.yb = yb;
+    }
+
+    public int getLeftSeatNum() {
+        return leftSeatNum;
+    }
+
+    public void setLeftSeatNum(int leftSeatNum) {
+        this.leftSeatNum = leftSeatNum;
     }
 
 }
