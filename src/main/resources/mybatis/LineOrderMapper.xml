@@ -163,7 +163,7 @@
     insert into lineorder (orderDate,type,nameListSize,nameListType,nameListState,nameListlimitDate,srf,drf,pf,salesmanId,salesmanName,lineOperatorId,lineOperatorName,
     visaOperatorId,visaOperatorName,signOperatorId,signOperatorName,customerId,lineCountryId,
     startDate,endDate,travelInfo,travelInfoFileUrl,aircorpId,price,priceSum,alreadyGot,needGot,gotBank,gotDate,paidPriceSum,status,lineProductId,specialComment,orderSeq,profit,qtys, postTime,
-    dyczb,deczb,jdstatus,busstatus,tuanstatus,yshkstatus,yfhkstatus,garanteeFileUrl,qtysRemark,lineOrderDeposit,commission,lineOrderDepositStatus,commissionStatus)
+    dyczb,deczb,jdstatus,busstatus,tuanstatus,yshkstatus,yfhkstatus,garanteeFileUrl,qtysRemark,lineOrderDeposit,commission,lineOrderDepositStatus,commissionStatus,alreadyPaidSum,needPaidSum)
     values (now(),
     #{type,jdbcType=INTEGER},#{nameListSize,jdbcType=INTEGER},#{nameListType,jdbcType=INTEGER},#{nameListState,jdbcType=INTEGER},#{nameListlimitDate,jdbcType=DATE},
     #{srf,jdbcType=VARCHAR},#{drf,jdbcType=VARCHAR},#{pf,jdbcType=VARCHAR},
@@ -176,7 +176,7 @@
     #{orderSeq,jdbcType=VARCHAR},#{profit,jdbcType=DECIMAL},#{qtys,jdbcType=DECIMAL}, now(),#{dyczb,jdbcType=VARCHAR},#{deczb,jdbcType=VARCHAR},
     #{jdstatus,jdbcType=INTEGER},#{busstatus,jdbcType=INTEGER},#{tuanstatus,jdbcType=INTEGER},#{yshkstatus,jdbcType=INTEGER},#{yfhkstatus,jdbcType=INTEGER}
     ,#{garanteeFileUrl,jdbcType=VARCHAR},#{qtysRemark,jdbcType=VARCHAR},#{lineOrderDeposit,jdbcType=DECIMAL},#{commission,jdbcType=DECIMAL}
-    ,#{lineOrderDepositStatus,jdbcType=INTEGER},#{commissionStatus,jdbcType=INTEGER})
+    ,#{lineOrderDepositStatus,jdbcType=INTEGER},#{commissionStatus,jdbcType=INTEGER},#{alreadyPaidSum,jdbcType=DECIMAL},#{needPaidSum,jdbcType=DECIMAL})
   </insert>
   
   <update id="updateByPrimaryKey">
@@ -229,6 +229,8 @@
 	    <if test="commission != null">commission = #{commission,jdbcType=DECIMAL},</if>
 	    <if test="commissionStatus != null">commissionStatus = #{commissionStatus,jdbcType=INTEGER},</if>
 	    <if test="lineOrderDepositStatus != null">lineOrderDepositStatus = #{lineOrderDepositStatus,jdbcType=INTEGER},</if>
+	    <if test="alreadyPaidSum != null">alreadyPaidSum = #{alreadyPaidSum,jdbcType=DECIMAL},</if>
+	    <if test="needPaidSum != null">needPaidSum = #{needPaidSum,jdbcType=DECIMAL},</if>
     postTime = now()
     </set>
     where orderId = #{orderId,jdbcType=INTEGER}

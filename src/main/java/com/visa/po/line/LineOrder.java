@@ -156,6 +156,8 @@ public class LineOrder {
     public String gotBank;
     public Date gotDate;
     public BigDecimal paidPriceSum;
+    public BigDecimal alreadyPaidSum;
+    public BigDecimal needPaidSum;
     /**
      * 线路订单状态
      * 
@@ -188,6 +190,22 @@ public class LineOrder {
     public String qtysRemark;
 
     public String garanteeFileUrl;
+
+    public BigDecimal getAlreadyPaidSum() {
+        return alreadyPaidSum;
+    }
+
+    public void setAlreadyPaidSum(BigDecimal alreadyPaidSum) {
+        this.alreadyPaidSum = alreadyPaidSum;
+    }
+
+    public BigDecimal getNeedPaidSum() {
+        return needPaidSum;
+    }
+
+    public void setNeedPaidSum(BigDecimal needPaidSum) {
+        this.needPaidSum = needPaidSum;
+    }
 
     public int getLineOrderDepositStatus() {
         return lineOrderDepositStatus;
