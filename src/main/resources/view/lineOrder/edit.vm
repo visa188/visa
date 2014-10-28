@@ -924,6 +924,12 @@
 	                        <label class="control_label"><span class="ico_must">*</span>押金:</label>
 							<div class="controls">
 			               		<span class="form_item"><input value="$!fn.disPrice($!{lineOrder.lineOrderDeposit})" name="lineOrderDeposit" id="lineOrderDeposit" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="押金">元</span>
+			               		<span class="form_item"><select name="lineOrderDepositStatus" id="lineOrderDepositStatus" class="text2" placeholder="押金状态">
+									<option value="" selected="selected">请选择</option>
+	    							<option value="1" #if($lineOrder.lineOrderDepositStatus=='1') selected #end>未收押金</option>
+									<option value="2" #if($lineOrder.lineOrderDepositStatus=='2') selected #end>已收押金</option>
+									<option value="3" #if($lineOrder.lineOrderDepositStatus=='3') selected #end>已退押金</option>
+								</select></span>
 			              	</div>
 		              	 </div>	
 		              	 
@@ -931,6 +937,12 @@
 	                        <label class="control_label"><span class="ico_must">*</span>返佣:</label>
 							<div class="controls">
 			               		<span class="form_item"><input value="$!fn.disPrice($!{lineOrder.commission})" name="commission" id="commission" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="返佣">元</span>
+			               		<span class="form_item"><select name="commissionStatus" id="commissionStatus" class="text2" placeholder="返佣状态">
+									<option value="" selected="selected">请选择</option>
+	    							<option value="1" #if($lineOrder.commissionStatus=='1') selected #end>无返佣</option>
+									<option value="2" #if($lineOrder.commissionStatus=='2') selected #end>未返佣</option>
+									<option value="3" #if($lineOrder.commissionStatus=='3') selected #end>已返佣</option>
+								</select></span>
 			              	</div>
 		              	 </div>	
 		              	 

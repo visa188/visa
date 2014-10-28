@@ -176,6 +176,8 @@ public class LineOrder {
 
     public BigDecimal lineOrderDeposit;
     public BigDecimal commission;
+    public int lineOrderDepositStatus;
+    public int commissionStatus;
 
     private String dyczb;
     private String deczb;
@@ -186,6 +188,22 @@ public class LineOrder {
     public String qtysRemark;
 
     public String garanteeFileUrl;
+
+    public int getLineOrderDepositStatus() {
+        return lineOrderDepositStatus;
+    }
+
+    public void setLineOrderDepositStatus(int lineOrderDepositStatus) {
+        this.lineOrderDepositStatus = lineOrderDepositStatus;
+    }
+
+    public int getCommissionStatus() {
+        return commissionStatus;
+    }
+
+    public void setCommissionStatus(int commissionStatus) {
+        this.commissionStatus = commissionStatus;
+    }
 
     public BigDecimal getLineOrderDeposit() {
         return lineOrderDeposit;
