@@ -904,6 +904,9 @@
 							<span class="form_item">应收：<input value="$!fn.disPrice($!{lineOrder.priceSum})" name="priceSum" id="priceSum" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应收" readonly>元</span>
 							<span class="form_item">已收：<input value="$!fn.disPrice($!{lineOrder.alreadyGot})" name="alreadyGot" id="alreadyGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收" onchange="calculateNeedPaid('tf');">元</span>
 							<span class="form_item">未收：<input value="$!fn.disPrice($!{lineOrder.needGot})" name="needGot" id="needGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收" readonly>元</span>
+                          </div>
+                          <label class="control_label"></label>
+                          <div class="controls">
 							<span class="form_item">入账银行：<input value="$!{lineOrder.gotBank}" name="gotBank" id="gotBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
 						    <span class="form_item">入账日期：<input value="$!fn.format($!{lineOrder.gotDate},'yyyy-MM-dd')" name="gotDate" id="gotDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
@@ -955,9 +958,15 @@
 							<span class="form_item">应收：<input value="$!fn.disPrice($!{garanteeService.priceSum})" name="garanteePriceSum" id="garanteePriceSum" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="应收">元</span>
 							<span class="form_item">已收：<input value="$!fn.disPrice($!{garanteeService.alreadyGot})" name="garanteeAlreadyGot" id="garanteeAlreadyGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已收" onchange="calculateNeedPaid('garantee');">元</span>
 							<span class="form_item">未收：<input value="$!fn.disPrice($!{garanteeService.needGot})" name="garanteeNeedGot" id="garanteeNeedGot" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未收" readonly>元</span>
+						  </div>
+						  <label class="control_label"></label>
+                          <div class="controls">
 							<span class="form_item">入账银行：<input value="$!{garanteeService.gotBank}" name="garanteeGotBank" id="garanteeGotBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
 						    <span class="form_item">入账日期：<input value="$!fn.format($!{garanteeService.gotDate},'yyyy-MM-dd')" name="garanteeGotDate" id="garanteeGotDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
 							<span class="form_item">已退：<input value="$!fn.disPrice($!{garanteeService.alreadyPaid})" name="garanteeAlreadyPaid" id="garanteeAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已退">元</span>
+						  </div>
+						  <label class="control_label"></label>
+                          <div class="controls">
 							<span class="form_item">转出银行：<input value="$!{garanteeService.paidBank}" name="garanteePaidBank" id="garanteePaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
 						    <span class="form_item">付款日期：<input value="$!fn.format($!{garanteeService.paidDate},'yyyy-MM-dd')" name="garanteePaidDate" id="garanteePaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="付款日期"></span>
                           </div>
@@ -971,16 +980,23 @@
 							<span class="form_item">应付：<input value="$!fn.disPrice($!{jpService.yfhj})" type="text" class="text1 js_nan" name="jpPriceSum" id="jpPriceSum" placeholder="应付" onchange="calculateProfit();">元</span>
 							<span class="form_item">已付：<input value="$!fn.disPrice($!{jpService.alreadyPaid})" name="jpAlreadyPaid" id="jpAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已付" onchange="calculateNeedPaid('jp');calculateProfit();">元</span>
 							<span class="form_item">未付：<input value="$!fn.disPrice($!{jpService.needPaid})" name="jpNeedPaid" id="jpNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未付" readonly>元</span>
+						  </div>
+						  <label class="control_label"></label>
+                          <div class="controls">
 							<span class="form_item">转出银行：<input value="$!{jpService.paidBank}" name="jpPaidBank" id="jpPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
 						    <span class="form_item">付款日期：<input value="$!fn.format($!{jpService.paidDate},'yyyy-MM-dd')" name="jpPaidDate" id="jpPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="付款日期"></span>
     						  #if($!{jpService.serviceItem4}=='1')
 								<span class="form_item">机票订金（可退）：<input value="$!fn.disPrice($!{jpService.serviceItem9})" name="jpPaidJpdj" id="jpPaidJpdj" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="机票订金（可退）"></span>
-								<span class="form_item">已退：<input value="$!{jpService.serviceItem10}" name="alreadyPaidJpdj" id="alreadyPaidJpdj" type="text" class="text1" maxlength="8" size="8" placeholder="机票订金（已退）"></span>
-								<span class="form_item">退款日期：<input value="$!{jpService.serviceItem11}" name="jpPaidJpdjDate" id="jpPaidJpdjDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="退款日期"></span>
+								</div>
+								<label class="control_label"></label>
+                          		<div class="controls">
+									<span class="form_item">已退：<input value="$!{jpService.serviceItem10}" name="alreadyPaidJpdj" id="alreadyPaidJpdj" type="text" class="text1" maxlength="8" size="8" placeholder="机票订金（已退）"></span>
+									<span class="form_item">退款日期：<input value="$!{jpService.serviceItem11}" name="jpPaidJpdjDate" id="jpPaidJpdjDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="退款日期"></span>
+    						  	</div>
     						  #elseif($!{jpService.serviceItem4}=='2')
 								<span class="form_item">机票订金（冲机票款,自动加到已付款中）：<input value="$!fn.disPrice($!{jpService.serviceItem9})" name="jpdjAlreadyPaid" id="jpdjAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="机票订金（冲机票款）" onchange="calculateNeedPaid('jp');"></span>
+    						    </div>
     						  #end
-						  </div>
                         </div>	
 						#end
 						#set($qzService = $!{lineServiceMap.get(2)})
@@ -991,6 +1007,9 @@
 							<span class="form_item">应付：<input value="$!fn.disPrice($!{qzService.yfhj})" type="text" class="text1 js_nan" name="qzPriceSum" id="qzPriceSum" placeholder="应付" onchange="calculateProfit();">元</span>
 							<span class="form_item">已付：<input value="$!fn.disPrice($!{qzService.alreadyPaid})" name="qzAlreadyPaid" id="qzAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已付" onchange="calculateNeedPaid('qz');calculateProfit();">元</span>
 							<span class="form_item">未付：<input value="$!fn.disPrice($!{qzService.needPaid})" name="qzNeedPaid" id="qzNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未付" readonly>元</span>
+						  </div>
+						  <label class="control_label"></label>
+                      	  <div class="controls">
 							<span class="form_item">转出银行：<input value="$!{qzService.paidBank}" name="qzPaidBank" id="qzPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
 						    <span class="form_item">付款日期：<input value="$!fn.format($!{qzService.paidDate},'yyyy-MM-dd')" name="qzPaidDate" id="qzPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
@@ -1004,12 +1023,15 @@
 							<span class="form_item">应付：<input value="$!fn.disPrice($!{djService.yfhj})" type="text" class="text1 js_nan" name="djPriceSum" id="djPriceSum" placeholder="应付" onchange="calculateProfit();">元</span>
 							<span class="form_item">已付：<input value="$!fn.disPrice($!{djService.alreadyPaid})" name="djAlreadyPaid" id="djAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已付" onchange="calculateNeedPaid('dj');calculateProfit();">元</span>
 							<span class="form_item">未付：<input value="$!fn.disPrice($!{djService.needPaid})" name="djNeedPaid" id="djNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未付" readonly>元</span>
+						  </div>
+						  <label class="control_label"></label>
+                      	  <div class="controls">
 							<span class="form_item">转出银行：<input value="$!{djService.paidBank}" name="djPaidBank" id="djPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
 						    <span class="form_item">付款日期：<input value="$!fn.format($!{djService.paidDate},'yyyy-MM-dd')" name="djPaidDate" id="djPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
-                          <label class="control_label">备注:</label>
+                          <label class="control_label"></label>
                        	  <div class="controls">
-                       	  	<textarea name="djFeeComment" id="djFeeComment" class="text3" cols="80" rows="3" placeholder="备注" maxlength="300">$!{djService.feeComment}</textarea>
+                       	  	备注:<textarea name="djFeeComment" id="djFeeComment" class="text3" cols="80" rows="3" placeholder="备注" maxlength="300">$!{djService.feeComment}</textarea>
                        	  </div>      	
                         </div>
 						#end
@@ -1021,12 +1043,15 @@
 							<span class="form_item">应付：<input value="$!fn.disPrice($!{qtService.yfhj})" type="text" class="text1 js_nan" name="qtPriceSum" id="qtPriceSum" onchange="calculateProfit();calculateNeedPaid('qt');" placeholder="应付">元</span>
 							<span class="form_item">已付：<input value="$!fn.disPrice($!{qtService.alreadyPaid})" name="qtAlreadyPaid" id="qtAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已付" onchange="calculateNeedPaid('qt');calculateProfit();">元</span>
 							<span class="form_item">未付：<input value="$!fn.disPrice($!{qtService.needPaid})" name="qtNeedPaid" id="qtNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未付" readonly>元</span>
+						  </div>
+						  <label class="control_label"></label>
+                      	  <div class="controls">
 							<span class="form_item">转出银行：<input value="$!{qtService.paidBank}" name="qtPaidBank" id="qtPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
 						    <span class="form_item">付款日期：<input value="$!fn.format($!{qtService.paidDate},'yyyy-MM-dd')" name="qtPaidDate" id="qtPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
-                          <label class="control_label">备注:</label>
+                          <label class="control_label"></label>
                        	  <div class="controls">
-                       	  	<textarea name="qtFeeComment" id="qtFeeComment" class="text3" cols="80" rows="3" placeholder="备注" maxlength="300">$!{qtService.feeComment}</textarea>
+                       	  	备注:<textarea name="qtFeeComment" id="qtFeeComment" class="text3" cols="80" rows="3" placeholder="备注" maxlength="300">$!{qtService.feeComment}</textarea>
                        	  </div>
                         </div>
                         #end  
@@ -1038,6 +1063,9 @@
 							<span class="form_item">应付：<input value="$!fn.disPrice($!{bxService.yfhj})" name="bxPriceSum" id="bxPriceSum" type="text" class="text1 js_nan" placeholder="应付" onchange="calculateProfit();calculateProfit();">元</span>
 							<span class="form_item">已付：<input value="$!fn.disPrice($!{bxService.alreadyPaid})" name="bxAlreadyPaid" id="bxAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已付" onchange="calculateNeedPaid('bx');calculateProfit();">元</span>
 							<span class="form_item">未付：<input value="$!fn.disPrice($!{bxService.needPaid})" name="bxNeedPaid" id="bxNeedPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="未付" readonly>元</span>
+						  </div>
+						  <label class="control_label"></label>
+                      	  <div class="controls">
 							<span class="form_item">转出银行：<input value="$!{bxService.paidBank}" name="bxPaidBank" id="bxPaidBank" type="text" class="text1" maxlength="8" size="8" placeholder="转出银行"></span>
 						    <span class="form_item">付款日期：<input value="$!fn.format($!{bxService.paidDate},'yyyy-MM-dd')" name="bxPaidDate" id="bxPaidDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
