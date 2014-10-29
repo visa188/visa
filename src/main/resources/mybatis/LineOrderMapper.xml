@@ -2,10 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.visa.dao.line.LineOrderDao" >
   <select id="selectAllLineOrder" resultType="LineOrder">
-  	select tmp1.*,lineproduct.lineProductName
-		from (select lineorder.*,linecountry.countryName lineCountryName
-		    from lineorder,linecountry
+  	select tmp1.*,lineproduct.lineProductName,lineproduct.orderSeq as lineProductOrderSeq, lineproduct.groupLeader,lineproduct.aircorpId,
+       	lineproduct.depositLimitDate,lineproduct.printTicketLimitDate,lineproduct.qw,lineproduct.zw,lineproduct.yb,lineproduct.seatNum,
+       	lineproduct.leftSeatNum
+		from (select lineorder.*,linecountry.countryName lineCountryName,customer.customerName
+		    from lineorder,linecountry,customer
 		    where lineorder.lineCountryId = linecountry.countryId  
+		     	and lineorder.customerId = customer.customerId  
+		     	<if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 		    	and lineorder.orderDate like #{date,jdbcType=VARCHAR}
 		    	<if test="salesmanId != null">and lineorder.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
     	) tmp1 left OUTER join lineproduct on( tmp1.lineProductId = lineproduct.lineProductId)
@@ -83,9 +87,10 @@
        	lineproduct.depositLimitDate,lineproduct.printTicketLimitDate,lineproduct.qw,lineproduct.zw,lineproduct.yb,lineproduct.seatNum,
        	lineproduct.leftSeatNum
 		from (
-			select lineorder.*,linecountry.countryName lineCountryName
-		    from lineorder,linecountry
+			select lineorder.*,linecountry.countryName lineCountryName,customer.customerName
+		    from lineorder,linecountry,customer
 		    where lineorder.lineCountryId = linecountry.countryId  
+		    	and lineorder.customerId = customer.customerId  
 		    <if test="userRoleId == 81">and (lineorder.status!=7 AND lineorder.status!=71)</if> 
 		    <if test="userRoleId == 101">and (lineorder.status=10 or lineorder.status==9 or lineorder.status=91)</if>
 		    <if test="userRoleId == 12"><![CDATA[and (lineorder.status= -11 or lineorder.status= -1)]]></if> 

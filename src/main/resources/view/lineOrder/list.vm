@@ -121,7 +121,7 @@
 								#else
 								<td>$!{order.orderSeq}</td>
 								<td>$!{order.salesmanName}</td>
-								<td>$!{order.travelAgency}</td>
+								<td>$!{order.customerName}</td>
 								<td>$!{order.nameListSize}人</td>
 								<td>$fn.format($!{order.postTime},'yyyy-MM-dd')</td>
 								<td width="">签证状态</td>

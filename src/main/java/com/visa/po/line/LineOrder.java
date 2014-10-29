@@ -106,7 +106,7 @@ public class LineOrder {
      * @pdOid 530eca3d-f958-4382-8824-8a30d9a2b6d8
      */
     public int customerId;
-
+    public String customerName;
     /**
      * 线路国家id
      * 
@@ -190,6 +190,14 @@ public class LineOrder {
     public String qtysRemark;
 
     public String garanteeFileUrl;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
     public BigDecimal getAlreadyPaidSum() {
         return alreadyPaidSum;
