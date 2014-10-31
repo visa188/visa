@@ -577,7 +577,7 @@ public class LineOrderController {
     private void exportOrderData(OutputStream out, String type, String year, String month,
             String salesmanId, String yfhkStatus, String yshkStatus, String customerId,
             String company, String operatorId) {
-        String[] titles = { "团号", "单号", "操作员", "签证员", "销售", "组团社", "报名人数", "应收账款", "已收账款", "未收账款",
+        String[] titles = { "团号", "单号", "操作员", "签证员", "销售", "客户", "报名人数", "应收账款", "已收账款", "未收账款",
                 "成本合计", "毛利合计", "应付账款", "已付账款", "未付账款", "押金", "押金收退情况", "返佣", "返佣收退情况" };
         HSSFWorkbook wb = new HSSFWorkbook();
         Sheet s = wb.createSheet();
