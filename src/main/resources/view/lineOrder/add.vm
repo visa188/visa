@@ -260,7 +260,7 @@
 		            <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>房间类型:</label>
                       <div class="controls">
-                       <span class="form_item">双人房:<input name="srf" id="srf" type="text" class="text1 js_non_empty js_nan" placeholder="双人房数量" style="width:60px;"> 单人房:<input name="drf" id="drf" type="text" class="text1 js_non_empty js_nan" placeholder="单人房数量" style="width:60px;"> 拼房:<input name="pf" id="pf" type="text" class="text1 js_non_empty js_nan" placeholder="拼房数量" style="width:60px;"></span>
+                       <span class="form_item">双人房:<input value="0" name="srf" id="srf" type="text" class="text1 js_non_empty js_nan" placeholder="双人房数量" style="width:60px;"> 单人房:<input value="0" name="drf" id="drf" type="text" class="text1 js_non_empty js_nan" placeholder="单人房数量" style="width:60px;"> 拼房:<input value="0" name="pf" id="pf" type="text" class="text1 js_non_empty js_nan" placeholder="拼房数量" style="width:60px;"></span>
                       </div>
                     </div>
 		            <script>
