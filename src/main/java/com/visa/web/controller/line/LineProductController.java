@@ -7,10 +7,11 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.velocity.exception.ParseErrorException;
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,10 +23,14 @@ import com.visa.dao.line.AirlineDao;
 import com.visa.dao.line.LineCountryDao;
 import com.visa.dao.line.LineOrderDao;
 import com.visa.dao.line.LineProductDao;
+import com.visa.dao.line.LinesServiceDao;
 import com.visa.po.Airline;
 import com.visa.po.Country;
+import com.visa.po.User;
 import com.visa.po.line.LineOrder;
 import com.visa.po.line.LineProduct;
+import com.visa.po.line.LinesSrvice;
+import com.visa.service.CommonService;
 import com.visa.vo.line.LineProductVo;
 
 /**
@@ -44,8 +49,10 @@ public class LineProductController {
     private LineOrderDao lineOrderDao;
     @Resource
     private SeqDao seqDao;
-
-    private final Log logger = LogFactory.getLog(getClass());
+    @Resource
+    private LinesServiceDao linesServiceDao;
+    @Resource
+    private CommonService commonService;
 
     /**
      * @param product product
@@ -59,13 +66,12 @@ public class LineProductController {
         String seachProductName = product.getLineProductName();
         Integer lineCountryId = product.getLineCountryId();
         paraMap.put("operator", "like");
-        paraMap.put("lineProductName", StringUtils.isEmpty(seachProductName) ? null : "%"
-                + seachProductName + "%");
+        paraMap.put("lineProductName", StringUtils.isEmpty(seachProductName) ? null : "%" + seachProductName + "%");
         paraMap.put("lineCountryId", lineCountryId == 0 ? null : lineCountryId);
 
         Integer recordCount = lineProductDao.selectAllCount(paraMap);
-        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount,
-                page, Constant.LINE_PAGE_OFFSET, model);
+        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount, page,
+                Constant.LINE_PAGE_OFFSET, model);
 
         paraMap.put("begin", recordRange[0]);
         paraMap.put("pageCount", Constant.LINE_PAGE_COUNT);
@@ -112,6 +118,11 @@ public class LineProductController {
         String prefix = StringUtil.paddingZeroToLeft(String.valueOf(orderSeq), 6);
         product.setOrderSeq(prefix);
         lineProductDao.insert(product);
+
+        for (LinesSrvice srvice : product.getLineOrderService()) {
+            linesServiceDao.insert("lineproductservice", srvice);
+        }
+
         return "redirect:list.do";
     }
 
@@ -134,6 +145,18 @@ public class LineProductController {
         model.put("title", "修改产品信息");
         model.put("action", "update");
         model.put("page", page);
+
+        List<LinesSrvice> lineServiceList = linesServiceDao.selectAllLinesSrvice("lineproductservice",
+                product.getLineProductId());
+        Map<Integer, LinesSrvice> lineServiceMap = new HashMap<Integer, LinesSrvice>();
+        for (LinesSrvice linesSrvice : lineServiceList) {
+            int serviceType = linesSrvice.getServiceType();
+            if (serviceType == 41 || serviceType == 42) {
+                serviceType = 4;
+            }
+            lineServiceMap.put(serviceType, linesSrvice);
+        }
+        model.put("lineServiceMap", lineServiceMap);
         return "lineproduct/add";
     }
 
@@ -153,6 +176,12 @@ public class LineProductController {
         if (seatNum - count >= 0) {
             product.setLeftSeatNum(seatNum - count);
             lineProductDao.updateByPrimaryKey(product);
+
+            linesServiceDao.deleteByOrderId("lineproductservice", product.getLineProductId(), null);
+            for (LinesSrvice srvice : product.getLineOrderService()) {
+                linesServiceDao.insert("lineproductservice", srvice);
+            }
+
             return "redirect:list.do?page=" + page;
         } else {
             model.put("msg", "机位数：" + seatNum + "小于该产品下所有订单的客人总数：" + count + "，修改失败！");
@@ -196,10 +225,38 @@ public class LineProductController {
      */
     @RequestMapping
     @ResponseBody
-    public LineProduct getProductInfo(String productId) {
+    public Map<String, Object> getProductInfo(@ModelAttribute(Constant.SESSION_USER) User user, String productId) {
         if (!StringUtils.isEmpty(productId)) {
             LineProduct product = lineProductDao.selectByPrimaryKey(Integer.parseInt(productId));
-            return product;
+
+            List<LinesSrvice> lineServiceList = linesServiceDao.selectAllLinesSrvice("lineproductservice",
+                    product.getLineProductId());
+            Map<Integer, LinesSrvice> lineServiceMap = new HashMap<Integer, LinesSrvice>();
+            for (LinesSrvice linesSrvice : lineServiceList) {
+                int serviceType = linesSrvice.getServiceType();
+                if (serviceType == 41 || serviceType == 42) {
+                    serviceType = 4;
+                }
+                lineServiceMap.put(serviceType, linesSrvice);
+            }
+
+            Map<String, Object> parameterMap = new HashMap<String, Object>();
+            parameterMap.put("lineServiceMap", lineServiceMap);
+            parameterMap.put("userLineRoleId", user.getLineRoleId());
+
+            try {
+                String service = commonService.renderVelocity("/view/lineOrder/servic.vm", parameterMap);
+                parameterMap.clear();
+                parameterMap.put("product", product);
+                parameterMap.put("service", service);
+                return parameterMap;
+            } catch (ResourceNotFoundException e) {
+                e.printStackTrace();
+            } catch (ParseErrorException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
@@ -213,8 +270,7 @@ public class LineProductController {
     public Integer getOrderCutomerSize(String productId) {
         int count = 0;
         if (!StringUtils.isEmpty(productId)) {
-            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(Integer
-                    .parseInt(productId));
+            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(Integer.parseInt(productId));
             for (LineOrder order : lineOrderList) {
                 count += order.getNameListSize();
             }

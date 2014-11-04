@@ -4,24 +4,24 @@
 
   <select id="selectAllLinesSrvice" resultType="LinesSrvice">
     select * 
-    from linessrvice
+    from ${tableName}
     where orderId= #{orderId,jdbcType=INTEGER}
   </select>
   
   <select id="selectByPrimaryKey" resultType="LinesSrvice">
     select 
     *
-    from linessrvice
+    from ${tableName}
     where serviceId = #{serviceId,jdbcType=INTEGER}
   </select>
   
   <delete id="deleteByPrimaryKey">
-    delete from linessrvice
+    delete from ${tableName}
     where serviceId = #{serviceId,jdbcType=INTEGER}
   </delete>
   
   <delete id="deleteByOrderId">
-    delete from linessrvice
+    delete from ${tableName}
     where orderId = #{orderId,jdbcType=INTEGER}
     <if test="serviceTypeList != null">and serviceType in 
         <foreach collection="serviceTypeList" item="serviceType" index="index"
@@ -32,50 +32,50 @@
   </delete>
   
   <insert id="insert">
-    insert into linessrvice (orderId,serviceName,serviceType,servicePrice,servicePayPrice,serviceOperator,serviceItem1,serviceItem2,serviceItem3,serviceItem4,
+    insert into ${tableName} (orderId,serviceName,serviceType,servicePrice,servicePayPrice,serviceOperator,serviceItem1,serviceItem2,serviceItem3,serviceItem4,
     serviceItem5,serviceItem6,serviceItem7,serviceItem8,serviceItem9,serviceItem10,serviceItem11,priceSum,yfhj,alreadyPaid,needPaid,paidBank,paidDate,alreadyGot,needGot,gotBank,gotDate,feeComment, postTime)
-    values (#{orderId,jdbcType=INTEGER},#{serviceName,jdbcType=VARCHAR},#{serviceType,jdbcType=VARCHAR},
-    #{servicePrice,jdbcType=DECIMAL},#{servicePayPrice,jdbcType=DECIMAL},#{serviceOperator,jdbcType=VARCHAR},#{serviceItem1,jdbcType=VARCHAR},#{serviceItem2,jdbcType=VARCHAR},
-    #{serviceItem3,jdbcType=VARCHAR},#{serviceItem4,jdbcType=VARCHAR},#{serviceItem5,jdbcType=VARCHAR},#{serviceItem6,jdbcType=VARCHAR},
-    #{serviceItem7,jdbcType=VARCHAR},#{serviceItem8,jdbcType=VARCHAR},#{serviceItem9,jdbcType=DECIMAL},#{serviceItem10,jdbcType=VARCHAR},#{serviceItem11,jdbcType=VARCHAR},
-    #{priceSum,jdbcType=DECIMAL},#{yfhj,jdbcType=DECIMAL},#{alreadyPaid,jdbcType=DECIMAL},#{needPaid,jdbcType=DECIMAL},#{paidBank,jdbcType=VARCHAR},
-    #{paidDate,jdbcType=DATE},#{alreadyGot,jdbcType=DECIMAL},#{needGot,jdbcType=DECIMAL},#{gotBank,jdbcType=VARCHAR},
-    #{gotDate,jdbcType=DATE},#{feeComment,jdbcType=VARCHAR}, now())
+    values (#{record.orderId,jdbcType=INTEGER},#{record.serviceName,jdbcType=VARCHAR},#{record.serviceType,jdbcType=VARCHAR},
+    #{record.servicePrice,jdbcType=DECIMAL},#{record.servicePayPrice,jdbcType=DECIMAL},#{record.serviceOperator,jdbcType=VARCHAR},#{record.serviceItem1,jdbcType=VARCHAR},#{record.serviceItem2,jdbcType=VARCHAR},
+    #{record.serviceItem3,jdbcType=VARCHAR},#{record.serviceItem4,jdbcType=VARCHAR},#{record.serviceItem5,jdbcType=VARCHAR},#{record.serviceItem6,jdbcType=VARCHAR},
+    #{record.serviceItem7,jdbcType=VARCHAR},#{record.serviceItem8,jdbcType=VARCHAR},#{record.serviceItem9,jdbcType=DECIMAL},#{record.serviceItem10,jdbcType=VARCHAR},#{record.serviceItem11,jdbcType=VARCHAR},
+    #{record.priceSum,jdbcType=DECIMAL},#{record.yfhj,jdbcType=DECIMAL},#{record.alreadyPaid,jdbcType=DECIMAL},#{record.needPaid,jdbcType=DECIMAL},#{record.paidBank,jdbcType=VARCHAR},
+    #{record.paidDate,jdbcType=DATE},#{record.alreadyGot,jdbcType=DECIMAL},#{record.needGot,jdbcType=DECIMAL},#{record.gotBank,jdbcType=VARCHAR},
+    #{record.gotDate,jdbcType=DATE},#{record.feeComment,jdbcType=VARCHAR}, now())
   </insert>
   
   <update id="updateByPrimaryKey">
-    update linessrvice
+    update ${tableName}
     <set>
-		<if test="orderId != null">orderId = #{orderId,jdbcType=INTEGER},</if>
-	    <if test="serviceName != null">serviceName = #{serviceName,jdbcType=VARCHAR},</if>
-	    <if test="serviceType != null">serviceType = #{serviceType,jdbcType=INTEGER},</if>
-	    <if test="servicePrice != null">servicePrice = #{servicePrice,jdbcType=DECIMAL},</if>
-	    <if test="servicePayPrice != null">servicePayPrice = #{servicePayPrice,jdbcType=DECIMAL},</if>
-	    <if test="serviceOperator != null">serviceOperator = #{serviceOperator,jdbcType=VARCHAR},</if>
-	    <if test="serviceItem1 != null">serviceItem1 = #{serviceItem1,jdbcType=VARCHAR},</if>
-	    <if test="serviceItem2 != null">serviceItem2 = #{serviceItem2,jdbcType=VARCHAR},</if>
-	    <if test="serviceItem3 != null">serviceItem3 = #{serviceItem3,jdbcType=VARCHAR},</if>
-	    <if test="serviceItem4 != null">serviceItem4 = #{serviceItem4,jdbcType=VARCHAR},</if>
-	    <if test="serviceItem5 != null">serviceItem5 = #{serviceItem5,jdbcType=VARCHAR},</if>
-	    <if test="serviceItem6 != null">serviceItem6 = #{serviceItem6,jdbcType=VARCHAR},</if>
-	    <if test="serviceItem7 != null">serviceItem7 = #{serviceItem7,jdbcType=VARCHAR},</if>
-	    <if test="serviceItem8 != null">serviceItem8 = #{serviceItem8,jdbcType=VARCHAR},</if>
-	    <if test="serviceItem9 != null">serviceItem9 = #{serviceItem9,jdbcType=DECIMAL},</if>
-	    <if test="serviceItem10 != null">serviceItem10 = #{serviceItem10,jdbcType=VARCHAR},</if>
-	    <if test="serviceItem11 != null">serviceItem11 = #{serviceItem11,jdbcType=VARCHAR},</if>
-	    <if test="priceSum != null">priceSum = #{priceSum,jdbcType=DECIMAL},</if>
-	    <if test="yfhj != null">yfhj = #{yfhj,jdbcType=DECIMAL},</if>
-	    <if test="alreadyPaid != null">alreadyPaid = #{alreadyPaid,jdbcType=DECIMAL},</if>
-	    <if test="needPaid != null">needPaid = #{needPaid,jdbcType=DECIMAL},</if>
-	    <if test="paidBank != null">paidBank = #{paidBank,jdbcType=VARCHAR},</if>
-	    <if test="paidDate != null">paidDate = #{paidDate,jdbcType=DATE},</if>
-	    <if test="alreadyGot != null">alreadyGot = #{alreadyGot,jdbcType=DECIMAL},</if>
-	    <if test="needGot != null">needGot = #{needGot,jdbcType=DECIMAL},</if>
-	    <if test="gotBank != null">gotBank = #{gotBank,jdbcType=VARCHAR},</if>
-	    <if test="gotDate != null">gotDate = #{gotDate,jdbcType=DATE},</if>
-	    <if test="feeComment != null">feeComment = #{feeComment,jdbcType=VARCHAR},</if>
+		<if test="orderId != null">orderId = #{record.orderId,jdbcType=INTEGER},</if>
+	    <if test="serviceName != null">serviceName = #{record.serviceName,jdbcType=VARCHAR},</if>
+	    <if test="serviceType != null">serviceType = #{record.serviceType,jdbcType=INTEGER},</if>
+	    <if test="servicePrice != null">servicePrice = #{record.servicePrice,jdbcType=DECIMAL},</if>
+	    <if test="servicePayPrice != null">servicePayPrice = #{record.servicePayPrice,jdbcType=DECIMAL},</if>
+	    <if test="serviceOperator != null">serviceOperator = #{record.serviceOperator,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem1 != null">serviceItem1 = #{record.serviceItem1,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem2 != null">serviceItem2 = #{record.serviceItem2,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem3 != null">serviceItem3 = #{record.serviceItem3,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem4 != null">serviceItem4 = #{record.serviceItem4,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem5 != null">serviceItem5 = #{record.serviceItem5,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem6 != null">serviceItem6 = #{record.serviceItem6,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem7 != null">serviceItem7 = #{record.serviceItem7,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem8 != null">serviceItem8 = #{record.serviceItem8,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem9 != null">serviceItem9 = #{record.serviceItem9,jdbcType=DECIMAL},</if>
+	    <if test="serviceItem10 != null">serviceItem10 = #{record.serviceItem10,jdbcType=VARCHAR},</if>
+	    <if test="serviceItem11 != null">serviceItem11 = #{record.serviceItem11,jdbcType=VARCHAR},</if>
+	    <if test="priceSum != null">priceSum = #{record.priceSum,jdbcType=DECIMAL},</if>
+	    <if test="yfhj != null">yfhj = #{record.yfhj,jdbcType=DECIMAL},</if>
+	    <if test="alreadyPaid != null">alreadyPaid = #{record.alreadyPaid,jdbcType=DECIMAL},</if>
+	    <if test="needPaid != null">needPaid = #{record.needPaid,jdbcType=DECIMAL},</if>
+	    <if test="paidBank != null">paidBank = #{record.paidBank,jdbcType=VARCHAR},</if>
+	    <if test="paidDate != null">paidDate = #{record.paidDate,jdbcType=DATE},</if>
+	    <if test="alreadyGot != null">alreadyGot = #{record.alreadyGot,jdbcType=DECIMAL},</if>
+	    <if test="needGot != null">needGot = #{record.needGot,jdbcType=DECIMAL},</if>
+	    <if test="gotBank != null">gotBank = #{record.gotBank,jdbcType=VARCHAR},</if>
+	    <if test="gotDate != null">gotDate = #{record.gotDate,jdbcType=DATE},</if>
+	    <if test="feeComment != null">feeComment = #{record.feeComment,jdbcType=VARCHAR},</if>
 	    postTime = now()
     </set>
-    where serviceId = #{serviceId,jdbcType=INTEGER}
+    where serviceId = #{record.serviceId,jdbcType=INTEGER}
   </update>
 </mapper>

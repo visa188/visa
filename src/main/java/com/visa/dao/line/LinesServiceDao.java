@@ -8,16 +8,16 @@ import com.visa.po.line.LinesSrvice;
 
 public interface LinesServiceDao {
 
-    int deleteByPrimaryKey(Integer serviceId);
+    int deleteByPrimaryKey(@Param("tableName") String tableName, @Param("serviceId") Integer serviceId);
 
-    int deleteByOrderId(@Param("orderId") Integer orderId, @Param("serviceTypeList") List<Integer> serviceType);
+    int deleteByOrderId(@Param("tableName") String tableName, @Param("orderId") Integer orderId, @Param("serviceTypeList") List<Integer> serviceType);
 
-    int insert(LinesSrvice record);
+    int insert(@Param("tableName") String tableName, @Param("record") LinesSrvice record);
 
-    List<LinesSrvice> selectAllLinesSrvice(Integer orderId);
+    List<LinesSrvice> selectAllLinesSrvice(@Param("tableName") String tableName, @Param("orderId") Integer orderId);
 
-    LinesSrvice selectByPrimaryKey(Integer serviceId);
+    LinesSrvice selectByPrimaryKey(@Param("tableName") String tableName, @Param("serviceId") Integer serviceId);
 
-    int updateByPrimaryKey(LinesSrvice record);
+    int updateByPrimaryKey(@Param("tableName") String tableName, @Param("record") LinesSrvice record);
 
 }
