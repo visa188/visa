@@ -3,6 +3,8 @@ package com.visa.dao.line;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.visa.po.line.LineOrder;
 import com.visa.vo.line.LineOrderVo;
 
@@ -30,5 +32,5 @@ public interface LineOrderDao {
 
     List<String> selectOrderMonths();
 
-    int countAlarmOrders();
+    int countAlarmOrders(@Param("type") Integer type);
 }

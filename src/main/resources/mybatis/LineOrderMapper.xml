@@ -142,10 +142,11 @@
 		limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
 	</select>
 	
-	<select id="countAlarmOrders" resultType="java.lang.Integer">
+	<select id="countAlarmOrders" resultType="java.lang.Integer" parameterType="java.lang.Integer">
 		select count(*)
 		    from lineorder,linecountry
 		    where lineorder.lineCountryId = linecountry.countryId  
+		    	<if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 		    	and DATE_ADD(now(),INTERVAL 2 DAY) > lineorder.nameListlimitDate
 				and nameListState != 1
 				and nameListState != 2

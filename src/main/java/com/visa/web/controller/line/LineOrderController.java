@@ -100,7 +100,7 @@ public class LineOrderController {
     public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page,
             ModelMap model, @ModelAttribute LineOrderSearchBean bean, Integer type,
             String lineProductOrderSeq) {
-        Integer alarmCount = lineOrderDao.countAlarmOrders();
+        Integer alarmCount = lineOrderDao.countAlarmOrders(type);
         if (StringUtils.isEmpty(lineProductOrderSeq)) {
 
             Map<String, Object> paraMap = new HashMap<String, Object>();
@@ -110,8 +110,7 @@ public class LineOrderController {
             String orderSeq = bean.getOrderSeq();
             Integer alarmOrders = bean.getAlarmOrders();
 
-            if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate)
-                    && alarmOrders == null) {
+            if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate)) {
                 // 如果未选择起止日期，默认为本月一号到当日
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -120,6 +119,13 @@ public class LineOrderController {
                 c.set(Calendar.DAY_OF_MONTH, 1);
                 startDate = sdf.format(c.getTime());
                 bean.setStartDate(startDate);
+            }
+
+            if (alarmOrders != null && alarmOrders == 1) {
+                startDate = null;
+                endDate = null;
+                bean.setEndDate(null);
+                bean.setStartDate(null);
             }
 
             paraMap.put("startDate", StringUtils.isEmpty(startDate) ? null : startDate);
@@ -157,6 +163,7 @@ public class LineOrderController {
             model.addAttribute("searchBean", bean);
             model.addAttribute("type", type);
             model.addAttribute("alarmCount", alarmCount);
+            model.addAttribute("alarmOrders", alarmOrders);
         } else {
             Map<String, Object> paraMap = new HashMap<String, Object>();
             paraMap.put("begin", 0);
@@ -170,7 +177,6 @@ public class LineOrderController {
             model.addAttribute("orderList", orderList);
             model.addAttribute("page", 1);
             model.addAttribute("hideSearch", "1");
-            model.addAttribute("alarmCount", alarmCount);
         }
     }
 
