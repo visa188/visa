@@ -5,7 +5,7 @@
 		</div>
 		<div class="maincon_fluid">
 			<div class="searchbox">
-					<label for="s_client">订单号：$!{lineOrder.orderSeq}&nbsp;$!fn.getFeeName($!one.feeType)</label>
+					<label for="s_client">订单号：$!{lineOrder.orderSeq}&nbsp;$!fn.getFeeName($feeDetail.feeType)</label>
             </div>
             <hr class="hr_a" />
 			<div class="widget_mng_box">
