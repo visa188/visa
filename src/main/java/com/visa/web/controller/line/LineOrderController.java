@@ -110,7 +110,8 @@ public class LineOrderController {
             String orderSeq = bean.getOrderSeq();
             Integer alarmOrders = bean.getAlarmOrders();
 
-            if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate) && alarmOrders == 0) {
+            if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate)
+                    && alarmOrders == null) {
                 // 如果未选择起止日期，默认为本月一号到当日
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
