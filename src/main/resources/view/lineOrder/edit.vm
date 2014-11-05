@@ -203,7 +203,7 @@
         </div>
         <div class="maincon_fluid">
             <form action="/lineOrder/update.do" method="post" class="form_horizontal hq_form line">
-              <input type="hidden" name="orderId" value="$!{lineOrder.orderId}" />  
+              <input type="hidden" id="orderId" name="orderId" value="$!{lineOrder.orderId}" />  
               <input type="hidden" name="orderSeq" value="$!{lineOrder.orderSeq}" /> 
               <input type="hidden" name="salesmanId" value="$!{lineOrder.salesmanId}" /> 
               <input type="hidden" name="type" value="$!{lineOrder.type}" />  
