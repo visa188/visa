@@ -66,12 +66,13 @@ public class LineProductController {
         String seachProductName = product.getLineProductName();
         Integer lineCountryId = product.getLineCountryId();
         paraMap.put("operator", "like");
-        paraMap.put("lineProductName", StringUtils.isEmpty(seachProductName) ? null : "%" + seachProductName + "%");
+        paraMap.put("lineProductName", StringUtils.isEmpty(seachProductName) ? null : "%"
+                + seachProductName + "%");
         paraMap.put("lineCountryId", lineCountryId == 0 ? null : lineCountryId);
 
         Integer recordCount = lineProductDao.selectAllCount(paraMap);
-        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount, page,
-                Constant.LINE_PAGE_OFFSET, model);
+        int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount,
+                page, Constant.LINE_PAGE_OFFSET, model);
 
         paraMap.put("begin", recordRange[0]);
         paraMap.put("pageCount", Constant.LINE_PAGE_COUNT);
@@ -146,8 +147,8 @@ public class LineProductController {
         model.put("action", "update");
         model.put("page", page);
 
-        List<LinesSrvice> lineServiceList = linesServiceDao.selectAllLinesSrvice("lineproductservice",
-                product.getLineProductId());
+        List<LinesSrvice> lineServiceList = linesServiceDao.selectAllLinesSrvice(
+                "lineproductservice", product.getLineProductId());
         Map<Integer, LinesSrvice> lineServiceMap = new HashMap<Integer, LinesSrvice>();
         for (LinesSrvice linesSrvice : lineServiceList) {
             int serviceType = linesSrvice.getServiceType();
@@ -225,12 +226,13 @@ public class LineProductController {
      */
     @RequestMapping
     @ResponseBody
-    public Map<String, Object> getProductInfo(@ModelAttribute(Constant.SESSION_USER) User user, String productId) {
+    public Map<String, Object> getProductInfo(@ModelAttribute(Constant.SESSION_USER) User user,
+            String productId) {
         if (!StringUtils.isEmpty(productId)) {
             LineProduct product = lineProductDao.selectByPrimaryKey(Integer.parseInt(productId));
 
-            List<LinesSrvice> lineServiceList = linesServiceDao.selectAllLinesSrvice("lineproductservice",
-                    product.getLineProductId());
+            List<LinesSrvice> lineServiceList = linesServiceDao.selectAllLinesSrvice(
+                    "lineproductservice", product.getLineProductId());
             Map<Integer, LinesSrvice> lineServiceMap = new HashMap<Integer, LinesSrvice>();
             for (LinesSrvice linesSrvice : lineServiceList) {
                 int serviceType = linesSrvice.getServiceType();
@@ -245,8 +247,9 @@ public class LineProductController {
             parameterMap.put("userLineRoleId", user.getLineRoleId());
 
             try {
-                String service = commonService.renderVelocity("/view/lineOrder/servic.vm", parameterMap);
-                parameterMap.clear();
+                String service = commonService.renderVelocity("/view/lineOrder/servic.vm",
+                        parameterMap);
+                // parameterMap.clear();
                 parameterMap.put("product", product);
                 parameterMap.put("service", service);
                 return parameterMap;
@@ -270,7 +273,8 @@ public class LineProductController {
     public Integer getOrderCutomerSize(String productId) {
         int count = 0;
         if (!StringUtils.isEmpty(productId)) {
-            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(Integer.parseInt(productId));
+            List<LineOrder> lineOrderList = lineOrderDao.selectByProductId(Integer
+                    .parseInt(productId));
             for (LineOrder order : lineOrderList) {
                 count += order.getNameListSize();
             }

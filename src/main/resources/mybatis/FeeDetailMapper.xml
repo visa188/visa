@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.visa.dao.line.FeeDetailDao">
+
+	<select id="selectAllCount" resultType="java.lang.Integer">
+		select count(*) from feeDetail
+		where 1=1
+		<if test="feeDetail.feeType != null">and feeType = #{feeDetail.feeType,jdbcType=INTEGER}</if>
+		<if test="feeDetail.orderId != null">and orderId = #{feeDetail.orderId,jdbcType=INTEGER}</if>
+		order by feeDate desc
+	</select>
+
+	<select id="selectAll" resultType="FeeDetail">
+		select *
+		from feeDetail
+		where 1=1
+		and feeType = #{feeDetail.feeType,jdbcType=INTEGER}
+		and orderId = #{feeDetail.orderId,jdbcType=INTEGER}
+		order by feeDate desc
+		limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectAllFeeDetail" resultType="FeeDetail">
+		select * from feeDetail
+		order by feeDate desc
+	</select>
+
+	<select id="selectByPrimaryKey" resultType="FeeDetail">
+		select
+		*
+		from feeDetail
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey">
+		delete from feeDetail
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert">
+		insert into feeDetail (orderId,feeType,feeAmount,feeDate,feeBank)
+		values (#{orderId,jdbcType=INTEGER},#{feeType,jdbcType=INTEGER}, #{feeAmount,jdbcType=DECIMAL}, #{feeDate,jdbcType=DATE}, #{feeBank,jdbcType=VARCHAR})
+	</insert>
+
+	<update id="updateByPrimaryKey">
+		update feeDetail
+		set orderId = #{orderId,jdbcType=INTEGER},
+		set feeType = #{feeType,jdbcType=INTEGER},
+		set feeAmount = #{feeAmount,jdbcType=DECIMAL},
+		set feeDate = #{feeDate,jdbcType=DATE},
+		set feeBank = #{feeBank,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

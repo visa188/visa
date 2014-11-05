@@ -51,6 +51,7 @@
            data:{productId:selectProductId},
            success: function(result){
                 if(result!='error'){
+                	result = result.product;
                     var depositLimitDate = new Date(result.depositLimitDate);
                     var printTicketLimitDate = new Date(result.printTicketLimitDate);
                     var startDate = new Date(result.startDate);
@@ -975,7 +976,7 @@
 						#set($jpService = $!{lineServiceMap.get(3)})
 						#if($!jpService)
 						<div class="control_group">
-                          <label class="control_label"><span class="ico_must">*</span>机票费用合计:</label>
+                          <label class="control_label"><span class="ico_must">*</span>机票费用合计(<a href="/feeDetail/list.do?feeType=1&orderId=$!{lineOrder.orderId}" target="_blank">点击查看明细</a>):</label>
                           <div class="controls">
 							<span class="form_item">应付：<input value="$!fn.disPrice($!{jpService.yfhj})" type="text" class="text1 js_nan" name="jpPriceSum" id="jpPriceSum" placeholder="应付" onchange="calculateProfit();">元</span>
 							<span class="form_item">已付：<input value="$!fn.disPrice($!{jpService.alreadyPaid})" name="jpAlreadyPaid" id="jpAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="已付" onchange="calculateNeedPaid('jp');calculateProfit();">元</span>
@@ -997,6 +998,9 @@
 								<span class="form_item">机票订金（冲机票款,自动加到已付款中）：<input value="$!fn.disPrice($!{jpService.serviceItem9})" name="jpdjAlreadyPaid" id="jpdjAlreadyPaid" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="机票订金（冲机票款）" onchange="calculateNeedPaid('jp');"></span>
     						    </div>
     						  #end
+    						  <div class="controls">
+    						  	<span class="form_item"><a href="#" onclick="addFee(1);">点击添加明细</a></span>
+    						  </div>	
                         </div>	
 						#end
 						#set($qzService = $!{lineServiceMap.get(2)})
@@ -1358,4 +1362,80 @@
         }
     });
    </script>
+   
+   <div style="display:hide">
+   		<form action="/feeDetail/insert.do" method="post" class="form_horizontal hq_form" id="feeForm">
+		<div id="feeDiv">
+            <div class="boxybody boxy-content" style="display: block;">
+            	<input value="" type="hidden" name="feeType" id="feeType">
+    			<p>
+    				<label class="control_label"><span class="ico_must">*</span>金额:</label>
+					<span class="form_item"><input value="" type="text" class="text1" id="feeAmount" name="feeAmount" placeholder="金额" maxlength="20" size="20"/></span>
+				</p>
+				<p>
+					<label class="control_label"><span class="ico_must">*</span>日期:</label>
+					<span class="form_item"><input value="" type="text" class="text1 js_datepicker" id="feeDate" name="feeDate" placeholder="日期" maxlength="20" size="20"/></span>
+				<p>
+				<p>
+					<label class="control_label"><span class="ico_must">*</span>银行:</label>
+					<span class="form_item"><input value="" type="text" class="text1" id="feeBank" name="feeBank" placeholder="银行" maxlength="20" size="20"/></span>
+				<p>
+				<p><span id="feetip" class="error_tip" style="display:hidden"></span></p>
+				<p><input type="button" class="boxybtn1" id="BtnFeeSubmit" value=""></p>
+            </div>   
+			<div class='boxyft'></div>
+        </div>
+        </form>
+	</div>
+	 <script>
+	var boxyFee = new Boxy(jQuery("#feeDiv"), {title: "费用明细", modal: true, draggable: true,fixed:true,closeText:"",center:true,show:false,closeable:true});
+	jQuery("#BtnFeeSubmit").click(function(){
+		var feeType=jQuery("#feeType").val();
+		var feeAmount=jQuery("#feeAmount").val();
+		var feeDate=jQuery("#feeDate").val();
+		var feeBank=jQuery("#feeBank").val();
+		var orderId=jQuery("#orderId").val();
+		
+		if(feeAmount==""){
+			jQuery("#feetip").text("金额不能为空！");
+			return;
+		}
+		if(feeDate==""){
+			jQuery("#feetip").text("日期不能为空！");
+			return;
+		}
+		if(feeBank==""){
+			jQuery("#feetip").text("银行不能为空！");
+			return;
+		}
+		
+		var reg = new RegExp("^[0-9]*$");
+		if(!reg.test(feeAmount)){
+			jQuery("#feetip").text("金额必须为数字！");
+			return;
+		}
+		
+		if(feeType!=""){
+    		jQuery.ajax({
+        	   type: "POST",
+        	   url: "/feeDetail/insert.do",
+        	   data:{orderId:orderId,feeType:feeType,feeAmount:feeAmount,feeDate:feeDate,feeBank:feeBank},
+        	   success: function(result){
+        	   }
+    		 });
+		 }
+		boxyFee.hide();
+	});
+	
+	function  addFee(teeType){
+		jQuery("#feeType").val("");
+		jQuery("#feeAmount").val("");
+		jQuery("#feeDate").val("");
+		jQuery("#feeBank").val("");
+		jQuery("#feetip").text("");
+		
+		jQuery("#feeType").val(teeType);
+		boxyFee.show();
+	}
+    </script>
 #footer()

@@ -548,4 +548,13 @@ public class VelocityToolbox {
             }
         }
     }
+
+    public String getFeeName(int feeType) {
+        switch (feeType) {
+        case 1:
+            return "机票费用应付";
+        default:
+            return "";
+        }
+    }
 }

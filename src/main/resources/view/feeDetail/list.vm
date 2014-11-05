@@ -1,0 +1,37 @@
+#header(0,0,"费用明细")
+	<div class="miancon">
+		<div class="maincon_title">
+			<span class="ico_order_w"></span><h2>费用明细</h2>
+		</div>
+		<div class="maincon_fluid">
+			<div class="searchbox">
+					<label for="s_client">订单号：$!{lineOrder.orderSeq}</label>
+            </div>
+            <hr class="hr_a" />
+			<div class="widget_mng_box">
+				<table cellpadding="0" cellspacing="0" width="100%" class="table_data tcenter">
+	                <thead>
+	                    <tr>
+	                        <th width="">费用说明</th>
+	                        <th width="">金额</th>
+	                        <th width="">日期</th>
+	                        <th width="">银行</th>
+	                        <th width="">删除</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+                        #foreach($one in $feeDetailList)
+	                    <tr>
+	                        <td>$!fn.getFeeName($!one.feeType)</td>
+	                        <td>$!fn.disPrice($!one.feeAmount)</td>
+	                        <td>$!fn.format($!one.feeDate,'yyyy-MM-dd')</td>
+	                        <td>$!one.feeBank</td>
+	                        <td><a class="ico_delete_r" onclick="return confirm('是否将此信息删除?')" href="delete.do?id=${one.id}&orderId=$!{feeDetail.orderId}&feeType=$!{feeDetail.feeType}"></a></td>
+	                    </tr>
+                        #end	 
+	                </tbody>
+	            </table>
+	        </div>
+		</div>
+	</div>
+#footer()
