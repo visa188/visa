@@ -520,6 +520,23 @@ public class LineOrderController {
     public String delete(@ModelAttribute(Constant.SESSION_USER) User user, int orderId, Integer page) {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(orderId);
         lineOrderDao.deleteByPrimaryKey(orderId);
+
+        LineProduct p = lineProductDao.selectByPrimaryKey(lineOrder.getLineProductId());
+        if (lineOrder.type == 2) {
+            if (lineOrder.nameListType == 1) {
+                int qw = p.qw - lineOrder.nameListSize;
+                p.setQw(qw);
+            } else if (lineOrder.nameListType == 2) {
+                int zw = p.zw - lineOrder.nameListSize;
+                p.setZw(zw);
+            } else if (lineOrder.nameListType == 3) {
+                int yb = p.yb - lineOrder.nameListSize;
+                p.setYb(yb);
+            }
+            p.setLeftSeatNum(p.seatNum - p.qw - p.zw - p.yb);
+            lineProductDao.updateByPrimaryKey(p);
+        }
+
         // 记录操作日志
         OperateLog operateLog = new OperateLog();
         operateLog.setUserId(user.getUserId());
