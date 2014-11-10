@@ -102,6 +102,9 @@ public class VelocityToolbox {
      * @return role name
      */
     public String getRole(Integer roleId) {
+        if (roleId == null) {
+            return "";
+        }
         if (roleId == 0) {
             return "超级管理员";
         }

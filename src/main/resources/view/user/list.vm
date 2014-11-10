@@ -49,7 +49,12 @@
 	                    <tr>
 	                        <td>$one.userId</td>
 	                        <td>$one.userName</td>
-	                        <td>$fn.getRole($one.roleId)</td>
+	                        #if(${fn.isAdminRoleId($userRoleId)})
+	                        	<td>$fn.getRole($one.roleId)</td>
+	                        #end
+	                        #if(${fn.isLineAdminRole($userLineRoleId)})
+	                        	<td>$fn.getRole($one.lineRoleId)</td>
+	                        #end
 	                        <td>$!one.managerName</td>
 	                        <td>$!{one.deptId}</td>
 	                        <td>$fn.format($one.postDt,"yyyy-MM-dd")</td>
