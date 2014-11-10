@@ -356,8 +356,10 @@ public class LineOrderController {
                     lineOrderVo.getVisaOperatorId()).getUserName());
         }
         if (!StringUtils.isEmpty(lineOrderVo.getSignOperatorId())) {
-            lineOrderVo.setSignOperatorName(userDao.selectByPrimaryKey(
-                    lineOrderVo.getSignOperatorId()).getUserName());
+            User tempUser = userDao.selectByPrimaryKey(lineOrderVo.getSignOperatorId());
+            if (tempUser != null) {
+                lineOrderVo.setSignOperatorName(tempUser.getUserName());
+            }
         }
 
         lineOrderDao.updateByPrimaryKey(lineOrderVo);
