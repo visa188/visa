@@ -43,7 +43,7 @@
 								#if(${fn.isLineAdminRole($userRoleId)})
 								<select name="lineRoleId" id="roleId" class="text2" #if(${fn.isLineAdminRole($userRoleId)}) onchange="selectCountry()" #end>
 									#foreach($one in $fn.lineRoleOptions().entrySet())
-                                    <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>$one.value.name</option>
+                                    <option value="$one.key"$fn.selected(${user.lineRoleId}, $one.key)>$one.value.name</option>
     								#end
 								#end
                             </select>
