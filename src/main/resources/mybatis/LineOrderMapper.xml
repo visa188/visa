@@ -36,9 +36,10 @@
 	
 	<select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
       	select count(*) from 
-		(select lineorder.*,linecountry.countryName lineCountryName
-		    from lineorder,linecountry
+		(select lineorder.*,linecountry.countryName lineCountryName,customer.customerName
+		    from lineorder,linecountry,customer
 		    where lineorder.lineCountryId = linecountry.countryId  
+		    and lineorder.customerId = customer.customerId  
 	    <if test="userRoleId == 81">and (lineorder.status!=7 AND lineorder.status!=71)</if> 
 	    <if test="userRoleId == 101">and (lineorder.status=10 or lineorder.status=9 or lineorder.status=91)</if>
 	    <if test="userRoleId == 12"><![CDATA[and (lineorder.status= -11 or lineorder.status= -1)]]></if> 
@@ -64,9 +65,9 @@
 		  </if>
 		  <if test="serviceOperatorId != null">
 			  UNION
-			  select lineorder.*,linecountry.countryName lineCountryName
-			    from lineorder,linecountry,linessrvice service
-			    where lineorder.lineCountryId = linecountry.countryId  and  service.orderId = lineorder.orderId 
+			  select lineorder.*,linecountry.countryName lineCountryName,customer.customerName
+			    from lineorder,linecountry,linessrvice service,customer
+			    where lineorder.lineCountryId = linecountry.countryId  and  service.orderId = lineorder.orderId and lineorder.customerId = customer.customerId  
 			    and (#{serviceOperatorId,jdbcType=VARCHAR} =  service.serviceOperator )
 			    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 				<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
@@ -116,9 +117,9 @@
 			  </if>
 			  <if test="serviceOperatorId != null">
 				  UNION
-				  select lineorder.*,linecountry.countryName lineCountryName
-				    from lineorder,linecountry,linessrvice service
-				    where lineorder.lineCountryId = linecountry.countryId  and  service.orderId = lineorder.orderId 
+				  select lineorder.*,linecountry.countryName lineCountryName,customer.customerName
+				    from lineorder,linecountry,linessrvice service,customer
+				    where lineorder.lineCountryId = linecountry.countryId  and  service.orderId = lineorder.orderId and lineorder.customerId = customer.customerId  
 				    and (#{serviceOperatorId,jdbcType=VARCHAR} =  service.serviceOperator )
 				    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 					<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
