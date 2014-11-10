@@ -110,9 +110,6 @@
                     <dl>
                         <dd#if($secNav==101) class="on"#end><a href="/lineOrder/list.do?page=1&type=1">单团路线订单信息管理</a></dd>
                         <dd#if($secNav==105) class="on"#end><a href="/lineOrder/list.do?page=1&type=2">散拼路线订单信息管理</a></dd>
-						#if($userLineRoleId==${fn.getLineSalesmanRoleId()})
-							<dd#if($secNav==102) class="on"#end><a href="/lineOrder/add.do">新增路线订单信息</a></dd>
-						#end
 						#if(${fn.isLineAdminRole($userLineRoleId)})
 							<dd#if($secNav==103) class="on"#end><a href="/lineOrder/export.do">导出路线订单信息</a></dd>
 							<dd#if($secNav==104) class="on"#end><a href="/operatelog/list.do?page=1">路线订单操作日志</a></dd>
