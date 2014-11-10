@@ -48,7 +48,7 @@
 		<if test="lineOperatorId != null">and lineorder.lineOperatorId=#{lineOperatorId,jdbcType=VARCHAR}</if>
 		<if test="visaOperatorId != null">and lineorder.visaOperatorId=#{visaOperatorId,jdbcType=VARCHAR}</if>
 		<if test="signOperatorId != null">and lineorder.signOperatorId=#{signOperatorId,jdbcType=VARCHAR}</if>
-		<if test="managerId != null">and ${role} in (select userId from user where managerId=#{managerId,jdbcType=VARCHAR})</if>
+		<if test="managerId != null">and lineorder.${role} in (select userId from user where managerId=#{managerId,jdbcType=VARCHAR})</if>
 		<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 		<if test="alarmOrders != null">
 				and DATE_ADD(now(),INTERVAL 2 DAY) > lineorder.nameListlimitDate
@@ -100,7 +100,7 @@
 			<if test="lineOperatorId != null">and lineorder.lineOperatorId=#{lineOperatorId,jdbcType=VARCHAR}</if>
 			<if test="visaOperatorId != null">and lineorder.visaOperatorId=#{visaOperatorId,jdbcType=VARCHAR}</if>
 			<if test="signOperatorId != null">and lineorder.signOperatorId=#{signOperatorId,jdbcType=VARCHAR}</if>
-			<if test="managerId != null">and ${role} in (select userId from user where managerId=#{managerId,jdbcType=VARCHAR})</if>
+			<if test="managerId != null">and lineorder.${role} in (select userId from user where managerId=#{managerId,jdbcType=VARCHAR})</if>
 			<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 			<if test="alarmOrders != null">
 				and DATE_ADD(now(),INTERVAL 2 DAY) > lineorder.nameListlimitDate
