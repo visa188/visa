@@ -204,10 +204,10 @@
         <div class="maincon_fluid">
             <form action="/lineOrder/update.do" method="post" class="form_horizontal hq_form line">
               <input type="hidden" id="orderId" name="orderId" value="$!{lineOrder.orderId}" />  
-              <input type="hidden" name="orderSeq" value="$!{lineOrder.orderSeq}" /> 
-              <input type="hidden" name="salesmanId" value="$!{lineOrder.salesmanId}" /> 
-              <input type="hidden" name="type" value="$!{lineOrder.type}" />  
-              <input type="hidden" name="currentPage" value="$!{currentPage}" />   
+              <input type="hidden" id="orderSeq" name="orderSeq" value="$!{lineOrder.orderSeq}" /> 
+              <input type="hidden" id="salesmanId" name="salesmanId" value="$!{lineOrder.salesmanId}" /> 
+              <input type="hidden" id="type" name="type" value="$!{lineOrder.type}" />  
+              <input type="hidden" id="currentPage" name="currentPage" value="$!{currentPage}" />   
               <input name="customerId" id="customerId" type="hidden" value="$!{customer.customerId}"/>
               <input value="$!{lineOrder.lineProductId}" type="hidden" id="lineProductId" name="lineProductId">
                 
