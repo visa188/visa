@@ -86,7 +86,7 @@
     FROM user
     where 1=1
     <if test="managerId != null">and managerId = #{managerId,jdbcType=VARCHAR}</if>
-    and roleId = #{roleId,jdbcType=INTEGER} 
+    and lineRoleId = #{roleId,jdbcType=INTEGER} 
     and enable = 1
   </select>
   
