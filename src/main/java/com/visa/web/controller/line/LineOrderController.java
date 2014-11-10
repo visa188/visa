@@ -162,7 +162,11 @@ public class LineOrderController {
             model.addAttribute("page", page);
             model.addAttribute("searchBean", bean);
             model.addAttribute("type", type);
-            model.addAttribute("alarmCount", alarmCount);
+            if (LineRoleEnumType.SALEMAN_MANAGER.getId() == user.getLineRoleId()
+                    || LineRoleEnumType.SALESMAN.getId() == user.getLineRoleId()
+                    || LineRoleEnumType.ADMIN.getId() == user.getLineRoleId()) {
+                model.addAttribute("alarmCount", alarmCount);
+            }
             model.addAttribute("alarmOrders", alarmOrders);
         } else {
             Map<String, Object> paraMap = new HashMap<String, Object>();
