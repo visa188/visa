@@ -122,7 +122,7 @@
 		                        <td width="">机票状态</td>
 		                        <td width="">#if($order.jdstatus == 3)已落实#elseif($order.jdstatus == 2)操作中#else未操作#end</td>
 	                            <td width="">#if($order.busstatus == 3)已落实#elseif($order.busstatus == 2)操作中#else未操作#end</td>
-	                            <td width="">#if($order.tuanstatus == 1)未出团#else已出团#end</td>
+	                            <td width="">#if($order.tuanstatus == 2)已出团#else未出团#end</td>
 	                            <td width="">#if($order.yshkStatus == 3)已收全款#elseif($order.yshkStatus == 2)已收款${order.alreadyGot}元#else未收款#end</td>
 								#else
 								<td>$!{order.orderSeq}</td>
@@ -134,7 +134,7 @@
 		                        <td width="">机票状态</td>
 		                        <td width="">#if($order.jdstatus == 3)已落实#elseif($order.jdstatus == 2)操作中#else未操作#end</td>
 	                            <td width="">#if($order.busstatus == 3)已落实#elseif($order.busstatus == 2)操作中#else未操作#end</td>
-	                            <td width="">#if($order.tuanstatus == 1)未出团#else已出团#end</td>
+	                            <td width="">#if($order.tuanstatus == 2)已出团#else未出团#end</td>
 	                            <td>$!{order.priceSum}</td>
 	                            <td width="">#if($order.yshkStatus == 3)已收全款#elseif($order.yshkStatus == 2)已收款${order.alreadyGot}元#else未收款#end</td>
 								#end
