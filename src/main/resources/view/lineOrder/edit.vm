@@ -714,11 +714,19 @@
                               <label class="control_label"><span class="ico_must">*</span>机票订金:</label>
                               <div class="controls">
                                <span class="form_item">
-    								<input value="$!{product.jpdj}" type="text"  class="text1 js_non_empty" name="jpdj" id="jpdj" placeholder="机票订金">元
-                                    <select name="jpdjType" id="jpdjType" class="text2">
-                                        <option value="1"  $fn.selected($!{product.jpdjType}, '1')>可退</option>
-                                        <option value="2"  $fn.selected($!{product.jpdjType}, '2')>冲机票款</option>
-                                    </select>
+                               		#if($!{lineOrder.type}==2)
+	    								<input value="$!{product.jpdj}" type="text"  class="text1 js_non_empty" name="jpdj" id="jpdj" placeholder="机票订金">元
+	                                    <select name="jpdjType" id="jpdjType" class="text2">
+	                                        <option value="1"  $fn.selected($!{product.jpdjType}, '1')>可退</option>
+	                                        <option value="2"  $fn.selected($!{product.jpdjType}, '2')>冲机票款</option>
+	                                    </select>
+                                    #else
+                                    	<input value="$!{jpService.serviceItem9}" type="text"  class="text1 js_non_empty" name="jpdj" id="jpdj" placeholder="机票订金">元
+	                                    <select name="jpdjType" id="jpdjType" class="text2">
+	                                        <option value="1"  $fn.selected($!{jpService.serviceItem4}, '1')>可退</option>
+	                                        <option value="2"  $fn.selected($!{jpService.serviceItem4}, '2')>冲机票款</option>
+	                                    </select>
+                                    #end
     							</span>
                               </div>
                             </div>
@@ -726,7 +734,7 @@
                               <label class="control_label"><span class="ico_must">*</span>应付机票款:</label>
                               <div class="controls">
                                <span class="form_item">
-									单价(含税)<input value="$!{jpService.servicePayPrice}" type="text"  class="text1 js_non_empty ysdj" name="yfjpkdj" id="yfjpkdj" placeholder="机票单价">元 
+									单价(含税)<input value="$!{jpService.servicePayPrice}" type="text"  class="text1 js_non_empty" name="yfjpkdj" id="yfjpkdj" placeholder="机票单价">元 
 									合计<input value="$!{jpService.yfhj}" type="text"  class="text1 js_non_empty" name="yfjpkhj" id="yfjpkhj" placeholder="机票合计">元
     							</span>
                               </div>
