@@ -90,8 +90,8 @@ public class OrdersController {
      * @param bean bean
      */
     @RequestMapping
-    public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page, ModelMap model,
-            @ModelAttribute OrderSearchBean bean) {
+    public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page,
+            ModelMap model, @ModelAttribute OrderSearchBean bean) {
         int recordCount = 0;
         // 每页数据数
         Map<String, Object> paraMap = new HashMap<String, Object>();
@@ -128,9 +128,12 @@ public class OrdersController {
         }
 
         paraMap.put("operator", "like");
-        paraMap.put("countryName", StringUtils.isEmpty(seachCountryName) ? null : "%" + seachCountryName + "%");
-        paraMap.put("customerName", StringUtils.isEmpty(customerName) ? null : "%" + customerName + "%");
-        paraMap.put("companyName", StringUtils.isEmpty(companyName) ? null : "%" + companyName + "%");
+        paraMap.put("countryName", StringUtils.isEmpty(seachCountryName) ? null : "%"
+                + seachCountryName + "%");
+        paraMap.put("customerName", StringUtils.isEmpty(customerName) ? null : "%" + customerName
+                + "%");
+        paraMap.put("companyName", StringUtils.isEmpty(companyName) ? null : "%" + companyName
+                + "%");
         paraMap.put("nameList", StringUtils.isEmpty(nameList) ? null : "%" + nameList + "%");
         paraMap.put("startDate", StringUtils.isEmpty(startDate) ? null : startDate);
         paraMap.put("endDate", StringUtils.isEmpty(endDate) ? null : endDate);
@@ -159,8 +162,8 @@ public class OrdersController {
             }
         }
 
-        int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page, Constant.PAGE_OFFSET,
-                model);
+        int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page,
+                Constant.PAGE_OFFSET, model);
         paraMap.put("begin", recordRange[0]);
         paraMap.put("pageCount", Constant.PAGE_COUNT);
 
@@ -183,12 +186,17 @@ public class OrdersController {
      * @param model model
      */
     @RequestMapping
-    public void add(@ModelAttribute(Constant.SESSION_USER) User user, ModelMap model) {
+    public void add(@ModelAttribute(Constant.SESSION_USER) User user, Integer type, ModelMap model) {
         String userId = user.getUserId();
         List<Customer> customerList = customerDao.selectAllBySalesmanId(userId);
         List<Area> areaList = areaDao.selectAllArea();
         model.put("areaList", areaList);
         model.put("customerList", customerList);
+        if (type == null) {
+            model.put("type", 0);
+        } else {
+            model.put("type", type);
+        }
     }
 
     /**
@@ -198,8 +206,8 @@ public class OrdersController {
      * @return logout
      */
     @RequestMapping
-    public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user, @ModelAttribute("orders") Orders orders,
-            ModelMap model) {
+    public String addSubmit(@ModelAttribute(Constant.SESSION_USER) User user,
+            @ModelAttribute("orders") Orders orders, ModelMap model) {
         String userId = user.getUserId();
         String userName = user.getUserName();
         if (RoleEnumType.SALESMAN.getId() == user.getRoleId()) {
@@ -307,7 +315,8 @@ public class OrdersController {
             @ModelAttribute OrderSearchBean bean) {
         Orders orders = ordersDao.selectByPrimaryKey(updateOrders.getOrderId());
 
-        if (RoleEnumType.SALESMAN.getId() == user.getRoleId() || RoleEnumType.ADMIN.getId() == user.getRoleId()) {
+        if (RoleEnumType.SALESMAN.getId() == user.getRoleId()
+                || RoleEnumType.ADMIN.getId() == user.getRoleId()) {
             Product product = productDao.selectByPrimaryKey(updateOrders.getProductId());
             // orders.setPriceYsdj(updateOrders.getPriceYsdj());
             // orders.setPriceQtzc(updateOrders.getPriceQtzc());
@@ -328,7 +337,8 @@ public class OrdersController {
             orders.setNameListSize(updateOrders.getNameListSize());
         }
         // 经理指定操作员
-        if (RoleEnumType.MANAGER.getId() == user.getRoleId() || RoleEnumType.ADMIN.getId() == user.getRoleId()) {
+        if (RoleEnumType.MANAGER.getId() == user.getRoleId()
+                || RoleEnumType.ADMIN.getId() == user.getRoleId()) {
             orders.setOperatorId(updateOrders.getOperatorId());
         }
         // 操作员录入：送签日期、送签员、订单状态
@@ -340,7 +350,8 @@ public class OrdersController {
         orders.setOperatorRemark(updateOrders.getOperatorRemark());
         // }
 
-        if (RoleEnumType.FINANCE.getId() == user.getRoleId() || RoleEnumType.ADMIN.getId() == user.getRoleId()) {
+        if (RoleEnumType.FINANCE.getId() == user.getRoleId()
+                || RoleEnumType.ADMIN.getId() == user.getRoleId()) {
             // 财务确认订单全部完款后将订单状态设置为已完成状态
             if (updateOrders.getYfhkStatus() == PriceStatusEnum.DONE.getId()) {
                 orders.setStatus(1);
@@ -439,8 +450,8 @@ public class OrdersController {
             response.addHeader("Content-Disposition", "attachment;filename=" + fileName + ".xls");
             OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
             response.setContentType("application/octet-stream");
-            this.exportOrderData(toClient, year, month, salesman, yfhkStatus, yshkStatus, customerId, company,
-                    operatorId);
+            this.exportOrderData(toClient, year, month, salesman, yfhkStatus, yshkStatus,
+                    customerId, company, operatorId);
 
         } catch (IOException e) {
             logger.error(e, e);
@@ -453,10 +464,12 @@ public class OrdersController {
      * @param type type
      * @param out out
      */
-    private void exportOrderData(OutputStream out, String year, String month, String salesmanId, String yfhkStatus,
-            String yshkStatus, String customerId, String company, String operatorId) {
-        String[] titles = { "客户名称", "下单日期", "产品名称", "客人名单", "客人数量", "销售员", "操作员", "送签日期", "送签员", "应收单价", "其它应收款",
-                "其它应付款", "总计应收款", "总计应付款", "毛利润", "付款状态", "已付货款", "收款状态", "已收货款", "备注" };
+    private void exportOrderData(OutputStream out, String year, String month, String salesmanId,
+            String yfhkStatus, String yshkStatus, String customerId, String company,
+            String operatorId) {
+        String[] titles = { "客户名称", "下单日期", "产品名称", "客人名单", "客人数量", "销售员", "操作员", "送签日期", "送签员",
+                "应收单价", "其它应收款", "其它应付款", "总计应收款", "总计应付款", "毛利润", "付款状态", "已付货款", "收款状态", "已收货款",
+                "备注" };
         HSSFWorkbook wb = new HSSFWorkbook();
         Sheet s = wb.createSheet();
         // header row
@@ -492,7 +505,11 @@ public class OrdersController {
                 headerCell = row.createCell(1);
                 headerCell.setCellValue(DateUtil.format(p.getOrderDate(), DateUtil.FORMAT_DATE));
                 headerCell = row.createCell(2);
-                headerCell.setCellValue(p.getProductName());
+                if (p.getType() == 1) {
+                    headerCell.setCellValue(p.getSingleProduct());
+                } else {
+                    headerCell.setCellValue(p.getProductName());
+                }
                 headerCell = row.createCell(3);
                 headerCell.setCellValue(p.getNameList());
                 headerCell = row.createCell(4);
@@ -506,29 +523,39 @@ public class OrdersController {
                 headerCell = row.createCell(8);
                 headerCell.setCellValue(p.getSignOperatorName());
                 headerCell = row.createCell(9);
-                headerCell.setCellValue(p.getPriceYsdj() == null ? "0" : p.getPriceYsdj().toString());
+                headerCell.setCellValue(p.getPriceYsdj() == null ? "0" : p.getPriceYsdj()
+                        .toString());
                 headerCell = row.createCell(10);
-                headerCell.setCellValue(p.getPriceQtys() == null ? "0" : p.getPriceQtys().toString());
+                headerCell.setCellValue(p.getPriceQtys() == null ? "0" : p.getPriceQtys()
+                        .toString());
                 headerCell = row.createCell(11);
-                headerCell.setCellValue(p.getPriceQtzc() == null ? "0" : p.getPriceQtzc().toString());
+                headerCell.setCellValue(p.getPriceQtzc() == null ? "0" : p.getPriceQtzc()
+                        .toString());
                 headerCell = row.createCell(12);
-                headerCell.setCellValue(p.getPriceZjys() == null ? "0" : p.getPriceZjys().toString());
+                headerCell.setCellValue(p.getPriceZjys() == null ? "0" : p.getPriceZjys()
+                        .toString());
                 headerCell = row.createCell(13);
-                headerCell.setCellValue(p.getPriceZjyf() == null ? "0" : p.getPriceZjyf().toString());
+                headerCell.setCellValue(p.getPriceZjyf() == null ? "0" : p.getPriceZjyf()
+                        .toString());
                 headerCell = row.createCell(14);
-                headerCell.setCellValue(p.getGrossProfit() == null ? "0" : p.getGrossProfit().toString());
+                headerCell.setCellValue(p.getGrossProfit() == null ? "0" : p.getGrossProfit()
+                        .toString());
                 headerCell = row.createCell(15);
                 if (PriceStatusEnum.PRICESTATUS_MAP.get(p.getYfhkStatus()) != null) {
-                    headerCell.setCellValue(PriceStatusEnum.PRICESTATUS_MAP.get(p.getYfhkStatus()).getName());
+                    headerCell.setCellValue(PriceStatusEnum.PRICESTATUS_MAP.get(p.getYfhkStatus())
+                            .getName());
                 } else {
                     headerCell.setCellValue("");
                 }
                 headerCell = row.createCell(16);
-                headerCell.setCellValue(p.getPriceYfhk() == null ? "0" : p.getPriceYfhk().toString());
+                headerCell.setCellValue(p.getPriceYfhk() == null ? "0" : p.getPriceYfhk()
+                        .toString());
                 headerCell = row.createCell(17);
-                headerCell.setCellValue(YshkStatusEnum.YSHKSTATUS_MAP.get(p.getYshkStatus()).getName());
+                headerCell.setCellValue(YshkStatusEnum.YSHKSTATUS_MAP.get(p.getYshkStatus())
+                        .getName());
                 headerCell = row.createCell(18);
-                headerCell.setCellValue(p.getPriceYshk() == null ? "0" : p.getPriceYshk().toString());
+                headerCell.setCellValue(p.getPriceYshk() == null ? "0" : p.getPriceYshk()
+                        .toString());
                 headerCell = row.createCell(19);
                 headerCell.setCellValue(p.getDes());
 

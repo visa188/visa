@@ -153,6 +153,8 @@
 				<input name="customerId" id="customerId" type="hidden" value="$!{orders.customerId}"/>
 				<input name="orderId" id="orderId" type="hidden" value="$!{orders.orderId}"/>
 				<input name="productPrice" id="productPrice" type="hidden" value="$!{product.price}"/>
+				
+				<input name="type" id="type" type="hidden" value="$!{orders.type}"/>
 		      <div class="widget_box">
 		        <div class="widget_title">
 		        	<span class="ico_order_r"></span>
@@ -179,50 +181,61 @@
 							</label>
 		              	</div>
 		        	</div>
-		            <div class="control_group">
-                        <label class="control_label"><span class="ico_must">*</span>所属领区:</label>
-                        <div class="controls">
-                            <span class="form_item"><select name="areaId" id="areaId" class="text2 js_non_empty" placeholder="所属领区">
-                                <option value="" selected="selected">请选择</option>
-								#foreach($one in $areaList)
-                                <option value="$one.areaId"$fn.selected(${product.areaId}, $one.areaId)>$one.areaName</option>
-                                #end
-                            </select></span>
-                        </div>                          
-                    </div>
-                    <div class="control_group">
-                        <label class="control_label"><span class="ico_must">*</span>所属地区:</label>
-                        <div class="controls">
-                            <span class="form_item"><select name="continentId" id="continentId" class="text2 js_non_empty" placeholder="所属地区">
-                                <option value="" selected="selected">请选择</option>
-								#foreach($one in $fn.continentOptions().entrySet())
-                                <option value="$one.key"$fn.selected(${product.continentId}, $one.key)>$one.value.name</option>
-                                #end
-                            </select></span>
-                        </div>                          
-                    </div>
-                    <div class="control_group">
-                        <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
-                        <div class="controls">
-                            <span class="form_item"><select name="countryId" id="countryId" class="text2 js_non_empty" placeholder="国家名称">
-                                <option value="" selected="selected">请选择</option>
-								#foreach($one in $countryList)
-									<option value="$one.countryId"$fn.selected(${product.countryId}, $one.countryId)>$one.countryName</option>
-                                #end
-                            </select></span>
-                        </div>                          
-                    </div>
-		        	<div class="control_group">
-	        			<label class="control_label"><span class="ico_must">*</span>选择产品:</label>
-						<div class="controls">
-		               		<span class="form_item"><select name="productId" id="productId" class="text2 js_non_empty" placeholder="产品" onchange="getProductPrice()">
-								<option value="" selected="selected">请选择</option>
-								#foreach($one in $productList)
-									<option value="$one.productId"$fn.selected(${orders.productId}, $one.productId)>$one.productName</option>
-                                #end
-							</select></span>
-		              	</div>		        			
-		        	</div>
+		        	#if($type==1)
+		        		<div class="control_group">
+	                        <label class="control_label"><span class="ico_must">*</span>单项产品名称:</label>
+	                        <div class="controls">
+	                            <span class="form_item">
+	                                <input name="singleProduct" id="singleProduct" type="text" class="text1 js_non_empty" maxlength="30" placeholder="单项产品名称" value="${orders.singleProduct}">
+	                            </span>
+	                        </div>                          
+	                    </div>
+		        	#else
+			            <div class="control_group">
+	                        <label class="control_label"><span class="ico_must">*</span>所属领区:</label>
+	                        <div class="controls">
+	                            <span class="form_item"><select name="areaId" id="areaId" class="text2 js_non_empty" placeholder="所属领区">
+	                                <option value="" selected="selected">请选择</option>
+									#foreach($one in $areaList)
+	                                <option value="$one.areaId"$fn.selected(${product.areaId}, $one.areaId)>$one.areaName</option>
+	                                #end
+	                            </select></span>
+	                        </div>                          
+	                    </div>
+	                    <div class="control_group">
+	                        <label class="control_label"><span class="ico_must">*</span>所属地区:</label>
+	                        <div class="controls">
+	                            <span class="form_item"><select name="continentId" id="continentId" class="text2 js_non_empty" placeholder="所属地区">
+	                                <option value="" selected="selected">请选择</option>
+									#foreach($one in $fn.continentOptions().entrySet())
+	                                <option value="$one.key"$fn.selected(${product.continentId}, $one.key)>$one.value.name</option>
+	                                #end
+	                            </select></span>
+	                        </div>                          
+	                    </div>
+	                    <div class="control_group">
+	                        <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
+	                        <div class="controls">
+	                            <span class="form_item"><select name="countryId" id="countryId" class="text2 js_non_empty" placeholder="国家名称">
+	                                <option value="" selected="selected">请选择</option>
+									#foreach($one in $countryList)
+										<option value="$one.countryId"$fn.selected(${product.countryId}, $one.countryId)>$one.countryName</option>
+	                                #end
+	                            </select></span>
+	                        </div>                          
+	                    </div>
+			        	<div class="control_group">
+		        			<label class="control_label"><span class="ico_must">*</span>选择产品:</label>
+							<div class="controls">
+			               		<span class="form_item"><select name="productId" id="productId" class="text2 js_non_empty" placeholder="产品" onchange="getProductPrice()">
+									<option value="" selected="selected">请选择</option>
+									#foreach($one in $productList)
+										<option value="$one.productId"$fn.selected(${orders.productId}, $one.productId)>$one.productName</option>
+	                                #end
+								</select></span>
+			              	</div>		        			
+			        	</div>
+		        	#end
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>下单日期:</label>
 		              <div class="controls">

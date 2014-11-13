@@ -85,6 +85,26 @@ public class Orders {
 
     private String yfhkRemark;
 
+    private int type = 0;
+
+    private String singleProduct;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getSingleProduct() {
+        return singleProduct;
+    }
+
+    public void setSingleProduct(String singleProduct) {
+        this.singleProduct = singleProduct;
+    }
+
     public String getYshkRemark() {
         return yshkRemark;
     }
