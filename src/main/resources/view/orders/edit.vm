@@ -181,7 +181,7 @@
 							</label>
 		              	</div>
 		        	</div>
-		        	#if($type==1)
+		        	#if(${orders.type}==1)
 		        		<div class="control_group">
 	                        <label class="control_label"><span class="ico_must">*</span>单项产品名称:</label>
 	                        <div class="controls">
