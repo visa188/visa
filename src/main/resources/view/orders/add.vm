@@ -215,11 +215,12 @@
 			               		<table cellpadding="0" cellspacing="0" class="client_table_data table_data">
 					                <thead>
 					                    <tr>
-					                        <th>客人信息</th>
+					                        <th>序号</th><th>客人信息</th>
 					                    </tr>
 					                </thead>
 					                <tbody>
 					                    <tr>
+					                    	<td>1</td>
 											<td>
 												姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:20%;"/>
 												联系方式:<input type="text" class="tb_text" name="tempContact" value="" placeholder="联系方式" style="width:30%;"/>

@@ -101,7 +101,11 @@ GLB.createErrortipEle = function(errortx){
 	errortipEle.innerHTML = errortx;
 	return errortipEle;
 }
-
+function csqu(oprTb){
+	$("tbody tr td:nth-child(1)",oprTb).each(function (i){
+		$(this).text(i+1);
+	});
+}
 // 客人信息操作
 GLB.clientOpr = function(node,addBtn,delBtn,type){
 	var oprTb = $("table",node);
@@ -131,6 +135,7 @@ GLB.clientOpr = function(node,addBtn,delBtn,type){
 			vTrTemp = createTr(1);
 		}
 		$(vTrTemp).appendTo(oprTb);
+		csqu(oprTb);
 		$("input",vTrTemp)[0].focus();
 	}
 
@@ -142,19 +147,20 @@ GLB.clientOpr = function(node,addBtn,delBtn,type){
 			return;
 		}else{
 			$(delBtn).parent("td").parent("tr").remove();
+			csqu(oprTb);
 		}
 	}
 
 	function createTr(type){
 		var t_tr = document.createElement("tr");
 		if(typeof type == "undefined"){
-			$(t_tr).html('<td>姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="姓名" style="width:20%;"/>' +
+			$(t_tr).html('<td></td><td>姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="姓名" style="width:20%;"/>' +
 					'联系方式:<input type="text" class="tb_text" name="tempContact" value="" placeholder="联系方式" style="width:30%;"/>' +
 					'地址:<input type="text" class="tb_text" name="tempAddr" value="" placeholder="地址" style="width:40%;"/>' +
 					'<span class="client_delete" title="删除行" onclick="delTempRow(this)">-</span></td>');
 			
 		}else{
-			$(t_tr).html('<td><input type="hidden" id="tempId" name="tempId" value="" />姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>' +
+			$(t_tr).html('<td></td><td><input type="hidden" id="tempId" name="tempId" value="" />姓名:<input type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>' +
 					'&nbsp;性别:<select name="tempSex" placeholder="客人性别"><option value="1">男</option><option value="2">女</option></select>' +
 					'&nbsp;类型:<select name="tempAgeType" placeholder="客人类型"><option value="1">成人</option><option value="2">儿童(占床)</option><option value="3">儿童(不占床)</option></select>'+                            
 					'<!--input type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/-->'+
@@ -182,6 +188,7 @@ function delTempRow(delBtn,type){
 		return;
 	}else{
 		$(delBtn).parent("td").parent("tr").remove();
+		csqu(oprTb);
 	}
 }
 
