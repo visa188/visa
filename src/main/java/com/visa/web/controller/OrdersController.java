@@ -260,7 +260,10 @@ public class OrdersController {
         Orders orders = ordersDao.selectByPrimaryKey(orderId);
         String userId = user.getUserId();
         List<Customer> customerList = customerDao.selectAllBySalesmanId(userId);
-        Product product = productDao.selectByPrimaryKey(orders.getProductId());
+        Product product = null;
+        if (orders.getProductId() != null) {
+            product = productDao.selectByPrimaryKey(orders.getProductId());
+        }
         List<User> operatorList = userDao.selectByRoleId(RoleEnumType.OPERATOR.getId());
         if (user.getRoleId() == RoleEnumType.ADMIN.getId()) {
             customerList = customerDao.selectAllCustomer();
@@ -268,8 +271,10 @@ public class OrdersController {
             customerList = customerDao.selectAllBySalesmanId(userId);
         }
         model.put("areaList", areaDao.selectAllArea());
-        model.put("countryList", countryDao.selectByContinentId(product.getContinentId()));
-        model.put("productList", productDao.searchByCountryId(product.getCountryId()));
+        if (product != null) {
+            model.put("countryList", countryDao.selectByContinentId(product.getContinentId()));
+            model.put("productList", productDao.searchByCountryId(product.getCountryId()));
+        }
         model.put("operatorList", operatorList);
         model.put("customerList", customerList);
         model.put("product", product);
@@ -317,7 +322,10 @@ public class OrdersController {
 
         if (RoleEnumType.SALESMAN.getId() == user.getRoleId()
                 || RoleEnumType.ADMIN.getId() == user.getRoleId()) {
-            Product product = productDao.selectByPrimaryKey(updateOrders.getProductId());
+            Product product = null;
+            if (updateOrders.getProductId() != null) {
+                product = productDao.selectByPrimaryKey(updateOrders.getProductId());
+            }
             // orders.setPriceYsdj(updateOrders.getPriceYsdj());
             // orders.setPriceQtzc(updateOrders.getPriceQtzc());
             // orders.setPriceQtys(updateOrders.getPriceQtys());
@@ -467,9 +475,9 @@ public class OrdersController {
     private void exportOrderData(OutputStream out, String year, String month, String salesmanId,
             String yfhkStatus, String yshkStatus, String customerId, String company,
             String operatorId) {
-        String[] titles = { "客户名称", "下单日期", "产品名称", "客人名单", "客人数量", "销售员", "操作员", "送签日期", "送签员",
-                "应收单价", "其它应收款", "其它应付款", "总计应收款", "总计应付款", "毛利润", "付款状态", "已付货款", "收款状态", "已收货款",
-                "备注" };
+        String[] titles = { "客户名称", "客户公司", "下单日期", "产品名称", "客人名单", "客人数量", "销售员", "操作员", "送签日期",
+                "送签员", "应收单价", "其它应收款", "其它应付款", "总计应收款", "总计应付款", "毛利润", "付款状态", "已付货款", "收款状态",
+                "已收货款", "备注" };
         HSSFWorkbook wb = new HSSFWorkbook();
         Sheet s = wb.createSheet();
         // header row
@@ -503,60 +511,62 @@ public class OrdersController {
                 headerCell = row.createCell(0);
                 headerCell.setCellValue(p.getCustomerName());
                 headerCell = row.createCell(1);
-                headerCell.setCellValue(DateUtil.format(p.getOrderDate(), DateUtil.FORMAT_DATE));
+                headerCell.setCellValue(p.getCustomerCompany());
                 headerCell = row.createCell(2);
+                headerCell.setCellValue(DateUtil.format(p.getOrderDate(), DateUtil.FORMAT_DATE));
+                headerCell = row.createCell(3);
                 if (p.getType() == 1) {
                     headerCell.setCellValue(p.getSingleProduct());
                 } else {
                     headerCell.setCellValue(p.getProductName());
                 }
-                headerCell = row.createCell(3);
-                headerCell.setCellValue(p.getNameList());
                 headerCell = row.createCell(4);
-                headerCell.setCellValue(p.getNameListSize());
+                headerCell.setCellValue(p.getNameList());
                 headerCell = row.createCell(5);
-                headerCell.setCellValue(p.getSalesmanName());
+                headerCell.setCellValue(p.getNameListSize());
                 headerCell = row.createCell(6);
-                headerCell.setCellValue(p.getOperatorName());
+                headerCell.setCellValue(p.getSalesmanName());
                 headerCell = row.createCell(7);
-                headerCell.setCellValue(DateUtil.format(p.getSignDate(), DateUtil.FORMAT_DATE));
+                headerCell.setCellValue(p.getOperatorName());
                 headerCell = row.createCell(8);
-                headerCell.setCellValue(p.getSignOperatorName());
+                headerCell.setCellValue(DateUtil.format(p.getSignDate(), DateUtil.FORMAT_DATE));
                 headerCell = row.createCell(9);
+                headerCell.setCellValue(p.getSignOperatorName());
+                headerCell = row.createCell(10);
                 headerCell.setCellValue(p.getPriceYsdj() == null ? "0" : p.getPriceYsdj()
                         .toString());
-                headerCell = row.createCell(10);
+                headerCell = row.createCell(11);
                 headerCell.setCellValue(p.getPriceQtys() == null ? "0" : p.getPriceQtys()
                         .toString());
-                headerCell = row.createCell(11);
+                headerCell = row.createCell(12);
                 headerCell.setCellValue(p.getPriceQtzc() == null ? "0" : p.getPriceQtzc()
                         .toString());
-                headerCell = row.createCell(12);
+                headerCell = row.createCell(13);
                 headerCell.setCellValue(p.getPriceZjys() == null ? "0" : p.getPriceZjys()
                         .toString());
-                headerCell = row.createCell(13);
+                headerCell = row.createCell(14);
                 headerCell.setCellValue(p.getPriceZjyf() == null ? "0" : p.getPriceZjyf()
                         .toString());
-                headerCell = row.createCell(14);
+                headerCell = row.createCell(15);
                 headerCell.setCellValue(p.getGrossProfit() == null ? "0" : p.getGrossProfit()
                         .toString());
-                headerCell = row.createCell(15);
+                headerCell = row.createCell(16);
                 if (PriceStatusEnum.PRICESTATUS_MAP.get(p.getYfhkStatus()) != null) {
                     headerCell.setCellValue(PriceStatusEnum.PRICESTATUS_MAP.get(p.getYfhkStatus())
                             .getName());
                 } else {
                     headerCell.setCellValue("");
                 }
-                headerCell = row.createCell(16);
+                headerCell = row.createCell(17);
                 headerCell.setCellValue(p.getPriceYfhk() == null ? "0" : p.getPriceYfhk()
                         .toString());
-                headerCell = row.createCell(17);
+                headerCell = row.createCell(18);
                 headerCell.setCellValue(YshkStatusEnum.YSHKSTATUS_MAP.get(p.getYshkStatus())
                         .getName());
-                headerCell = row.createCell(18);
+                headerCell = row.createCell(19);
                 headerCell.setCellValue(p.getPriceYshk() == null ? "0" : p.getPriceYshk()
                         .toString());
-                headerCell = row.createCell(19);
+                headerCell = row.createCell(20);
                 headerCell.setCellValue(p.getDes());
 
                 if (p.getPriceZjys() != null) {

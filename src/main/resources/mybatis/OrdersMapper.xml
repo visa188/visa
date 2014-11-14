@@ -4,7 +4,7 @@
   
   <select id="selectAll" resultType="Orders" parameterType="java.util.Map" >
     select tmp1.*,user.userName operatorName 
-		from (select orders.*,product.productName,customer.customerName,customer.company,user1.userName salesmanName,country.countryName
+		from (select orders.*,product.productName,customer.customerName,customer.company,user1.userName salesmanName,country.countryName,customer.company customerCompany
 			from orders,product,customer,user user1,country
 			where (orders.type=0 or orders.type is null)
 					and	 orders.productId=product.productId 
@@ -19,7 +19,7 @@
 		<if test="yfhkStatus != null">and orders.yfhkStatus=#{yfhkStatus,jdbcType=VARCHAR}</if>
 		<if test="yshkStatus != null">and orders.yshkStatus=#{yshkStatus,jdbcType=VARCHAR}</if>
 		UNION
-				SELECT orders.*,orders.nameList productName,customer.customerName,customer.company,user1.userName salesmanName,orders.nameList countryName
+				SELECT orders.*,orders.nameList productName,customer.customerName,customer.company,user1.userName salesmanName,orders.nameList countryName,customer.company customerCompany
 				FROM orders,customer,user user1
 				WHERE  orders.type=1
 					and	 orders.customerId=customer.customerId 
