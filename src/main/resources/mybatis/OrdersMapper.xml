@@ -35,11 +35,9 @@
   </select>
   
   <select id="selectByPrimaryKey" resultType="Orders" parameterType="java.lang.Integer" >
-    select orders.*,product.productName,customer.customerName,country.countryName
-	from orders,product,customer,country
-	where orders.productId=product.productId 
-		and orders.customerId=customer.customerId 
-		and product.countryId=country.countryId
+    select orders.*,customer.customerName
+	from orders,customer
+	where orders.customerId=customer.customerId 
     and orderId = #{orderId,jdbcType=INTEGER} 
   </select>
   
