@@ -312,6 +312,7 @@
 					</div>
 				#end
 				##if($userRoleId==${fn.getOperatorRoleId()}||${fn.isAdminRoleId($userRoleId)})
+				#if(${orders.type}!=1)
     				<div class="widget_title">
     		        	<span class="ico_static_r"></span>
     		        	<h3>送签信息</h3>
@@ -350,6 +351,7 @@
     		              </div>
     		            </div> 
     				</div>	
+    			#end
 				##end
 				#if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()}||$userRoleId==${fn.getOperatorRoleId()})
 		        <div class="widget_title">
