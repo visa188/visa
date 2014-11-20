@@ -17,4 +17,6 @@ public interface OperateCountryDao {
 
     int updateByPrimaryKey(OperatorCountry record);
 
+    int deleteByUserId(String userId);
+
 }

@@ -163,11 +163,11 @@ public class LineOrder {
      * 
      * @pdOid 039a9580-614d-44ec-89e9-c2ffcc97d52e
      */
-    public int status;
+    public Integer status;
 
-    public int jdstatus;
-    public int busstatus;
-    public int tuanstatus;
+    public Integer jdstatus;
+    public Integer busstatus;
+    public Integer tuanstatus;
 
     public String orderSeq;
     public String specialComment;
@@ -178,18 +178,37 @@ public class LineOrder {
 
     public BigDecimal lineOrderDeposit;
     public BigDecimal commission;
-    public int lineOrderDepositStatus;
-    public int commissionStatus;
+    public Integer lineOrderDepositStatus;
+    public Integer commissionStatus;
 
     private String dyczb;
     private String deczb;
 
-    public int yshkstatus;
-    public int yfhkstatus;
+    public Integer yshkstatus;
+    public Integer yfhkstatus;
 
     public String qtysRemark;
 
     public String garanteeFileUrl;
+
+    public Date depositLimitDate;
+    public Date printTicketLimitDate;
+
+    public Date getDepositLimitDate() {
+        return depositLimitDate;
+    }
+
+    public void setDepositLimitDate(Date depositLimitDate) {
+        this.depositLimitDate = depositLimitDate;
+    }
+
+    public Date getPrintTicketLimitDate() {
+        return printTicketLimitDate;
+    }
+
+    public void setPrintTicketLimitDate(Date printTicketLimitDate) {
+        this.printTicketLimitDate = printTicketLimitDate;
+    }
 
     public String getCustomerName() {
         return customerName;
@@ -215,19 +234,19 @@ public class LineOrder {
         this.needPaidSum = needPaidSum;
     }
 
-    public int getLineOrderDepositStatus() {
+    public Integer getLineOrderDepositStatus() {
         return lineOrderDepositStatus;
     }
 
-    public void setLineOrderDepositStatus(int lineOrderDepositStatus) {
+    public void setLineOrderDepositStatus(Integer lineOrderDepositStatus) {
         this.lineOrderDepositStatus = lineOrderDepositStatus;
     }
 
-    public int getCommissionStatus() {
+    public Integer getCommissionStatus() {
         return commissionStatus;
     }
 
-    public void setCommissionStatus(int commissionStatus) {
+    public void setCommissionStatus(Integer commissionStatus) {
         this.commissionStatus = commissionStatus;
     }
 
@@ -263,37 +282,37 @@ public class LineOrder {
         this.garanteeFileUrl = garanteeFileUrl;
     }
 
-    public int getYshkstatus() {
+    public Integer getYshkstatus() {
         return yshkstatus;
     }
 
-    public void setYshkstatus(int yshkstatus) {
+    public void setYshkstatus(Integer yshkstatus) {
         this.yshkstatus = yshkstatus;
     }
 
-    public int getYfhkstatus() {
+    public Integer getYfhkstatus() {
         return yfhkstatus;
     }
 
-    public void setYfhkstatus(int yfhkstatus) {
+    public void setYfhkstatus(Integer yfhkstatus) {
         this.yfhkstatus = yfhkstatus;
     }
 
     @FieldDes(fieldDes = "占位类型#1&切位@2&占位@3&预报")
-    public int getNameListType() {
+    public Integer getNameListType() {
         return nameListType;
     }
 
-    public void setNameListType(int nameListType) {
+    public void setNameListType(Integer nameListType) {
         this.nameListType = nameListType;
     }
 
     @FieldDes(fieldDes = "占位状态#1&已收定金@2&已收资料")
-    public int getNameListState() {
+    public Integer getNameListState() {
         return nameListState;
     }
 
-    public void setNameListState(int nameListState) {
+    public void setNameListState(Integer nameListState) {
         this.nameListState = nameListState;
     }
 
@@ -411,11 +430,11 @@ public class LineOrder {
         this.lineProductId = lineProductId;
     }
 
-    public int getOrderId() {
+    public Integer getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
 
@@ -429,47 +448,47 @@ public class LineOrder {
     }
 
     @FieldDes(fieldDes = "订单类型")
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
     @FieldDes(fieldDes = "客人数量")
-    public int getNameListSize() {
+    public Integer getNameListSize() {
         return nameListSize;
     }
 
     @FieldDes(fieldDes = "双人房数量")
-    public int getSrf() {
+    public Integer getSrf() {
         return srf;
     }
 
-    public void setSrf(int srf) {
+    public void setSrf(Integer srf) {
         this.srf = srf;
     }
 
     @FieldDes(fieldDes = "单人房数量")
-    public int getDrf() {
+    public Integer getDrf() {
         return drf;
     }
 
-    public void setDrf(int drf) {
+    public void setDrf(Integer drf) {
         this.drf = drf;
     }
 
     @FieldDes(fieldDes = "拼房数量")
-    public int getPf() {
+    public Integer getPf() {
         return pf;
     }
 
-    public void setPf(int pf) {
+    public void setPf(Integer pf) {
         this.pf = pf;
     }
 
-    public void setNameListSize(int nameListSize) {
+    public void setNameListSize(Integer nameListSize) {
         this.nameListSize = nameListSize;
     }
 
@@ -500,11 +519,11 @@ public class LineOrder {
     }
 
     @FieldDes(fieldDes = "客人ID")
-    public int getCustomerId() {
+    public Integer getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
 
@@ -553,11 +572,11 @@ public class LineOrder {
     }
 
     @FieldDes(fieldDes = "航空公司")
-    public int getAircorpId() {
+    public Integer getAircorpId() {
         return aircorpId;
     }
 
-    public void setAircorpId(int aircorpId) {
+    public void setAircorpId(Integer aircorpId) {
         this.aircorpId = aircorpId;
     }
 
@@ -571,11 +590,11 @@ public class LineOrder {
     }
 
     @FieldDes(fieldDes = "订单状态")
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -647,27 +666,27 @@ public class LineOrder {
         this.lineProductOrderSeq = lineProductOrderSeq;
     }
 
-    public int getJdstatus() {
+    public Integer getJdstatus() {
         return jdstatus;
     }
 
-    public void setJdstatus(int jdstatus) {
+    public void setJdstatus(Integer jdstatus) {
         this.jdstatus = jdstatus;
     }
 
-    public int getBusstatus() {
+    public Integer getBusstatus() {
         return busstatus;
     }
 
-    public void setBusstatus(int busstatus) {
+    public void setBusstatus(Integer busstatus) {
         this.busstatus = busstatus;
     }
 
-    public int getTuanstatus() {
+    public Integer getTuanstatus() {
         return tuanstatus;
     }
 
-    public void setTuanstatus(int tuanstatus) {
+    public void setTuanstatus(Integer tuanstatus) {
         this.tuanstatus = tuanstatus;
     }
 
@@ -687,43 +706,43 @@ public class LineOrder {
         this.deczb = deczb;
     }
 
-    public int getSeatNum() {
+    public Integer getSeatNum() {
         return seatNum;
     }
 
-    public void setSeatNum(int seatNum) {
+    public void setSeatNum(Integer seatNum) {
         this.seatNum = seatNum;
     }
 
-    public int getQw() {
+    public Integer getQw() {
         return qw;
     }
 
-    public void setQw(int qw) {
+    public void setQw(Integer qw) {
         this.qw = qw;
     }
 
-    public int getZw() {
+    public Integer getZw() {
         return zw;
     }
 
-    public void setZw(int zw) {
+    public void setZw(Integer zw) {
         this.zw = zw;
     }
 
-    public int getYb() {
+    public Integer getYb() {
         return yb;
     }
 
-    public void setYb(int yb) {
+    public void setYb(Integer yb) {
         this.yb = yb;
     }
 
-    public int getLeftSeatNum() {
+    public Integer getLeftSeatNum() {
         return leftSeatNum;
     }
 
-    public void setLeftSeatNum(int leftSeatNum) {
+    public void setLeftSeatNum(Integer leftSeatNum) {
         this.leftSeatNum = leftSeatNum;
     }
 

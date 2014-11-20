@@ -54,7 +54,8 @@ public class UserController {
      */
     @RequestMapping
     public void list(@ModelAttribute(Constant.SESSION_USER) User sessionUser,
-            String searchUserName, Integer searchRoleId, Integer searchLineRoleId, Integer page, ModelMap model) {
+            String searchUserName, Integer searchRoleId, Integer searchLineRoleId, Integer page,
+            ModelMap model) {
         List<UserVo> userList = new ArrayList<UserVo>();
         User user = new User();
         user.setUserName(searchUserName);
@@ -212,7 +213,22 @@ public class UserController {
      */
     @RequestMapping
     public String update(User user, Integer page) {
+        String pwd = user.getPwd();
+        pwd = StringUtils.isEmpty(pwd) ? null : pwd;
+        user.setPwd(pwd);
         userDao.updateByPrimaryKey(user);
+
+        operateCountryDao.deleteByUserId(user.getUserId());
+        if (!StringUtils.isEmpty(user.getLinecountryId())) {
+            for (String linecountryId : user.getLinecountryId().split(",")) {
+                if (!StringUtils.isEmpty(linecountryId)) {
+                    OperatorCountry record = new OperatorCountry();
+                    record.setLineCountryId(Integer.parseInt(linecountryId));
+                    record.setUserid(user.getUserId());
+                    operateCountryDao.insert(record);
+                }
+            }
+        }
 
         Department dept = deptDao.select(user.getDeptId());
         if (dept == null) {

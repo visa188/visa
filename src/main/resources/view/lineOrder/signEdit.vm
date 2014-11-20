@@ -29,6 +29,7 @@
    </span>
   </div>
 </div>
+#if($!{garanteeService.serviceItem1} != "1")
 <div class="control_group" id="garanteePriceDiv">
   <label class="control_label"><span class="ico_must">*</span>保证金额:</label>
   <div class="controls">
@@ -36,6 +37,7 @@
    <span class="form_item"><input disabled value="$!{garanteeService.priceSum}" name="garanteePrice" id="garanteePrice" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="保证金额"></span>
   </div>
 </div>
+#end
 <div class="control_group">
   <label class="control_label"><span class="ico_must">*</span>送签日期:</label>
   <div class="controls">

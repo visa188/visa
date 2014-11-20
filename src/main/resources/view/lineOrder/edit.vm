@@ -464,7 +464,6 @@
                             </div>
                         </div>                          
                     </div>
-                    #if($lineOrder.type==1)
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>服务:</label>
                       <div class="controls">
@@ -529,7 +528,6 @@
                             </div>
                         </div>                
                     </div>
-                    #end
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>第一操作部:</label>
                       <div class="controls">
@@ -1001,7 +999,7 @@
 								</div>
 								<label class="control_label"></label>
                           		<div class="controls">
-									<span class="form_item">已退：<input value="$!{jpService.serviceItem10}" name="alreadyPaidJpdj" id="alreadyPaidJpdj" type="text" class="text1" maxlength="8" size="8" placeholder="机票订金（已退）"></span>
+									<span class="form_item">已退：<input value="$!fn.disPrice($!{jpService.serviceItem10})" name="alreadyPaidJpdj" id="alreadyPaidJpdj" type="text" class="text1" maxlength="8" size="8" placeholder="机票订金（已退）"></span>
 									<span class="form_item">退款日期：<input value="$!{jpService.serviceItem11}" name="jpPaidJpdjDate" id="jpPaidJpdjDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="退款日期"></span>
     						  	</div>
     						  #elseif($!{jpService.serviceItem4}=='2')
@@ -1338,21 +1336,11 @@
 					#end
                 </div>
               </div>
-              #if($fn.hasButton($!{lineOrder.status},$userLineRoleId))
               <div class="form_actions">
                     <button type="reset" class="btn btn_reset">重置</button>
                     <input type="hidden" id="status" name="status" value="$!{lineOrder.status}"/>
-                    <button type="button" class="btn btn_save" name="bc">保存</button>
                     <button type="button" class="btn btn_save" name="tj">提交</button>
-                    <script>
-                        jQuery('.btn_save').click(function(){
-                            if('tj'==jQuery(this).attr('name')){
-                                jQuery('#status').val('$fn.nextFlow($!{lineOrder.status},$fn.getParallel($!{lineOrder.dyczb},$!{lineOrder.deczb}),$userLineRoleId,$visaService)');                                
-                            }
-                        });
-                    </script>
                 </div>  
-                #end              
             </form>
         </div>
     </div>

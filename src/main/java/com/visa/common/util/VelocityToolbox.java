@@ -362,7 +362,7 @@ public class VelocityToolbox {
         if (isLineAdminRole(userRoleId)) {
             return "aa";
         }
-        if (userRoleId == getLineSalesmanRoleId()) {
+        if (userRoleId == getLineSalesmanRoleId() || userRoleId == getLineSalesmanManagerRoleId()) {
             return "bb";
         }
         switch (type) {

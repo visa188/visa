@@ -40,6 +40,8 @@
 		    from lineorder,linecountry,customer
 		    where lineorder.lineCountryId = linecountry.countryId  
 		    and lineorder.customerId = customer.customerId  
+		<if test="userRoleId != 7 and userRoleId != 71  and userRoleId != 6"><![CDATA[ and lineorder.status>0 ]]></if>
+		<if test="userRoleId == 10 or userRoleId == 101"><![CDATA[ and lineorder.status=1 ]]></if>
 		<if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 		<if test="salesmanId != null">and lineorder.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
 		<if test="lineOperatorId != null">and lineorder.lineOperatorId=#{lineOperatorId,jdbcType=VARCHAR}</if>
@@ -89,6 +91,8 @@
 		    from lineorder,linecountry,customer
 		    where lineorder.lineCountryId = linecountry.countryId  
 		    	and lineorder.customerId = customer.customerId  
+		    <if test="userRoleId != 7 and userRoleId != 71 and userRoleId != 6"><![CDATA[ and lineorder.status>0 ]]></if>
+		    <if test="userRoleId == 10 or userRoleId == 101"><![CDATA[ and lineorder.status=1 ]]></if>
 		    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 			<if test="salesmanId != null">and lineorder.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
 			<if test="lineOperatorId != null">and lineorder.lineOperatorId=#{lineOperatorId,jdbcType=VARCHAR}</if>

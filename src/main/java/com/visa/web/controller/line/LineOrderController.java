@@ -170,10 +170,28 @@ public class LineOrderController {
             model.addAttribute("alarmOrders", alarmOrders);
         } else {
             Map<String, Object> paraMap = new HashMap<String, Object>();
+            paraMap.put("type", type);
+            paraMap.put("userRoleId", user.getLineRoleId());
+
+            if (LineRoleEnumType.SALESMAN.getId() == user.getLineRoleId()) {
+                paraMap.put("salesmanId", user.getUserId());
+            } else if (LineRoleEnumType.SALEMAN_MANAGER.getId() == user.getLineRoleId()) {
+                paraMap.put("managerId", user.getUserId());
+                paraMap.put("role", "salesmanId");
+            } else if (LineRoleEnumType.OPERATOR.getId() == user.getLineRoleId()) {
+                paraMap.put("lineOperatorId", user.getUserId());
+                paraMap.put("serviceOperatorId", user.getUserId());
+            } else if (LineRoleEnumType.VISAOPER.getId() == user.getLineRoleId()) {
+                paraMap.put("visaOperatorId", user.getUserId());
+            } else if (LineRoleEnumType.SIGNOPERATOR.getId() == user.getLineRoleId()) {
+                paraMap.put("signOperatorId", user.getUserId());
+            }
+
             paraMap.put("begin", 0);
             paraMap.put("pageCount", Constant.LINE_PAGE_COUNT * 1000);
             List<LineOrder> orderList = new ArrayList<LineOrder>();
-            for (LineOrder lineOrder : lineOrderDao.selectByPage(paraMap)) {
+            List<LineOrder> tempOrderList = lineOrderDao.selectByPage(paraMap);
+            for (LineOrder lineOrder : tempOrderList) {
                 if (lineProductOrderSeq.equals(lineOrder.getLineProductOrderSeq())) {
                     orderList.add(lineOrder);
                 }
@@ -217,6 +235,7 @@ public class LineOrderController {
         String prefix = "XL" + StringUtil.paddingZeroToLeft(String.valueOf(orderSeq), 6);
         lineOrder.setOrderSeq(prefix);
         lineOrder.setSalesmanId(user.getUserId());
+        lineOrder.setStatus(0);
         // 散拼团订单时，校验该产品下所有订单客人总量是否大于机位数
         if (lineOrder.getType() == 2) {
             LineProduct product = lineProductDao.selectByPrimaryKey(lineOrder.getLineProductId());
@@ -363,6 +382,16 @@ public class LineOrderController {
             User tempUser = userDao.selectByPrimaryKey(lineOrderVo.getSignOperatorId());
             if (tempUser != null) {
                 lineOrderVo.setSignOperatorName(tempUser.getUserName());
+            }
+        }
+
+        if (user.getLineRoleId() == LineRoleEnumType.SALEMAN_MANAGER.getId()
+                || user.getLineRoleId() == LineRoleEnumType.ADMIN.getId()) {
+            // 订单含有签证服务status=1，没有的话status=2
+            if (lineOrderVo.getQz() != null && lineOrderVo.getQz().startsWith("1")) {
+                lineOrderVo.setStatus(1);
+            } else {
+                lineOrderVo.setStatus(2);
             }
         }
 

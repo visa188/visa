@@ -332,7 +332,7 @@
                     </div>
                     <script>
                         jQuery('#dyczb,#deczb').change(function(){
-                            if((jQuery('#dyczb').val()==1 && jQuery('#deczb').val()==2) || (jQuery('#dyczb').val()==2 && jQuery('#deczb').val()==1)){
+                            if(jQuery('#dyczb').val()==jQuery('#deczb').val()){
                             	alert('两个操作部不能相同');
                             }else{
                             	if(jQuery('#dyczb').val()==3 && jQuery('#deczb').val()==3){
@@ -377,16 +377,8 @@
 				<div class="form_actions">
 					<button type="reset" class="btn btn_reset">重置</button>
                     <input type="hidden" id="status" name="status" value="0"/>
-	              	<button type="button" class="btn btn_save" name="bc">保存</button>
 	              	<button type="button" class="btn btn_save" name="tj">提交</button>
 	              	<script>
-                        jQuery('.btn_save').click(function(){
-                            var nameListSize = jQuery('#nameListSize').val();
-                            if('tj'==jQuery(this).attr('name')){
-                                jQuery('#status').val('71');                                
-                            }
-                        });
-						
 						function calculatePriceSum(){
 							var price=jQuery('#price').val()==''?0:jQuery('#price').val();
 							var qtys=jQuery('#qtys').val()==''?0:jQuery('#qtys').val();

@@ -15,7 +15,12 @@
   
   <delete id="deleteByPrimaryKey">
     delete from operatorcountry
-    where areaId = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByUserId"  parameterType="java.lang.String" >
+    delete from operatorcountry
+    where userid = #{userId,jdbcType=VARCHAR}
   </delete>
   
   <insert id="insert">

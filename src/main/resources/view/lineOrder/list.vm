@@ -24,7 +24,7 @@
 			<input type="hidden" id="page" name="page" value="1">
 			<input type="hidden" id="type" name="type" value="$!{type}">
 			#if(!$hideSearch)	
-    			#if($alarmCount>0)
+    			#if($alarmCount&&$alarmCount>0)
     				<div class="searchbox">
     				<label for="s_client">
     					<input type="hidden" id="alarmOrders" name="alarmOrders" value="$!alarmOrders">
@@ -70,7 +70,6 @@
 	                       	<th width="">订单号</th>
 	                        <th width="">团队编号</th>
                             <th width="">线路</th>
-                            <th width="">航空公司</th>
                             <th width="">总位</th>
                             <th width="">领队</th>
                             <th width="">余位</th>
@@ -108,13 +107,12 @@
     	                    <tr>
     	                    	#if(${type}=="2")
     	                    	<td>$!{order.orderSeq}</td>
-								<td><a href="/lineOrder/list.do?lineProductOrderSeq=$!{order.lineProductOrderSeq}">$!{order.lineProductOrderSeq}</a></td>
+								<td><a href="/lineOrder/list.do?lineProductOrderSeq=$!{order.lineProductOrderSeq}&type=2">$!{order.lineProductOrderSeq}</a></td>
 								<td>$!{order.lineProductName}</td>
-								<td>$!{order.aircorpId}</td>
 								<td width="">${order.seatNum}</td>
 	                            <td>$!{order.groupLeader}</td>
 	                            <td width="">${order.leftSeatNum}</td>
-	                            <td width="">#if($order.nameListType == 1)切位${order.qw}#elseif($order.nameListType == 2)占位${order.zw}#else预报${order.yb}#end</td>
+	                            <td width="">#if($order.nameListType == 1)切位#elseif($order.nameListType == 2)占位#else预报#end${order.nameListSize}</td>
 								<td>$!{order.price}</td>
     	                        <td>$fn.format($!{order.depositLimitDate},'yyyy-MM-dd')</td>
     	                        <td>$fn.format($!{order.printTicketLimitDate},'yyyy-MM-dd')</td>
@@ -123,7 +121,7 @@
 		                        <td width="">#if($order.jdstatus == 3)已落实#elseif($order.jdstatus == 2)操作中#else未操作#end</td>
 	                            <td width="">#if($order.busstatus == 3)已落实#elseif($order.busstatus == 2)操作中#else未操作#end</td>
 	                            <td width="">#if($order.tuanstatus == 2)已出团#else未出团#end</td>
-	                            <td width="">#if($order.yshkStatus == 3)已收全款#elseif($order.yshkStatus == 2)已收款${order.alreadyGot}元#else未收款#end</td>
+	                            <td width="">#if($order.yshkstatus == 3)已收全款#elseif($order.yshkstatus == 2)已收款${order.alreadyGot}元#else未收款#end</td>
 								#else
 								<td>$!{order.orderSeq}</td>
 								<td>$!{order.salesmanName}</td>
@@ -136,7 +134,7 @@
 	                            <td width="">#if($order.busstatus == 3)已落实#elseif($order.busstatus == 2)操作中#else未操作#end</td>
 	                            <td width="">#if($order.tuanstatus == 2)已出团#else未出团#end</td>
 	                            <td>$!{order.priceSum}</td>
-	                            <td width="">#if($order.yshkStatus == 3)已收全款#elseif($order.yshkStatus == 2)已收款${order.alreadyGot}元#else未收款#end</td>
+	                            <td width="">#if($order.yshkstatus == 3)已收全款#elseif($order.yshkstatus == 2)已收款${order.alreadyGot}元#else未收款#end</td>
 								#end
     	                        <td><a class="ico_edit_g" href="javascript:updateOrder('/lineOrder/edit.do?orderId=$!{order.orderId}&currentPage=${page}')"></a></td>
     	                        <td><a class="ico_delete_r" onclick="return confirm('是否将此订单删除?')" href="/lineOrder/delete.do?orderId=$!{order.orderId}&page=${page}"></a></td>
