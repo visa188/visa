@@ -715,7 +715,7 @@
                               <div class="controls">
                                <span class="form_item">
                                		#if($!{lineOrder.type}==2)
-	    								<input value="$!{product.jpdj}" type="text"  class="text1 js_non_empty" name="jpdj" id="jpdj" placeholder="机票订金">元
+	    								<input value="$!fn.disPrice($!{product.jpdj})" type="text"  class="text1 js_non_empty" name="jpdj" id="jpdj" placeholder="机票订金">元
 	                                    <select name="jpdjType" id="jpdjType" class="text2">
 	                                        <option value="1"  $fn.selected($!{product.jpdjType}, '1')>可退</option>
 	                                        <option value="2"  $fn.selected($!{product.jpdjType}, '2')>冲机票款</option>
@@ -734,8 +734,8 @@
                               <label class="control_label"><span class="ico_must">*</span>应付机票款:</label>
                               <div class="controls">
                                <span class="form_item">
-									单价(含税)<input value="$!{jpService.servicePayPrice}" type="text"  class="text1 js_non_empty" name="yfjpkdj" id="yfjpkdj" placeholder="机票单价" onchange="calculateJpYfhj();">元 
-									合计<input readonly value="$!{jpService.yfhj}" type="text"  class="text1 js_non_empty" name="yfjpkhj" id="yfjpkhj" placeholder="机票合计">元
+									单价(含税)<input value="$!fn.disPrice($!{jpService.servicePayPrice})" type="text"  class="text1 js_non_empty" name="yfjpkdj" id="yfjpkdj" placeholder="机票单价" onchange="calculateJpYfhj();">元 
+									合计<input readonly value="$!fn.disPrice($!{jpService.yfhj})" type="text"  class="text1 js_non_empty" name="yfjpkhj" id="yfjpkhj" placeholder="机票合计">元
     							</span>
                               </div>
                             </div>
@@ -755,7 +755,7 @@
                           <label class="control_label"><span class="ico_must">*</span>地接费用合计:</label>
                           <div class="controls">
                            <span class="form_item">#if($djService.serviceItem1)酒店费用#end #if($djService.serviceItem4)特殊景点费用#end #if($djService.serviceType == $fn.getBsServicTypeId())巴士费用#else司兼导费用#end
-                           <input value="$!{djService.yfhj}" type="text" class="text1 js_non_empty" name="yfdjhj" id="yfdjhj" placeholder="地接费用合计">元</span>
+                           <input value="$!fn.disPrice($!{djService.yfhj})" type="text" class="text1 js_non_empty" name="yfdjhj" id="yfdjhj" placeholder="地接费用合计">元</span>
                           </div>
                         </div>
                         #end  
@@ -764,7 +764,7 @@
                           <div class="controls">
                            #set($bxService = $!{lineServiceMap.get(7)})
                            <input type="hidden" name="bxServicId" value="$!{bxService.serviceId}" />  
-                           <span class="form_item"><input value="$!{bxService.servicePayPrice}" name="yfbxdj" id="yfbxdj" type="text" class="text1 js_non_empty js_nan ysdj" placeholder="保险单价">元  总计 <input value="$!{bxService.yfhj}" name="yfbxhj" id="yfbxhj" type="text" class="text1 js_non_empty js_nan" placeholder="保险合计">元</span>
+                           <span class="form_item"><input value="$!fn.disPrice($!{bxService.servicePayPrice})" name="yfbxdj" id="yfbxdj" type="text" class="text1 js_non_empty js_nan ysdj" placeholder="保险单价">元  总计 <input value="$!fn.disPrice($!{bxService.yfhj})" name="yfbxhj" id="yfbxhj" type="text" class="text1 js_non_empty js_nan" placeholder="保险合计">元</span>
                           </div>
                         </div>
                     </div>  
@@ -833,7 +833,7 @@
                           <label class="control_label"><span class="ico_must">*</span>保证金额:</label>
                           <div class="controls">
 							<input type="hidden" name="garanteeServiceId" value="$!{garanteeService.serviceId}" />  
-                           <span class="form_item"><input value="$!{garanteeService.priceSum}" name="garanteePrice" id="garanteePrice" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="保证金额"></span>
+                           <span class="form_item"><input value="$!fn.disPrice($!{garanteeService.priceSum})" name="garanteePrice" id="garanteePrice" type="text" class="text1 js_nan" maxlength="8" size="8" placeholder="保证金额"></span>
                           </div>
                         </div>
 						<div class="control_group">
@@ -858,7 +858,7 @@
 						<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>应付签证费（单价）:</label>
                           <div class="controls">
-                           <span class="form_item"><input value="$!{visaService.servicePayPrice}" name="servicePayPrice" id="servicePayPrice" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应付签证费（单价）" onchange="sumVisaPay();"></span>
+                           <span class="form_item"><input value="$!fn.disPrice($!{visaService.servicePayPrice})" name="servicePayPrice" id="servicePayPrice" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应付签证费（单价）" onchange="sumVisaPay();"></span>
                           </div>
                         </div>
 						<div class="control_group">
