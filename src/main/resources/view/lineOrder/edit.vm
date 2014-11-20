@@ -734,11 +734,20 @@
                               <label class="control_label"><span class="ico_must">*</span>应付机票款:</label>
                               <div class="controls">
                                <span class="form_item">
-									单价(含税)<input value="$!{jpService.servicePayPrice}" type="text"  class="text1 js_non_empty" name="yfjpkdj" id="yfjpkdj" placeholder="机票单价">元 
-									合计<input value="$!{jpService.yfhj}" type="text"  class="text1 js_non_empty" name="yfjpkhj" id="yfjpkhj" placeholder="机票合计">元
+									单价(含税)<input value="$!{jpService.servicePayPrice}" type="text"  class="text1 js_non_empty" name="yfjpkdj" id="yfjpkdj" placeholder="机票单价" onchange="calculateJpYfhj();">元 
+									合计<input readonly value="$!{jpService.yfhj}" type="text"  class="text1 js_non_empty" name="yfjpkhj" id="yfjpkhj" placeholder="机票合计">元
     							</span>
                               </div>
                             </div>
+                            <script>
+                            function calculateJpYfhj(){
+									var yfjpkdjObj = jQuery("#yfjpkdj");
+									var nameListSize = jQuery("#nameListSize").val();
+    								var yfjpkdj=yfjpkdjObj.val()==''?0:yfjpkdjObj.val();
+									var yfjpkhj = Math.round(parseFloat(yfjpkdj*100*nameListSize))/100;                  
+									jQuery("#yfjpkhj").val(yfjpkhj);          	
+                            }
+                            </script>
                         #end
                         #set($djService = $!{lineServiceMap.get(4)})  
                         #if($djService)
@@ -1336,11 +1345,13 @@
 					#end
                 </div>
               </div>
+              #if($userLineRoleId != $fn.getLineSalesmanRoleId()||$!{lineOrder.status}==0)
               <div class="form_actions">
                     <button type="reset" class="btn btn_reset">重置</button>
                     <input type="hidden" id="status" name="status" value="$!{lineOrder.status}"/>
                     <button type="button" class="btn btn_save" name="tj">提交</button>
                 </div>  
+                #end
             </form>
         </div>
     </div>
