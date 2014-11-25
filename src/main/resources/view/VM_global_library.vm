@@ -57,15 +57,6 @@
                 </li>
 				#end
 				#if(${fn.isLineAdminRole($userLineRoleId)})
-				<li class="pro_mng#if($topNav==11) open#end">
-                    <a class="pro_mng_tab" href="/lineproduct/list.do"><span class="ico_pro"></span><span class="sidenav_text">线路产品管理</span><span class="ico_fold"></span></a>
-                    <dl>
-                        <dd#if($secNav==111) class="on"#end><a href="/lineproduct/list.do">线路产品信息管理</a></dd>
-						#if(${fn.isLineAdminRole($userLineRoleId)}||${fn.isLineOperatorRole($userLineRoleId)})
-							<dd#if($secNav==112) class="on"#end><a href="/lineproduct/add.do">新增线路产品信息</a></dd>
-						#end
-                    </dl>
-                </li>
 				<li class="client_mng#if($topNav==7) open#end">
                     <a class="client_mng_tab" href="/linecountry/list.do"><span class="ico_setting"></span><span class="sidenav_text">线路国家管理</span><span class="ico_fold"></span></a>
                     <dl>
@@ -81,6 +72,15 @@
                     </dl>                   
                 </li>
 				#end
+				<li class="pro_mng#if($topNav==11) open#end">
+                    <a class="pro_mng_tab" href="/lineproduct/list.do"><span class="ico_pro"></span><span class="sidenav_text">线路产品管理</span><span class="ico_fold"></span></a>
+                    <dl>
+                        <dd#if($secNav==111) class="on"#end><a href="/lineproduct/list.do">线路产品信息管理</a></dd>
+						#if(${fn.isLineAdminRole($userLineRoleId)}||${fn.isLineOperatorRole($userLineRoleId)})
+							<dd#if($secNav==112) class="on"#end><a href="/lineproduct/add.do">新增线路产品信息</a></dd>
+						#end
+                    </dl>
+                </li>
 				#if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||${fn.isLineSalesmanRole($userLineRoleId)}||${fn.isLineAdminRole($userLineRoleId)})
                 <li class="client_mng#if($topNav==2) open#end">
                     <a class="client_mng_tab" href="/customer/list.do"><span class="ico_client"></span><span class="sidenav_text">客户管理</span><span class="ico_fold"></span></a>
