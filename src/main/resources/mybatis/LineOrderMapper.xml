@@ -37,9 +37,11 @@
 	<select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
       	select count(*) from 
 		(select lineorder.*,linecountry.countryName lineCountryName,customer.customerName
-		    from lineorder,linecountry,customer
+		    from lineorder,linecountry,customer,user user1,linenamelist
 		    where lineorder.lineCountryId = linecountry.countryId  
 		    and lineorder.customerId = customer.customerId  
+		    and user1.userId=lineorder.salesmanId 
+		    and linenamelist.lineOrderId=lineorder.orderId 
 		<if test="userRoleId != 7 and userRoleId != 71  and userRoleId != 6"><![CDATA[ and lineorder.status>0 ]]></if>
 		<if test="userRoleId == 10 or userRoleId == 101"><![CDATA[ and lineorder.status=1 ]]></if>
 		<if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
@@ -53,7 +55,19 @@
 				and DATE_ADD(now(),INTERVAL 2 DAY) > lineorder.nameListlimitDate
 				and nameListState != 1
 				and nameListState != 2
-			</if>
+		</if>
+			
+		  <if test="countryName != null">and linecountry.countryName ${operator} #{countryName,jdbcType=VARCHAR}</if>
+		  <if test="customerName != null">and customer.customerName ${operator} #{customerName,jdbcType=VARCHAR}</if>
+		  <if test="companyName != null">and customer.company ${operator} #{companyName,jdbcType=VARCHAR}</if>
+		  <if test="nameList != null">and linenamelist.name ${operator} #{nameList,jdbcType=VARCHAR}</if>
+		  <if test="status != null">and lineorder.status = #{status,jdbcType=INTEGER}</if>
+		  <if test="yfhkStatus != null">and lineorder.yfhkStatus = #{yfhkStatus,jdbcType=INTEGER}</if>
+		  <if test="yshkStatus != null">and lineorder.yshkStatus = #{yshkStatus,jdbcType=INTEGER}</if>
+		  <if test="salesmanForSearch != null">and lineorder.salesmanId=#{salesmanForSearch,jdbcType=VARCHAR}</if>
+		  <if test="operatorForSearch != null">and lineorder.lineOperatorId=#{operatorForSearch,jdbcType=VARCHAR}</if>
+		  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
+			
 		<if test="startDate != null">
 		  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
 		  </if>
@@ -88,9 +102,11 @@
        	lineproduct.leftSeatNum
 		from (
 			select lineorder.*,linecountry.countryName lineCountryName,customer.customerName
-		    from lineorder,linecountry,customer
+		    from lineorder,linecountry,customer,user user1,linenamelist
 		    where lineorder.lineCountryId = linecountry.countryId  
 		    	and lineorder.customerId = customer.customerId  
+		    	and user1.userId=lineorder.salesmanId 
+		    	and linenamelist.lineOrderId=lineorder.orderId 
 		    <if test="userRoleId != 7 and userRoleId != 71 and userRoleId != 6"><![CDATA[ and lineorder.status>0 ]]></if>
 		    <if test="userRoleId == 10 or userRoleId == 101"><![CDATA[ and lineorder.status=1 ]]></if>
 		    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
@@ -100,6 +116,18 @@
 			<if test="signOperatorId != null">and lineorder.signOperatorId=#{signOperatorId,jdbcType=VARCHAR}</if>
 			<if test="managerId != null">and lineorder.${role} in (select userId from user where managerId=#{managerId,jdbcType=VARCHAR})</if>
 			<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
+			
+			<if test="countryName != null">and linecountry.countryName ${operator} #{countryName,jdbcType=VARCHAR}</if>
+		  <if test="customerName != null">and customer.customerName ${operator} #{customerName,jdbcType=VARCHAR}</if>
+		  <if test="companyName != null">and customer.company ${operator} #{companyName,jdbcType=VARCHAR}</if>
+		  <if test="nameList != null">and linenamelist.name ${operator} #{nameList,jdbcType=VARCHAR}</if>
+		  <if test="status != null">and lineorder.status = #{status,jdbcType=INTEGER}</if>
+		  <if test="yfhkStatus != null">and lineorder.yfhkStatus = #{yfhkStatus,jdbcType=INTEGER}</if>
+		  <if test="yshkStatus != null">and lineorder.yshkStatus = #{yshkStatus,jdbcType=INTEGER}</if>
+		  <if test="salesmanForSearch != null">and lineorder.salesmanId=#{salesmanForSearch,jdbcType=VARCHAR}</if>
+		  <if test="operatorForSearch != null">and lineorder.lineOperatorId=#{operatorForSearch,jdbcType=VARCHAR}</if>
+		  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
+			
 			<if test="alarmOrders != null">
 				and DATE_ADD(now(),INTERVAL 2 DAY) > lineorder.nameListlimitDate
 				and nameListState != 1
@@ -240,4 +268,53 @@
     </set>
     where orderId = #{orderId,jdbcType=INTEGER}
   </update>
+  
+  <select id="sumPrice" parameterType="java.util.Map" resultType="java.util.Map">
+      select sum(priceSum) sumzjys,sum(paidPriceSum) sumzjyf,sum(alreadyGot) sumyshk
+      from 
+		(select lineProductId,IFNULL(lineorder.priceSum,0) priceSum,IFNULL(lineorder.paidPriceSum,0) paidPriceSum,IFNULL(lineorder.alreadyGot,0) alreadyGot
+		    from lineorder,linecountry,customer
+		    where lineorder.lineCountryId = linecountry.countryId  
+		    and lineorder.customerId = customer.customerId  
+		<if test="userRoleId != 7 and userRoleId != 71  and userRoleId != 6"><![CDATA[ and lineorder.status>0 ]]></if>
+		<if test="userRoleId == 10 or userRoleId == 101"><![CDATA[ and lineorder.status=1 ]]></if>
+		<if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
+		<if test="salesmanId != null">and lineorder.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
+		<if test="lineOperatorId != null">and lineorder.lineOperatorId=#{lineOperatorId,jdbcType=VARCHAR}</if>
+		<if test="visaOperatorId != null">and lineorder.visaOperatorId=#{visaOperatorId,jdbcType=VARCHAR}</if>
+		<if test="signOperatorId != null">and lineorder.signOperatorId=#{signOperatorId,jdbcType=VARCHAR}</if>
+		<if test="managerId != null">and lineorder.${role} in (select userId from user where managerId=#{managerId,jdbcType=VARCHAR})</if>
+		<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
+		<if test="alarmOrders != null">
+				and DATE_ADD(now(),INTERVAL 2 DAY) > lineorder.nameListlimitDate
+				and nameListState != 1
+				and nameListState != 2
+			</if>
+		<if test="startDate != null">
+		  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
+		  </if>
+		  <if test="endDate != null">
+		  	<![CDATA[
+			and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
+			]]>
+		  </if>
+		  <if test="serviceOperatorId != null">
+			  UNION
+			  select  lineProductId,IFNULL(lineorder.priceSum,0) priceSum,IFNULL(lineorder.paidPriceSum,0) paidPriceSum,IFNULL(lineorder.alreadyGot,0) alreadyGot
+			    from lineorder,linecountry,linessrvice service,customer
+			    where lineorder.lineCountryId = linecountry.countryId  and  service.orderId = lineorder.orderId and lineorder.customerId = customer.customerId  
+			    and (#{serviceOperatorId,jdbcType=VARCHAR} =  service.serviceOperator )
+			    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
+				<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
+				<if test="startDate != null">
+				  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
+				  </if>
+				  <if test="endDate != null">
+				  	<![CDATA[
+					and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
+					]]>
+				  </if>
+		   </if>
+		  ) tmp1 left OUTER join lineproduct on( tmp1.lineProductId = lineproduct.lineProductId)
+   </select>
 </mapper>

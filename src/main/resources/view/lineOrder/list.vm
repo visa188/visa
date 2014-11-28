@@ -61,6 +61,25 @@
     			</div>
 			#end
 		</form>
+		
+		#if($sumPrice)
+		<hr class="hr_a">
+		<div class="widget_mng_box">
+			#if(${fn.isLineSalesmanRole($userLineRoleId)} ||${fn.isLineAdminRole($userLineRoleId)})
+				<table cellpadding="0" cellspacing="0" width="400" class="table_data tcenter">
+					<tbody>
+		            	<tr>
+		            		<td>总计应收:</td><td>$!{sumPrice.sumzjys}</td>
+		            		<td>总计应付:</td><td>$!{sumPrice.sumzjyf}</td>
+		            		<td>毛利:</td><td>$!{sumPrice.sumlr}</td>
+		            		<td>总计未收:</td><td>$!{sumPrice.sumwshk}</td>
+		            	</tr>
+		            </tbody>
+				</table>
+			#end
+		</div>
+		#end
+		
 		<hr class="hr_a">
 			<div class="widget_mng_box">
 				<table cellpadding="0" cellspacing="0" width="100%" class="table_data tcenter">
@@ -69,20 +88,16 @@
 	                       #if(${type}=="2")
 	                       	<th width="">订单号</th>
 	                        <th width="">团队编号</th>
-                            <th width="">线路</th>
+                            <th width="">线路名称</th>
                             <th width="">总位</th>
-                            <th width="">领队</th>
                             <th width="">余位</th>
                             <th width="">切位/占位/预报</th>
 							<th width="">同业价</th>
-	                        <th width="">机票定金时限</th>
 							<th width="">出票时限</th>
 							<th width="">签证状态</th>
-	                        <th width="">机票状态</th>
-	                        <th width="">酒店状态</th>
-                            <th width="">巴士状态</th>
                             <th width="">团队状态</th>
                             <th width="">收款状态</th>
+                            <th width="">付款状态</th>
                            #else
                             <th width="">订单号</th>
                             <th width="">销售</th>
@@ -110,18 +125,14 @@
 								<td><a href="/lineOrder/list.do?lineProductOrderSeq=$!{order.lineProductOrderSeq}&type=2">$!{order.lineProductOrderSeq}</a></td>
 								<td>$!{order.lineProductName}</td>
 								<td width="">${order.seatNum}</td>
-	                            <td>$!{order.groupLeader}</td>
 	                            <td width="">${order.leftSeatNum}</td>
 	                            <td width="">#if($order.nameListType == 1)切位#elseif($order.nameListType == 2)占位#else预报#end${order.nameListSize}</td>
 								<td>$!{order.price}</td>
     	                        <td>$fn.format($!{order.depositLimitDate},'yyyy-MM-dd')</td>
-    	                        <td>$fn.format($!{order.printTicketLimitDate},'yyyy-MM-dd')</td>
 								<td width="">签证状态</td>
-		                        <td width="">机票状态</td>
-		                        <td width="">#if($order.jdstatus == 3)已落实#elseif($order.jdstatus == 2)操作中#else未操作#end</td>
-	                            <td width="">#if($order.busstatus == 3)已落实#elseif($order.busstatus == 2)操作中#else未操作#end</td>
 	                            <td width="">#if($order.tuanstatus == 2)已出团#else未出团#end</td>
 	                            <td width="">#if($order.yshkstatus == 3)已收全款#elseif($order.yshkstatus == 2)已收款${order.alreadyGot}元#else未收款#end</td>
+	                            <td width="">#if($order.yfhkstatus == 3)已付全款#elseif($order.yfhkstatus == 2)已付款${order.alreadyPaidSum}元#else未付款#end</td>
 								#else
 								<td>$!{order.orderSeq}</td>
 								<td>$!{order.salesmanName}</td>

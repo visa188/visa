@@ -33,4 +33,6 @@ public interface LineOrderDao {
     List<String> selectOrderMonths();
 
     int countAlarmOrders(@Param("type") Integer type);
+
+    Map<String, Object> sumPrice(Map<String, Object> paraMap);
 }

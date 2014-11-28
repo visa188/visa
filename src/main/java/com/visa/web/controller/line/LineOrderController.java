@@ -3,6 +3,8 @@ package com.visa.web.controller.line;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -111,6 +113,16 @@ public class LineOrderController {
             String orderSeq = bean.getOrderSeq();
             Integer alarmOrders = bean.getAlarmOrders();
 
+            String seachCountryName = bean.getSeachCountryName();
+            String customerName = bean.getSeachCustomerName();
+            String companyName = bean.getSeachCustomerCompany();
+            String nameList = bean.getSeachNameList();
+            String yfhkStatus = bean.getSeachYfhkStatus();
+            String yshkStatus = bean.getSeachYshkStatus();
+            String salesman = bean.getSalesman();
+            String operator = bean.getOperator();
+            String deptId = bean.getDeptId();
+
             if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate)) {
                 // 如果未选择起止日期，默认为本月一号到当日
                 Calendar c = Calendar.getInstance();
@@ -133,6 +145,19 @@ public class LineOrderController {
             paraMap.put("endDate", StringUtils.isEmpty(endDate) ? null : endDate);
             paraMap.put("orderSeq", StringUtils.isEmpty(orderSeq) ? null : orderSeq);
             paraMap.put("alarmOrders", alarmOrders == null || alarmOrders == 0 ? null : alarmOrders);
+            paraMap.put("operator", "like");
+            paraMap.put("countryName", StringUtils.isEmpty(seachCountryName) ? null : "%"
+                    + seachCountryName + "%");
+            paraMap.put("customerName", StringUtils.isEmpty(customerName) ? null : "%"
+                    + customerName + "%");
+            paraMap.put("companyName", StringUtils.isEmpty(companyName) ? null : "%" + companyName
+                    + "%");
+            paraMap.put("nameList", StringUtils.isEmpty(nameList) ? null : "%" + nameList + "%");
+            paraMap.put("yfhkStatus", StringUtils.isEmpty(yfhkStatus) ? null : yfhkStatus);
+            paraMap.put("yshkStatus", StringUtils.isEmpty(yshkStatus) ? null : yshkStatus);
+            paraMap.put("salesmanForSearch", StringUtils.isEmpty(salesman) ? null : salesman);
+            paraMap.put("operatorForSearch", StringUtils.isEmpty(operator) ? null : operator);
+            paraMap.put("deptId", StringUtils.isEmpty(deptId) ? null : deptId);
 
             if (LineRoleEnumType.SALESMAN.getId() == user.getLineRoleId()) {
                 paraMap.put("salesmanId", user.getUserId());
@@ -169,6 +194,22 @@ public class LineOrderController {
                 model.addAttribute("alarmCount", alarmCount);
             }
             model.addAttribute("alarmOrders", alarmOrders);
+
+            // 总计应收和总计应付汇总
+            Map<String, Object> sumPrice = lineOrderDao.sumPrice(paraMap);
+            if (sumPrice != null) {
+                DecimalFormat fmt = new DecimalFormat("#,####,####,####.00");
+                BigDecimal sumzjys = (BigDecimal) sumPrice.get("sumzjys");
+                BigDecimal sumzjyf = (BigDecimal) sumPrice.get("sumzjyf");
+                BigDecimal sumyshk = (BigDecimal) sumPrice.get("sumyshk");
+                if (sumzjys != null && sumzjyf != null && sumyshk != null) {
+                    sumPrice.put("sumzjys", fmt.format(sumzjys));
+                    sumPrice.put("sumzjyf", fmt.format(sumzjyf));
+                    sumPrice.put("sumwshk", fmt.format(sumzjys.subtract(sumyshk)));
+                    sumPrice.put("sumlr", fmt.format(sumzjys.subtract(sumzjyf)));
+                }
+            }
+            model.addAttribute("sumPrice", sumPrice);
         } else {
             Map<String, Object> paraMap = new HashMap<String, Object>();
             paraMap.put("type", type);
