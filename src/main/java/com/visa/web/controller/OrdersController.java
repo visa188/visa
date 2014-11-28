@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -171,7 +172,15 @@ public class OrdersController {
 
         model.addAttribute("orderList", orderList);
         List<User> salesmanList = userDao.selectByRoleId(RoleEnumType.SALESMAN.getId());
-        model.put("salesmanList", salesmanList);
+        List<User> tempSalesmanList = new ArrayList<User>();
+        if (!StringUtils.isEmpty(deptId)) {
+            for (User man : salesmanList) {
+                if (deptId.equals(man.getDeptId())) {
+                    tempSalesmanList.add(man);
+                }
+            }
+        }
+        model.put("salesmanList", tempSalesmanList);
         List<User> operatorList = userDao.selectByRoleId(RoleEnumType.OPERATOR.getId());
         model.put("operatorList", operatorList);
         List<Department> deptList = deptDao.selectAll();
