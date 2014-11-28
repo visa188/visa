@@ -33,6 +33,7 @@ import com.visa.common.constant.LineRoleEnumType;
 import com.visa.common.constant.LineSrviceEnumType;
 import com.visa.common.constant.PriceStatusEnum;
 import com.visa.common.constant.YshkStatusEnum;
+import com.visa.common.util.DateUtil;
 import com.visa.common.util.PagingUtil;
 import com.visa.common.util.StringUtil;
 import com.visa.common.util.VisaUtil;
@@ -637,8 +638,9 @@ public class LineOrderController {
     private void exportOrderData(OutputStream out, String type, String year, String month,
             String salesmanId, String yfhkStatus, String yshkStatus, String customerId,
             String company, String operatorId) {
-        String[] titles = { "团号", "单号", "操作员", "签证员", "销售", "客户", "报名人数", "应收账款", "已收账款", "未收账款",
-                "成本合计", "毛利合计", "应付账款", "已付账款", "未付账款", "押金", "押金收退情况", "返佣", "返佣收退情况" };
+        String[] titles = { "团号", "单号", "线路名称", "出发日期", "结束日期", "操作员", "签证员", "销售", "客户", "报名人数",
+                "应收账款", "已收账款", "未收账款", "毛利合计", "应付账款", "已付账款", "未付账款", "押金", "押金收退情况", "返佣",
+                "返佣收退情况" };
         HSSFWorkbook wb = new HSSFWorkbook();
         Sheet s = wb.createSheet();
         // header row
@@ -672,45 +674,49 @@ public class LineOrderController {
                 headerCell = row.createCell(1);
                 headerCell.setCellValue(p.getOrderSeq());
                 headerCell = row.createCell(2);
-                headerCell.setCellValue(p.getLineOperatorName());
+                headerCell.setCellValue(p.getLineProductName());
                 headerCell = row.createCell(3);
-                headerCell.setCellValue(p.getSignOperatorName());
+                headerCell.setCellValue(DateUtil.format(p.getStartDate(), DateUtil.FORMAT_DATE));
                 headerCell = row.createCell(4);
-                headerCell.setCellValue(p.getSalesmanName());
+                headerCell.setCellValue(DateUtil.format(p.getEndDate(), DateUtil.FORMAT_DATE));
                 headerCell = row.createCell(5);
-                headerCell.setCellValue(p.getCustomerName());
+                headerCell.setCellValue(p.getLineOperatorName());
                 headerCell = row.createCell(6);
-                headerCell.setCellValue(p.getNameListSize());
+                headerCell.setCellValue(p.getSignOperatorName());
                 headerCell = row.createCell(7);
-                headerCell.setCellValue(p.getPriceSum() == null ? "0" : p.getPriceSum().toString());
+                headerCell.setCellValue(p.getSalesmanName());
                 headerCell = row.createCell(8);
+                headerCell.setCellValue(p.getCustomerName());
+                headerCell = row.createCell(9);
+                headerCell.setCellValue(p.getNameListSize());
+                headerCell = row.createCell(10);
+                headerCell.setCellValue(p.getPriceSum() == null ? "0" : p.getPriceSum().toString());
+                headerCell = row.createCell(11);
                 headerCell.setCellValue(p.getAlreadyGot() == null ? "0" : p.getAlreadyGot()
                         .toString());
-                headerCell = row.createCell(9);
-                headerCell.setCellValue(p.getNeedGot() == null ? "0" : p.getNeedGot().toString());
-                headerCell = row.createCell(10);
-                headerCell.setCellValue("");
-                headerCell = row.createCell(11);
-                headerCell.setCellValue(p.getProfit() == null ? "0" : p.getProfit().toString());
                 headerCell = row.createCell(12);
+                headerCell.setCellValue(p.getNeedGot() == null ? "0" : p.getNeedGot().toString());
+                headerCell = row.createCell(13);
+                headerCell.setCellValue(p.getProfit() == null ? "0" : p.getProfit().toString());
+                headerCell = row.createCell(14);
                 headerCell.setCellValue(p.getPaidPriceSum() == null ? "0" : p.getPaidPriceSum()
                         .toString());
-                headerCell = row.createCell(13);
+                headerCell = row.createCell(15);
                 headerCell.setCellValue(p.getAlreadyPaidSum() == null ? "0" : p.getAlreadyPaidSum()
                         .toString());
-                headerCell = row.createCell(14);
+                headerCell = row.createCell(16);
                 headerCell.setCellValue(p.getNeedPaidSum() == null ? "0" : p.getNeedPaidSum()
                         .toString());
-                headerCell = row.createCell(15);
+                headerCell = row.createCell(17);
                 headerCell.setCellValue(p.getLineOrderDeposit() == null ? "0" : p
                         .getLineOrderDeposit().toString());
-                headerCell = row.createCell(16);
+                headerCell = row.createCell(18);
                 headerCell.setCellValue(VisaUtil.getLineOrderDepositStatusName(p
                         .getLineOrderDepositStatus()));
-                headerCell = row.createCell(17);
+                headerCell = row.createCell(19);
                 headerCell.setCellValue(p.getCommission() == null ? "0" : p.getCommission()
                         .toString());
-                headerCell = row.createCell(18);
+                headerCell = row.createCell(20);
                 headerCell.setCellValue(VisaUtil.getLineOrderDepositStatusName(p
                         .getCommissionStatus()));
             }

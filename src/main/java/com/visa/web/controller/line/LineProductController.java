@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.visa.common.constant.Constant;
+import com.visa.common.util.DateUtil;
 import com.visa.common.util.PagingUtil;
-import com.visa.common.util.StringUtil;
 import com.visa.dao.SeqDao;
 import com.visa.dao.line.AirlineDao;
 import com.visa.dao.line.LineCountryDao;
@@ -65,10 +65,24 @@ public class LineProductController {
 
         String seachProductName = product.getLineProductName();
         Integer lineCountryId = product.getLineCountryId();
+        String orderSeq = product.getOrderSeq();
+        String startDate = null;
+        String endDate = null;
+
+        if (product.getStartDate() != null) {
+            startDate = DateUtil.format(product.getStartDate(), DateUtil.FORMAT_DATE);
+        }
+        if (product.getEndDate() != null) {
+            endDate = DateUtil.format(product.getEndDate(), DateUtil.FORMAT_DATE);
+        }
+
         paraMap.put("operator", "like");
         paraMap.put("lineProductName", StringUtils.isEmpty(seachProductName) ? null : "%"
                 + seachProductName + "%");
         paraMap.put("lineCountryId", lineCountryId == 0 ? null : lineCountryId);
+        paraMap.put("orderSeq", StringUtils.isEmpty(orderSeq) ? null : "%" + orderSeq + "%");
+        paraMap.put("startDate", startDate);
+        paraMap.put("endDate", endDate);
 
         Integer recordCount = lineProductDao.selectAllCount(paraMap);
         int[] recordRange = PagingUtil.addPagingSupport(Constant.LINE_PAGE_COUNT, recordCount,
@@ -81,6 +95,7 @@ public class LineProductController {
         model.put("productList", productList);
         List<Country> countryList = lineCountryDao.selectAllCountry();
         model.put("countryList", countryList);
+        model.put("product", product);
     }
 
     /**
@@ -115,9 +130,9 @@ public class LineProductController {
         if (seatNum - count >= 0) {
             product.setLeftSeatNum(seatNum - count);
         }
-        int orderSeq = seqDao.select("lineProduct");
-        String prefix = StringUtil.paddingZeroToLeft(String.valueOf(orderSeq), 6);
-        product.setOrderSeq(prefix);
+        // int orderSeq = seqDao.select("lineProduct");
+        // String prefix = StringUtil.paddingZeroToLeft(String.valueOf(orderSeq), 6);
+        // product.setOrderSeq(prefix);
         lineProductDao.insert(product);
 
         for (LinesSrvice srvice : product.getLineOrderService()) {

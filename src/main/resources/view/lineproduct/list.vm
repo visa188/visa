@@ -10,7 +10,10 @@
 			<form id="form1" name="form1" action="/lineproduct/list.do" method="post" class="form_horizontal">
         		<input type="hidden" id="page" name="page" value="1">
     			<div class="searchbox">
-        			<label for="s_client">产品名称：<input value="$!{product.lineProductName}" id="lineProductName" name="lineProductName" type="text" class="s_client searchtx" placeholder="产品名称"></label>			
+    				<label for="s_ordertime">开始时间：<input id="startDate" name="startDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="开始时间" value="$fn.format($!{product.startDate},'yyyy-MM-dd')"></label>
+    				<label for="s_ordertime">结束时间：<input id="endDate" name="endDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="结束时间" value="$fn.format($!{product.endDate},'yyyy-MM-dd')"></label>
+        			<label for="s_client">产品名称：<input value="$!{product.lineProductName}" id="lineProductName" name="lineProductName" type="text" class="s_client searchtx" placeholder="产品名称"></label>	
+        			<label for="s_client">团队编号：<input value="$!{product.orderSeq}" id="orderSeq" name="orderSeq" type="text" class="s_client searchtx" placeholder="团队编号"></label>		
                     <label for="s_guest">所属国家：
                         <select name="lineCountryId" id="lineCountryId" class="text" onchange="conditionSearch(1)">
                             <option value="0">全部国家</option>
@@ -27,6 +30,7 @@
 				<table cellpadding="0" cellspacing="0" width="100%" class="table_data tcenter">
 	                <thead>
 	                    <tr>
+	                    	<th width="">团队编号</th>
 	                        <th width="">产品名称</th>
 	                        <th width="">航空公司</th>
 	                        <th width="">所属线路国家</th>
@@ -45,18 +49,19 @@
 	                <tbody>
                         #foreach($one in $productList)
 	                    <tr>
-	                        <td>$one.lineProductName</td>
-							<td>$one.airLineName</td>
-	                        <td>$one.lineCountryName</td>
-                            <td>$fn.format($!{one.depositLimitDate},"yyyy-MM-dd")</td>
-                            <td>$fn.format($!{one.printTicketLimitDate},"yyyy-MM-dd")</td>
+	                    	<td>$!one.orderSeq</td>
+	                        <td>$!one.lineProductName</td>
+							<td>$!one.airLineName</td>
+	                        <td>$!one.lineCountryName</td>
+                            <td>$!fn.format($!{one.depositLimitDate},"yyyy-MM-dd")</td>
+                            <td>$!fn.format($!{one.printTicketLimitDate},"yyyy-MM-dd")</td>
                             <td>$!{one.seatNum}</td>
                             <td>$!{one.leftSeatNum}</td>
                             <td>$!{one.price}</td>
-							<td><a class="ico_edit_g" href="/lineOrder/add.do?lineproductId=${one.lineProductId}&type=2"></a></td>
+							<td><a class="ico_edit_g" href="/lineOrder/add.do?lineproductId=$!{one.lineProductId}&type=2"></a></td>
 							#if(${fn.isLineAdminRole($userLineRoleId)}||${fn.isLineOperatorRole($userLineRoleId)})
-	                        <td><a class="ico_edit_g" href="edit.do?productId=${one.lineProductId}&page=$page"></a></td>
-	                        <td><a class="ico_delete_r" onclick="return confirm('是否将此产品删除?')" href="delete.do?productId=${one.lineProductId}&page=$page"></a></td>
+	                        <td><a class="ico_edit_g" href="edit.do?productId=$!{one.lineProductId}&page=$!page"></a></td>
+	                        <td><a class="ico_delete_r" onclick="return confirm('是否将此产品删除?')" href="delete.do?productId=$!{one.lineProductId}&page=$!page"></a></td>
 							#end
 						</tr>
                         #end	 

@@ -66,7 +66,7 @@
 	                        #if($!{one.enable}==1)
 	                        <td>#if($!{one.userId}!='admin')<a class="ico_delete_r" onclick="return confirm('是否将此用户删除?')" href="delete.do?userId=${one.userId}&page=$page"></a>#else &nbsp; #end</td>
 	                        #else
-	                        <td><a href="active.do?userId=${one.userId}&page=$page">激活用户</a></td>
+	                        ##<td><a href="active.do?userId=${one.userId}&page=$page">激活用户</a></td>
 	                        #end
 	                    </tr>
                         #end	 

@@ -49,7 +49,7 @@
             <ul>
 				#if(${fn.isAdminRoleId($userRoleId)})
                 <li class="pro_mng#if($topNav==1) open#end">
-                    <a class="pro_mng_tab" href="/product/list.do"><span class="ico_pro"></span><span class="sidenav_text">产品管理</span><span class="ico_fold"></span></a>
+                    <a class="pro_mng_tab" href="/product/list.do"><span class="ico_pro"></span><span class="sidenav_text">签证产品管理</span><span class="ico_fold"></span></a>
                     <dl>
                         <dd#if($secNav==11) class="on"#end><a href="/product/list.do">产品信息管理</a></dd>
                         <dd#if($secNav==12) class="on"#end><a href="/product/add.do">新增产品信息</a></dd>
@@ -60,12 +60,12 @@
 				<li class="client_mng#if($topNav==7) open#end">
                     <a class="client_mng_tab" href="/linecountry/list.do"><span class="ico_setting"></span><span class="sidenav_text">线路国家管理</span><span class="ico_fold"></span></a>
                     <dl>
-                        <dd#if($secNav==71) class="on"#end><a href="/linecountry/list.do">国家信息管理</a></dd>
-                        <dd#if($secNav==72) class="on"#end><a href="/linecountry/add.do">新增国家信息</a></dd>
+                        <dd#if($secNav==71) class="on"#end><a href="/linecountry/list.do">线路国家信息管理</a></dd>
+                        <dd#if($secNav==72) class="on"#end><a href="/linecountry/add.do">新增线路国家信息</a></dd>
                     </dl>                   
                 </li>
                 <li class="client_mng#if($topNav==8) open#end">
-                    <a class="client_mng_tab" href="/airline/list.do"><span class="ico_setting"></span><span class="sidenav_text">航空公司管理</span><span class="ico_fold"></span></a>
+                    <a class="client_mng_tab" href="/airline/list.do"><span class="ico_setting"></span><span class="sidenav_text">线路航空公司管理</span><span class="ico_fold"></span></a>
                     <dl>
                         <dd#if($secNav==81) class="on"#end><a href="/airline/list.do">航空公司管理</a></dd>
                         <dd#if($secNav==82) class="on"#end><a href="/airline/add.do">新增航空公司信息</a></dd>
@@ -75,9 +75,9 @@
 				<li class="pro_mng#if($topNav==11) open#end">
                     <a class="pro_mng_tab" href="/lineproduct/list.do"><span class="ico_pro"></span><span class="sidenav_text">线路产品管理</span><span class="ico_fold"></span></a>
                     <dl>
-                        <dd#if($secNav==111) class="on"#end><a href="/lineproduct/list.do">线路产品信息管理</a></dd>
+                        <dd#if($secNav==111) class="on"#end><a href="/lineproduct/list.do">产品信息管理</a></dd>
 						#if(${fn.isLineAdminRole($userLineRoleId)}||${fn.isLineOperatorRole($userLineRoleId)})
-							<dd#if($secNav==112) class="on"#end><a href="/lineproduct/add.do">新增线路产品信息</a></dd>
+							<dd#if($secNav==112) class="on"#end><a href="/lineproduct/add.do">新增产品信息</a></dd>
 						#end
                     </dl>
                 </li>
@@ -92,7 +92,7 @@
 				#end
 				#if($userRoleId&&$userRoleId<6)
                 <li class="order_mng#if($topNav==3) open#end">
-                    <a class="order_mng_tab" href="/orders/list.do?page=1"><span class="ico_order"></span><span class="sidenav_text">订单管理</span><span class="ico_fold"></span></a>
+                    <a class="order_mng_tab" href="/orders/list.do?page=1"><span class="ico_order"></span><span class="sidenav_text">签证订单管理</span><span class="ico_fold"></span></a>
                     <dl>
                         <dd#if($secNav==31) class="on"#end><a href="/orders/list.do?page=1">订单信息管理</a></dd>
 						#if($userRoleId==${fn.getSalesmanRoleId()})
@@ -108,13 +108,13 @@
 				#end
 				#if($userLineRoleId==0||$userLineRoleId>=6)
 				<li class="order_mng#if($topNav==10) open#end">
-                    <a class="order_mng_tab" href="/lineOrder/list.do?page=1&type=1"><span class="ico_order"></span><span class="sidenav_text">路线订单管理</span><span class="ico_fold"></span></a>
+                    <a class="order_mng_tab" href="/lineOrder/list.do?page=1&type=1"><span class="ico_order"></span><span class="sidenav_text">线路订单管理</span><span class="ico_fold"></span></a>
                     <dl>
-                        <dd#if($secNav==101) class="on"#end><a href="/lineOrder/list.do?page=1&type=1">单团路线订单信息管理</a></dd>
-                        <dd#if($secNav==105) class="on"#end><a href="/lineOrder/list.do?page=1&type=2">散拼路线订单信息管理</a></dd>
+                        <dd#if($secNav==101) class="on"#end><a href="/lineOrder/list.do?page=1&type=1">单团订单信息管理</a></dd>
+                        <dd#if($secNav==105) class="on"#end><a href="/lineOrder/list.do?page=1&type=2">散拼订单信息管理</a></dd>
 						#if(${fn.isLineAdminRole($userLineRoleId)})
-							<dd#if($secNav==103) class="on"#end><a href="/lineOrder/export.do">导出路线订单信息</a></dd>
-							<dd#if($secNav==104) class="on"#end><a href="/operatelog/list.do?page=1">路线订单操作日志</a></dd>
+							<dd#if($secNav==103) class="on"#end><a href="/lineOrder/export.do">导出订单信息</a></dd>
+							<dd#if($secNav==104) class="on"#end><a href="/operatelog/list.do?page=1">订单操作日志</a></dd>
 						#end
                     </dl>
                 </li>
@@ -129,7 +129,7 @@
                     </li>
                     
     				<li class="client_mng#if($topNav==6) open#end">
-                        <a class="client_mng_tab" href="/area/list.do"><span class="ico_setting"></span><span class="sidenav_text">领区管理</span><span class="ico_fold"></span></a>
+                        <a class="client_mng_tab" href="/area/list.do"><span class="ico_setting"></span><span class="sidenav_text">签证领区管理</span><span class="ico_fold"></span></a>
                         <dl>
                             <dd#if($secNav==61) class="on"#end><a href="/area/list.do">领区信息管理</a></dd>
                             <dd#if($secNav==62) class="on"#end><a href="/area/add.do">新增领区信息</a></dd>

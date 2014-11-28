@@ -18,7 +18,16 @@
 		from lineproduct
 		where 1=1
 		<if test="lineProductName != null">and lineproduct.lineProductName ${operator} #{lineProductName,jdbcType=VARCHAR}</if>
+		<if test="orderSeq != null">and lineproduct.orderSeq ${operator} #{orderSeq,jdbcType=VARCHAR}</if>
 		<if test="lineCountryId != null">and lineproduct.lineCountryId=#{lineCountryId,jdbcType=VARCHAR}</if>
+		<if test="startDate != null">
+		  	and date_format(lineproduct.startDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
+		  </if>
+		  <if test="endDate != null">
+		  	<![CDATA[
+			and date_format(lineproduct.startDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
+			]]>
+		  </if>
 	</select>
 	
 	<select id="selectByPage" parameterType="java.util.Map" resultType="LineProductVo">
@@ -26,7 +35,16 @@
 		from lineproduct,airline,linecountry
 		where lineproduct.aircorpId=airline.airlineId and lineproduct.lineCountryId=linecountry.countryId
 		<if test="lineProductName != null">and lineproduct.lineProductName ${operator} #{lineProductName,jdbcType=VARCHAR}</if>
+		<if test="orderSeq != null">and lineproduct.orderSeq ${operator} #{orderSeq,jdbcType=VARCHAR}</if>
 		<if test="lineCountryId != null">and lineproduct.lineCountryId=#{lineCountryId,jdbcType=VARCHAR}</if>
+		<if test="startDate != null">
+		  	and date_format(lineproduct.startDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
+		  </if>
+		  <if test="endDate != null">
+		  	<![CDATA[
+			and date_format(lineproduct.startDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
+			]]>
+		  </if>
 		limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
 	</select>
   
@@ -63,6 +81,7 @@
     travelInfoFileUrl = #{travelInfoFileUrl,jdbcType=VARCHAR},
     jpdj = #{jpdj,jdbcType=VARCHAR},
     jpdjType = #{jpdjType,jdbcType=VARCHAR},
+    orderSeq = #{orderSeq,jdbcType=VARCHAR},
     des = #{des,jdbcType=DECIMAL}
     where lineProductId = #{lineProductId,jdbcType=INTEGER}
   </update>

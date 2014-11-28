@@ -87,6 +87,12 @@
                             <span class="form_item"><input value="$!{product.lineProductName}" type="text" class="text1 js_non_empty" name="lineProductName" placeholder="产品名称" maxlength="50" size="50"/></span>
 		              	</div>		        			
 		        	</div>
+		        	<div class="control_group">
+	        			<label class="control_label"><span class="ico_must">*</span>团队编号:</label>
+						<div class="controls">
+                            <span class="form_item"><input value="$!{product.orderSeq}" type="text" class="text1 js_non_empty" name="orderSeq" placeholder="团队编号" maxlength="50" size="50"/></span>
+		              	</div>		        			
+		        	</div>
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>航空公司:</label>
                         <div class="controls">

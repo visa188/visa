@@ -22,6 +22,15 @@
    					
    				</label>
 				#if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
+					<label for="s_client">所属部门：
+    					<select name="deptId" id="deptId" class="text" onchange="conditionSearch(1)">
+    						<option value="" selected="selected">全部</option>
+    						#foreach($one in $deptList)
+    							<option value="$one.name"$fn.selected(${searchBean.deptId}, $one.name)>$one.name</option>
+                            #end
+    					</select>
+    				</label>
+				
     				<label for="s_client">所属销售：
     					<select name="salesman" id="salesman" class="text" onchange="conditionSearch(1)">
     						<option value="" selected="selected">全部</option>
@@ -30,14 +39,7 @@
                             #end
     					</select>
     				</label>
-    				<label for="s_client">所属部门：
-    					<select name="deptId" id="deptId" class="text" onchange="conditionSearch(1)">
-    						<option value="" selected="selected">全部</option>
-    						#foreach($one in $deptList)
-    							<option value="$one.name"$fn.selected(${searchBean.deptId}, $one.name)>$one.name</option>
-                            #end
-    					</select>
-    				</label>
+    				
 					<label for="s_client">所属操作员：
     					<select name="operator" id="operator" class="text" onchange="conditionSearch(1)">
     						<option value="" selected="selected">全部</option>

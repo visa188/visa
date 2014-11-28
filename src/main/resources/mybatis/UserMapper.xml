@@ -7,6 +7,7 @@
     where 1=1 
     <if test="userName != null">and userName like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')</if>
     <if test="roleId != null and roleId != 0">and roleId = #{roleId,jdbcType=INTEGER}</if>
+    and  enable=1
     order by postDt desc 
   </select>
   
@@ -17,6 +18,7 @@
     where 1=1
     <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
+    and  u1.enable=1
     order by  enable desc,postDt desc 
     limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
   </select>
@@ -27,6 +29,7 @@
     <if test="userName != null">and userName like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')</if>
     <if test="roleId != null and roleId != 0">and roleId = #{roleId,jdbcType=INTEGER}</if>
     <if test="lineRoleId != null and lineRoleId != 0">and lineRoleId = #{lineRoleId,jdbcType=INTEGER}</if>
+    and  enable=1
     order by postDt desc 
   </select>
   
@@ -38,6 +41,7 @@
     <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
     <if test="user.lineRoleId != null and user.lineRoleId != 0">and u1.lineRoleId = #{user.lineRoleId,jdbcType=INTEGER}</if>
+    and  u1.enable=1
     order by  enable desc,postDt desc 
     limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
   </select>
@@ -48,6 +52,7 @@
     <if test="userName != null">and userName like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')</if>
     <if test="roleId != null and roleId != 0">and roleId = #{roleId,jdbcType=INTEGER}</if>
      <if test="lineRoleId != null and lineRoleId != 0">and lineRoleId = #{lineRoleId,jdbcType=INTEGER}</if>
+     and  enable=1
     order by postDt desc 
   </select>
   
@@ -59,6 +64,7 @@
     <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
      <if test="user.lineRoleId != null and user.lineRoleId != 0">and u1.lineRoleId = #{user.lineRoleId,jdbcType=INTEGER}</if>
+     and  u1.enable=1
     order by  enable desc,postDt desc 
     limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
   </select>
@@ -66,9 +72,9 @@
   <select id="selectByRoleId" resultType="User">
     select *  
     FROM user 
-    where roleId = #{roleId,jdbcType=INTEGER}  or lineRoleId = #{lineRoleId,jdbcType=INTEGER} 
+    where (roleId = #{roleId,jdbcType=INTEGER}  or lineRoleId = #{lineRoleId,jdbcType=INTEGER}) and enable = 1
     order by userName
-    and enable = 1
+    
   </select>
   
   <select id="selectByLineCountryId" resultType="User">
