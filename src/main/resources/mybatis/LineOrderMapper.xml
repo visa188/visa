@@ -10,7 +10,7 @@
 		    where lineorder.lineCountryId = linecountry.countryId  
 		     	and lineorder.customerId = customer.customerId  
 		     	<if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
-		    	and lineorder.orderDate like #{date,jdbcType=VARCHAR}
+		    	and lineorder.startDate like #{date,jdbcType=VARCHAR}
 		    	<if test="salesmanId != null">and lineorder.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
     	) tmp1 left OUTER join lineproduct on( tmp1.lineProductId = lineproduct.lineProductId)
   </select>
@@ -69,11 +69,11 @@
 		  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
 			
 		<if test="startDate != null">
-		  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
+		  	and date_format(lineorder.startDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
 		  </if>
 		  <if test="endDate != null">
 		  	<![CDATA[
-			and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
+			and date_format(lineorder.startDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
 			]]>
 		  </if>
 		  <if test="serviceOperatorId != null">
@@ -85,11 +85,11 @@
 			    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 				<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 				<if test="startDate != null">
-				  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
+				  	and date_format(lineorder.startDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
 				  </if>
 				  <if test="endDate != null">
 				  	<![CDATA[
-					and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
+					and date_format(lineorder.startDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
 					]]>
 				  </if>
 		   </if>
@@ -134,11 +134,11 @@
 				and nameListState != 2
 			</if>
 			<if test="startDate != null">
-			  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
+			  	and date_format(lineorder.startDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
 			  </if>
 			  <if test="endDate != null">
 			  	<![CDATA[
-				and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
+				and date_format(lineorder.startDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
 				]]>
 			  </if>
 			  <if test="serviceOperatorId != null">
@@ -150,11 +150,11 @@
 				    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 					<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 					<if test="startDate != null">
-					  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
+					  	and date_format(lineorder.startDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
 					  </if>
 					  <if test="endDate != null">
 					  	<![CDATA[
-						and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
+						and date_format(lineorder.startDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
 						]]>
 					  </if>
 			   </if>
@@ -291,11 +291,11 @@
 				and nameListState != 2
 			</if>
 		<if test="startDate != null">
-		  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
+		  	and date_format(lineorder.startDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
 		  </if>
 		  <if test="endDate != null">
 		  	<![CDATA[
-			and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
+			and date_format(lineorder.startDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
 			]]>
 		  </if>
 		  <if test="serviceOperatorId != null">
@@ -307,11 +307,11 @@
 			    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
 				<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 				<if test="startDate != null">
-				  	and date_format(lineorder.orderDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
+				  	and date_format(lineorder.startDate ,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
 				  </if>
 				  <if test="endDate != null">
 				  	<![CDATA[
-					and date_format(lineorder.orderDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
+					and date_format(lineorder.startDate ,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}
 					]]>
 				  </if>
 		   </if>

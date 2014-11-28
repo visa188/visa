@@ -40,6 +40,7 @@ import com.visa.common.util.PagingUtil;
 import com.visa.common.util.StringUtil;
 import com.visa.common.util.VisaUtil;
 import com.visa.dao.CustomerDao;
+import com.visa.dao.DepartmentDao;
 import com.visa.dao.SeqDao;
 import com.visa.dao.UserDao;
 import com.visa.dao.line.AirlineDao;
@@ -58,6 +59,7 @@ import com.visa.po.line.LineOrder;
 import com.visa.po.line.LineProduct;
 import com.visa.po.line.LinesSrvice;
 import com.visa.po.line.OperateLog;
+import com.visa.vo.Department;
 import com.visa.vo.line.LineOrderSearchBean;
 import com.visa.vo.line.LineOrderVo;
 
@@ -90,6 +92,8 @@ public class LineOrderController {
     private AirlineDao airlineDao;
     @Resource
     private CustomerDao customerDao;
+    @Resource
+    private DepartmentDao deptDao;
 
     /**
      * 列出所有的订单
@@ -210,6 +214,23 @@ public class LineOrderController {
                 }
             }
             model.addAttribute("sumPrice", sumPrice);
+            List<User> salesmanList = userDao.selectByRoleId(LineRoleEnumType.SALESMAN.getId());
+            List<User> tempSalesmanList = null;
+            if (!StringUtils.isEmpty(deptId)) {
+                tempSalesmanList = new ArrayList<User>();
+                for (User man : salesmanList) {
+                    if (deptId.equals(man.getDeptId())) {
+                        tempSalesmanList.add(man);
+                    }
+                }
+            } else {
+                tempSalesmanList = salesmanList;
+            }
+            model.put("salesmanList", tempSalesmanList);
+            List<User> operatorList = userDao.selectByRoleId(LineRoleEnumType.OPERATOR.getId());
+            model.put("operatorList", operatorList);
+            List<Department> deptList = deptDao.selectAll();
+            model.put("deptList", deptList);
         } else {
             Map<String, Object> paraMap = new HashMap<String, Object>();
             paraMap.put("type", type);

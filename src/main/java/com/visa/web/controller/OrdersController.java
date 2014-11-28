@@ -172,13 +172,16 @@ public class OrdersController {
 
         model.addAttribute("orderList", orderList);
         List<User> salesmanList = userDao.selectByRoleId(RoleEnumType.SALESMAN.getId());
-        List<User> tempSalesmanList = new ArrayList<User>();
+        List<User> tempSalesmanList = null;
         if (!StringUtils.isEmpty(deptId)) {
+            tempSalesmanList = new ArrayList<User>();
             for (User man : salesmanList) {
                 if (deptId.equals(man.getDeptId())) {
                     tempSalesmanList.add(man);
                 }
             }
+        } else {
+            tempSalesmanList = salesmanList;
         }
         model.put("salesmanList", tempSalesmanList);
         List<User> operatorList = userDao.selectByRoleId(RoleEnumType.OPERATOR.getId());
