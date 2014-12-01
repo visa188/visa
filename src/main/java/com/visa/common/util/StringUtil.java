@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -37,8 +38,11 @@ public class StringUtil {
         return result.toString();
     }
 
-    public static String generateUpdateOperLog(LineOrderVo lineOrder, LineOrder lineOrderDB,
-            Map<Integer, LinesSrvice> serviceListDB, Map<Integer, LineNameList> nameListDB) {
+    public static Map<String, Object> generateUpdateOperLog(LineOrderVo lineOrder,
+            LineOrder lineOrderDB, Map<Integer, LinesSrvice> serviceListDB,
+            Map<Integer, LineNameList> nameListDB) {
+        Map<String, Object> temp = new HashMap<String, Object>();
+
         StringBuffer result = new StringBuffer();
         StringBuffer result1 = new StringBuffer();
         try {
@@ -103,7 +107,10 @@ public class StringUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return result1.toString();
+
+        temp.put("log", result1.toString());
+        temp.put("delService", serviceListDB);
+        return temp;
     }
 
     public static String generateDeleteOperLog(LineOrder lineOrder) {

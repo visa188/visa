@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -421,6 +422,7 @@ public class LineOrderController {
      * @param page page
      * @return String
      */
+    @SuppressWarnings("unchecked")
     @RequestMapping
     public String update(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrderVo,
             Integer currentPage) {
@@ -579,8 +581,9 @@ public class LineOrderController {
         }
 
         // 记录操作日志
-        String log = StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder, serviceListDB,
-                nameListDB);
+        Map<String, Object> temp = StringUtil.generateUpdateOperLog(lineOrderVo, lineOrder,
+                serviceListDB, nameListDB);
+        String log = (String) temp.get("log");
         if (!StringUtils.isEmpty(log)) {
             OperateLog operateLog = new OperateLog();
             operateLog.setUserId(user.getUserId());
@@ -590,6 +593,17 @@ public class LineOrderController {
             operateLog.setOrderSeq(lineOrder.getOrderSeq());
             operateLogDao.insert(operateLog);
         }
+
+        serviceListDB = (Map<Integer, LinesSrvice>) temp.get("delService");
+        if (serviceListDB != null) {
+            for (Entry<Integer, LinesSrvice> entry : serviceListDB.entrySet()) {
+                if (entry.getValue().getServiceType() != LineSrviceEnumType.BX.getId()) {
+                    linesServiceDao.deleteByPrimaryKey("linessrvice", entry.getValue()
+                            .getServiceId());
+                }
+            }
+        }
+
         return "redirect:list.do?page=" + currentPage + "&type=" + lineOrderVo.getType();
     }
 

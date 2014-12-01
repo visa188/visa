@@ -72,7 +72,7 @@
 						jQuery('#result').html("<a href='/file/download.do?myfile="+result.travelInfoFileUrl+"'>"+fileName+"</a>");
 					}
 					jQuery("#travelInfo").val(result.travelInfo);
-					jQuery("#serviceContainer").replaceWith(service);
+					jQuery("#serviceContainer").html(service);
 					//getOperators();
 				}
     	   }
@@ -385,6 +385,11 @@
 							var nameListSize = jQuery('#nameListSize').val()==''?0:jQuery('#nameListSize').val();
 							var priceSum = Math.round(parseFloat(price*100*nameListSize+qtys*100))/100;
 							jQuery('#priceSum').val(priceSum);
+						}
+						
+						var type = '$!{type}';
+						if(type=='2'){
+							getProductId();
 						}
                     </script>
 	            </div>			      
