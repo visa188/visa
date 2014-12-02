@@ -217,6 +217,27 @@
                     <h3>订单基本信息</h3>
                 </div>
                 <div class="widget_content">
+                	<div class="control_group">
+	        			<label class="control_label"><span class="ico_must">*</span>客户:</label>
+						<div class="controls">
+							<span class="form_item">
+								<input name="customerShowName" id="customerShowName" type="text" class="text1 js_non_empty" placeholder="客户" value="$!{customer.customerName}" onkeydown="searchCustomer()" disabled>
+							</span>
+		              	</div>
+						<label class="control_label"><span class="ico_must"></span>客户搜素框:</label>
+						<div class="controls">
+							<label class="dropcontrol">
+    							<span class="form_item dd">
+									<input name="tempCustomerName" id="tempCustomerName" type="text" class="text1" placeholder="客户" value="" onkeyup="searchCustomer()">
+        							<div id="dropbox" class="dropbox" style="display:none">
+            							<ul id="searchResult">
+            							</ul>
+        							</div>
+    							</span>
+							</label>
+		              	</div>	        			
+		        	</div>
+		        	
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>订单类型:</label>
                         <div class="controls">
@@ -320,27 +341,6 @@
                       </div>
                     </div>  
 					
-					<div class="control_group">
-	        			<label class="control_label"><span class="ico_must">*</span>客户:</label>
-						<div class="controls">
-							<span class="form_item">
-								<input name="customerShowName" id="customerShowName" type="text" class="text1 js_non_empty" placeholder="客户" value="$!{customer.customerName}" onkeydown="searchCustomer()" disabled>
-							</span>
-		              	</div>
-						<label class="control_label"><span class="ico_must"></span>客户搜素框:</label>
-						<div class="controls">
-							<label class="dropcontrol">
-    							<span class="form_item dd">
-									<input name="tempCustomerName" id="tempCustomerName" type="text" class="text1" placeholder="客户" value="" onkeyup="searchCustomer()">
-        							<div id="dropbox" class="dropbox" style="display:none">
-            							<ul id="searchResult">
-            							</ul>
-        							</div>
-    							</span>
-							</label>
-		              	</div>	        			
-		        	</div>
-                    
 					#if(${lineOrder.type}==2)
 						<div class="control_group">
 	                      <label class="control_label"><span class="ico_must">*</span>占位类型:</label>
