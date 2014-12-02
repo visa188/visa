@@ -264,8 +264,6 @@ public class LineProductController {
             try {
                 String service = commonService.renderVelocity("/view/lineOrder/servic.vm",
                         parameterMap);
-                System.out.println(service);
-                // parameterMap.clear();
                 parameterMap.put("product", product);
                 parameterMap.put("service", service);
                 return parameterMap;

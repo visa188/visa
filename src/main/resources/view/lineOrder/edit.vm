@@ -65,6 +65,9 @@
                     jQuery("#endDate").val(endDate.getFullYear()+'-'+(endDate.getMonth()+1)+'-'+endDate.getDate());
                     jQuery("#seatNum").val(result.seatNum);
                     jQuery("#leftSeatNum").val(result.leftSeatNum);
+                    jQuery("#jpdj").val(result.jpdj);
+					jQuery("#jpdjType").find("option[value='"+result.jpdjType+"']").attr("selected",true);
+					
 					if(result.travelInfoFileUrl!=''){
 						jQuery("#travelInfoFileUrl").val(result.travelInfoFileUrl);
 						var fileName = result.travelInfoFileUrl.substring(result.travelInfoFileUrl.lastIndexOf('/')+1);
