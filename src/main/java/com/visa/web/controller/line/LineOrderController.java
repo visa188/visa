@@ -129,14 +129,14 @@ public class LineOrderController {
             String deptId = bean.getDeptId();
 
             if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate)) {
-                // 如果未选择起止日期，默认为本月一号到当日
+                // 如果未选择起止日期，默认为当日到本月30日
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                endDate = sdf.format(c.getTime());
-                bean.setEndDate(endDate);
-                c.set(Calendar.DAY_OF_MONTH, 1);
                 startDate = sdf.format(c.getTime());
                 bean.setStartDate(startDate);
+                c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+                endDate = sdf.format(c.getTime());
+                bean.setEndDate(endDate);
             }
 
             if (alarmOrders != null && alarmOrders == 1) {
