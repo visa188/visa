@@ -37,11 +37,10 @@
 	<select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
       	select count(*) from 
 		(select lineorder.*,linecountry.countryName lineCountryName,customer.customerName
-		    from lineorder,linecountry,customer,user user1,linenamelist
+		    from lineorder,linecountry,customer,user user1
 		    where lineorder.lineCountryId = linecountry.countryId  
 		    and lineorder.customerId = customer.customerId  
 		    and user1.userId=lineorder.salesmanId 
-		    and linenamelist.lineOrderId=lineorder.orderId 
 		<if test="userRoleId != 7 and userRoleId != 71  and userRoleId != 6"><![CDATA[ and lineorder.status>0 ]]></if>
 		<if test="userRoleId == 10 or userRoleId == 101"><![CDATA[ and lineorder.status=1 ]]></if>
 		<if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
@@ -60,7 +59,6 @@
 		  <if test="countryName != null">and linecountry.countryName ${operator} #{countryName,jdbcType=VARCHAR}</if>
 		  <if test="customerName != null">and customer.customerName ${operator} #{customerName,jdbcType=VARCHAR}</if>
 		  <if test="companyName != null">and customer.company ${operator} #{companyName,jdbcType=VARCHAR}</if>
-		  <if test="nameList != null">and linenamelist.name ${operator} #{nameList,jdbcType=VARCHAR}</if>
 		  <if test="status != null">and lineorder.status = #{status,jdbcType=INTEGER}</if>
 		  <if test="yfhkStatus != null">and lineorder.yfhkStatus = #{yfhkStatus,jdbcType=INTEGER}</if>
 		  <if test="yshkStatus != null">and lineorder.yshkStatus = #{yshkStatus,jdbcType=INTEGER}</if>
@@ -102,11 +100,10 @@
        	lineproduct.leftSeatNum
 		from (
 			select lineorder.*,linecountry.countryName lineCountryName,customer.customerName
-		    from lineorder,linecountry,customer,user user1,linenamelist
+		    from lineorder,linecountry,customer,user user1
 		    where lineorder.lineCountryId = linecountry.countryId  
 		    	and lineorder.customerId = customer.customerId  
 		    	and user1.userId=lineorder.salesmanId 
-		    	and linenamelist.lineOrderId=lineorder.orderId 
 		    <if test="userRoleId != 7 and userRoleId != 71 and userRoleId != 6"><![CDATA[ and lineorder.status>0 ]]></if>
 		    <if test="userRoleId == 10 or userRoleId == 101"><![CDATA[ and lineorder.status=1 ]]></if>
 		    <if test="type != null">and lineorder.type=#{type,jdbcType=INTEGER}</if>
@@ -120,7 +117,6 @@
 			<if test="countryName != null">and linecountry.countryName ${operator} #{countryName,jdbcType=VARCHAR}</if>
 		  <if test="customerName != null">and customer.customerName ${operator} #{customerName,jdbcType=VARCHAR}</if>
 		  <if test="companyName != null">and customer.company ${operator} #{companyName,jdbcType=VARCHAR}</if>
-		  <if test="nameList != null">and linenamelist.name ${operator} #{nameList,jdbcType=VARCHAR}</if>
 		  <if test="status != null">and lineorder.status = #{status,jdbcType=INTEGER}</if>
 		  <if test="yfhkStatus != null">and lineorder.yfhkStatus = #{yfhkStatus,jdbcType=INTEGER}</if>
 		  <if test="yshkStatus != null">and lineorder.yshkStatus = #{yshkStatus,jdbcType=INTEGER}</if>
