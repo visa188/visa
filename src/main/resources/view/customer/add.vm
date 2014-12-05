@@ -56,7 +56,7 @@ function  checkPhoneNo(){
                             <span class="form_item"><input value="$!{customer.address}" type="text" class="text1 js_non_empty" name="address" placeholder="地址" maxlength="200" size="200"/></span>
                         </div>                          
                     </div>
-                    #if(${session.getAttribute("session_user").roleId}==1)
+                    #if(${fn.isAdminRoleId($userRoleId)}||${fn.isLineAdminRole($userLineRoleId)})
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>所属销售:</label>
                         <div class="controls">

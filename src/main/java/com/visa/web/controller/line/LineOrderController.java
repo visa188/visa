@@ -134,6 +134,7 @@ public class LineOrderController {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 startDate = sdf.format(c.getTime());
                 bean.setStartDate(startDate);
+                c.add(Calendar.MONTH, 3);
                 c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
                 endDate = sdf.format(c.getTime());
                 bean.setEndDate(endDate);

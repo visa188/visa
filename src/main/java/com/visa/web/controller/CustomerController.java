@@ -79,7 +79,20 @@ public class CustomerController {
                     Constant.PAGE_COUNT, customer);
         }
         model.put("customerList", customerList);
-        List<User> salesmanList = userDao.selectByRoleId(RoleEnumType.SALESMAN.getId());
+
+        List<User> salesmanList = new ArrayList<User>();
+        if (sessionUser.getRoleId() != null
+                && (sessionUser.getRoleId() == RoleEnumType.ADMIN.getId() || sessionUser
+                        .getRoleId() == RoleEnumType.FINANCE.getId())) {
+            salesmanList.addAll(userDao.selectByRoleId(RoleEnumType.SALESMAN.getId()));
+        }
+
+        if (sessionUser.getLineRoleId() != null
+                && (sessionUser.getLineRoleId() == LineRoleEnumType.ADMIN.getId()
+                        || sessionUser.getLineRoleId() == LineRoleEnumType.ADMIN.getId() || sessionUser
+                        .getLineRoleId() == LineRoleEnumType.ADMIN.getId())) {
+            salesmanList.addAll(userDao.selectByRoleId(LineRoleEnumType.SALESMAN.getId()));
+        }
         model.put("salesmanList", salesmanList);
     }
 
@@ -91,15 +104,16 @@ public class CustomerController {
      */
     @RequestMapping
     public void add(@ModelAttribute(Constant.SESSION_USER) User sessionUser, ModelMap model) {
+        List<User> salesmanList = new ArrayList<User>();
         if (sessionUser.getRoleId() != null
                 && sessionUser.getRoleId() == RoleEnumType.ADMIN.getId()) {
-            List<User> salesmanList = userDao.selectByRoleId(RoleEnumType.SALESMAN.getId());
-            model.put("salesmanList", salesmanList);
-        } else if (sessionUser.getLineRoleId() != null
-                && sessionUser.getLineRoleId() == LineRoleEnumType.ADMIN.getId()) {
-            List<User> salesmanList = userDao.selectByRoleId(LineRoleEnumType.SALESMAN.getId());
-            model.put("salesmanList", salesmanList);
+            salesmanList.addAll(userDao.selectByRoleId(RoleEnumType.SALESMAN.getId()));
         }
+        if (sessionUser.getLineRoleId() != null
+                && sessionUser.getLineRoleId() == LineRoleEnumType.ADMIN.getId()) {
+            salesmanList.addAll(userDao.selectByRoleId(LineRoleEnumType.SALESMAN.getId()));
+        }
+        model.put("salesmanList", salesmanList);
         model.put("topNav", 2);
         model.put("secNav", 22);
         model.put("title", "新增客户信息");
@@ -134,17 +148,18 @@ public class CustomerController {
     @RequestMapping
     public String edit(@ModelAttribute(Constant.SESSION_USER) User sessionUser, Integer customerId,
             Integer page, ModelMap model) {
+        List<User> salesmanList = new ArrayList<User>();
         Customer customer = customerDao.selectByPrimaryKey(customerId);
         model.put("customer", customer);
         if (sessionUser.getRoleId() != null
                 && sessionUser.getRoleId() == RoleEnumType.ADMIN.getId()) {
-            List<User> salesmanList = userDao.selectByRoleId(RoleEnumType.SALESMAN.getId());
-            model.put("salesmanList", salesmanList);
-        } else if (sessionUser.getLineRoleId() != null
-                && sessionUser.getLineRoleId() == LineRoleEnumType.ADMIN.getId()) {
-            List<User> salesmanList = userDao.selectByRoleId(LineRoleEnumType.SALESMAN.getId());
-            model.put("salesmanList", salesmanList);
+            salesmanList.addAll(userDao.selectByRoleId(RoleEnumType.SALESMAN.getId()));
         }
+        if (sessionUser.getLineRoleId() != null
+                && sessionUser.getLineRoleId() == LineRoleEnumType.ADMIN.getId()) {
+            salesmanList.addAll(userDao.selectByRoleId(LineRoleEnumType.SALESMAN.getId()));
+        }
+        model.put("salesmanList", salesmanList);
         model.put("topNav", 2);
         model.put("secNav", 22);
         model.put("title", "修改客户信息");

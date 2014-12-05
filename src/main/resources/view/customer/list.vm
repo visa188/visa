@@ -8,7 +8,7 @@
             <div class="searchbox">
                 <form id="form1" name="form1" action="/customer/list.do" method="post">
                     <input type="hidden" id="page" name="page" value="1">
-					#if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
+					#if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()}||${fn.isLineAdminRole($userLineRoleId)}||$userLineRoleId == $fn.getLineFinanceRoleId() || $userLineRoleId == $fn.getLineFinanceManagerRoleId())
         				<label for="s_client">所属销售：
         					<select name="salesmanId" id="salesmanId" class="text" onchange="conditionSearch(1)">
         						<option value="" selected="selected">全部</option>
@@ -38,7 +38,7 @@
                             <th width="">备注</th>
 	                        <th width="">添加日期</th>
 	                        <th width="">修改</th>
-	                        #if(${fn.isAdminRoleId($userRoleId)})<th width="">删除</th>#end
+	                        #if(${fn.isAdminRoleId($userRoleId)}||${fn.isLineAdminRole($userLineRoleId)})<th width="">删除</th>#end
 	                    </tr>
 	                </thead>
 	                <tbody>
@@ -53,7 +53,7 @@
                             <td>$one.des</td>
 	                        <td>$fn.format($one.postDt,"yyyy-MM-dd")</td>
 	                        <td><a class="ico_edit_g" href="edit.do?customerId=${one.customerId}&page=$page"></a></td>
-	                        #if(${fn.isAdminRoleId($userRoleId)})<td><a class="ico_delete_r" onclick="return confirm('是否将此客户信息删除?')" href="delete.do?customerId=${one.customerId}&page=$page"></a></td>#end
+	                        #if(${fn.isAdminRoleId($userRoleId)}||${fn.isLineAdminRole($userLineRoleId)})<td><a class="ico_delete_r" onclick="return confirm('是否将此客户信息删除?')" href="delete.do?customerId=${one.customerId}&page=$page"></a></td>#end
 	                    </tr>
                         #end	 
 	                </tbody>
