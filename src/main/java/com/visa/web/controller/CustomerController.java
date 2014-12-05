@@ -62,8 +62,10 @@ public class CustomerController {
     public void list(@ModelAttribute(Constant.SESSION_USER) User sessionUser, Customer customer,
             Integer page, ModelMap model) {
         List<CustomerVo> customerList = new ArrayList<CustomerVo>();
-        if (sessionUser.getRoleId() == RoleEnumType.ADMIN.getId()
-                || sessionUser.getLineRoleId() == LineRoleEnumType.ADMIN.getId()) {
+        if ((sessionUser.getRoleId() != null && sessionUser.getRoleId() == RoleEnumType.ADMIN
+                .getId())
+                || (sessionUser.getLineRoleId() != null && sessionUser.getLineRoleId() == LineRoleEnumType.ADMIN
+                        .getId())) {
             Integer recordCount = customerDao.selectAllCount(customer);
             int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page,
                     Constant.PAGE_OFFSET, model);
