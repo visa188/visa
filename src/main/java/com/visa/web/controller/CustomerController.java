@@ -91,8 +91,13 @@ public class CustomerController {
      */
     @RequestMapping
     public void add(@ModelAttribute(Constant.SESSION_USER) User sessionUser, ModelMap model) {
-        if (sessionUser.getRoleId() == RoleEnumType.ADMIN.getId()) {
+        if (sessionUser.getRoleId() != null
+                && sessionUser.getRoleId() == RoleEnumType.ADMIN.getId()) {
             List<User> salesmanList = userDao.selectByRoleId(RoleEnumType.SALESMAN.getId());
+            model.put("salesmanList", salesmanList);
+        } else if (sessionUser.getLineRoleId() != null
+                && sessionUser.getLineRoleId() == LineRoleEnumType.ADMIN.getId()) {
+            List<User> salesmanList = userDao.selectByRoleId(LineRoleEnumType.SALESMAN.getId());
             model.put("salesmanList", salesmanList);
         }
         model.put("topNav", 2);
@@ -131,8 +136,13 @@ public class CustomerController {
             Integer page, ModelMap model) {
         Customer customer = customerDao.selectByPrimaryKey(customerId);
         model.put("customer", customer);
-        if (sessionUser.getRoleId() == RoleEnumType.ADMIN.getId()) {
+        if (sessionUser.getRoleId() != null
+                && sessionUser.getRoleId() == RoleEnumType.ADMIN.getId()) {
             List<User> salesmanList = userDao.selectByRoleId(RoleEnumType.SALESMAN.getId());
+            model.put("salesmanList", salesmanList);
+        } else if (sessionUser.getLineRoleId() != null
+                && sessionUser.getLineRoleId() == LineRoleEnumType.ADMIN.getId()) {
+            List<User> salesmanList = userDao.selectByRoleId(LineRoleEnumType.SALESMAN.getId());
             model.put("salesmanList", salesmanList);
         }
         model.put("topNav", 2);
@@ -207,9 +217,12 @@ public class CustomerController {
     public List<Customer> searchCustomer(@ModelAttribute(Constant.SESSION_USER) User user,
             String customerName) {
         String userId = user.getUserId();
-        if (user.getRoleId() == RoleEnumType.ADMIN.getId()) {
+        if ((user.getRoleId() != null && user.getRoleId() == RoleEnumType.ADMIN.getId())
+                || (user.getLineRoleId() != null && user.getLineRoleId() == LineRoleEnumType.ADMIN
+                        .getId())) {
             userId = null;
         }
+
         return customerDao.searchCustomer(customerName, userId);
     }
 
@@ -221,7 +234,10 @@ public class CustomerController {
     public void export(@ModelAttribute(Constant.SESSION_USER) User sessionUser, Customer customer,
             HttpServletResponse rsp) {
         List<CustomerVo> customerList = new ArrayList<CustomerVo>();
-        if (sessionUser.getRoleId() == RoleEnumType.ADMIN.getId()) {
+        if ((sessionUser.getRoleId() != null && sessionUser.getRoleId() == RoleEnumType.ADMIN
+                .getId())
+                || (sessionUser.getLineRoleId() != null && sessionUser.getLineRoleId() == LineRoleEnumType.ADMIN
+                        .getId())) {
             Integer recordCount = customerDao.selectAllCount(customer);
             customerList = customerDao.selectAll(0, recordCount, customer);
         } else {
