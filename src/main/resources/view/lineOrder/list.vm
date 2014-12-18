@@ -167,7 +167,7 @@
 						#foreach($order in $orderList)
     	                    <tr>
     	                    	#if(${type}=="2")
-    	                    	<td>$!{order.orderSeq}#if($!{fn.isLineSalesmanRole($userLineRoleId)}==0)  (未审批)  #else  (已审批)  #end</td>
+    	                    	<td>$!{order.orderSeq}#if($!{fn.isLineSalesmanRole($userLineRoleId)})  #if(${order.status}==0)  (未审批)  #else  (已审批)  #end   #end</td>
     	                    	<td>$!fn.format($!{order.orderDate},'yyyy-MM-dd')</td>
 								<td><a href="/lineOrder/list.do?lineProductOrderSeq=$!{order.lineProductOrderSeq}&type=2">$!{order.lineProductOrderSeq}</a></td>
 								<td>$!{order.lineProductName}</td>
