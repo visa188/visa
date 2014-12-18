@@ -129,6 +129,7 @@
 	                       	<th width="">下单日期</th>
 	                        <th width="">团队编号</th>
                             <th width="">线路名称</th>
+                            <th width="">出发日期</th>
                             <th width="">总位</th>
                             <th width="">余位</th>
                             <th width="">切位/占位/预报</th>
@@ -142,11 +143,11 @@
                             <th width="">订单号</th>
                             <th width="">下单日期</th>
                             <th width="">团队编号</th>
+                            <th width="">出发日期</th>
                             <th width="">销售</th>
                             <th width="">客户名</th>
                             <th width="">客户公司</th>
                             <th width="">人数</th>
-                            <th width="">下单日期</th>
                             <th width="">签证状态</th>
                             <th width="">机票状态</th>
                             <th width="">酒店状态</th>
@@ -171,6 +172,7 @@
     	                    	<td>$!fn.format($!{order.orderDate},'yyyy-MM-dd')</td>
 								<td><a href="/lineOrder/list.do?lineProductOrderSeq=$!{order.lineProductOrderSeq}&type=2">$!{order.lineProductOrderSeq}</a></td>
 								<td>$!{order.lineProductName}</td>
+								<td>$!fn.format($!{order.startDate},'yyyy-MM-dd')</td>
 								<td width="">${order.seatNum}</td>
 	                            <td width="">${order.leftSeatNum}</td>
 	                            <td width="">#if($order.nameListType == 1)切位#elseif($order.nameListType == 2)占位#else预报#end${order.nameListSize}</td>
@@ -184,11 +186,11 @@
 								<td>$!{order.orderSeq}#if($!{fn.isLineSalesmanRole($userLineRoleId)})  #if(${order.status}==0)  (未审批)  #else  (已审批)  #end   #end</td>
 								<td>$!fn.format($!{order.orderDate},'yyyy-MM-dd')</td>
 								<td>$!{order.procurementSeq}</td>
+								<td>$!fn.format($!{order.startDate},'yyyy-MM-dd')</td>
 								<td>$!{order.salesmanName}</td>
 								<td>$!{order.customerName}</td>
 								<td>$!{order.company}</td>
 								<td>$!{order.nameListSize}人</td>
-								<td>$!fn.format($!{order.postTime},'yyyy-MM-dd')</td>
 								<td width="">签证状态</td>
 		                        <td width="">机票状态</td>
 		                        <td width="">#if($order.jdstatus == 3)已落实#elseif($order.jdstatus == 2)操作中#else未操作#end</td>
