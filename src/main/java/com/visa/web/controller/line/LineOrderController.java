@@ -190,6 +190,18 @@ public class LineOrderController {
             paraMap.put("pageCount", Constant.LINE_PAGE_COUNT);
 
             List<LineOrder> orderList = lineOrderDao.selectByPage(paraMap);
+
+            for (LineOrder order : orderList) {
+                if (!StringUtils.isEmpty(order.getLineOperatorId())) {
+                    order.setLineOperatorName(userDao.selectByPrimaryKey(order.getLineOperatorId())
+                            .getUserName());
+                }
+                if (!StringUtils.isEmpty(order.getVisaOperatorId())) {
+                    order.setVisaOperatorName(userDao.selectByPrimaryKey(order.getVisaOperatorId())
+                            .getUserName());
+                }
+            }
+
             model.addAttribute("orderList", orderList);
             model.addAttribute("page", page);
             model.addAttribute("searchBean", bean);
@@ -264,6 +276,7 @@ public class LineOrderController {
             model.addAttribute("orderList", orderList);
             model.addAttribute("page", 1);
             model.addAttribute("hideSearch", "1");
+            model.addAttribute("type", type);
         }
     }
 
@@ -715,7 +728,7 @@ public class LineOrderController {
     private void exportOrderData(OutputStream out, String type, String year, String month,
             String salesmanId, String yfhkStatus, String yshkStatus, String customerId,
             String company, String operatorId) {
-        String[] titles = { "团号", "单号", "线路名称", "出发日期", "结束日期", "操作员", "签证员", "销售", "客户", "报名人数",
+        String[] titles = { "团队编号", "单号", "线路名称", "出发日期", "结束日期", "操作员", "签证员", "销售", "客户", "报名人数",
                 "应收账款", "已收账款", "未收账款", "毛利合计", "应付账款", "已付账款", "未付账款", "押金", "押金收退情况", "返佣",
                 "返佣收退情况" };
         HSSFWorkbook wb = new HSSFWorkbook();
@@ -789,13 +802,13 @@ public class LineOrderController {
                         .getLineOrderDeposit().toString());
                 headerCell = row.createCell(18);
                 headerCell.setCellValue(VisaUtil.getLineOrderDepositStatusName(p
-                        .getLineOrderDepositStatus()));
+                        .getLineOrderDepositStatus() == null ? 0 : p.getLineOrderDepositStatus()));
                 headerCell = row.createCell(19);
                 headerCell.setCellValue(p.getCommission() == null ? "0" : p.getCommission()
                         .toString());
                 headerCell = row.createCell(20);
                 headerCell.setCellValue(VisaUtil.getLineOrderDepositStatusName(p
-                        .getCommissionStatus()));
+                        .getCommissionStatus() == null ? 0 : p.getCommissionStatus()));
             }
         }
         try {

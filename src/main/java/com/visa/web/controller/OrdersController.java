@@ -116,6 +116,7 @@ public class OrdersController {
         String operator = bean.getOperator();
         String orderSeq = bean.getOrderSeq();
         String deptId = bean.getDeptId();
+        String orderType = bean.getOrderType();
 
         if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate)) {
             // 如果未选择起止日期，默认为本月一号到当日
@@ -144,6 +145,7 @@ public class OrdersController {
         paraMap.put("operatorForSearch", StringUtils.isEmpty(operator) ? null : operator);
         paraMap.put("orderSeq", StringUtils.isEmpty(orderSeq) ? null : orderSeq);
         paraMap.put("deptId", StringUtils.isEmpty(deptId) ? null : deptId);
+        paraMap.put("orderType", StringUtils.isEmpty(orderType) ? null : orderType);
 
         // 记录总条数
         recordCount = ordersDao.count(paraMap);

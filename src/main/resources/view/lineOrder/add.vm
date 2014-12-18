@@ -100,7 +100,7 @@
 			
 			jQuery("#lineProductId").val(jQuery("#selectProductId").val());
 			jQuery("#selectProductId").addClass('js_non_empty');
-			jQuery("#price").attr("readonly","readonly");
+			//jQuery("#price").attr("readonly","readonly");
 			jQuery("#startDate").attr("readonly","readonly");
 			jQuery("#endDate").attr("readonly","readonly");
 			jQuery("#startDate").datepicker( "option", "disabled", true );
@@ -367,12 +367,21 @@
 		              <label class="control_label"><span class="ico_must">*</span>其它应收:</label>
 		              <div class="controls">
 		               <span class="form_item"><input name="qtys" id="qtys" type="text" value="0" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="其它应收" onchange="calculatePriceSum();"></span>
+		               <span class="form_item">其它应收备注:<input type="text" class="text1" maxlength="200" size="50" id="qtysRemark" name="qtysRemark" placeholder="其它应收备注" value=""></span>
 		              </div>
 		            </div>
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>应收合计:</label>
 		              <div class="controls">
 		               <span class="form_item"><input name="priceSum" id="priceSum" type="text" value="0" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应收合计" readonly></span>
+		              </div>
+		            </div>
+		            <div class="control_group">
+		              <label class="control_label"><span class="ico_must">*</span>应收备注:</label>
+		              <div class="controls">
+		               <span class="form_item">
+		               		<textarea name="ysFeeComment" id="ysFeeComment" class="text3" cols="80" rows="3" placeholder="应收备注" maxlength="300"></textarea>
+		               </span>
 		              </div>
 		            </div>
 		        </div>         

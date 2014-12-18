@@ -103,7 +103,7 @@
 		#if($sumPrice)
 		<hr class="hr_a">
 		<div class="widget_mng_box">
-			#if(${fn.isLineSalesmanRole($userLineRoleId)} ||${fn.isLineAdminRole($userLineRoleId)})
+			#if(${fn.isLineSalesmanRole($userLineRoleId)} ||${fn.isLineAdminRole($userLineRoleId)}||$userLineRoleId == $fn.getLineFinanceRoleId() || $userLineRoleId == $fn.getLineFinanceManagerRoleId())
 				<table cellpadding="0" cellspacing="0" width="400" class="table_data tcenter">
 					<tbody>
 		            	<tr>
@@ -111,6 +111,7 @@
 		            		<td>总计应付:</td><td>$!{sumPrice.sumzjyf}</td>
 		            		<td>毛利:</td><td>$!{sumPrice.sumlr}</td>
 		            		<td>总计未收:</td><td>$!{sumPrice.sumwshk}</td>
+		            		<td>总人数:</td><td>$!{sumPrice.sumNameListSize}</td>
 		            	</tr>
 		            </tbody>
 				</table>
@@ -125,6 +126,7 @@
 	                    <tr>
 	                       #if(${type}=="2")
 	                       	<th width="">订单号</th>
+	                       	<th width="">下单日期</th>
 	                        <th width="">团队编号</th>
                             <th width="">线路名称</th>
                             <th width="">总位</th>
@@ -138,8 +140,11 @@
                             <th width="">付款状态</th>
                            #else
                             <th width="">订单号</th>
+                            <th width="">下单日期</th>
+                            <th width="">团队编号</th>
                             <th width="">销售</th>
                             <th width="">客户名</th>
+                            <th width="">客户公司</th>
                             <th width="">人数</th>
                             <th width="">下单日期</th>
                             <th width="">签证状态</th>
@@ -151,6 +156,8 @@
                             <th width="">收款状态</th>
                             <th width="">付款状态</th>
                            #end 
+                            <th width="">线路操作员</th>
+                            <th width="">签证操作员</th>
 	                        <th width="">修改</th>
 	                        <th width="">删除</th>
 							<th width="">查看日志</th>
@@ -160,7 +167,8 @@
 						#foreach($order in $orderList)
     	                    <tr>
     	                    	#if(${type}=="2")
-    	                    	<td>$!{order.orderSeq}</td>
+    	                    	<td>$!{order.orderSeq}#if($!{fn.isLineSalesmanRole($userLineRoleId)}==0)  (未审批)  #else  (已审批)  #end</td>
+    	                    	<td>$!fn.format($!{order.orderDate},'yyyy-MM-dd')</td>
 								<td><a href="/lineOrder/list.do?lineProductOrderSeq=$!{order.lineProductOrderSeq}&type=2">$!{order.lineProductOrderSeq}</a></td>
 								<td>$!{order.lineProductName}</td>
 								<td width="">${order.seatNum}</td>
@@ -173,11 +181,14 @@
 	                            <td width="">#if($order.yshkstatus == 3)已收全款#elseif($order.yshkstatus == 2)已收款$!fn.disPrice(${order.alreadyGot})元#else未收款#end</td>
 	                            <td width="">#if($order.yfhkstatus == 3)已付全款#elseif($order.yfhkstatus == 2)已付款$!fn.disPrice(${order.alreadyPaidSum})元#else未付款#end</td>
 								#else
-								<td>$!{order.orderSeq}</td>
+								<td>$!{order.orderSeq}#if($!{fn.isLineSalesmanRole($userLineRoleId)})  #if(${order.status}==0)  (未审批)  #else  (已审批)  #end   #end</td>
+								<td>$!fn.format($!{order.orderDate},'yyyy-MM-dd')</td>
+								<td>$!{order.procurementSeq}</td>
 								<td>$!{order.salesmanName}</td>
 								<td>$!{order.customerName}</td>
+								<td>$!{order.company}</td>
 								<td>$!{order.nameListSize}人</td>
-								<td>$fn.format($!{order.postTime},'yyyy-MM-dd')</td>
+								<td>$!fn.format($!{order.postTime},'yyyy-MM-dd')</td>
 								<td width="">签证状态</td>
 		                        <td width="">机票状态</td>
 		                        <td width="">#if($order.jdstatus == 3)已落实#elseif($order.jdstatus == 2)操作中#else未操作#end</td>
@@ -187,6 +198,8 @@
 	                            <td width="">#if($order.yshkstatus == 3)已收全款#elseif($order.yshkstatus == 2)已收款$!fn.disPrice(${order.alreadyGot})元#else未收款#end</td>
 	                             <td width="">#if($order.yfhkstatus == 3)已付全款#elseif($order.yfhkstatus == 2)已付款$!fn.disPrice(${order.alreadyPaidSum})元#else未付款#end</td>
 								#end
+								<td>$!{order.lineOperatorName}</td>
+                            	<td>$!{order.visaOperatorName}</td>
     	                        <td><a class="ico_edit_g" href="javascript:updateOrder('/lineOrder/edit.do?orderId=$!{order.orderId}&currentPage=${page}')"></a></td>
     	                        <td><a class="ico_delete_r" onclick="return confirm('是否将此订单删除?')" href="/lineOrder/delete.do?orderId=$!{order.orderId}&page=${page}"></a></td>
 								<td><a class="ico_edit_g" href="/operatelog/list.do?orderSeq=$!{order.orderSeq}&currentPage=1"></a></td>

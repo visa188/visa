@@ -236,6 +236,10 @@ public class VelocityToolbox {
         return false;
     }
 
+    public int getLineProcurementRoleId() {
+        return LineRoleEnumType.PROCUREMENT.getId();
+    }
+
     /**
      * @return Map<Integer, RoleEnumType>
      */
@@ -363,6 +367,31 @@ public class VelocityToolbox {
             return "aa";
         }
         if (userRoleId == getLineSalesmanRoleId() || userRoleId == getLineSalesmanManagerRoleId()) {
+            return "bb";
+        }
+        switch (type) {
+        case 0:
+            return " readonly";
+        case 1:
+            return " onfocus=\"this.defaultIndex=this.selectedIndex;\" onchange=\"this.selectedIndex=this.defaultIndex;\"";
+        case 2:
+            return "cc";
+        default:
+            return "dd";
+        }
+    }
+
+    /**
+     * @param userRoleId
+     * @param type 0 text 1 select 2 datepicker
+     * @return
+     */
+    public String isReadOnlyNew(int userRoleId, int type) {
+        if (isLineAdminRole(userRoleId)) {
+            return "aa";
+        }
+        if (userRoleId == getLineSalesmanRoleId() || userRoleId == getLineSalesmanManagerRoleId()
+                || isLineOperatorRole(userRoleId)) {
             return "bb";
         }
         switch (type) {

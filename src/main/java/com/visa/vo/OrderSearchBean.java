@@ -6,131 +6,140 @@ import java.io.Serializable;
  * @author user yrwang
  */
 public class OrderSearchBean implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String startDate = "";
-	private String endDate = "";
-	private String seachCustomerName = "";
-	private String seachCustomerCompany = "";
-	private String seachNameList = "";
-	private String status = "";
-	private String seachYfhkStatus = "";
-	private String seachYshkStatus = "";
-	private String salesman = "";
-	private String operator = "";
-	private String seachCountryName = "";
-	private String orderSeq = "";
-	private String deptId = "";
+    private String startDate = "";
+    private String endDate = "";
+    private String seachCustomerName = "";
+    private String seachCustomerCompany = "";
+    private String seachNameList = "";
+    private String status = "";
+    private String seachYfhkStatus = "";
+    private String seachYshkStatus = "";
+    private String salesman = "";
+    private String operator = "";
+    private String seachCountryName = "";
+    private String orderSeq = "";
+    private String deptId = "";
+    private String orderType = "";
 
-	public OrderSearchBean() {
-	}
+    public String getOrderType() {
+        return orderType;
+    }
 
-	public String getDeptId() {
-		return deptId;
-	}
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
+    }
 
-	public void setDeptId(String deptId) {
-		this.deptId = deptId;
-	}
+    public OrderSearchBean() {
+    }
 
-	public String getOrderSeq() {
-		return orderSeq;
-	}
+    public String getDeptId() {
+        return deptId;
+    }
 
-	public void setOrderSeq(String orderSeq) {
-		this.orderSeq = orderSeq;
-	}
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+    public String getOrderSeq() {
+        return orderSeq;
+    }
 
-	public String getSeachYshkStatus() {
-		return seachYshkStatus;
-	}
+    public void setOrderSeq(String orderSeq) {
+        this.orderSeq = orderSeq;
+    }
 
-	public void setSeachYshkStatus(String seachYshkStatus) {
-		this.seachYshkStatus = seachYshkStatus;
-	}
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 
-	public String getSeachCountryName() {
-		return seachCountryName;
-	}
+    public String getSeachYshkStatus() {
+        return seachYshkStatus;
+    }
 
-	public void setSeachCountryName(String seachCountryName) {
-		this.seachCountryName = seachCountryName;
-	}
+    public void setSeachYshkStatus(String seachYshkStatus) {
+        this.seachYshkStatus = seachYshkStatus;
+    }
 
-	public String getSeachCustomerCompany() {
-		return seachCustomerCompany;
-	}
+    public String getSeachCountryName() {
+        return seachCountryName;
+    }
 
-	public void setSeachCustomerCompany(String seachCustomerCompany) {
-		this.seachCustomerCompany = seachCustomerCompany;
-	}
+    public void setSeachCountryName(String seachCountryName) {
+        this.seachCountryName = seachCountryName;
+    }
 
-	public String getOperator() {
-		return operator;
-	}
+    public String getSeachCustomerCompany() {
+        return seachCustomerCompany;
+    }
 
-	public void setOperator(String operator) {
-		this.operator = operator;
-	}
+    public void setSeachCustomerCompany(String seachCustomerCompany) {
+        this.seachCustomerCompany = seachCustomerCompany;
+    }
 
-	public String getSalesman() {
-		return salesman;
-	}
+    public String getOperator() {
+        return operator;
+    }
 
-	public void setSalesman(String salesman) {
-		this.salesman = salesman;
-	}
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
 
-	public String getSeachYfhkStatus() {
-		return seachYfhkStatus;
-	}
+    public String getSalesman() {
+        return salesman;
+    }
 
-	public void setSeachYfhkStatus(String seachYfhkStatus) {
-		this.seachYfhkStatus = seachYfhkStatus;
-	}
+    public void setSalesman(String salesman) {
+        this.salesman = salesman;
+    }
 
-	public String getSeachCustomerName() {
-		return seachCustomerName;
-	}
+    public String getSeachYfhkStatus() {
+        return seachYfhkStatus;
+    }
 
-	public void setSeachCustomerName(String seachCustomerName) {
-		this.seachCustomerName = seachCustomerName;
-	}
+    public void setSeachYfhkStatus(String seachYfhkStatus) {
+        this.seachYfhkStatus = seachYfhkStatus;
+    }
 
-	public String getSeachNameList() {
-		return seachNameList;
-	}
+    public String getSeachCustomerName() {
+        return seachCustomerName;
+    }
 
-	public void setSeachNameList(String seachNameList) {
-		this.seachNameList = seachNameList;
-	}
+    public void setSeachCustomerName(String seachCustomerName) {
+        this.seachCustomerName = seachCustomerName;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public String getSeachNameList() {
+        return seachNameList;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setSeachNameList(String seachNameList) {
+        this.seachNameList = seachNameList;
+    }
 
-	public String getStartDate() {
-		return startDate;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public String getEndDate() {
-		return endDate;
-	}
+    public String getStartDate() {
+        return startDate;
+    }
 
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 
 }

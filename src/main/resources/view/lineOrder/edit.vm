@@ -388,7 +388,7 @@
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>房间类型:</label>
                       <div class="controls">
-                       <span class="form_item">双人房:<input $fn.isReadOnly($userLineRoleId) value="$!{lineOrder.srf}" name="srf" id="srf" type="text" class="text1 js_non_empty js_nan" placeholder="双人房数量" style="width:60px;"> 单人房:<input $fn.isReadOnly($userLineRoleId) value="$!{lineOrder.drf}" name="drf" id="drf" type="text" class="text1 js_non_empty js_nan" placeholder="单人房数量" style="width:60px;"> 拼房:<input $fn.isReadOnly($userLineRoleId) value="$!{lineOrder.pf}" name="pf" id="pf" type="text" class="text1 js_non_empty js_nan" placeholder="拼房数量" style="width:60px;"></span>
+                       <span class="form_item">双人房:<input $fn.isReadOnlyNew($userLineRoleId) value="$!{lineOrder.srf}" name="srf" id="srf" type="text" class="text1 js_non_empty js_nan" placeholder="双人房数量" style="width:60px;"> 单人房:<input $fn.isReadOnlyNew($userLineRoleId) value="$!{lineOrder.drf}" name="drf" id="drf" type="text" class="text1 js_non_empty js_nan" placeholder="单人房数量" style="width:60px;"> 拼房:<input $fn.isReadOnlyNew($userLineRoleId) value="$!{lineOrder.pf}" name="pf" id="pf" type="text" class="text1 js_non_empty js_nan" placeholder="拼房数量" style="width:60px;"></span>
                       </div>
                     </div>
                     #set($ops="")
@@ -427,14 +427,14 @@
                                             	<td>${velocityCount}</td>
                                                 <td>
                                            <input type="hidden" id="tempId" name="tempId" value="$!{custom.id}" />
-                                                                                                                                    姓名:<input $fn.isReadOnly($userLineRoleId) value="$!{custom.name}" type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>
-                                                                                                                                    性别:<select $fn.isReadOnly($userLineRoleId,1) name="tempSex" placeholder="客人性别"><option value="1" $fn.selected(${custom.sex}, "1")>男</option><option value="2" $fn.selected(${custom.sex}, "2")>女</option></select>
-                                                                                                                                    类型:<select $fn.isReadOnly($userLineRoleId,1) name="tempAgeType" placeholder="客人类型"><option value="1" $fn.selected(${custom.ageType}, "1")>成人</option><option value="2" $fn.selected(${custom.ageType}, "2")>儿童(占床)</option><option value="3"  $fn.selected(${custom.ageType}, "3")>儿童(不占床)</option></select>                            
-                                       <!--input $fn.isReadOnly($userLineRoleId) value="$!{custom.deposit}" type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/-->
-                                                                                                                                    房间:<select $fn.isReadOnly($userLineRoleId,1)  dbvalue="$!{custom.datum}" id="tempDatum" name="tempDatum" class="tempDatum" placeholder="房间">$!{ops}</select>
-                                       <!--input $fn.isReadOnly($userLineRoleId) value="$!{custom.room}" type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/-->
-                                                                                                                                    备注:<input $fn.isReadOnly($userLineRoleId) value="$!{custom.comment}" type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
-                                          <span $fn.isDisplay($userLineRoleId) name="delName" class="client_delete" title="删除行" style="margin-left:5%">-</span>
+                                                                                                                                    姓名:<input $fn.isReadOnlyNew($userLineRoleId) value="$!{custom.name}" type="text" class="tb_text" name="tempName" value="" placeholder="客户姓名" style="width:8%;"/>
+                                                                                                                                    性别:<select $fn.isReadOnlyNew($userLineRoleId,1) name="tempSex" placeholder="客人性别"><option value="1" $fn.selected(${custom.sex}, "1")>男</option><option value="2" $fn.selected(${custom.sex}, "2")>女</option></select>
+                                                                                                                                    类型:<select $fn.isReadOnlyNew($userLineRoleId,1) name="tempAgeType" placeholder="客人类型"><option value="1" $fn.selected(${custom.ageType}, "1")>成人</option><option value="2" $fn.selected(${custom.ageType}, "2")>儿童(占床)</option><option value="3"  $fn.selected(${custom.ageType}, "3")>儿童(不占床)</option></select>                            
+                                       <!--input $fn.isReadOnlyNew($userLineRoleId) value="$!{custom.deposit}" type="text" class="tb_text" name="tempDeposit" value="" placeholder="押金" style="width:8%;"/-->
+                                                                                                                                    房间:<select $fn.isReadOnlyNew($userLineRoleId,1)  dbvalue="$!{custom.datum}" id="tempDatum" name="tempDatum" class="tempDatum" placeholder="房间">$!{ops}</select>
+                                       <!--input $fn.isReadOnlyNew($userLineRoleId) value="$!{custom.room}" type="text" class="tb_text" name="tempRoom" value="" placeholder="房间数" style="width:8%;"/-->
+                                                                                                                                    备注:<input $fn.isReadOnlyNew($userLineRoleId) value="$!{custom.comment}" type="text" class="tb_text" name="tempComment" value="" placeholder="备注" style="width:5%;"/>
+                                          <span $fn.isReadOnlyNew($userLineRoleId) name="delName" class="client_delete" title="删除行" style="margin-left:5%">-</span>
                                                 </td>
                                             </tr> 
                                         #end
@@ -598,6 +598,18 @@
 				   </span>
                   </div>
                 </div>
+                
+	                #if($!{lineOrder.type}==1&&$userLineRoleId == $fn.getLineProcurementRoleId())
+		                <div class="control_group">
+		                  <label class="control_label"><span class="ico_must">*</span>团队编号:</label>
+		                  <div class="controls">
+		                   <span class="form_item">
+								<input value="$!{lineOrder.procurementSeq}" type="text" class="text1 js_non_empty" name="procurementSeq" placeholder="团队编号" maxlength="50" size="50"/>
+						   </span>
+		                  </div>
+		                </div>
+	                #end
+	                
                 #end
                 #if($userLineRoleId == $fn.getLineOperatorManagerRoleId() || $userLineRoleId == $fn.getLineVisaoperManagerRoleId() || $fn.isLineAdminRole($userLineRoleId))
                     <script>
@@ -757,7 +769,10 @@
                         <div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>地接费用合计:</label>
                           <div class="controls">
-                           <span class="form_item">#if($djService.serviceItem1)酒店费用#end #if($djService.serviceItem4)特殊景点费用#end #if($djService.serviceType == $fn.getBsServicTypeId())巴士费用#else司兼导费用#end
+                           <span class="form_item">
+							#if($lineOrder.type==1)                           
+                           		#if($djService.serviceItem1)酒店费用#end #if($djService.serviceItem4)特殊景点费用#end #if($djService.serviceType == $fn.getBsServicTypeId())巴士费用#else司兼导费用#end
+                            #end
                            <input value="$!fn.disPrice($!{djService.yfhj})" type="text" class="text1 js_non_empty" name="yfdjhj" id="yfdjhj" placeholder="地接费用合计">元</span>
                           </div>
                         </div>
@@ -915,7 +930,15 @@
 		              <label class="control_label"><span class="ico_must">*</span>其它应收:</label>
 		              <div class="controls">
 		               <span class="form_item"><input $fn.isReadOnly($userLineRoleId) name="qtys" id="qtys" type="text" value="$!fn.disPrice($!{lineOrder.qtys})" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="其它应收" onchange="calculatePriceSum();"></span>
-		               <span class="form_item">其它应收备注:<input type="text" class="text1" maxlength="200" size="50" id="qtysRemark" name="qtysRemark" placeholder="其它应收备注" value="$!{lineOrder.qtysRemark}""></span>
+		               <span class="form_item">其它应收备注:<input type="text" class="text1" maxlength="200" size="50" id="qtysRemark" name="qtysRemark" placeholder="其它应收备注" value="$!{lineOrder.qtysRemark}"></span>
+		              </div>
+		            </div>
+		             <div class="control_group">
+		              <label class="control_label"><span class="ico_must">*</span>应收备注:</label>
+		              <div class="controls">
+		               <span class="form_item">
+		               		<textarea name="ysFeeComment" id="ysFeeComment" class="text3" cols="80" rows="3" placeholder="应收备注" maxlength="300">$!{lineOrder.ysFeeComment}</textarea>
+		               </span>
 		              </div>
 		            </div>
 					#if($userLineRoleId == $fn.getLineFinanceRoleId() || $userLineRoleId == $fn.getLineFinanceManagerRoleId() )
@@ -931,6 +954,7 @@
 							<span class="form_item">入账银行：<input value="$!{lineOrder.gotBank}" name="gotBank" id="gotBank" type="text" class="text1" maxlength="8" size="8" placeholder="入账银行"></span>
 						    <span class="form_item">入账日期：<input value="$!fn.format($!{lineOrder.gotDate},'yyyy-MM-dd')" name="gotDate" id="gotDate" type="text" class="text1 js_datepicker" maxlength="8" size="8" placeholder="入账日期"></span>
                           </div>
+                          
                         </div>
                         <div class="control_group">
 	                        <label class="control_label"><span class="ico_must">*</span>收款状态:</label>

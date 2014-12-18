@@ -18,8 +18,14 @@
 		<form id="form1" name="form1" action="/orders/list.do" method="post" class="form_horizontal">
 			<input type="hidden" id="page" name="page" value="1">
     		<div class="searchbox">
+    			<label for="s_client">订单类型：
+    				<select name="orderType" id="orderType" class="text" onchange="conditionSearch(1)">
+    					<option value="" selected="selected">全部</option>
+						<option value="0" #if(${searchBean.orderType}==0) selected="selected" #end>普通订单</option>
+						<option value="1" #if(${searchBean.orderType}==1) selected="selected" #end>单项产品订单</option>
+					</select>
+   				</label>
    				<label for="s_client">订单号：<input type="text" name="orderSeq" value="$!{searchBean.orderSeq}" />
-   					
    				</label>
 				#if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
 					<label for="s_client">所属部门：

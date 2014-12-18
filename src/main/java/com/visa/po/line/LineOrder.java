@@ -107,6 +107,7 @@ public class LineOrder {
      */
     public int customerId;
     public String customerName;
+    public String company;
     /**
      * 线路国家id
      * 
@@ -193,6 +194,33 @@ public class LineOrder {
 
     public Date depositLimitDate;
     public Date printTicketLimitDate;
+
+    public String procurementSeq;
+    public String ysFeeComment;
+
+    public String getYsFeeComment() {
+        return ysFeeComment;
+    }
+
+    public void setYsFeeComment(String ysFeeComment) {
+        this.ysFeeComment = ysFeeComment;
+    }
+
+    public String getProcurementSeq() {
+        return procurementSeq;
+    }
+
+    public void setProcurementSeq(String procurementSeq) {
+        this.procurementSeq = procurementSeq;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
 
     public Date getDepositLimitDate() {
         return depositLimitDate;

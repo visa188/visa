@@ -101,7 +101,7 @@
        	lineproduct.depositLimitDate,lineproduct.printTicketLimitDate,lineproduct.qw,lineproduct.zw,lineproduct.yb,lineproduct.seatNum,
        	lineproduct.leftSeatNum
 		from (
-			select lineorder.*,linecountry.countryName lineCountryName,customer.customerName
+			select lineorder.*,linecountry.countryName lineCountryName,customer.customerName,customer.company
 		    from lineorder,linecountry,customer,user user1,linenamelist
 		    where lineorder.lineCountryId = linecountry.countryId  
 		    	and lineorder.customerId = customer.customerId  
@@ -143,7 +143,7 @@
 			  </if>
 			  <if test="serviceOperatorId != null">
 				  UNION
-				  select lineorder.*,linecountry.countryName lineCountryName,customer.customerName
+				  select lineorder.*,linecountry.countryName lineCountryName,customer.customerName,customer.company
 				    from lineorder,linecountry,linessrvice service,customer
 				    where lineorder.lineCountryId = linecountry.countryId  and  service.orderId = lineorder.orderId and lineorder.customerId = customer.customerId  
 				    and (#{serviceOperatorId,jdbcType=VARCHAR} =  service.serviceOperator )
@@ -196,7 +196,7 @@
     insert into lineorder (orderDate,type,nameListSize,nameListType,nameListState,nameListlimitDate,srf,drf,pf,salesmanId,salesmanName,lineOperatorId,lineOperatorName,
     visaOperatorId,visaOperatorName,signOperatorId,signOperatorName,customerId,lineCountryId,
     startDate,endDate,travelInfo,travelInfoFileUrl,aircorpId,price,priceSum,alreadyGot,needGot,gotBank,gotDate,paidPriceSum,status,lineProductId,specialComment,orderSeq,profit,qtys, postTime,
-    dyczb,deczb,jdstatus,busstatus,tuanstatus,yshkstatus,yfhkstatus,garanteeFileUrl,qtysRemark,lineOrderDeposit,commission,lineOrderDepositStatus,commissionStatus,alreadyPaidSum,needPaidSum)
+    dyczb,deczb,jdstatus,busstatus,tuanstatus,yshkstatus,yfhkstatus,garanteeFileUrl,qtysRemark,lineOrderDeposit,commission,lineOrderDepositStatus,commissionStatus,alreadyPaidSum,needPaidSum,procurementSeq,ysFeeComment)
     values (now(),
     #{type,jdbcType=INTEGER},#{nameListSize,jdbcType=INTEGER},#{nameListType,jdbcType=INTEGER},#{nameListState,jdbcType=INTEGER},#{nameListlimitDate,jdbcType=DATE},
     #{srf,jdbcType=VARCHAR},#{drf,jdbcType=VARCHAR},#{pf,jdbcType=VARCHAR},
@@ -209,7 +209,7 @@
     #{orderSeq,jdbcType=VARCHAR},#{profit,jdbcType=DECIMAL},#{qtys,jdbcType=DECIMAL}, now(),#{dyczb,jdbcType=VARCHAR},#{deczb,jdbcType=VARCHAR},
     #{jdstatus,jdbcType=INTEGER},#{busstatus,jdbcType=INTEGER},#{tuanstatus,jdbcType=INTEGER},#{yshkstatus,jdbcType=INTEGER},#{yfhkstatus,jdbcType=INTEGER}
     ,#{garanteeFileUrl,jdbcType=VARCHAR},#{qtysRemark,jdbcType=VARCHAR},#{lineOrderDeposit,jdbcType=DECIMAL},#{commission,jdbcType=DECIMAL}
-    ,#{lineOrderDepositStatus,jdbcType=INTEGER},#{commissionStatus,jdbcType=INTEGER},#{alreadyPaidSum,jdbcType=DECIMAL},#{needPaidSum,jdbcType=DECIMAL})
+    ,#{lineOrderDepositStatus,jdbcType=INTEGER},#{commissionStatus,jdbcType=INTEGER},#{alreadyPaidSum,jdbcType=DECIMAL},#{needPaidSum,jdbcType=DECIMAL},#{procurementSeq,jdbcType=VARCHAR},#{ysFeeComment,jdbcType=VARCHAR})
   </insert>
   
   <update id="updateByPrimaryKey">
@@ -264,15 +264,18 @@
 	    <if test="lineOrderDepositStatus != null">lineOrderDepositStatus = #{lineOrderDepositStatus,jdbcType=INTEGER},</if>
 	    <if test="alreadyPaidSum != null">alreadyPaidSum = #{alreadyPaidSum,jdbcType=DECIMAL},</if>
 	    <if test="needPaidSum != null">needPaidSum = #{needPaidSum,jdbcType=DECIMAL},</if>
+	    <if test="procurementSeq != null">procurementSeq = #{procurementSeq,jdbcType=VARCHAR},</if>
+	    <if test="ysFeeComment != null">ysFeeComment = #{ysFeeComment,jdbcType=VARCHAR},</if>
+	    
     postTime = now()
     </set>
     where orderId = #{orderId,jdbcType=INTEGER}
   </update>
   
   <select id="sumPrice" parameterType="java.util.Map" resultType="java.util.Map">
-      select sum(priceSum) sumzjys,sum(paidPriceSum) sumzjyf,sum(alreadyGot) sumyshk
+      select sum(priceSum) sumzjys,sum(paidPriceSum) sumzjyf,sum(alreadyGot) sumyshk,sum(nameListSize) sumNameListSize
       from 
-		(select lineProductId,IFNULL(lineorder.priceSum,0) priceSum,IFNULL(lineorder.paidPriceSum,0) paidPriceSum,IFNULL(lineorder.alreadyGot,0) alreadyGot
+		(select lineProductId,IFNULL(lineorder.priceSum,0) priceSum,IFNULL(lineorder.paidPriceSum,0) paidPriceSum,IFNULL(lineorder.alreadyGot,0) alreadyGot,IFNULL(lineorder.nameListSize,0) nameListSize
 		    from lineorder,linecountry,customer
 		    where lineorder.lineCountryId = linecountry.countryId  
 		    and lineorder.customerId = customer.customerId  
