@@ -85,7 +85,7 @@
         if(type==1){
             jQuery("#sanpinSelectDiv").hide();
             
-            jQuery("#selectProductId").removeClass('js_non_empty');
+            jQuery("#selectProductId").removeClass('$!{fn.getIfNonEmpty($userLineRoleId)}');
             #if($userLineRoleId == $fn.getLineSalesmanRoleId() || $fn.isLineAdminRole($userLineRoleId))
             jQuery("#price").removeAttr("readonly");
             jQuery("#startDate").removeAttr("readonly");
@@ -97,7 +97,7 @@
             jQuery("#sanpinSelectDiv").show();
             
 			jQuery("#lineProductId").val(jQuery("#selectProductId").val());
-            jQuery("#selectProductId").addClass('js_non_empty');
+            jQuery("#selectProductId").addClass('$!{fn.getIfNonEmpty($userLineRoleId)}');
             jQuery("#price").attr("readonly","readonly");
             jQuery("#startDate").attr("readonly","readonly");
             jQuery("#endDate").attr("readonly","readonly");
@@ -224,7 +224,7 @@
 	        			<label class="control_label"><span class="ico_must">*</span>客户:</label>
 						<div class="controls">
 							<span class="form_item">
-								<input name="customerShowName" id="customerShowName" type="text" class="text1 js_non_empty" placeholder="客户" value="$!{customer.customerName}" onkeydown="searchCustomer()" disabled>
+								<input name="customerShowName" id="customerShowName" type="text" class="text1 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="客户" value="$!{customer.customerName}" onkeydown="searchCustomer()" disabled>
 							</span>
 		              	</div>
 						<label class="control_label"><span class="ico_must"></span>客户搜素框:</label>
@@ -296,21 +296,21 @@
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>出发日期:</label>
                       <div class="controls">
-                       <span class="form_item"><input $fn.isReadOnly($userLineRoleId) value="$fn.format($!{lineOrder.startDate},"yyyy-MM-dd")" type="text"  class="text1 $fn.isReadOnly($userLineRoleId,2) js_non_empty" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate"></span>
+                       <span class="form_item"><input $fn.isReadOnly($userLineRoleId) value="$fn.format($!{lineOrder.startDate},"yyyy-MM-dd")" type="text"  class="text1 $fn.isReadOnly($userLineRoleId,2) $!{fn.getIfNonEmpty($userLineRoleId)}" maxlength="10" size="10" placeholder="出发日期" name="startDate" id="startDate"></span>
                       </div>
                     </div> 
                     
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>归国日期:</label>
                       <div class="controls">
-                       <span class="form_item"><input $fn.isReadOnly($userLineRoleId) value="$fn.format($!{lineOrder.endDate},"yyyy-MM-dd")" type="text"  class="text1 $fn.isReadOnly($userLineRoleId,2) js_non_empty" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate"></span>
+                       <span class="form_item"><input $fn.isReadOnly($userLineRoleId) value="$fn.format($!{lineOrder.endDate},"yyyy-MM-dd")" type="text"  class="text1 $fn.isReadOnly($userLineRoleId,2) $!{fn.getIfNonEmpty($userLineRoleId)}" maxlength="10" size="10" placeholder="归国日期" name="endDate" id="endDate"></span>
                       </div>
                     </div> 
 					
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
                         <div class="controls">
-                            <span class="form_item"><select $fn.isReadOnly($userLineRoleId,1) name="lineCountryId" id="lineCountryId" class="text2 js_non_empty" placeholder="国家名称" #if($userLineRoleId==${fn.getLineSalesmanRoleId()}||${fn.isLineAdminRole($userLineRoleId)}) onchange="getOperators()" #end>
+                            <span class="form_item"><select $fn.isReadOnly($userLineRoleId,1) name="lineCountryId" id="lineCountryId" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="国家名称" #if($userLineRoleId==${fn.getLineSalesmanRoleId()}||${fn.isLineAdminRole($userLineRoleId)}) onchange="getOperators()" #end>
                                 <option value="" selected="selected">请选择</option>
                                 #foreach($one in $countryList)
                                     <option value="$one.countryId" $fn.selected(${lineOrder.lineCountryId}, $one.countryId)>$one.countryName</option>
@@ -349,7 +349,7 @@
 	                      <label class="control_label"><span class="ico_must">*</span>占位类型:</label>
 	                      <div class="controls">
 	                       <span class="form_item">
-								<select $fn.isReadOnly($userLineRoleId,1) name="nameListType" id="nameListType" class="text2 js_non_empty" placeholder="占位类型">
+								<select $fn.isReadOnly($userLineRoleId,1) name="nameListType" id="nameListType" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="占位类型">
 	                                <option value="1" $fn.selected(${lineOrder.nameListType}, "1")>切位</option>
 	                                <option value="2" $fn.selected(${lineOrder.nameListType}, "2")>占位</option>
 									<option value="3" $fn.selected(${lineOrder.nameListType}, "3")>预报</option>
@@ -366,21 +366,21 @@
 	                    <div class="control_group">
 	                      <label class="control_label"><span class="ico_must">*</span>占位数:</label>
 	                      <div class="controls">
-	                       <span class="form_item"><input $fn.isReadOnly($userLineRoleId) value="$!{lineOrder.nameListSize}" name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="占位数" onchange="setNamelistSize()"></span>
+	                       <span class="form_item"><input $fn.isReadOnly($userLineRoleId) value="$!{lineOrder.nameListSize}" name="nameListSize" id="nameListSize" type="text" class="text1 $!{fn.getIfNonEmpty($userLineRoleId)} js_nan" maxlength="8" size="8" placeholder="占位数" onchange="setNamelistSize()"></span>
 	                      </div>
 	                    </div>
 						
 						<div class="control_group">
 	                      <label class="control_label"><span class="ico_must">*</span>占位取消时限:</label>
 	                      <div class="controls">
-	                       <span class="form_item"><input value="$!fn.format($!{lineOrder.nameListlimitDate},"yyyy-MM-dd")" name="nameListlimitDate" id="nameListlimitDate" type="text" class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="占位取消时限"></span>
+	                       <span class="form_item"><input value="$!fn.format($!{lineOrder.nameListlimitDate},"yyyy-MM-dd")" name="nameListlimitDate" id="nameListlimitDate" type="text" class="text1 js_datepicker $!{fn.getIfNonEmpty($userLineRoleId)}" maxlength="10" size="10" placeholder="占位取消时限"></span>
 	                      </div>
 	                    </div>
 	                #elseif(${lineOrder.type}==1)
 	                	 <div class="control_group">
 	                      <label class="control_label"><span class="ico_must">*</span>客人数量:</label>
 	                      <div class="controls">
-	                       <span class="form_item"><input $fn.isReadOnly($userLineRoleId) value="$!{lineOrder.nameListSize}" name="nameListSize" id="nameListSize" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="客人数量" onchange="setNamelistSize()"></span>
+	                       <span class="form_item"><input $fn.isReadOnly($userLineRoleId) value="$!{lineOrder.nameListSize}" name="nameListSize" id="nameListSize" type="text" class="text1 $!{fn.getIfNonEmpty($userLineRoleId)} js_nan" maxlength="8" size="8" placeholder="客人数量" onchange="setNamelistSize()"></span>
 	                      </div>
 	                    </div>
                     #end
@@ -388,7 +388,7 @@
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>房间类型:</label>
                       <div class="controls">
-                       <span class="form_item">双人房:<input $fn.isReadOnlyNew($userLineRoleId) value="$!{lineOrder.srf}" name="srf" id="srf" type="text" class="text1 js_non_empty js_nan" placeholder="双人房数量" style="width:60px;"> 单人房:<input $fn.isReadOnlyNew($userLineRoleId) value="$!{lineOrder.drf}" name="drf" id="drf" type="text" class="text1 js_non_empty js_nan" placeholder="单人房数量" style="width:60px;"> 拼房:<input $fn.isReadOnlyNew($userLineRoleId) value="$!{lineOrder.pf}" name="pf" id="pf" type="text" class="text1 js_non_empty js_nan" placeholder="拼房数量" style="width:60px;"></span>
+                       <span class="form_item">双人房:<input $fn.isReadOnlyNew($userLineRoleId) value="$!{lineOrder.srf}" name="srf" id="srf" type="text" class="text1 $!{fn.getIfNonEmpty($userLineRoleId)} js_nan" placeholder="双人房数量" style="width:60px;"> 单人房:<input $fn.isReadOnlyNew($userLineRoleId) value="$!{lineOrder.drf}" name="drf" id="drf" type="text" class="text1 $!{fn.getIfNonEmpty($userLineRoleId)} js_nan" placeholder="单人房数量" style="width:60px;"> 拼房:<input $fn.isReadOnlyNew($userLineRoleId) value="$!{lineOrder.pf}" name="pf" id="pf" type="text" class="text1 $!{fn.getIfNonEmpty($userLineRoleId)} js_nan" placeholder="拼房数量" style="width:60px;"></span>
                       </div>
                     </div>
                     #set($ops="")
@@ -460,7 +460,7 @@
                                             </tr>
                                     #end          
                                     </tbody>
-                                </table><span class="form_item"><input type="hidden" class="js_non_empty" id="nameList" name="nameList" value="" placeholder="客人信息"></span>
+                                </table><span class="form_item"><input type="hidden" class="$!{fn.getIfNonEmpty($userLineRoleId)}" id="nameList" name="nameList" value="" placeholder="客人信息"></span>
                                 <div $fn.isDisplay($userLineRoleId) class="client_operate_btns">
                                     <span class="client_add" title="添加行">+</span>
                                 </div>
@@ -535,7 +535,7 @@
                       <label class="control_label"><span class="ico_must">*</span>第一操作部:</label>
                       <div class="controls">
                        <span class="form_item">
-		                    <select $fn.isReadOnly($userLineRoleId,1) name="dyczb" id="dyczb" class="text2 js_non_empty" placeholder="第一操作部">
+		                    <select $fn.isReadOnly($userLineRoleId,1) name="dyczb" id="dyczb" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="第一操作部">
 		                    	<option value="1" $fn.selected(${lineOrder.dyczb}, "1")>操作部</option>
 		                    	<option value="2" $fn.selected(${lineOrder.dyczb}, "2")>采购部</option>
 	                            <option value="3" $fn.selected(${lineOrder.dyczb}, "3")>无</option>
@@ -547,7 +547,7 @@
                       <label class="control_label"><span class="ico_must">*</span>第二操作部:</label>
                       <div class="controls">
                        <span class="form_item">
-		                    <select $fn.isReadOnly($userLineRoleId,1) name="deczb" id="deczb" class="text2 js_non_empty" placeholder="第二操作部">
+		                    <select $fn.isReadOnly($userLineRoleId,1) name="deczb" id="deczb" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="第二操作部">
 	                            <option value="1" $fn.selected(${lineOrder.deczb}, "1")>操作部</option>
 	                            <option value="2" $fn.selected(${lineOrder.deczb}, "2")>采购部</option>
 	                            <option value="3" $fn.selected(${lineOrder.deczb}, "3")>无</option>
@@ -567,7 +567,7 @@
                   <label class="control_label"><span class="ico_must">*</span>酒店状态:</label>
                   <div class="controls">
                    <span class="form_item">
-						<select name="jdstatus" id="jdstatus" class="text2 js_non_empty" placeholder="酒店状态">
+						<select name="jdstatus" id="jdstatus" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="酒店状态">
 							<option value="1" $fn.selected($!{lineOrder.jdstatus}, 1)>未操作</option>
                             <option value="2" $fn.selected($!{lineOrder.jdstatus}, 2)>操作中</option>
 							<option value="3" $fn.selected($!{lineOrder.jdstatus}, 3)>已落实</option>
@@ -579,7 +579,7 @@
                   <label class="control_label"><span class="ico_must">*</span>巴士状态:</label>
                   <div class="controls">
                    <span class="form_item">
-						<select name="busstatus" id="busstatus" class="text2 js_non_empty" placeholder="巴士状态">
+						<select name="busstatus" id="busstatus" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="巴士状态">
 							<option value="1" $fn.selected($!{lineOrder.busstatus}, 1)>未操作</option>
                             <option value="2" $fn.selected($!{lineOrder.busstatus}, 2)>操作中</option>
 							<option value="3" $fn.selected($!{lineOrder.busstatus}, 3)>已落实</option>
@@ -591,7 +591,7 @@
                   <label class="control_label"><span class="ico_must">*</span>团队状态:</label>
                   <div class="controls">
                    <span class="form_item">
-						<select name="tuanstatus" id="tuanstatus" class="text2 js_non_empty" placeholder="团队状态">
+						<select name="tuanstatus" id="tuanstatus" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="团队状态">
 							<option value="1" $fn.selected($!{lineOrder.jdstatus}, "1")>未出团</option>
                             <option value="2" $fn.selected($!{lineOrder.jdstatus}, "2")>已出团</option>
 						</select>
@@ -604,7 +604,7 @@
 		                  <label class="control_label"><span class="ico_must">*</span>团队编号:</label>
 		                  <div class="controls">
 		                   <span class="form_item">
-								<input value="$!{lineOrder.procurementSeq}" type="text" class="text1 js_non_empty" name="procurementSeq" placeholder="团队编号" maxlength="50" size="50"/>
+								<input value="$!{lineOrder.procurementSeq}" type="text" class="text1 $!{fn.getIfNonEmpty($userLineRoleId)}" name="procurementSeq" placeholder="团队编号" maxlength="50" size="50"/>
 						   </span>
 		                  </div>
 		                </div>
@@ -681,7 +681,7 @@
                         <div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>线路操作员:</label>
                           <div class="controls">
-                           <span class="form_item"><select name="lineOperatorId" id="lineOperatorId" class="text2 js_non_empty" placeholder="线路操作员">
+                           <span class="form_item"><select name="lineOperatorId" id="lineOperatorId" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="线路操作员">
                                 <option value="" selected="selected">请选择</option>
                                 
                             </select></span>
@@ -693,7 +693,7 @@
                         <div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>签证操作员:</label>
                           <div class="controls">
-                           <span class="form_item"><select name="visaOperatorId" id="visaOperatorId" class="text2 js_non_empty" placeholder="签证操作员">
+                           <span class="form_item"><select name="visaOperatorId" id="visaOperatorId" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="签证操作员">
                                 <option value="" selected="selected">请选择</option>
                                 
                             </select></span>
@@ -717,7 +717,7 @@
                               <label class="control_label"><span class="ico_must">*</span> 航空公司:</label>
                               <div class="controls">
                                <span class="form_item">
-    								<select name="hkgs" id="hkgs" class="text2 js_non_empty">
+    								<select name="hkgs" id="hkgs" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}">
                                     #foreach($one in $airlineList)
                                         <option value="$one.airlineId" $fn.selected($!{jpService.serviceItem3}, $one.airlineId)>$one.airlineName</option>
                                     #end
@@ -730,13 +730,13 @@
                               <div class="controls">
                                <span class="form_item">
                                		#if($!{lineOrder.type}==2)
-	    								<input value="$!fn.disPrice($!{product.jpdj})" type="text"  class="text1 js_non_empty" name="jpdj" id="jpdj" placeholder="机票订金">元
+	    								<input value="$!fn.disPrice($!{product.jpdj})" type="text"  class="text1 $!{fn.getIfNonEmpty($userLineRoleId)}" name="jpdj" id="jpdj" placeholder="机票订金">元
 	                                    <select name="jpdjType" id="jpdjType" class="text2">
 	                                        <option value="1"  $fn.selected($!{product.jpdjType}, '1')>可退</option>
 	                                        <option value="2"  $fn.selected($!{product.jpdjType}, '2')>冲机票款</option>
 	                                    </select>
                                     #else
-                                    	<input value="$!{jpService.serviceItem9}" type="text"  class="text1 js_non_empty" name="jpdj" id="jpdj" placeholder="机票订金">元
+                                    	<input value="$!{jpService.serviceItem9}" type="text"  class="text1 $!{fn.getIfNonEmpty($userLineRoleId)}" name="jpdj" id="jpdj" placeholder="机票订金">元
 	                                    <select name="jpdjType" id="jpdjType" class="text2">
 	                                        <option value="1"  $fn.selected($!{jpService.serviceItem4}, '1')>可退</option>
 	                                        <option value="2"  $fn.selected($!{jpService.serviceItem4}, '2')>冲机票款</option>
@@ -749,8 +749,8 @@
                               <label class="control_label"><span class="ico_must">*</span>应付机票款:</label>
                               <div class="controls">
                                <span class="form_item">
-									单价(含税)<input value="$!fn.disPrice($!{jpService.servicePayPrice})" type="text"  class="text1 js_non_empty" name="yfjpkdj" id="yfjpkdj" placeholder="机票单价" onchange="calculateJpYfhj();">元 
-									合计<input readonly value="$!fn.disPrice($!{jpService.yfhj})" type="text"  class="text1 js_non_empty" name="yfjpkhj" id="yfjpkhj" placeholder="机票合计">元
+									单价(含税)<input value="$!fn.disPrice($!{jpService.servicePayPrice})" type="text"  class="text1 $!{fn.getIfNonEmpty($userLineRoleId)}" name="yfjpkdj" id="yfjpkdj" placeholder="机票单价" onchange="calculateJpYfhj();">元 
+									合计<input readonly value="$!fn.disPrice($!{jpService.yfhj})" type="text"  class="text1 $!{fn.getIfNonEmpty($userLineRoleId)}" name="yfjpkhj" id="yfjpkhj" placeholder="机票合计">元
     							</span>
                               </div>
                             </div>
@@ -773,7 +773,7 @@
 							#if($lineOrder.type==1)                           
                            		#if($djService.serviceItem1)酒店费用#end #if($djService.serviceItem4)特殊景点费用#end #if($djService.serviceType == $fn.getBsServicTypeId())巴士费用#else司兼导费用#end
                             #end
-                           <input value="$!fn.disPrice($!{djService.yfhj})" type="text" class="text1 js_non_empty" name="yfdjhj" id="yfdjhj" placeholder="地接费用合计">元</span>
+                           <input value="$!fn.disPrice($!{djService.yfhj})" type="text" class="text1 $!{fn.getIfNonEmpty($userLineRoleId)}" name="yfdjhj" id="yfdjhj" placeholder="地接费用合计">元</span>
                           </div>
                         </div>
                         #end  
@@ -782,7 +782,7 @@
                           <div class="controls">
                            #set($bxService = $!{lineServiceMap.get(7)})
                            <input type="hidden" name="bxServicId" value="$!{bxService.serviceId}" />  
-                           <span class="form_item"><input value="$!fn.disPrice($!{bxService.servicePayPrice})" name="yfbxdj" id="yfbxdj" type="text" class="text1 js_non_empty js_nan ysdj" placeholder="保险单价">元  总计 <input value="$!fn.disPrice($!{bxService.yfhj})" name="yfbxhj" id="yfbxhj" type="text" class="text1 js_non_empty js_nan" placeholder="保险合计">元</span>
+                           <span class="form_item"><input value="$!fn.disPrice($!{bxService.servicePayPrice})" name="yfbxdj" id="yfbxdj" type="text" class="text1 $!{fn.getIfNonEmpty($userLineRoleId)} js_nan ysdj" placeholder="保险单价">元  总计 <input value="$!fn.disPrice($!{bxService.yfhj})" name="yfbxhj" id="yfbxhj" type="text" class="text1 $!{fn.getIfNonEmpty($userLineRoleId)} js_nan" placeholder="保险合计">元</span>
                           </div>
                         </div>
                     </div>  
@@ -797,7 +797,7 @@
     					<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>送签员:</label>
                           <div class="controls">
-                           <span class="form_item"><select name="signOperatorId" id="signOperatorId" class="text2 js_non_empty" placeholder="送签员">
+                           <span class="form_item"><select name="signOperatorId" id="signOperatorId" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="送签员">
                                 <option value="" selected="selected">请选择</option>
                                 #foreach($one in $signOperList)
                                     <option value="$one.userId" $fn.selected(${lineOrder.signOperatorId}, $one.userId)>$one.userName</option>
@@ -809,7 +809,7 @@
                           <label class="control_label"><span class="ico_must">*</span>资料:</label>
                           <div class="controls">
                            <span class="form_item">
-								<select name="datumIsready" id="datumIsready" class="text2 js_non_empty" placeholder="资料">
+								<select name="datumIsready" id="datumIsready" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="资料">
 									<option value="未收" $fn.selected($!{visaService.serviceItem4}, "未收")>未收</option>
                                     <option value="已收" $fn.selected($!{visaService.serviceItem4}, "已收")>已收</option>
 								</select>
@@ -820,7 +820,7 @@
                           <label class="control_label"><span class="ico_must">*</span>消签资料:</label>
                           <div class="controls">
                            <span class="form_item">
-								<select name="cancelDatumIsready" id="cancelDatumIsready" class="text2 js_non_empty" placeholder="消签资料">
+								<select name="cancelDatumIsready" id="cancelDatumIsready" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="消签资料">
 									<option value="未收" $fn.selected($!{visaService.serviceItem6}, "未收")>未收</option>
                                     <option value="已收" $fn.selected($!{visaService.serviceItem6}, "已收")>已收</option>
 								</select>
@@ -831,7 +831,7 @@
                           <label class="control_label"><span class="ico_must">*</span>资料上交期限:</label>
                           <div class="controls">
                            <span class="form_item">
-						   <input value="$!{visaService.serviceItem3}" type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="资料上交期限" name="datumLimitDate" id="datumLimitDate"></span>
+						   <input value="$!{visaService.serviceItem3}" type="text"  class="text1 js_datepicker $!{fn.getIfNonEmpty($userLineRoleId)}" maxlength="10" size="10" placeholder="资料上交期限" name="datumLimitDate" id="datumLimitDate"></span>
                           </div>
                         </div>
 						#set($garanteeService = $!{lineServiceMap.get(6)})
@@ -839,7 +839,7 @@
                           <label class="control_label"><span class="ico_must">*</span>归国保证方式:</label>
                           <div class="controls">
                            <span class="form_item">
-								<select name="garanteeType" id="garanteeType" class="text2 js_non_empty" placeholder="归国保证方式" onchange="showGaranteePrice()">
+								<select name="garanteeType" id="garanteeType" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="归国保证方式" onchange="showGaranteePrice()">
 									<option value="1" $fn.selected($!{garanteeService.serviceItem1}, "1")>承诺函</option>
                                     <option value="2" $fn.selected($!{garanteeService.serviceItem1}, "2")>归国保证金</option>
 									<option value="3" $fn.selected($!{garanteeService.serviceItem1}, "3")>联保</option>
@@ -858,14 +858,14 @@
                           <label class="control_label"><span class="ico_must">*</span>送签日期:</label>
                           <div class="controls">
                            <span class="form_item">
-						   <input value="$!{visaService.serviceItem2}" type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="送签日期" name="signDate" id="signDate"></span>
+						   <input value="$!{visaService.serviceItem2}" type="text"  class="text1 js_datepicker $!{fn.getIfNonEmpty($userLineRoleId)}" maxlength="10" size="10" placeholder="送签日期" name="signDate" id="signDate"></span>
                           </div>
                         </div>  
 						<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>签证状态:</label>
                           <div class="controls">
                            <span class="form_item">
-								<select name="visaState" id="visaState" class="text2 js_non_empty" placeholder="签证状态">
+								<select name="visaState" id="visaState" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="签证状态">
 									<option value="1" $fn.selected($!{visaService.serviceItem5}, "1")>未送签</option>
                                     <option value="2" $fn.selected($!{visaService.serviceItem5}, "2")>已送签</option>
 									<option value="3" $fn.selected($!{visaService.serviceItem5}, "3")>已出签</option>
@@ -876,7 +876,7 @@
 						<div class="control_group">
                           <label class="control_label"><span class="ico_must">*</span>应付签证费（单价）:</label>
                           <div class="controls">
-                           <span class="form_item"><input value="$!fn.disPrice($!{visaService.servicePayPrice})" name="servicePayPrice" id="servicePayPrice" type="text" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应付签证费（单价）" onchange="sumVisaPay();"></span>
+                           <span class="form_item"><input value="$!fn.disPrice($!{visaService.servicePayPrice})" name="servicePayPrice" id="servicePayPrice" type="text" class="text1 $!{fn.getIfNonEmpty($userLineRoleId)} js_nan" maxlength="8" size="8" placeholder="应付签证费（单价）" onchange="sumVisaPay();"></span>
                           </div>
                         </div>
 						<div class="control_group">
@@ -903,11 +903,11 @@
 							var garanteeType=jQuery("#garanteeType").val();
 							if(garanteeType==2 || garanteeType==3){
 								garanteePriceDiv.show();
-								jQuery("#garanteePrice").addClass('js_non_empty');
+								jQuery("#garanteePrice").addClass('$!{fn.getIfNonEmpty($userLineRoleId)}');
 							}else{
 								jQuery("#garanteePrice").val(0);
 								garanteePriceDiv.hide();
-								jQuery("#garanteePrice").removeClass('js_non_empty');
+								jQuery("#garanteePrice").removeClass('$!{fn.getIfNonEmpty($userLineRoleId)}');
 							}
 						}
 						showGaranteePrice();
@@ -929,7 +929,7 @@
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>其它应收:</label>
 		              <div class="controls">
-		               <span class="form_item"><input $fn.isReadOnly($userLineRoleId) name="qtys" id="qtys" type="text" value="$!fn.disPrice($!{lineOrder.qtys})" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="其它应收" onchange="calculatePriceSum();"></span>
+		               <span class="form_item"><input $fn.isReadOnly($userLineRoleId) name="qtys" id="qtys" type="text" value="$!fn.disPrice($!{lineOrder.qtys})" class="text1 $!{fn.getIfNonEmpty($userLineRoleId)} js_nan" maxlength="8" size="8" placeholder="其它应收" onchange="calculatePriceSum();"></span>
 		               <span class="form_item">其它应收备注:<input type="text" class="text1" maxlength="200" size="50" id="qtysRemark" name="qtysRemark" placeholder="其它应收备注" value="$!{lineOrder.qtysRemark}"></span>
 		              </div>
 		            </div>
@@ -959,7 +959,7 @@
                         <div class="control_group">
 	                        <label class="control_label"><span class="ico_must">*</span>收款状态:</label>
 							<div class="controls">
-			               		<span class="form_item"><select name="yshkstatus" id="yshkstatus" class="text2 js_non_empty" placeholder="收款状态">
+			               		<span class="form_item"><select name="yshkstatus" id="yshkstatus" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="收款状态">
 									<option value="" selected="selected">请选择</option>
 	    							<option value="1" #if($lineOrder.yshkstatus=='1') selected #end>未收款</option>
 									<option value="2" #if($lineOrder.yshkstatus=='2') selected #end>部分收款</option>
@@ -1130,7 +1130,7 @@
                         <div class="control_group">
 	                        <label class="control_label"><span class="ico_must">*</span>付款状态:</label>
 							<div class="controls">
-			               		<span class="form_item"><select name="yfhkstatus" id="yfhkstatus" class="text2 js_non_empty" placeholder="付款状态">
+			               		<span class="form_item"><select name="yfhkstatus" id="yfhkstatus" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="付款状态">
 									<option value="" selected="selected">请选择</option>
 	    							<option value="1" #if($lineOrder.yfhkstatus=='1') selected #end>未付款</option>
 									<option value="2" #if($lineOrder.yfhkstatus=='2') selected #end>部分付款</option>

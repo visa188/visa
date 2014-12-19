@@ -589,4 +589,12 @@ public class VelocityToolbox {
             return "";
         }
     }
+
+    public String getIfNonEmpty(int roleId) {
+        if (roleId == LineRoleEnumType.ADMIN.getId()) {
+            return "";
+        }
+        return " js_non_empty";
+    }
+
 }
