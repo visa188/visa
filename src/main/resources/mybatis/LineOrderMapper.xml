@@ -303,7 +303,7 @@
 		  </if>
 		  <if test="serviceOperatorId != null">
 			  UNION
-			  select  lineProductId,IFNULL(lineorder.priceSum,0) priceSum,IFNULL(lineorder.paidPriceSum,0) paidPriceSum,IFNULL(lineorder.alreadyGot,0) alreadyGot
+			  select  lineProductId,IFNULL(lineorder.priceSum,0) priceSum,IFNULL(lineorder.paidPriceSum,0) paidPriceSum,IFNULL(lineorder.alreadyGot,0) alreadyGot,IFNULL(lineorder.nameListSize,0) nameListSize
 			    from lineorder,linecountry,linessrvice service,customer
 			    where lineorder.lineCountryId = linecountry.countryId  and  service.orderId = lineorder.orderId and lineorder.customerId = customer.customerId  
 			    and (#{serviceOperatorId,jdbcType=VARCHAR} =  service.serviceOperator )
