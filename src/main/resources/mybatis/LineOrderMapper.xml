@@ -289,6 +289,7 @@
 		<if test="visaOperatorId != null">and lineorder.visaOperatorId=#{visaOperatorId,jdbcType=VARCHAR}</if>
 		<if test="signOperatorId != null">and lineorder.signOperatorId=#{signOperatorId,jdbcType=VARCHAR}</if>
 		<if test="managerId != null">and lineorder.${role} in (select userId from user where managerId=#{managerId,jdbcType=VARCHAR})</if>
+		<if test="operatorManagerId != null">and lineorder.lineCountryId in (select lineCountryId from operatorcountry where userid=#{operatorManagerId,jdbcType=VARCHAR})</if>
 		<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 		<if test="alarmOrders != null">
 				and DATE_ADD(now(),INTERVAL 2 DAY) > lineorder.nameListlimitDate
