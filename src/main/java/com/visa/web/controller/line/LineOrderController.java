@@ -170,6 +170,8 @@ public class LineOrderController {
             } else if (LineRoleEnumType.SALEMAN_MANAGER.getId() == user.getLineRoleId()) {
                 paraMap.put("managerId", user.getUserId());
                 paraMap.put("role", "salesmanId");
+            } else if (LineRoleEnumType.OPERATOR_MANAGER.getId() == user.getLineRoleId()) {
+                paraMap.put("operatorManagerId", user.getUserId());
             } else if (LineRoleEnumType.OPERATOR.getId() == user.getLineRoleId()) {
                 paraMap.put("lineOperatorId", user.getUserId());
                 paraMap.put("serviceOperatorId", user.getUserId());

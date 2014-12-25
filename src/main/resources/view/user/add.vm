@@ -145,7 +145,7 @@
 	function selectCountry(){
 		var roleId=jQuery("#roleId").val();
 		
-		if(roleId==${fn.getLineOperatorRoleId()}){
+		if(roleId==${fn.getLineOperatorRoleId()}||roleId==${fn.getLineOperatorManagerRoleId()}){
 			boxyCountry.show();
 			jQuery("#countryNames").addClass('js_non_empty');
 		}else{
@@ -153,7 +153,7 @@
 			jQuery("#showCountryNames").hide();
 			jQuery("#countryNames").removeClass('js_non_empty');
 		}
-		if(roleId!=""){
+		if(roleId!=""&&roleId!=${fn.getLineOperatorManagerRoleId()}){
     		jQuery.ajax({
         	   type: "POST",
         	   url: "/user/getManagers.do",

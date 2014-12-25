@@ -2,7 +2,7 @@
   <label class="control_label"><span class="ico_must">*</span>资料已全:</label>
   <div class="controls">
    <span class="form_item">
-		<select disabled name="datumIsready" id="datumIsready" class="text2 js_non_empty" placeholder="资料已全" >
+		<select disabled name="datumIsready" id="datumIsready" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="资料已全" >
 			<option value="否">否</option>
             <option value="是" $fn.selected($!{visaService.serviceItem4}, "是")>是</option>
 		</select>
@@ -13,7 +13,7 @@
   <label class="control_label"><span class="ico_must">*</span>资料上交期限:</label>
   <div class="controls">
    <span class="form_item">
-   <input disabled value="$!{visaService.serviceItem3}" type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="资料上交期限" name="datumLimitDate" id="datumLimitDate"></span>
+   <input disabled value="$!{visaService.serviceItem3}" type="text"  class="text1 js_datepicker $!{fn.getIfNonEmpty($userLineRoleId)}" maxlength="10" size="10" placeholder="资料上交期限" name="datumLimitDate" id="datumLimitDate"></span>
   </div>
 </div>
 #set($garanteeService = $!{lineServiceMap.get(6)})
@@ -21,7 +21,7 @@
   <label class="control_label"><span class="ico_must">*</span>归国保证方式:</label>
   <div class="controls">
    <span class="form_item">
-		<select disabled name="garanteeType" id="garanteeType" class="text2 js_non_empty" placeholder="归国保证方式">
+		<select disabled name="garanteeType" id="garanteeType" class="text2 $!{fn.getIfNonEmpty($userLineRoleId)}" placeholder="归国保证方式">
 			<option value="1" $fn.selected($!{garanteeService.serviceItem1}, "1")>承诺函</option>
             <option value="2" $fn.selected($!{garanteeService.serviceItem1}, "2")>归国保证金</option>
 			<option value="3" $fn.selected($!{garanteeService.serviceItem1}, "3")>联保</option>
@@ -42,6 +42,6 @@
   <label class="control_label"><span class="ico_must">*</span>送签日期:</label>
   <div class="controls">
    <span class="form_item">
-   <input disabled value="$!{visaService.serviceItem2}" type="text"  class="text1 js_datepicker js_non_empty" maxlength="10" size="10" placeholder="送签日期" name="signDate" id="signDate"></span>
+   <input disabled value="$!{visaService.serviceItem2}" type="text"  class="text1 js_datepicker $!{fn.getIfNonEmpty($userLineRoleId)}" maxlength="10" size="10" placeholder="送签日期" name="signDate" id="signDate"></span>
   </div>
 </div>
