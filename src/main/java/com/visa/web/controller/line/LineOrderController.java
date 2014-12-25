@@ -202,6 +202,10 @@ public class LineOrderController {
                     order.setVisaOperatorName(userDao.selectByPrimaryKey(order.getVisaOperatorId())
                             .getUserName());
                 }
+                if (!StringUtils.isEmpty(order.getVisaOperatorId())) {
+                    order.setSalesmanName(userDao.selectByPrimaryKey(order.getSalesmanId())
+                            .getUserName());
+                }
             }
 
             model.addAttribute("orderList", orderList);
@@ -272,6 +276,20 @@ public class LineOrderController {
             List<LineOrder> tempOrderList = lineOrderDao.selectByPage(paraMap);
             for (LineOrder lineOrder : tempOrderList) {
                 if (lineProductOrderSeq.equals(lineOrder.getLineProductOrderSeq())) {
+
+                    if (!StringUtils.isEmpty(lineOrder.getLineOperatorId())) {
+                        lineOrder.setLineOperatorName(userDao.selectByPrimaryKey(
+                                lineOrder.getLineOperatorId()).getUserName());
+                    }
+                    if (!StringUtils.isEmpty(lineOrder.getVisaOperatorId())) {
+                        lineOrder.setVisaOperatorName(userDao.selectByPrimaryKey(
+                                lineOrder.getVisaOperatorId()).getUserName());
+                    }
+                    if (!StringUtils.isEmpty(lineOrder.getVisaOperatorId())) {
+                        lineOrder.setSalesmanName(userDao.selectByPrimaryKey(
+                                lineOrder.getSalesmanId()).getUserName());
+                    }
+
                     orderList.add(lineOrder);
                 }
             }

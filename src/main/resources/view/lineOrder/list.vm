@@ -157,6 +157,9 @@
                             <th width="">收款状态</th>
                             <th width="">付款状态</th>
                            #end 
+                           #if($userLineRoleId != $fn.getLineSalesmanRoleId() )
+                           	<th width="">销售</th>
+                           #end
                             <th width="">线路操作员</th>
                             <th width="">签证操作员</th>
 	                        <th width="">修改</th>
@@ -200,6 +203,9 @@
 	                            <td width="">#if($order.yshkstatus == 3)已收全款#elseif($order.yshkstatus == 2)已收款$!fn.disPrice(${order.alreadyGot})元#else未收款#end</td>
 	                             <td width="">#if($order.yfhkstatus == 3)已付全款#elseif($order.yfhkstatus == 2)已付款$!fn.disPrice(${order.alreadyPaidSum})元#else未付款#end</td>
 								#end
+								#if($userLineRoleId != $fn.getLineSalesmanRoleId() )
+                           			<td width="">$!{order.salesmanName}</td>
+                           		#end
 								<td>$!{order.lineOperatorName}</td>
                             	<td>$!{order.visaOperatorName}</td>
     	                        <td><a class="ico_edit_g" href="javascript:updateOrder('/lineOrder/edit.do?orderId=$!{order.orderId}&currentPage=${page}')"></a></td>
