@@ -291,6 +291,18 @@
 		<if test="managerId != null">and lineorder.${role} in (select userId from user where managerId=#{managerId,jdbcType=VARCHAR})</if>
 		<if test="operatorManagerId != null">and lineorder.lineCountryId in (select lineCountryId from operatorcountry where userid=#{operatorManagerId,jdbcType=VARCHAR})</if>
 		<if test="orderSeq != null">and lineorder.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
+		
+		<if test="countryName != null">and linecountry.countryName ${operator} #{countryName,jdbcType=VARCHAR}</if>
+		  <if test="customerName != null">and customer.customerName ${operator} #{customerName,jdbcType=VARCHAR}</if>
+		  <if test="companyName != null">and customer.company ${operator} #{companyName,jdbcType=VARCHAR}</if>
+		  <if test="nameList != null">and linenamelist.name ${operator} #{nameList,jdbcType=VARCHAR}</if>
+		  <if test="status != null">and lineorder.status = #{status,jdbcType=INTEGER}</if>
+		  <if test="yfhkStatus != null">and lineorder.yfhkStatus = #{yfhkStatus,jdbcType=INTEGER}</if>
+		  <if test="yshkStatus != null">and lineorder.yshkStatus = #{yshkStatus,jdbcType=INTEGER}</if>
+		  <if test="salesmanForSearch != null">and lineorder.salesmanId=#{salesmanForSearch,jdbcType=VARCHAR}</if>
+		  <if test="operatorForSearch != null">and lineorder.lineOperatorId=#{operatorForSearch,jdbcType=VARCHAR}</if>
+		  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
+		
 		<if test="alarmOrders != null">
 				and DATE_ADD(now(),INTERVAL 2 DAY) > lineorder.nameListlimitDate
 				and nameListState != 1
