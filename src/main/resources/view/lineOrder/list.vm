@@ -78,7 +78,7 @@
 						<option value="3" #if(${searchBean.seachYshkStatus}==3) selected="selected" #end>已收全款</option>
 					</select>
 				</label>
-    				<label for="s_client">订单号码：<input type="text" name="orderSeq" class="s_client searchtx"  value="$!{searchBean.orderSeq}" />
+    				<label for="s_client">订单序号：<input type="text" name="orderSeq" class="s_client searchtx"  value="$!{searchBean.orderSeq}" />
        				</label>
     				#if(!$alarmOrders||$alarmOrders!=1)
     					<label for="s_ordertime">开始时间：<input id="startDate" name="startDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="开始时间" value="$!{searchBean.startDate}"></label>
