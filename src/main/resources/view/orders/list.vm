@@ -18,8 +18,7 @@
 		<form id="form1" name="form1" action="/orders/list.do" method="post" class="form_horizontal">
 			<input type="hidden" id="page" name="page" value="1">
     		<div class="searchbox">
-    			<label for="s_client">订单类型：
-    				<select name="orderType" id="orderType" class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+    			<label for="s_client">订单类型：<select name="orderType" id="orderType" class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
     					<option value="" selected="selected">全部</option>
 						<option value="0" #if(${searchBean.orderType}==0) selected="selected" #end>普通订单</option>
 						<option value="1" #if(${searchBean.orderType}==1) selected="selected" #end>单项产品订单</option>
@@ -27,8 +26,7 @@
    				</label>
    				</label>
 				#if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
-					<label for="s_client">所属部门：
-    					<select name="deptId" id="deptId" class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+					<label for="s_client">所属部门：<select name="deptId" id="deptId" class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
     						<option value="" selected="selected">全部</option>
     						#foreach($one in $deptList)
     							<option value="$one.name"$fn.selected(${searchBean.deptId}, $one.name)>$one.name</option>
@@ -36,8 +34,7 @@
     					</select>
     				</label>
 				
-    				<label for="s_client">所属销售：
-    					<select name="salesman" id="salesman"  class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+    				<label for="s_client">所属销售：<select name="salesman" id="salesman"  class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
     						<option value="" selected="selected">全部</option>
     						#foreach($one in $salesmanList)
     							<option value="$one.userId"$fn.selected(${searchBean.salesman}, $one.userId)>$one.userName</option>
@@ -45,8 +42,7 @@
     					</select>
     				</label>
     				
-					<label for="s_client">所属操作员：
-    					<select name="operator" id="operator"  class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+					<label for="s_client">所属操作员：<select name="operator" id="operator"  class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
     						<option value="" selected="selected">全部</option>
     						#foreach($one in $operatorList)
     							<option value="$one.userId"$fn.selected(${searchBean.operator}, $one.userId)>$one.userName</option>
@@ -59,16 +55,14 @@
 			<div class="searchbox">
 				<label for="s_ordertime">开始时间：<input id="startDate" name="startDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="开始时间" value="$!{searchBean.startDate}"></label>
     			<label for="s_ordertime">结束时间：<input id="endDate" name="endDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="结束时间" value="$!{searchBean.endDate}"></label>
-				<label for="s_client">付款状态：
-					<select name="seachYfhkStatus" id="seachYfhkStatus"  class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+				<label for="s_client">付款状态：<select name="seachYfhkStatus" id="seachYfhkStatus"  class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
 						<option value="" selected="selected">全部</option>
 						<option value="1" #if(${searchBean.seachYfhkStatus}==1) selected="selected" #end>未付款</option>
 						<option value="2" #if(${searchBean.seachYfhkStatus}==2) selected="selected" #end>部分付款</option>
 						<option value="3" #if(${searchBean.seachYfhkStatus}==3) selected="selected" #end>已付全款</option>
 					</select>
 				</label>
-				<label for="s_client">收款状态：
-					<select name="seachYshkStatus" id="seachYshkStatus"  class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+				<label for="s_client">收款状态：<select name="seachYshkStatus" id="seachYshkStatus"  class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
 						<option value="" selected="selected">全部</option>
 						<option value="1" #if(${searchBean.seachYshkStatus}==1) selected="selected" #end>未收款</option>
 						<option value="2" #if(${searchBean.seachYshkStatus}==2) selected="selected" #end>部分收款</option>
