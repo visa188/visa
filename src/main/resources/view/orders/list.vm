@@ -77,7 +77,7 @@
     			<label for="s_guest">客人姓名：<input id="seachNameList" name="seachNameList" type="text" class="s_guest searchtx" placeholder="客人姓名" value="$!{searchBean.seachNameList}"></label>
 			</div>
 			<div class="searchbox">
-			<label for="s_client">订单序号：<input type="text" name="orderSeq" value="$!{searchBean.orderSeq}"  placeholder="订单序号"/>
+			<label for="s_client">订单序号：<input type="text"  class="s_guest searchtx" name="orderSeq" value="$!{searchBean.orderSeq}"  placeholder="订单序号"/></label>	
 			<label for="searchbtn"><input id="searchbtn" type="submit" name="" class="searchbtn" value="搜索" ></label>	
 			</div>
 		</form>
