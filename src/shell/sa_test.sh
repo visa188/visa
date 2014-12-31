@@ -1,7 +1,7 @@
 #!/bin/sh
 echo "================== stop resin =================="
 
-PID=`ps -ef|grep 'com.caucho.boot.WatchdogManager'|grep 'resin'|grep -v perl|grep -v grep|awk '{print $2}'`
+PID=`ps -ef|grep 'com.caucho.boot.WatchdogManager'|grep 'resin_test'|grep -v perl|grep -v grep|awk '{print $2}'`
 if [ -n "${PID}" ]; then
     kill -9 ${PID}
 fi
@@ -18,4 +18,4 @@ mvn
 chown -R resin:resin /home/workspace/visa/target/visa
 
 echo "================== restart resin =================="
-su -c "/home/server/resin/bin/resin.sh start" resin
+su -c "/home/server/resin_test/bin/resin.sh start" resin
