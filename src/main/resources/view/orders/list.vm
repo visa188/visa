@@ -11,7 +11,7 @@
 		<div class="maincon_title">
 			<span class="ico_order_w"></span><h2>订单信息管理</h2>
 			#if($userRoleId==${fn.getSalesmanRoleId()})
-				<div class="left"><a class="ico_order_add" title="新增订单信息" href="/orders/add.do">+</a></div>
+				<div class="left" style="margin-left: 10px;"><a class="ico_order_add" title="新增订单信息" href="/orders/add.do">+</a></div>
 			#end
 		</div>
 		<div class="maincon_fluid">
@@ -108,9 +108,8 @@
 	                    <tr>
 							<th width="">订单号</th>
 							<th width="">订单类型</th>
-							#if($!{order.type}==1)
-								<th width="">产品名称</th>
-							#end
+							<th width="">产品名称</th>
+							<th width="">销售</th>
 	                        <th width="">客户姓名</th>
 							<th width="">客户公司</th>
 							<th width="">客人数量</th>
@@ -135,10 +134,11 @@
 								<td>$!{order.orderSeq}</td>
 								#if($!{order.type}==1)
 									<td>单项产品</td>
-									<td>$!{order.singleProduct}</td>
 								#else
 									<td>签证</td>
 								#end
+								<td>$!{order.singleProduct}</td>
+								<td>$!{order.salesmanName}</td>
     	                        <td>$!{order.customerName}</td>
     	                        <td title="$!{order.customerCompany}">${fn.shortenStr(${order.customerCompany},8)}</td>
 								<td>$!{order.nameListSize}人</td>

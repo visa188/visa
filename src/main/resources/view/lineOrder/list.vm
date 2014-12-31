@@ -16,7 +16,7 @@
 		<div class="maincon_title">
 			<span class="ico_order_w"></span><h2>订单信息管理</h2>
 				#if(${fn.isLineSalesmanRole($userLineRoleId)})
-					<div class="left"><a class="ico_order_add" title="新增订单信息" href="/lineOrder/add.do?type=$!{type}">+</a></div>
+					<div class="left" style="margin-left: 10px;"><a class="ico_order_add" title="新增订单信息" href="/lineOrder/add.do?type=$!{type}">+</a></div>
 				#end
 		</div>
 		<div class="maincon_fluid">
