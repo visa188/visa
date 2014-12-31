@@ -360,20 +360,20 @@
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>应收单价:</label>
 		              <div class="controls">
-		               <span class="form_item"><input name="price" id="price" type="text" value="$!{product.price}" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应收单价" onchange="calculatePriceSum();"></span>
+		               <span class="form_item"><input name="price" id="price" type="text" value="$!{product.price}" style="width:60px;" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应收单价" onchange="calculatePriceSum();"></span>
 		              </div>
 		            </div>
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>其它应收:</label>
 		              <div class="controls">
-		               <span class="form_item"><input name="qtys" id="qtys" type="text" value="0" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="其它应收" onchange="calculatePriceSum();"></span>
-		               <span class="form_item">其它应收备注:<input type="text" class="text1" maxlength="200" size="50" id="qtysRemark" name="qtysRemark" placeholder="其它应收备注" value=""></span>
+		               <span class="form_item"><input name="qtys" id="qtys" type="text" value="0" style="width:60px;" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="其它应收" onchange="calculatePriceSum();"></span>
+		               <span class="form_item">其它应收备注:<input type="text" style="width:60px;" class="text1" maxlength="200" size="50" id="qtysRemark" name="qtysRemark" placeholder="其它应收备注" value=""></span>
 		              </div>
 		            </div>
 					<div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>应收合计:</label>
 		              <div class="controls">
-		               <span class="form_item"><input name="priceSum" id="priceSum" type="text" value="0" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应收合计" readonly></span>
+		               <span class="form_item"><input name="priceSum" id="priceSum" type="text" value="0" style="width:60px;" class="text1 js_non_empty js_nan" maxlength="8" size="8" placeholder="应收合计" readonly></span>
 		              </div>
 		            </div>
 		            <div class="control_group">

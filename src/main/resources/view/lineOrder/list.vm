@@ -40,24 +40,21 @@
     			#end			
         		<div class="searchbox">
     				#if(${fn.isLineAdminRole($userLineRoleId)}||$userLineRoleId == $fn.getLineFinanceRoleId() || $userLineRoleId == $fn.getLineFinanceManagerRoleId() )
-    					<label for="s_client">所属部门：
-	    					<select name="deptId" id="deptId" class="text" onchange="conditionSearch(1)">
+    					<label for="s_client">所属部门：<select name="deptId" id="deptId" style="height: 22px;width: 150px;" class="text2" onchange="conditionSearch(1)">
 	    						<option value="" selected="selected">全部</option>
 	    						#foreach($one in $deptList)
 	    							<option value="$one.name"$fn.selected(${searchBean.deptId}, $one.name)>$one.name</option>
 	                            #end
 	    					</select>
     					</label>
-        				<label for="s_client">所属销售：
-        					<select name="salesman" id="salesman" class="text" onchange="conditionSearch(1)">
+        				<label for="s_client">所属销售：<select name="salesman" id="salesman" style="height: 22px;width: 150px;" class="text2" onchange="conditionSearch(1)">
         						<option value="" selected="selected">全部</option>
         						#foreach($one in $salesmanList)
         							<option value="$one.userId"$fn.selected(${searchBean.salesman}, $one.userId)>$one.userName</option>
                                 #end
         					</select>
         				</label>
-        				<label for="s_client">所属操作员：
-    					<select name="operator" id="operator" class="text" onchange="conditionSearch(1)">
+        				<label for="s_client">所属操作：<select name="operator" id="operator" style="height: 22px;width: 150px;" class="text2" onchange="conditionSearch(1)">
     						<option value="" selected="selected">全部</option>
     						#foreach($one in $operatorList)
     							<option value="$one.userId"$fn.selected(${searchBean.operator}, $one.userId)>$one.userName</option>
@@ -65,37 +62,35 @@
     					</select>
     				</label>
     				#end
-    				<label for="s_client">付款状态：
-					<select name="seachYfhkStatus" id="seachYfhkStatus" class="text" onchange="conditionSearch(1)">
+    				<label for="s_client">付款状态：<select name="seachYfhkStatus" id="seachYfhkStatus" style="height: 22px;width: 150px;" class="text2" onchange="conditionSearch(1)">
 						<option value="" selected="selected">全部</option>
 						<option value="1" #if(${searchBean.seachYfhkStatus}==1) selected="selected" #end>未付款</option>
 						<option value="2" #if(${searchBean.seachYfhkStatus}==2) selected="selected" #end>部分付款</option>
 						<option value="3" #if(${searchBean.seachYfhkStatus}==3) selected="selected" #end>已付全款</option>
 					</select>
 				</label>
-				<label for="s_client">收款状态：
-					<select name="seachYshkStatus" id="seachYshkStatus" class="text" onchange="conditionSearch(1)">
+    			</div>
+    			<div class="searchbox">
+    				<label for="s_client">收款状态：<select name="seachYshkStatus" id="seachYshkStatus" style="height: 22px;width: 150px;" class="text2" onchange="conditionSearch(1)">
 						<option value="" selected="selected">全部</option>
 						<option value="1" #if(${searchBean.seachYshkStatus}==1) selected="selected" #end>未收款</option>
 						<option value="2" #if(${searchBean.seachYshkStatus}==2) selected="selected" #end>部分收款</option>
 						<option value="3" #if(${searchBean.seachYshkStatus}==3) selected="selected" #end>已收全款</option>
 					</select>
 				</label>
-    			</div>
-    			<div class="searchbox">
-					<label for="s_client">国家：<input id="seachCountryName" name="seachCountryName" type="text" class="s_client searchtx" placeholder="国家" value="$!{searchBean.seachCountryName}"></label>
-	    			<label for="s_client">客户姓名：<input id="seachCustomerName" name="seachCustomerName" type="text" class="s_client searchtx" placeholder="客户姓名" value="$!{searchBean.seachCustomerName}"></label>
-					<label for="s_client">客户公司：<input id="seachCustomerCompany" name="seachCustomerCompany" type="text" class="s_client searchtx" placeholder="客户姓名" value="$!{searchBean.seachCustomerCompany}"></label>
-	    			<label for="s_guest">客人姓名：<input id="seachNameList" name="seachNameList" type="text" class="s_guest searchtx" placeholder="客人姓名" value="$!{searchBean.seachNameList}"></label>	
-    			</div>
-    			<div class="searchbox">
-    				<label for="s_client">订单号：<input type="text" name="orderSeq" value="$!{searchBean.orderSeq}" />
+    				<label for="s_client">订单号码：<input type="text" name="orderSeq" class="s_client searchtx"  value="$!{searchBean.orderSeq}" />
        				</label>
     				#if(!$alarmOrders||$alarmOrders!=1)
     					<label for="s_ordertime">开始时间：<input id="startDate" name="startDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="开始时间" value="$!{searchBean.startDate}"></label>
         				<label for="s_ordertime">结束时间：<input id="endDate" name="endDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="结束时间" value="$!{searchBean.endDate}"></label>
         			#end
-        			<label for="searchbtn"><input id="searchbtn" type="submit" name="" class="searchbtn" value="搜索" ></label>	
+    			</div>
+    			<div class="searchbox">
+					<label for="s_client">国家名称：<input id="seachCountryName" name="seachCountryName" type="text" class="s_client searchtx" placeholder="国家" value="$!{searchBean.seachCountryName}"></label>
+	    			<label for="s_client">客户姓名：<input id="seachCustomerName" name="seachCustomerName" type="text" class="s_client searchtx" placeholder="客户姓名" value="$!{searchBean.seachCustomerName}"></label>
+					<label for="s_client">客户公司：<input id="seachCustomerCompany" name="seachCustomerCompany" type="text" class="s_client searchtx" placeholder="客户姓名" value="$!{searchBean.seachCustomerCompany}"></label>
+	    			<label for="s_guest">客人姓名：<input id="seachNameList" name="seachNameList" type="text" class="s_guest searchtx" placeholder="客人姓名" value="$!{searchBean.seachNameList}"></label>	
+	    			<label for="searchbtn"><input id="searchbtn" type="submit" name="" class="searchbtn" value="搜索" ></label>	
     			</div>
 			#end
 		</form>
