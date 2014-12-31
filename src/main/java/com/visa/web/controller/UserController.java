@@ -119,6 +119,7 @@ public class UserController {
             model.put("code", 404);
             return "result";
         } else {
+            user.setEnable(1);
             userDao.insert(user);
 
             if (!StringUtils.isEmpty(user.getLinecountryId())) {

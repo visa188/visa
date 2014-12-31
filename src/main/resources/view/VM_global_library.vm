@@ -96,7 +96,7 @@
                     <dl>
                         <dd#if($secNav==31) class="on"#end><a href="/orders/list.do?page=1">订单信息管理</a></dd>
 						#if($userRoleId==${fn.getSalesmanRoleId()})
-							<dd#if($secNav==32) class="on"#end><a href="/orders/add.do">新增订单</a></dd>
+							<dd#if($secNav==32) class="on"#end><a href="/orders/add.do">新增签证订单</a></dd>
 							<dd#if($secNav==34) class="on"#end><a href="/orders/add.do?type=1">新增单项产品订单</a></dd>
 						#end
 						#if(${fn.isAdminRoleId($userRoleId)})
