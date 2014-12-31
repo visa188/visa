@@ -108,7 +108,9 @@
 	                    <tr>
 							<th width="">订单号</th>
 							<th width="">订单类型</th>
-							<!--th width="">所属销售员</th-->
+							#if($!{order.type}==1)
+								<th width="">产品名称</th>
+							#end
 	                        <th width="">客户姓名</th>
 							<th width="">客户公司</th>
 							<th width="">客人数量</th>
@@ -132,11 +134,11 @@
     	                    <tr>
 								<td>$!{order.orderSeq}</td>
 								#if($!{order.type}==1)
+									<td>单项产品</td>
 									<td>$!{order.singleProduct}</td>
 								#else
 									<td>签证</td>
 								#end
-								<!--td>$!{order.salesmanName}</td-->
     	                        <td>$!{order.customerName}</td>
     	                        <td title="$!{order.customerCompany}">${fn.shortenStr(${order.customerCompany},8)}</td>
 								<td>$!{order.nameListSize}人</td>
