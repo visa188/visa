@@ -42,7 +42,7 @@
     					</select>
     				</label>
     				
-					<label for="s_client">所属操作员：<select name="operator" id="operator"  class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+					<label for="s_client">所属操作：<select name="operator" id="operator"  class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
     						<option value="" selected="selected">全部</option>
     						#foreach($one in $operatorList)
     							<option value="$one.userId"$fn.selected(${searchBean.operator}, $one.userId)>$one.userName</option>
