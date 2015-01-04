@@ -331,6 +331,7 @@
 	  <if test="operatorForSearch != null">and orders.operatorId=#{operatorForSearch,jdbcType=VARCHAR}</if>
 	  <if test="orderSeq != null">and orders.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 	  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
+	  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
 	  <if test="startDate != null">
 	  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 	  </if>
@@ -359,6 +360,7 @@
 			  <if test="operatorForSearch != null">and orders.operatorId=#{operatorForSearch,jdbcType=VARCHAR}</if>
 	  		  <if test="orderSeq != null">and orders.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 	  		  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
+	  		  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
 	  		  <if test="startDate != null">
 			  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 			  </if>
