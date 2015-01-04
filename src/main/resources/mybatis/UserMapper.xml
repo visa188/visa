@@ -114,9 +114,9 @@
   
  <insert id="insert" parameterType="User"  useGeneratedKeys="true" keyProperty="userId">
     insert into user (userId, userName, roleId, lineRoleId,
-      pwd, managerId, postDt, deptId)
+      pwd, managerId, postDt, deptId,enable)
     values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, #{lineRoleId,jdbcType=INTEGER}, 
-      '123456', #{managerId,jdbcType=INTEGER}, now(),#{deptId,jdbcType=VARCHAR})
+      '123456', #{managerId,jdbcType=INTEGER}, now(),#{deptId,jdbcType=VARCHAR},1)
   </insert>
   
   <update id="updateByPrimaryKey" parameterType="User" >
