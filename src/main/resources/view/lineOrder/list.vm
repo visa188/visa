@@ -88,7 +88,7 @@
     			<div class="searchbox">
 					<label for="s_client">国家名称：<input id="seachCountryName" name="seachCountryName" type="text" class="s_client searchtx" placeholder="国家" value="$!{searchBean.seachCountryName}"></label>
 	    			<label for="s_client">客户姓名：<input id="seachCustomerName" name="seachCustomerName" type="text" class="s_client searchtx" placeholder="客户姓名" value="$!{searchBean.seachCustomerName}"></label>
-					<label for="s_client">客户公司：<input id="seachCustomerCompany" name="seachCustomerCompany" type="text" class="s_client searchtx" placeholder="客户姓名" value="$!{searchBean.seachCustomerCompany}"></label>
+					<label for="s_client">客户公司：<input id="seachCustomerCompany" name="seachCustomerCompany" type="text" class="s_client searchtx" placeholder="客户公司" value="$!{searchBean.seachCustomerCompany}"></label>
 	    			<label for="s_guest">客人姓名：<input id="seachNameList" name="seachNameList" type="text" class="s_guest searchtx" placeholder="客人姓名" value="$!{searchBean.seachNameList}"></label>	
 	    			<label for="searchbtn"><input id="searchbtn" type="submit" name="" class="searchbtn" value="搜索" ></label>	
     			</div>
