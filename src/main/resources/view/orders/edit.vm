@@ -370,13 +370,13 @@
 		        	<div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>保险应收款:</label>
                       <div class="controls">
-                       <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxys" name="priceBxys" placeholder="保险应收款" value="$!{orders.priceBxys}" onchange="setBxyf();calculate()" #if($userRoleId!=${fn.getOperatorRoleId()}) readonly #end></span>
+                       <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxys" name="priceBxys" placeholder="保险应收款" value="$!{orders.priceBxys}" onchange="setBxyf();calculate()" #if($userRoleId!=${fn.getOperatorRoleId()}||${fn.isAdminRoleId($userRoleId)}) readonly #end></span>
                       </div>
                     </div>
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>保险应付款:</label>
                       <div class="controls">
-                       <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxyf" name="priceBxyf" placeholder="保险应付款" value="#if(${orders.priceBxyf})${orders.priceBxyf}#else 0.00 #end" onchange="calculate()"  #if($userRoleId!=${fn.getOperatorRoleId()}) readonly #end></span>
+                       <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxyf" name="priceBxyf" placeholder="保险应付款" value="#if(${orders.priceBxyf})${orders.priceBxyf}#else 0.00 #end" onchange="calculate()"  #if($userRoleId!=${fn.getOperatorRoleId()}||${fn.isAdminRoleId($userRoleId)}) readonly #end></span>
                       </div>
                     </div>
                     #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})

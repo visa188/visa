@@ -253,13 +253,13 @@
 		        	<div class="control_group">
                       <label class="control_label">保险应收款:</label>
                       <div class="controls">
-                       <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxys" name="priceBxys" value="0" placeholder="保险应收款" onchange="setBxyf();calculate()" readonly></span>
+                       <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxys" name="priceBxys" value="0" placeholder="保险应收款" onchange="setBxyf();calculate()" ></span>
                       </div>
                     </div>
                     <div class="control_group">
                         <label class="control_label">保险应付款:</label>
                         <div class="controls">
-                            <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxyf" name="priceBxyf" value="0" placeholder="保险应付款" onchange="calculate()" readonly></span>
+                            <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxyf" name="priceBxyf" value="0" placeholder="保险应付款" onchange="calculate()" ></span>
                         </div>                          
                     </div>
 		            <div class="control_group">
