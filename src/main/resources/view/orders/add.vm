@@ -152,12 +152,21 @@
 							</label>
 		              	</div>	        			
 		        	</div>
-		        	#if($type==1)
+		        	#if($type!=0)
 		        		<div class="control_group">
 	                        <label class="control_label"><span class="ico_must">*</span>单项产品名称:</label>
 	                        <div class="controls">
 	                            <span class="form_item">
 	                                <input name="singleProduct" id="singleProduct" type="text" class="text1 js_non_empty" maxlength="30" placeholder="单项产品名称">
+	                            </span>
+	                        </div>                          
+	                    </div>
+	                    <div class="control_group">
+	                        <label class="control_label"><span class="ico_must">*</span>产品类型:</label>
+	                        <div class="controls">
+	                            <span class="form_item">
+	                                #if(${type}==1) <input  type="text" class="text1" value="单项产品" readonly> #end
+									#if(${type}==2) <input  type="text" class="text1" value="机票" readonly> #end
 	                            </span>
 	                        </div>                          
 	                    </div>

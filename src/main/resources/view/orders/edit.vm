@@ -153,8 +153,8 @@
 				<input name="customerId" id="customerId" type="hidden" value="$!{orders.customerId}"/>
 				<input name="orderId" id="orderId" type="hidden" value="$!{orders.orderId}"/>
 				<input name="productPrice" id="productPrice" type="hidden" value="$!{product.price}"/>
-				
 				<input name="type" id="type" type="hidden" value="$!{orders.type}"/>
+				
 		      <div class="widget_box">
 		        <div class="widget_title">
 		        	<span class="ico_order_r"></span>
@@ -181,7 +181,7 @@
 							</label>
 		              	</div>
 		        	</div>
-		        	#if(${orders.type}==1)
+		        	#if(${orders.type}!=0)
 		        		<div class="control_group">
 	                        <label class="control_label"><span class="ico_must">*</span>单项产品名称:</label>
 	                        <div class="controls">
@@ -190,7 +190,17 @@
 	                            </span>
 	                        </div>                          
 	                    </div>
+	                    <div class="control_group">
+	                        <label class="control_label"><span class="ico_must">*</span>产品类型:</label>
+	                        <div class="controls">
+	                            <span class="form_item">
+	                                #if(${orders.type}==1) <input  type="text" class="text1" value="单项产品" readonly> #end
+									#if(${orders.type}==2) <input  type="text" class="text1" value="机票" readonly> #end
+	                            </span>
+	                        </div>                          
+	                    </div>
 		        	#else
+		        		
 			            <div class="control_group">
 	                        <label class="control_label"><span class="ico_must">*</span>所属领区:</label>
 	                        <div class="controls">

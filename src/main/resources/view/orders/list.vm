@@ -20,7 +20,8 @@
     		<div class="searchbox">
     			<label for="s_client">订单类型：<select name="orderType" id="orderType" class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
     					<option value="" selected="selected">全部</option>
-						<option value="0" #if(${searchBean.orderType}==0) selected="selected" #end>普通订单</option>
+						<option value="0" #if(${searchBean.orderType}==0) selected="selected" #end>签证订单</option>
+						<option value="2" #if(${searchBean.orderType}==2) selected="selected" #end>机票订单</option>
 						<option value="1" #if(${searchBean.orderType}==1) selected="selected" #end>单项产品订单</option>
 					</select>
    				</label>
@@ -105,7 +106,6 @@
 	                    <tr>
 							<th width="">订单号</th>
 							<th width="">订单类型</th>
-							<th width="">产品名称</th>
 							<th width="">销售</th>
 	                        <th width="">客户姓名</th>
 							<th width="">客户公司</th>
@@ -131,10 +131,11 @@
 								<td>$!{order.orderSeq}</td>
 								#if($!{order.type}==1)
 									<td>单项产品</td>
+								#elseif($!{order.type}==1)
+									<td>机票</td>
 								#else
 									<td>签证</td>
 								#end
-								<td>$!{order.singleProduct}</td>
 								<td>$!{order.salesmanName}</td>
     	                        <td>$!{order.customerName}</td>
     	                        <td title="$!{order.customerCompany}">${fn.shortenStr(${order.customerCompany},8)}</td>

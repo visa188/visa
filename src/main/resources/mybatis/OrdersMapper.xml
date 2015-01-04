@@ -21,7 +21,7 @@
 		UNION
 				SELECT orders.*,orders.nameList productName,customer.customerName,customer.company,user1.userName salesmanName,orders.nameList countryName,customer.company customerCompany
 				FROM orders,customer,user user1
-				WHERE  orders.type=1
+				WHERE  (orders.type=1 or orders.type =2)
 					and	 orders.customerId=customer.customerId 
 					AND user1.userId=orders.salesmanId 	
 					and orders.orderDate like #{date,jdbcType=VARCHAR}
@@ -101,7 +101,7 @@
 	  UNION
 				SELECT orders.*,orders.nameList productName,customer.customerName,user1.userName salesmanName,orders.nameList countryName
 				FROM orders,customer,user user1
-				WHERE  orders.type=1
+				WHERE  (orders.type=1 or orders.type =2)
 					and	 orders.customerId=customer.customerId 
 					AND user1.userId=orders.salesmanId 	
 					<if test="salesmanId != null">and orders.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
@@ -166,7 +166,7 @@
 			  UNION
 				SELECT orders.*,orders.nameList productName,customer.customerName,user1.userName salesmanName,orders.nameList countryName,customer.company customerCompany
 				FROM orders,customer,user user1
-				WHERE  orders.type=1
+				WHERE  (orders.type=1 or orders.type =2)
 					and	 orders.customerId=customer.customerId 
 					AND user1.userId=orders.salesmanId 	
 					<if test="salesmanId != null">and orders.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
@@ -343,7 +343,7 @@
 	  UNION
 				SELECT orders.*,IFNULL(orders.priceYshk,0) AS priceYshk1,orders.nameList productName,customer.customerName,user1.userName salesmanName,orders.nameList countryName
 				FROM orders,customer,user user1
-				WHERE  orders.type=1
+				WHERE  (orders.type=1 or orders.type =2)
 					and	 orders.customerId=customer.customerId 
 					AND user1.userId=orders.salesmanId 	
 					<if test="salesmanId != null">and orders.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
