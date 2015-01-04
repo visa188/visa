@@ -131,7 +131,7 @@
 								<td>$!{order.orderSeq}</td>
 								#if($!{order.type}==1)
 									<td>单项产品</td>
-								#elseif($!{order.type}==1)
+								#elseif($!{order.type}==2)
 									<td>机票</td>
 								#else
 									<td>签证</td>
