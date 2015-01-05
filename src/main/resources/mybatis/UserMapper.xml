@@ -12,6 +12,7 @@
   </select>
   
   <select id="selectAll" resultType="UserVo">
+  SELECT * FROM (
     select u1.*,u2.userName as managerName  
     FROM user u1 
     LEFT JOIN user u2 ON u1.managerId=u2.userId  
@@ -19,6 +20,15 @@
     <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
     and  u1.enable=1
+    UNION
+    select u1.*,u2.userName as managerName  
+    FROM user u1 
+    LEFT JOIN user u2 ON u1.lineManagerId=u2.userId  
+    where 1=1
+    <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
+    <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
+    and  u1.enable=1
+    ) temp
     order by  enable desc,postDt desc 
     limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
   </select>
@@ -59,7 +69,7 @@
   <select id="selectLineAll" resultType="UserVo">
     select u1.*,u2.userName as managerName  
     FROM user u1 
-    LEFT JOIN user u2 ON u1.managerId=u2.userId  
+    LEFT JOIN user u2 ON u1.lineManagerId=u2.userId  
     where 1=1
     <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
@@ -82,7 +92,9 @@
     FROM user , operatorcountry
     where user.userId = operatorcountry.userId 
     and lineCountryId = #{lineCountryId,jdbcType=INTEGER} 
-    <if test="managerId != null">and managerId = #{managerId,jdbcType=VARCHAR}</if>
+    <if test="managerId != null">
+    	and (managerId = #{managerId,jdbcType=VARCHAR} or lineManagerId = #{managerId,jdbcType=VARCHAR})
+    </if>
     and lineRoleId = #{roleId,jdbcType=INTEGER} 
     and enable = 1
   </select>
@@ -91,7 +103,9 @@
     select *  
     FROM user
     where 1=1
-    <if test="managerId != null">and managerId = #{managerId,jdbcType=VARCHAR}</if>
+    <if test="managerId != null">
+    	and (managerId = #{managerId,jdbcType=VARCHAR} or lineManagerId = #{managerId,jdbcType=VARCHAR})
+    </if>
     and lineRoleId = #{roleId,jdbcType=INTEGER} 
     and enable = 1
   </select>
@@ -114,9 +128,9 @@
   
  <insert id="insert" parameterType="User"  useGeneratedKeys="true" keyProperty="userId">
     insert into user (userId, userName, roleId, lineRoleId,
-      pwd, managerId, postDt, deptId,enable)
+      pwd, managerId,lineManagerId, postDt, deptId,enable)
     values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, #{lineRoleId,jdbcType=INTEGER}, 
-      '123456', #{managerId,jdbcType=INTEGER}, now(),#{deptId,jdbcType=VARCHAR},1)
+      '123456', #{managerId,jdbcType=VARCHAR}, #{lineManagerId,jdbcType=VARCHAR}, now(),#{deptId,jdbcType=VARCHAR},1)
   </insert>
   
   <update id="updateByPrimaryKey" parameterType="User" >
@@ -124,7 +138,8 @@
     set userName = #{userName,jdbcType=VARCHAR},
       <if test="roleId != null">roleId = #{roleId,jdbcType=INTEGER},</if>
       <if test="lineRoleId != null">lineRoleId = #{lineRoleId,jdbcType=INTEGER},</if>
-      managerId = #{managerId,jdbcType=INTEGER},
+      managerId = #{managerId,jdbcType=VARCHAR},
+      lineManagerId = #{lineManagerId,jdbcType=VARCHAR},
       <if test="pwd != null">pwd = #{pwd,jdbcType=VARCHAR},</if>
       deptId = #{deptId,jdbcType=VARCHAR}
     where userId = #{userId,jdbcType=VARCHAR}

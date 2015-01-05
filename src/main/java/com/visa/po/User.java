@@ -3,104 +3,114 @@ package com.visa.po;
 import java.util.Date;
 
 public class User {
-	private String userId;
+    private String userId;
 
-	private String userName;
+    private String userName;
 
-	private Integer roleId;
+    private Integer roleId;
 
-	private Integer lineRoleId;
+    private Integer lineRoleId;
 
-	private String pwd;
+    private String pwd;
 
-	private String managerId;
+    private String managerId;
 
-	private Date postDt;
+    private String lineManagerId;
 
-	private String deptId;
+    private Date postDt;
 
-	private int enable;
+    private String deptId;
 
-	private String linecountryId;
+    private int enable;
 
-	public String getLinecountryId() {
-		return linecountryId;
-	}
+    private String linecountryId;
 
-	public void setLinecountryId(String linecountryId) {
-		this.linecountryId = linecountryId;
-	}
+    public String getLineManagerId() {
+        return lineManagerId;
+    }
 
-	public String getDeptId() {
-		return deptId;
-	}
+    public void setLineManagerId(String lineManagerId) {
+        this.lineManagerId = lineManagerId;
+    }
 
-	public void setDeptId(String deptId) {
-		this.deptId = deptId;
-	}
+    public String getLinecountryId() {
+        return linecountryId;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public void setLinecountryId(String linecountryId) {
+        this.linecountryId = linecountryId;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public String getDeptId() {
+        return deptId;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public Integer getRoleId() {
-		return roleId;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public Integer getLineRoleId() {
-		return lineRoleId;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public void setLineRoleId(Integer lineRoleId) {
-		this.lineRoleId = lineRoleId;
-	}
+    public Integer getRoleId() {
+        return roleId;
+    }
 
-	public String getPwd() {
-		return pwd;
-	}
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
 
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
+    public Integer getLineRoleId() {
+        return lineRoleId;
+    }
 
-	public String getManagerId() {
-		return managerId;
-	}
+    public void setLineRoleId(Integer lineRoleId) {
+        this.lineRoleId = lineRoleId;
+    }
 
-	public void setManagerId(String managerId) {
-		this.managerId = managerId;
-	}
+    public String getPwd() {
+        return pwd;
+    }
 
-	public Date getPostDt() {
-		return postDt;
-	}
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
 
-	public void setPostDt(Date postDt) {
-		this.postDt = postDt;
-	}
+    public String getManagerId() {
+        return managerId;
+    }
 
-	public int getEnable() {
-		return enable;
-	}
+    public void setManagerId(String managerId) {
+        this.managerId = managerId;
+    }
 
-	public void setEnable(int enable) {
-		this.enable = enable;
-	}
+    public Date getPostDt() {
+        return postDt;
+    }
+
+    public void setPostDt(Date postDt) {
+        this.postDt = postDt;
+    }
+
+    public int getEnable() {
+        return enable;
+    }
+
+    public void setEnable(int enable) {
+        this.enable = enable;
+    }
 
 }

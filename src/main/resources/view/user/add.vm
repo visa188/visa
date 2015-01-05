@@ -35,13 +35,13 @@
                         <label class="control_label"><span class="ico_must">*</span>用户权限:</label>
                         <div class="controls">
 								#if(${fn.isAdminRoleId($userRoleId)})
-								<select name="roleId" id="roleId" class="text2" #if(${fn.isLineAdminRole($userRoleId)}) onchange="selectCountry()" #end>
+								<select name="roleId" id="roleId" class="text2" >
                                     #foreach($one in $fn.roleOptions().entrySet())
                                     <option value="$one.key"$fn.selected(${user.roleId}, $one.key)>$one.value.name</option>
 									#end
 								#end
-								#if(${fn.isLineAdminRole($userRoleId)})
-								<select name="lineRoleId" id="roleId" class="text2" #if(${fn.isLineAdminRole($userRoleId)}) onchange="selectCountry()" #end>
+								#if(${fn.isLineAdminRole($userLineRoleId)})
+								<select name="lineRoleId" id="roleId" class="text2" #if(${fn.isLineAdminRole($userLineRoleId)}) onchange="selectCountry()" #end>
 									#foreach($one in $fn.lineRoleOptions().entrySet())
                                     <option value="$one.key"$fn.selected(${user.lineRoleId}, $one.key)>$one.value.name</option>
     								#end
@@ -59,12 +59,27 @@
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">*</span>所属经理:</label>
                         <div class="controls">
-                            <span class="form_item"><select name="managerId" id="managerId" class="text2" placeholder="所属经理">
-                                <option value="">无</option>
-                                #foreach($one in $managerList)
-                                <option value="$one.userId"$fn.selected(${user.managerId}, $one.userId)>$one.userName</option>
-                                #end
-                            </select></span>
+                            <span class="form_item">
+                            
+	                            #if(${fn.isAdminRoleId($userRoleId)})
+	                            	<input type="hidden"   name="lineManagerId"  value="$!{user.lineManagerId}"/>
+									<select name="managerId" id="managerId" class="text2" placeholder="所属经理">
+		                                <option value="">无</option>
+		                                #foreach($one in $managerList)
+		                                <option value="$one.userId"$fn.selected(${user.managerId}, $one.userId)>$one.userName</option>
+		                                #end
+								#end
+								#if(${fn.isLineAdminRole($userLineRoleId)})
+									<input type="hidden"  name="managerId"  value="$!{user.managerId}"/>
+									<select name="lineManagerId" id="managerId" class="text2" placeholder="所属经理">
+		                                <option value="">无</option>
+		                                #foreach($one in $managerList)
+		                                <option value="$one.userId"$fn.selected(${user.lineManagerId}, $one.userId)>$one.userName</option>
+		                                #end
+								#end
+                            	</select>
+	                            
+                            </span>
                         </div>                          
                     </div>
                     <div class="control_group">
