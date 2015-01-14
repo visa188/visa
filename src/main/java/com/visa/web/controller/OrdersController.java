@@ -575,8 +575,12 @@ public class OrdersController {
                 headerCell.setCellValue(p.getPriceYfhk() == null ? "0" : p.getPriceYfhk()
                         .toString());
                 headerCell = row.createCell(18);
-                headerCell.setCellValue(YshkStatusEnum.YSHKSTATUS_MAP.get(p.getYshkStatus())
-                        .getName());
+                if (PriceStatusEnum.PRICESTATUS_MAP.get(p.getYshkStatus()) != null) {
+                    headerCell.setCellValue(YshkStatusEnum.YSHKSTATUS_MAP.get(p.getYshkStatus())
+                            .getName());
+                } else {
+                    headerCell.setCellValue("");
+                }
                 headerCell = row.createCell(19);
                 headerCell.setCellValue(p.getPriceYshk() == null ? "0" : p.getPriceYshk()
                         .toString());
