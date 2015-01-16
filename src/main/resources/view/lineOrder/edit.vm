@@ -923,7 +923,7 @@
                     <div class="control_group">
                       <label class="control_label"><span class="ico_must">*</span>应收单价:</label>
                       <div class="controls">
-                       <span class="form_item"><input $fn.isReadOnly($userLineRoleId) value="$!fn.disPrice($!{lineOrder.price})" name="price" id="price" type="text" class="text1 js_nan" style="width:60px;" maxlength="8" size="8" placeholder="应收单价" onchange="calculatePriceSum();" readonly>元</span>
+                       <span class="form_item"><input $fn.isReadOnly($userLineRoleId) value="$!fn.disPrice($!{lineOrder.price})" name="price" id="price" type="text" class="text1 js_nan" style="width:60px;" maxlength="8" size="8" placeholder="应收单价" onchange="calculatePriceSum();" >元</span>
                       </div>
                     </div>
 					<div class="control_group">
@@ -1372,13 +1372,11 @@
 					#end
                 </div>
               </div>
-              #if($userLineRoleId != $fn.getLineSalesmanRoleId()||$!{lineOrder.status}==0)
               <div class="form_actions">
                     <button type="reset" class="btn btn_reset">重置</button>
                     <input type="hidden" id="status" name="status" value="$!{lineOrder.status}"/>
                     <button type="button" class="btn btn_save" name="tj">提交</button>
                 </div>  
-                #end
             </form>
         </div>
     </div>
