@@ -401,8 +401,8 @@ public class OrdersController {
         if (RoleEnumType.OPERATOR.getId() == user.getRoleId()) {
             orders.setPriceBxys(updateOrders.getPriceBxys());
             orders.setPriceBxyf(updateOrders.getPriceBxyf());
-            orders.setPriceZjys(orders.getPriceZjys().add(updateOrders.getPriceBxys()));
-            orders.setPriceZjyf(orders.getPriceZjyf().add(updateOrders.getPriceBxyf()));
+            // orders.setPriceZjys(orders.getPriceZjys().add(updateOrders.getPriceBxys()));
+            // orders.setPriceZjyf(orders.getPriceZjyf().add(updateOrders.getPriceBxyf()));
         }
 
         orders.setDes(updateOrders.getDes());
