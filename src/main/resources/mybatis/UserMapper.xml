@@ -117,7 +117,7 @@
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    update user set enable = 0
+    delete from user 
     where userId = #{userId,jdbcType=VARCHAR}
   </delete>
   
