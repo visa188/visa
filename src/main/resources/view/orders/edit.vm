@@ -3,7 +3,10 @@
 <script>
     function setBxyf(){
         var priceBxys=jQuery("#priceBxys").val()==''?0:jQuery("#priceBxys").val();
-        jQuery("#priceBxyf").val(priceBxys);
+        var nameListSize=jQuery("#nameListSize").val()==''?0:jQuery("#nameListSize").val();
+        var priceBxyf = 0.0;
+        priceBxyf = Math.round(priceBxys*nameListSize*100)/100;
+        jQuery("#priceBxyf").val(priceBxyf);
     }
     
 	function calculate(){
@@ -20,7 +23,7 @@
 		var grossProfit = 0.0;
 		
 		if(priceYsdj&&priceQtys&&priceQtzc&&nameListSize){
-			priceZjys = Math.round(parseFloat(priceYsdj*100*nameListSize+priceQtys*100+priceBxys*100))/100;
+			priceZjys = Math.round(parseFloat(priceYsdj*100*nameListSize+priceQtys*100+priceBxys*nameListSize*100))/100;
             priceZjyf = Math.round(parseFloat(productPrice*100 * nameListSize+priceQtzc*100+priceBxyf*100))/100;
 			grossProfit = Math.round(parseFloat(priceZjys*100 - priceZjyf*100))/100;
 		}
@@ -149,6 +152,9 @@
 				<input name="seachCustomerName" id="seachCustomerName" type="hidden" value="$!{searchBean.seachCustomerName}"/>
 				<input name="seachCustomerCompany" id="seachCustomerCompany" type="hidden" value="$!{searchBean.seachCustomerCompany}"/>
 				<input name="seachNameList" id="seachNameList" type="hidden" value="$!{searchBean.seachNameList}"/>
+				<input name="orderSeq" id="orderSeq" type="hidden" value="$!{searchBean.orderSeq}"/>
+				<input name="deptId" id="deptId" type="hidden" value="$!{searchBean.deptId}"/>
+				<input name="orderType" id="orderType" type="hidden" value="$!{searchBean.orderType}"/>
 				
 				<input name="customerId" id="customerId" type="hidden" value="$!{orders.customerId}"/>
 				<input name="orderId" id="orderId" type="hidden" value="$!{orders.orderId}"/>
@@ -378,7 +384,7 @@
 		        	</div>
 		        	#end
 		        	<div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>保险应收款:</label>
+                      <label class="control_label"><span class="ico_must">*</span>保险应收单价:</label>
                       <div class="controls">
                        <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxys" name="priceBxys" placeholder="保险应收款" value="#if(${orders.priceBxys})$!{orders.priceBxys}#else 0.00 #end" onchange="setBxyf();calculate()" #if($userRoleId!=${fn.getOperatorRoleId()}||${fn.isAdminRoleId($userRoleId)}) readonly #end></span>
                       </div>
@@ -556,8 +562,10 @@
     	}
     </script>
 	
+	#if($userRoleId==${fn.getFinanceRoleId()}||${fn.isAdminRoleId($userRoleId)})
 	<script>
 		processYfhk();
 		processYshk();
 	</script>
+	#end
 #footer()

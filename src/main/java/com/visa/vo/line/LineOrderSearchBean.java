@@ -8,8 +8,8 @@ import java.io.Serializable;
 public class LineOrderSearchBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String startDate = "";
-    private String endDate = "";
+    private String searchStartDate = "";
+    private String searchEndDate = "";
     private String orderSeq;
     private Integer alarmOrders;
     private String seachCustomerName = "";
@@ -119,20 +119,20 @@ public class LineOrderSearchBean implements Serializable {
         this.orderSeq = orderSeq;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getSearchStartDate() {
+        return searchStartDate;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setSearchStartDate(String searchStartDate) {
+        this.searchStartDate = searchStartDate;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getSearchEndDate() {
+        return searchEndDate;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setSearchEndDate(String searchEndDate) {
+        this.searchEndDate = searchEndDate;
     }
 
 }

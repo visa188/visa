@@ -21,6 +21,7 @@
     						</select></span>
 						</div>
 		        	</div>
+		        	#if(${fn.isLineAdminRole($userLineRoleId)})
 					<div class="control_group">
 	        			<label class="control_label"><span class="ico_must">&nbsp;</span>销售人员:</label>
 						<div class="controls">
@@ -32,6 +33,7 @@
     						</select></span>
 		              	</div>		        			
 		        	</div>
+		        	#end
 		        	<div class="control_group">
 	        			<label class="control_label"><span class="ico_must">*</span>年份:</label>
 						<div class="controls">

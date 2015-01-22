@@ -191,12 +191,21 @@ public class LineOrder {
     public String qtysRemark;
 
     public String garanteeFileUrl;
+    public String garanteeType;
 
     public Date depositLimitDate;
     public Date printTicketLimitDate;
 
     public String procurementSeq;
     public String ysFeeComment;
+
+    public String getGaranteeType() {
+        return garanteeType;
+    }
+
+    public void setGaranteeType(String garanteeType) {
+        this.garanteeType = garanteeType;
+    }
 
     public String getYsFeeComment() {
         return ysFeeComment;

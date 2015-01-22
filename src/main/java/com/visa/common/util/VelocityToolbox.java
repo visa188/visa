@@ -431,6 +431,9 @@ public class VelocityToolbox {
     }
 
     public String getVisaTypeName(String visaType) {
+        if ("1".equals(visaType)) {
+            return "承诺函";
+        }
         if ("2".equals(visaType)) {
             return "归国保证金";
         }

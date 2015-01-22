@@ -2,7 +2,10 @@
 <script>
     function setBxyf(){
         var priceBxys=jQuery("#priceBxys").val()==''?0:jQuery("#priceBxys").val();
-        jQuery("#priceBxyf").val(priceBxys);
+        var nameListSize=jQuery("#nameListSize").val()==''?0:jQuery("#nameListSize").val();
+        var priceBxyf = 0.0;
+        priceBxyf = Math.round(priceBxys*nameListSize*100)/100;
+        jQuery("#priceBxyf").val(priceBxyf);
     }
 	function calculate(){
 		var priceYsdj=jQuery("#priceYsdj").val()==''?0:jQuery("#priceYsdj").val();
@@ -18,7 +21,7 @@
 		var grossProfit = 0.0;
 		
 		if(priceYsdj&&priceBxys&&priceBxyf&&priceQtys&&priceQtzc&&nameListSize){
-			priceZjys = Math.round(parseFloat(priceYsdj*100*nameListSize+priceQtys*100+priceBxys*100))/100;
+			priceZjys = Math.round(parseFloat(priceYsdj*100*nameListSize+priceQtys*100+priceBxys*nameListSize*100))/100;
 			priceZjyf = Math.round(parseFloat(productPrice*100 * nameListSize+priceQtzc*100+priceBxyf*100))/100;
 			grossProfit = Math.round(parseFloat(priceZjys*100 - priceZjyf*100))/100;
 		}
@@ -260,7 +263,7 @@
 		              	</div>		        			
 		        	</div>
 		        	<div class="control_group">
-                      <label class="control_label">保险应收款:</label>
+                      <label class="control_label">保险应收单价:</label>
                       <div class="controls">
                        <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxys" name="priceBxys" value="0" placeholder="保险应收款" onchange="setBxyf();calculate()" ></span>
                       </div>

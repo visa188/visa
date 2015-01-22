@@ -113,8 +113,8 @@ public class LineOrderController {
 
             Map<String, Object> paraMap = new HashMap<String, Object>();
 
-            String startDate = bean.getStartDate();
-            String endDate = bean.getEndDate();
+            String startDate = bean.getSearchStartDate();
+            String endDate = bean.getSearchEndDate();
             String orderSeq = bean.getOrderSeq();
             Integer alarmOrders = bean.getAlarmOrders();
 
@@ -133,18 +133,18 @@ public class LineOrderController {
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 startDate = sdf.format(c.getTime());
-                bean.setStartDate(startDate);
+                bean.setSearchStartDate(startDate);
                 c.add(Calendar.MONTH, 3);
                 c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
                 endDate = sdf.format(c.getTime());
-                bean.setEndDate(endDate);
+                bean.setSearchEndDate(endDate);
             }
 
             if (alarmOrders != null && alarmOrders == 1) {
                 startDate = null;
                 endDate = null;
-                bean.setEndDate(null);
-                bean.setStartDate(null);
+                bean.setSearchEndDate(null);
+                bean.setSearchStartDate(null);
             }
 
             paraMap.put("startDate", StringUtils.isEmpty(startDate) ? null : startDate);
@@ -418,7 +418,7 @@ public class LineOrderController {
      */
     @RequestMapping
     public void edit(@ModelAttribute(Constant.SESSION_USER) User user, Integer orderId,
-            Integer currentPage, ModelMap model) {
+            Integer currentPage, @ModelAttribute LineOrderSearchBean bean, ModelMap model) {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(orderId);
         List<LinesSrvice> lineServiceList = linesServiceDao.selectAllLinesSrvice("linessrvice",
                 orderId);
@@ -447,6 +447,7 @@ public class LineOrderController {
         model.put("airlineList", airlineList);
         LineProduct product = lineProductDao.selectByPrimaryKey(lineOrder.getLineProductId());
         model.put("product", product);
+        model.addAttribute("searchBean", bean);
     }
 
     /**
@@ -459,7 +460,7 @@ public class LineOrderController {
     @SuppressWarnings("unchecked")
     @RequestMapping
     public String update(@ModelAttribute(Constant.SESSION_USER) User user, LineOrderVo lineOrderVo,
-            Integer currentPage) {
+            Integer currentPage, @ModelAttribute LineOrderSearchBean bean, ModelMap model) {
         LineOrder lineOrder = lineOrderDao.selectByPrimaryKey(lineOrderVo.getOrderId());
         List<LinesSrvice> tempServiceListDB = linesServiceDao.selectAllLinesSrvice("linessrvice",
                 lineOrderVo.getOrderId());
@@ -638,6 +639,18 @@ public class LineOrderController {
             }
         }
 
+        model.put("seachCountryName", bean.getSeachCountryName());
+        model.put("salesman", bean.getSalesman());
+        model.put("operator", bean.getOperator());
+        model.put("seachYfhkStatus", bean.getSeachYfhkStatus());
+        model.put("seachYshkStatus", bean.getSeachYshkStatus());
+        model.put("searchStartDate", bean.getSearchStartDate());
+        model.put("searchEndDate", bean.getSearchEndDate());
+        model.put("seachCustomerName", bean.getSeachCustomerName());
+        model.put("seachCustomerCompany", bean.getSeachCustomerCompany());
+        model.put("seachNameList", bean.getSeachNameList());
+        model.put("deptId", bean.getDeptId());
+
         return "redirect:list.do?page=" + currentPage + "&type=" + lineOrderVo.getType();
     }
 
@@ -708,7 +721,8 @@ public class LineOrderController {
      * @param response response
      */
     @RequestMapping
-    public void exportSubmit(HttpServletRequest request, HttpServletResponse response) {
+    public void exportSubmit(@ModelAttribute(Constant.SESSION_USER) User user,
+            HttpServletRequest request, HttpServletResponse response) {
         try {
             String type = request.getParameter("type");
             String year = request.getParameter("year");
@@ -732,7 +746,7 @@ public class LineOrderController {
             OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
             response.setContentType("application/octet-stream");
             this.exportOrderData(toClient, type, year, month, salesman, yfhkStatus, yshkStatus,
-                    customerId, company, operatorId);
+                    customerId, company, operatorId, user);
 
         } catch (IOException e) {
             logger.error(e, e);
@@ -747,10 +761,10 @@ public class LineOrderController {
      */
     private void exportOrderData(OutputStream out, String type, String year, String month,
             String salesmanId, String yfhkStatus, String yshkStatus, String customerId,
-            String company, String operatorId) {
-        String[] titles = { "团队编号", "单号", "线路名称", "出发日期", "结束日期", "操作员", "签证员", "销售", "客户", "报名人数",
-                "应收账款", "已收账款", "未收账款", "毛利合计", "应付账款", "已付账款", "未付账款", "押金", "押金收退情况", "返佣",
-                "返佣收退情况" };
+            String company, String operatorId, User user) {
+        String[] titles = { "团队编号", "单号", "线路名称", "出发日期", "结束日期", "操作员", "签证员", "销售", "客户", "客户公司",
+                "报名人数", "应收账款", "已收账款", "未收账款", "毛利合计", "应付账款", "已付账款", "未付账款", "押金", "押金收退情况",
+                "返佣", "返佣收退情况" };
         HSSFWorkbook wb = new HSSFWorkbook();
         Sheet s = wb.createSheet();
         // header row
@@ -772,6 +786,25 @@ public class LineOrderController {
 
         paraMap.put("yfhkStatus", StringUtils.isEmpty(yfhkStatus) ? null : yfhkStatus);
         paraMap.put("yshkStatus", StringUtils.isEmpty(yshkStatus) ? null : yshkStatus);
+
+        if (LineRoleEnumType.SALESMAN.getId() == user.getLineRoleId()) {
+            paraMap.put("salesmanId", user.getUserId());
+        } else if (LineRoleEnumType.SALEMAN_MANAGER.getId() == user.getLineRoleId()) {
+            paraMap.put("managerId", user.getUserId());
+            paraMap.put("role", "salesmanId");
+        } else if (LineRoleEnumType.OPERATOR_MANAGER.getId() == user.getLineRoleId()) {
+            paraMap.put("operatorManagerId", user.getUserId());
+        } else if (LineRoleEnumType.OPERATOR.getId() == user.getLineRoleId()) {
+            paraMap.put("lineOperatorId", user.getUserId());
+            paraMap.put("serviceOperatorId", user.getUserId());
+        } else if (LineRoleEnumType.VISAOPER.getId() == user.getLineRoleId()) {
+            paraMap.put("visaOperatorId", user.getUserId());
+        } else if (LineRoleEnumType.SIGNOPERATOR.getId() == user.getLineRoleId()) {
+            paraMap.put("signOperatorId", user.getUserId());
+        }
+
+        paraMap.put("userRoleId", user.getLineRoleId());
+
         List<LineOrder> ordersList = lineOrderDao.selectAllLineOrder(paraMap);
 
         if (ordersList != null && ordersList.size() > 0) {
@@ -798,35 +831,37 @@ public class LineOrderController {
                 headerCell = row.createCell(8);
                 headerCell.setCellValue(p.getCustomerName());
                 headerCell = row.createCell(9);
-                headerCell.setCellValue(p.getNameListSize());
+                headerCell.setCellValue(p.getCompany());
                 headerCell = row.createCell(10);
-                headerCell.setCellValue(p.getPriceSum() == null ? "0" : p.getPriceSum().toString());
+                headerCell.setCellValue(p.getNameListSize());
                 headerCell = row.createCell(11);
+                headerCell.setCellValue(p.getPriceSum() == null ? "0" : p.getPriceSum().toString());
+                headerCell = row.createCell(12);
                 headerCell.setCellValue(p.getAlreadyGot() == null ? "0" : p.getAlreadyGot()
                         .toString());
-                headerCell = row.createCell(12);
-                headerCell.setCellValue(p.getNeedGot() == null ? "0" : p.getNeedGot().toString());
                 headerCell = row.createCell(13);
-                headerCell.setCellValue(p.getProfit() == null ? "0" : p.getProfit().toString());
+                headerCell.setCellValue(p.getNeedGot() == null ? "0" : p.getNeedGot().toString());
                 headerCell = row.createCell(14);
+                headerCell.setCellValue(p.getProfit() == null ? "0" : p.getProfit().toString());
+                headerCell = row.createCell(15);
                 headerCell.setCellValue(p.getPaidPriceSum() == null ? "0" : p.getPaidPriceSum()
                         .toString());
-                headerCell = row.createCell(15);
+                headerCell = row.createCell(16);
                 headerCell.setCellValue(p.getAlreadyPaidSum() == null ? "0" : p.getAlreadyPaidSum()
                         .toString());
-                headerCell = row.createCell(16);
+                headerCell = row.createCell(17);
                 headerCell.setCellValue(p.getNeedPaidSum() == null ? "0" : p.getNeedPaidSum()
                         .toString());
-                headerCell = row.createCell(17);
+                headerCell = row.createCell(18);
                 headerCell.setCellValue(p.getLineOrderDeposit() == null ? "0" : p
                         .getLineOrderDeposit().toString());
-                headerCell = row.createCell(18);
+                headerCell = row.createCell(19);
                 headerCell.setCellValue(VisaUtil.getLineOrderDepositStatusName(p
                         .getLineOrderDepositStatus() == null ? 0 : p.getLineOrderDepositStatus()));
-                headerCell = row.createCell(19);
+                headerCell = row.createCell(20);
                 headerCell.setCellValue(p.getCommission() == null ? "0" : p.getCommission()
                         .toString());
-                headerCell = row.createCell(20);
+                headerCell = row.createCell(21);
                 headerCell.setCellValue(VisaUtil.getLineOrderDepositStatusName(p
                         .getCommissionStatus() == null ? 0 : p.getCommissionStatus()));
             }

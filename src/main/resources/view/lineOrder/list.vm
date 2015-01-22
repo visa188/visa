@@ -81,8 +81,8 @@
     				<label for="s_client">订单序号：<input type="text" name="orderSeq" class="s_client searchtx"  value="$!{searchBean.orderSeq}" />
        				</label>
     				#if(!$alarmOrders||$alarmOrders!=1)
-    					<label for="s_ordertime">开始时间：<input id="startDate" name="startDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="开始时间" value="$!{searchBean.startDate}"></label>
-        				<label for="s_ordertime">结束时间：<input id="endDate" name="endDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="结束时间" value="$!{searchBean.endDate}"></label>
+    					<label for="s_ordertime">开始时间：<input id="searchStartDate" name="searchStartDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="开始时间" value="$!{searchBean.searchStartDate}"></label>
+        				<label for="s_ordertime">结束时间：<input id="searchEndDate" name="searchEndDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="结束时间" value="$!{searchBean.searchEndDate}"></label>
         			#end
     			</div>
     			<div class="searchbox">
@@ -152,6 +152,7 @@
                             <th width="">收款状态</th>
                             <th width="">付款状态</th>
                            #end 
+                           <th width="">归国保证</th>
                            #if($userLineRoleId != $fn.getLineSalesmanRoleId() )
                            	<th width="">销售</th>
                            #end
@@ -198,6 +199,7 @@
 	                            <td width="">#if($order.yshkstatus == 3)已收全款#elseif($order.yshkstatus == 2)已收款$!fn.disPrice(${order.alreadyGot})元#else未收款#end</td>
 	                             <td width="">#if($order.yfhkstatus == 3)已付全款#elseif($order.yfhkstatus == 2)已付款$!fn.disPrice(${order.alreadyPaidSum})元#else未付款#end</td>
 								#end
+								<td width="">$!fn.getVisaTypeName($!{order.garanteeType})</td>
 								#if($userLineRoleId != $fn.getLineSalesmanRoleId() )
                            			<td width="">$!{order.salesmanName}</td>
                            		#end

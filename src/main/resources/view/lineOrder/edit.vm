@@ -213,6 +213,18 @@
               <input type="hidden" id="currentPage" name="currentPage" value="$!{currentPage}" />   
               <input name="customerId" id="customerId" type="hidden" value="$!{customer.customerId}"/>
               <input value="$!{lineOrder.lineProductId}" type="hidden" id="lineProductId" name="lineProductId">
+              
+             	<input name="salesman" id="salesman" type="hidden" value="$!{searchBean.salesman}"/>
+				<input name="operator" id="operator" type="hidden" value="$!{searchBean.operator}"/>
+				<input name="seachYfhkStatus" id="seachYfhkStatus" type="hidden" value="$!{searchBean.seachYfhkStatus}"/>
+				<input name="seachYshkStatus" id="seachYshkStatus" type="hidden" value="$!{searchBean.seachYshkStatus}"/>
+				<input name="searchStartDate" id="searchStartDate" type="hidden" value="$!{searchBean.searchStartDate}"/>
+				<input name="searchEndDate" id="searchEndDate" type="hidden" value="$!{searchBean.searchEndDate}"/>
+				<input name="seachCountryName" id="seachCountryName" type="hidden" value="$!{searchBean.seachCountryName}"/>
+				<input name="seachCustomerName" id="seachCustomerName" type="hidden" value="$!{searchBean.seachCustomerName}"/>
+				<input name="seachCustomerCompany" id="seachCustomerCompany" type="hidden" value="$!{searchBean.seachCustomerCompany}"/>
+				<input name="seachNameList" id="seachNameList" type="hidden" value="$!{searchBean.seachNameList}"/>
+				<input name="deptId" id="deptId" type="hidden" value="$!{searchBean.deptId}"/>
                 
               <div class="widget_box">
                 <div class="widget_title">
