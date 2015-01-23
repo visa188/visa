@@ -157,11 +157,13 @@ public class OrdersController {
             BigDecimal sumzjys = (BigDecimal) sumPrice.get("sumzjys");
             BigDecimal sumzjyf = (BigDecimal) sumPrice.get("sumzjyf");
             BigDecimal sumyshk = (BigDecimal) sumPrice.get("sumyshk");
+            BigDecimal sumNameListSize = (BigDecimal) sumPrice.get("sumNameListSize");
             if (sumzjys != null && sumzjyf != null && sumyshk != null) {
                 sumPrice.put("sumzjys", fmt.format(sumzjys));
                 sumPrice.put("sumzjyf", fmt.format(sumzjyf));
                 sumPrice.put("sumwshk", fmt.format(sumzjys.subtract(sumyshk)));
                 sumPrice.put("sumlr", fmt.format(sumzjys.subtract(sumzjyf)));
+                sumPrice.put("sumNameListSize", sumNameListSize.toString());
             }
         }
 

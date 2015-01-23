@@ -107,7 +107,7 @@
                     </dl>
                 </li>
 				#end
-				#if($userLineRoleId==0||$userLineRoleId>=6)
+				#if($userLineRoleId&&($userLineRoleId==0||$userLineRoleId>=6))
 				<li class="order_mng#if($topNav==10) open#end">
                     <a class="order_mng_tab" href="/lineOrder/list.do?page=1&type=1"><span class="ico_order"></span><span class="sidenav_text">线路订单管理</span><span class="ico_fold"></span></a>
                     <dl>

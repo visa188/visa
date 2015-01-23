@@ -92,6 +92,7 @@
 	            		<td>总计应收:</td><td>$!{sumPrice.sumzjys}</td>
 	            		<td>总计应付:</td><td>$!{sumPrice.sumzjyf}</td>
 	            		<td>毛利:</td><td>$!{sumPrice.sumlr}</td>
+	            		<td>总人数:</td><td>$!{sumPrice.sumNameListSize}</td>
 	            		<!--td>总计未收:</td><td>$!{sumPrice.sumwshk}</td--!>
 	            	</tr>
 	            </tbody>
