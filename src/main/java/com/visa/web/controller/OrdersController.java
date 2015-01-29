@@ -392,6 +392,8 @@ public class OrdersController {
             orders.setPriceYsdj(updateOrders.getPriceYsdj());
             orders.setPriceQtzc(updateOrders.getPriceQtzc());
             orders.setPriceQtys(updateOrders.getPriceQtys());
+            orders.setPriceQtysBz(updateOrders.getPriceQtysBz());
+            orders.setPriceQtzcBz(updateOrders.getPriceQtzcBz());
 
             // MODIFY：财务允许修改总计应收
             orders.setPriceZjys(updateOrders.getPriceZjys());
