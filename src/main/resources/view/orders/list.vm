@@ -109,14 +109,14 @@
 							<th width="">订单类型</th>
 							<th width="">销售</th>
 	                        <th width="">客户姓名</th>
-							<th width="">客户公司</th>
+							<!--th width="">客户公司</th-->
 							<th width="">客人数量</th>
 	                        <th width="">签证国家</th>
 	                        <th width="">下单日期</th>
 	                        <th width="">总计应收</th>
 	                        <th width="">总计应付</th>
 							#if($userRoleId!=${fn.getFinanceRoleId()})
-	                        <th width="">送签日期</th>
+	                        <!--th width="">送签日期</th-->
 	                        <th width="">目前状态</th>
 							#end
 	                        <th width="">操作员</th>
@@ -139,14 +139,14 @@
 								#end
 								<td>$!{order.salesmanName}</td>
     	                        <td>$!{order.customerName}</td>
-    	                        <td title="$!{order.customerCompany}">${fn.shortenStr(${order.customerCompany},8)}</td>
+    	                        <!--td title="$!{order.customerCompany}">${fn.shortenStr(${order.customerCompany},8)}</td-->
 								<td>$!{order.nameListSize}人</td>
     	                        <td>#if($!{order.type}!=1)$!{order.countryName}#end</td>
     	                        <td>$fn.format($!{order.orderDate},'yyyy-MM-dd')</td>
 								<td>$!{order.priceZjys}</td>
 								<td>$!{order.priceZjyf}</td>
 								#if($userRoleId!=${fn.getFinanceRoleId()})
-    	                        <td>$fn.format($!{order.signDate},'yyyy-MM-dd')</td>
+    	                        <!--td>$fn.format($!{order.signDate},'yyyy-MM-dd')</td-->
     	                        <td>$!{order.operatorDes}</td>
 								#end
     	                        <td>$!{order.operatorName}</td>
