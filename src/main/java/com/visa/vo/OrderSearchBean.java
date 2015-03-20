@@ -22,6 +22,7 @@ public class OrderSearchBean implements Serializable {
     private String orderSeq = "";
     private String deptId = "";
     private String orderType = "";
+    private String seachOperatorDes = "";
 
     public String getOrderType() {
         return orderType;
@@ -141,5 +142,13 @@ public class OrderSearchBean implements Serializable {
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
+
+	public String getSeachOperatorDes() {
+		return seachOperatorDes;
+	}
+
+	public void setSeachOperatorDes(String seachOperatorDes) {
+		this.seachOperatorDes = seachOperatorDes;
+	}
 
 }

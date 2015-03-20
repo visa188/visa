@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 public class SpringContextUtil implements ApplicationContextAware {
     private static ApplicationContext context = null;
 
-    @Override
     public void setApplicationContext(ApplicationContext context) {
         SpringContextUtil.context = context;
     }

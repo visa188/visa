@@ -13,4 +13,5 @@ public interface DepartmentDao {
 
     int delete(String name);
 
+    void update(Department department);
 }

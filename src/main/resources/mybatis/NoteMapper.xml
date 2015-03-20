@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.visa.dao.NoteDao" >
+  
+  <select id="count" resultType="java.lang.Integer">
+    select count(*) from note 
+  </select>
+  
+  <select id="selectBySaleId" resultType="Note" parameterType="java.util.Map">
+    select * from note where op = #{saleId} limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultType="Note" parameterType="java.util.Map">
+    select * from note limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
+  </select>
+  
+ <insert id="insert" parameterType="Note"  useGeneratedKeys="true" keyProperty="noteId">
+    insert into note (orderSeq, content, op,createDate )
+    values (#{orderSeq,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR}, #{op,jdbcType=VARCHAR},now())
+  </insert>
+  
+</mapper>

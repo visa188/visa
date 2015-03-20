@@ -1,0 +1,255 @@
+#header(11,38,"订单信息管理")
+<script>
+	function updateOrder(formUrl){
+		jQuery("#form1").attr("action",formUrl);
+		jQuery("#form1").submit();
+		jQuery("#form1").attr("action","/orders/list.do");
+	}
+	
+	
+	
+</script>
+	<div class="miancon">
+		<div class="maincon_title">
+			<span class="ico_order_w"></span><h2>订单信息管理</h2>
+			#if($userRoleId==${fn.getSalesmanRoleId()})
+				<div class="left" style="margin-left: 10px;"><a class="ico_order_add" title="新增订单信息" href="/orders/add.do">+</a></div>
+			#end
+		</div>
+		<div class="maincon_fluid">
+		<form id="form1" name="form1" action="/orders/list.do" method="post" class="form_horizontal">
+			<input type="hidden" id="page" name="page" value="1">
+    		<div class="searchbox">
+    			<label for="s_client">订单类型：<select name="orderType" id="orderType" class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+    					<option value="" selected="selected">全部</option>
+						<option value="0" #if(${searchBean.orderType}==0) selected="selected" #end>签证订单</option>
+						<option value="2" #if(${searchBean.orderType}==2) selected="selected" #end>机票订单</option>
+						<option value="1" #if(${searchBean.orderType}==1) selected="selected" #end>单项产品订单</option>
+					</select>
+   				</label>
+   				</label>
+				#if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
+					<label for="s_client">所属部门：<select name="deptId" id="deptId" class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+    						<option value="" selected="selected">全部</option>
+    						#foreach($one in $deptList)
+    							<option value="$one.name"$fn.selected(${searchBean.deptId}, $one.name)>$one.name</option>
+                            #end
+    					</select>
+    				</label>
+				
+    				<label for="s_client">所属销售：<select name="salesman" id="salesman"  class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+    						<option value="" selected="selected">全部</option>
+    						#foreach($one in $salesmanList)
+    							<option value="$one.userId"$fn.selected(${searchBean.salesman}, $one.userId)>$one.userName</option>
+                            #end
+    					</select>
+    				</label>
+    				
+					<label for="s_client">所属操作：<select name="operator" id="operator"  class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+    						<option value="" selected="selected">全部</option>
+    						#foreach($one in $operatorList)
+    							<option value="$one.userId"$fn.selected(${searchBean.operator}, $one.userId)>$one.userName</option>
+                            #end
+    					</select>
+    				</label>
+				#end
+				
+			</div>
+			<div class="searchbox">
+				<label for="s_ordertime">开始时间：<input id="startDate" name="startDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="开始时间" value="$!{searchBean.startDate}"></label>
+    			<label for="s_ordertime">结束时间：<input id="endDate" name="endDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="结束时间" value="$!{searchBean.endDate}"></label>
+				<label for="s_client">付款状态：<select name="seachYfhkStatus" id="seachYfhkStatus"  class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+						<option value="" selected="selected">全部</option>
+						<option value="1" #if(${searchBean.seachYfhkStatus}==1) selected="selected" #end>未付款</option>
+						<option value="2" #if(${searchBean.seachYfhkStatus}==2) selected="selected" #end>部分付款</option>
+						<option value="3" #if(${searchBean.seachYfhkStatus}==3) selected="selected" #end>已付全款</option>
+					</select>
+				</label>
+				<label for="s_client">收款状态：<select name="seachYshkStatus" id="seachYshkStatus"  class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+						<option value="" selected="selected">全部</option>
+						<option value="1" #if(${searchBean.seachYshkStatus}==1) selected="selected" #end>未收款</option>
+						<option value="2" #if(${searchBean.seachYshkStatus}==2) selected="selected" #end>部分收款</option>
+						<option value="3" #if(${searchBean.seachYshkStatus}==3) selected="selected" #end>已收全款</option>
+					</select>
+				</label>
+    		</div>
+			<div class="searchbox">
+				<label for="s_client">国家名称：<input id="seachCountryName" name="seachCountryName" type="text" class="s_client searchtx" placeholder="国家" value="$!{searchBean.seachCountryName}"></label>
+    			<label for="s_client">客户姓名：<input id="seachCustomerName" name="seachCustomerName" type="text" class="s_client searchtx" placeholder="客户姓名" value="$!{searchBean.seachCustomerName}"></label>
+				<label for="s_client">客户公司：<input id="seachCustomerCompany" name="seachCustomerCompany" type="text" class="s_client searchtx" placeholder="客户姓名" value="$!{searchBean.seachCustomerCompany}"></label>
+    			<label for="s_guest">客人姓名：<input id="seachNameList" name="seachNameList" type="text" class="s_guest searchtx" placeholder="客人姓名" value="$!{searchBean.seachNameList}"></label>
+			</div>
+			<div class="searchbox">
+			<label for="s_client">订单序号：<input type="text"  class="s_guest searchtx" name="orderSeq" value="$!{searchBean.orderSeq}"  placeholder="订单序号"/></label>	
+			<label for="s_client">目前状态：<select name="seachOperatorDes" id="seachOperatorDes" class="text2" style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+                          <option value="" selected="selected">全部</option>
+                          <option value="等待材料补充"  #if(${searchBean.seachOperatorDes}=="等待材料补充") selected #end>等待材料补充</option>
+                          <option value="待进使馆/面试" #if(${searchBean.seachOperatorDes}=="待进使馆/面试") selected #end>待进使馆/面试</option>
+                          <option value="已进使馆/面试" #if(${searchBean.seachOperatorDes}=="已进使馆/面试") selected #end>已进使馆/面试</option>
+                          <option value="签证出签"     #if(${searchBean.seachOperatorDes}=="签证出签") selected #end>签证出签</option>
+                          <option value="签证拒签"     #if(${searchBean.seachOperatorDes}=="签证拒签") selected #end>签证拒签</option>
+                          <option value="订单取消"     #if(${searchBean.seachOperatorDes}=="订单取消") selected #end>订单取消</option>
+                 </select>
+			</label>	
+			<label for="searchbtn"><input id="searchbtn" type="submit" name="" class="searchbtn" value="搜索" ></label>	
+			</div>
+		</form>
+		#if($sumPrice)
+		<hr class="hr_a">
+		<div class="widget_mng_box">
+		#if($userRoleId==${fn.getSalesmanRoleId()} || ${fn.isAdminRoleId($userRoleId)})
+			<table cellpadding="0" cellspacing="0" width="800" class="table_data tcenter">
+				<tbody>
+	            	<tr>
+	            		<td>总计应收:</td><td>$!{sumPrice.sumzjys}</td>
+	            		<td>总计应付:</td><td>$!{sumPrice.sumzjyf}</td>
+	            		<td>毛利:</td><td>$!{sumPrice.sumlr}</td>
+	            		<td>总人数:</td><td>$!{sumPrice.sumNameListSize}</td>
+	            		<!--td>总计未收:</td><td>$!{sumPrice.sumwshk}</td--!>
+	            	</tr>
+	            </tbody>
+			</table>
+		#end
+		</div>
+		#end
+		<hr class="hr_a">
+			<div class="widget_mng_box">
+				<table cellpadding="0" cellspacing="0" width="100%" class="table_data tcenter">
+	                <thead>
+	                    <tr>
+							<th width="">订单号</th>
+							<th width="">订单类型</th>
+							<th width="">销售</th>
+	                        <th width="">客户姓名</th>
+							<th width="">客人数量</th>
+	                        <th width="">签证国家</th>
+	                        <th width="">下单日期</th>
+	                        <th width="">总计应收</th>
+	                        <th width="">总计应付</th>
+							<th width="">送签日期</th>
+	                        <th width="">目前状态</th>
+	                        <th width="">操作员</th>
+							<th width="">付款状态</th>
+							<th width="">收款状态</th>
+							<th width="">审核状态</th>
+	                        <th width="">修改</th>
+	                        <th width=""><span id="all">全选</span><input type="checkbox" name="all"  onclick="selectAll(this)"/></th>
+	                        <th width="">审核</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+						#foreach($order in $orderList)
+    	                    <tr>
+								<td  class="test">$!{order.orderSeq}</td>
+								#if($!{order.type}==1)
+									<td>单项产品</td>
+								#elseif($!{order.type}==2)
+									<td>机票</td>
+								#else
+									<td>签证</td>
+								#end
+								<td>$!{order.salesmanName}</td>
+    	                        <td>$!{order.customerName}</td>
+								<td>$!{order.nameListSize}人</td>
+    	                        <td>#if($!{order.type}!=1)$!{order.countryName}#end</td>
+    	                        <td>$fn.format($!{order.orderDate},'yyyy-MM-dd')</td>
+								<td>$!{order.priceZjys}</td>
+								<td>$!{order.priceZjyf}</td>
+								<td>$fn.format($!{order.signDate},'yyyy-MM-dd')</td>
+    	                        <td>$!{order.operatorDes}</td>
+    	                        <td>$!{order.operatorName}</td>
+    	                        <td>$fn.getPriceStatus($!{order.yfhkStatus})#if($!{order.yfhkStatus}==2) $!{order.priceYfhk}元 #end</td>
+								<td>$fn.getYshkStatus($!{order.yshkStatus})#if($!{order.yshkStatus}==2) $!{order.priceYshk}元 #end</td>
+								<td>
+								   #if($!{order.spStatus}==1)
+								        	<span style="color:red">已审批</span>
+								   #else
+								                              未审批
+								   #end
+								 </td>
+    	                        <td><a class="ico_edit_g" href="javascript:updateOrder('/orders/edit.do?orderId=$!{order.orderId}&currentPage=${page}')"></a></td>
+    	                        <td> <input type="checkbox" name="checkbox" /></td>
+    	                        
+    	                        #if($velocityCount == 1)
+    	                        <td rowSpan="20"> <input type="button" value="审核" onclick="ajaxSubmit();"/></td>
+    	                        #end
+    	                    </tr>
+						#end
+	                </tbody>
+	            </table>
+	        </div>
+			#generatePage()
+			</div>
+	</div>
+	
+<script>
+
+
+   function ajaxSubmit(){
+       
+      var checks = $("input[name='checkbox']:checked");
+      if(checks.length == 0){
+          alert("请选择一个订单,然后再审核!");
+          return;
+      }
+      var vs = "";
+      
+      jQuery.map(checks, function(obj){
+      
+      //       var flag = $(obj).prop("checked");         
+     //         
+    //         if(flag){
+             
+               var values =$(obj).parent("td").parent("tr").find(".test").text();
+               vs += (values + ",");
+        //     }
+      })
+
+     jQuery.get("/orders/ajaxSubmit.do", { vstring : vs},function(data){
+   		  
+   		  if("yes" == data){
+   		      alert("审批成功!");
+   		  }
+  	  });
+             
+       
+   
+   }
+   
+	
+	function selectAll(obj){
+	
+	    var checks = $("input[name='checkbox']");
+	    
+        if($(obj).prop("checked")){
+	    
+	      checks.each(function(index){
+	    
+	          var flag = $(this).prop("checked");
+	         
+	          if(!flag){
+	          
+	              $(this).prop("checked", "true");
+	          }
+	    
+	       })
+	    
+	    }else{
+	    
+	      checks.each(function(index){
+	    
+	          var flag = $(this).prop("checked");
+	          
+	          if(flag){
+	          
+	              $(this).prop("checked", false);
+	          }
+	    
+	       })
+	    }
+	
+	    }
+	
+	</script>
+	
+#footer()

@@ -79,6 +79,16 @@
 			</div>
 			<div class="searchbox">
 			<label for="s_client">订单序号：<input type="text"  class="s_guest searchtx" name="orderSeq" value="$!{searchBean.orderSeq}"  placeholder="订单序号"/></label>	
+			<label for="s_client">目前状态：<select name="seachOperatorDes" id="seachOperatorDes" class="text2" style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+                          <option value="" selected="selected">全部</option>
+                          <option value="等待材料补充"  #if(${searchBean.seachOperatorDes}=="等待材料补充") selected #end>等待材料补充</option>
+                          <option value="待进使馆/面试" #if(${searchBean.seachOperatorDes}=="待进使馆/面试") selected #end>待进使馆/面试</option>
+                          <option value="已进使馆/面试" #if(${searchBean.seachOperatorDes}=="已进使馆/面试") selected #end>已进使馆/面试</option>
+                          <option value="签证出签"     #if(${searchBean.seachOperatorDes}=="签证出签") selected #end>签证出签</option>
+                          <option value="签证拒签"     #if(${searchBean.seachOperatorDes}=="签证拒签") selected #end>签证拒签</option>
+                          <option value="订单取消"     #if(${searchBean.seachOperatorDes}=="订单取消") selected #end>订单取消</option>
+                 </select>
+			</label>	
 			<label for="searchbtn"><input id="searchbtn" type="submit" name="" class="searchbtn" value="搜索" ></label>	
 			</div>
 		</form>
@@ -115,11 +125,13 @@
 	                        <th width="">总计应收</th>
 	                        <th width="">总计应付</th>
 							#if($userRoleId!=${fn.getFinanceRoleId()})
+							<th width="">送签日期</th>
 	                        <th width="">目前状态</th>
 							#end
 	                        <th width="">操作员</th>
 							<th width="">付款状态</th>
 							<th width="">收款状态</th>
+							<th width="">审核状态</th>
 	                        <th width="">修改</th>
 	                        #if(${fn.isAdminRoleId($userRoleId)})<th width="">删除</th>#end
 	                    </tr>
@@ -143,11 +155,19 @@
 								<td>$!{order.priceZjys}</td>
 								<td>$!{order.priceZjyf}</td>
 								#if($userRoleId!=${fn.getFinanceRoleId()})
+								<td>$fn.format($!{order.signDate},'yyyy-MM-dd')</td>
     	                        <td>$!{order.operatorDes}</td>
 								#end
     	                        <td>$!{order.operatorName}</td>
     	                        <td>$fn.getPriceStatus($!{order.yfhkStatus})#if($!{order.yfhkStatus}==2) $!{order.priceYfhk}元 #end</td>
 								<td>$fn.getYshkStatus($!{order.yshkStatus})#if($!{order.yshkStatus}==2) $!{order.priceYshk}元 #end</td>
+								<td>
+								   #if($!{order.spStatus}==1)
+								        	<span style="color:red">已审批</span>
+								   #else
+								                              未审批
+								   #end
+								 </td>
     	                        <td><a class="ico_edit_g" href="javascript:updateOrder('/orders/edit.do?orderId=$!{order.orderId}&currentPage=${page}')"></a></td>
     	                        #if(${fn.isAdminRoleId($userRoleId)})<td><a class="ico_delete_r" onclick="return confirm('是否将此订单删除?')" href="/orders/delete.do?orderId=$!{order.orderId}&page=${page}"></a></td>#end
     	                    </tr>

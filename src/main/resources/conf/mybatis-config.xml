@@ -23,5 +23,6 @@
 		<typeAlias alias="LineProductVo" type="com.visa.vo.line.LineProductVo" />
 		<typeAlias alias="OperateLogVo" type="com.visa.vo.line.OperateLogVo" />
 		<typeAlias alias="FeeDetail" type="com.visa.po.line.FeeDetail" />
+		<typeAlias alias="Note" type="com.visa.po.Note" />
 	</typeAliases>
 </configuration>

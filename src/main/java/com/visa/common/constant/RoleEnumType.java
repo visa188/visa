@@ -29,7 +29,11 @@ public enum RoleEnumType {
     /**
      * 财务
      */
-    FINANCE(5, "签证财务");
+    FINANCE(5, "签证财务"),
+    /**
+     * 财务经理
+     */
+    FINANCEMANAGER(8, "财务经理");
 
     private int id;
     private String name;

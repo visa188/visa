@@ -14,8 +14,12 @@ public interface OrdersDao {
     List<Orders> selectByExample(Orders example);
 
     Orders selectByPrimaryKey(Integer orderId);
+    
+    Orders selectByOrderSeq(String orderSeq);
 
     int updateByPrimaryKey(Orders record);
+    
+    int updateByOrderSeq(Orders record);
 
     int count(Map<String, Object> paraMap);
 

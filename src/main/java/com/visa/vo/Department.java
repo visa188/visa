@@ -5,7 +5,8 @@ import java.util.Date;
 public class Department {
 	private Date createData;
 	private String name;
-
+	private String oldName;
+	
 	public Date getCreateData() {
 		return createData;
 	}
@@ -22,4 +23,22 @@ public class Department {
 		this.name = name;
 	}
 
+	public String getOldName() {
+		return oldName;
+	}
+
+	public void setOldName(String oldName) {
+		this.oldName = oldName;
+	}
+
+	public Department(String name, String oldName) {
+		super();
+		this.name = name;
+		this.oldName = oldName;
+	}
+
+	public Department() {
+		super();
+	}
+	
 }

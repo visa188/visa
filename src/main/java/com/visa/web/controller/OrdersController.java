@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,6 +29,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.google.common.base.Splitter;
@@ -46,12 +47,14 @@ import com.visa.dao.AreaDao;
 import com.visa.dao.CountryDao;
 import com.visa.dao.CustomerDao;
 import com.visa.dao.DepartmentDao;
+import com.visa.dao.NoteDao;
 import com.visa.dao.OrdersDao;
 import com.visa.dao.ProductDao;
 import com.visa.dao.SeqDao;
 import com.visa.dao.UserDao;
 import com.visa.po.Area;
 import com.visa.po.Customer;
+import com.visa.po.Note;
 import com.visa.po.Orders;
 import com.visa.po.Product;
 import com.visa.po.User;
@@ -83,6 +86,8 @@ public class OrdersController {
     private SeqDao seqDao;
     @Resource
     private DepartmentDao deptDao;
+    @Resource
+    private NoteDao noteDao;
 
     /**
      * @param user user
@@ -117,6 +122,7 @@ public class OrdersController {
         String orderSeq = bean.getOrderSeq();
         String deptId = bean.getDeptId();
         String orderType = bean.getOrderType();
+        String operatorDes = bean.getSeachOperatorDes();
 
         if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate)) {
             // 如果未选择起止日期，默认为本月一号到当日
@@ -146,6 +152,7 @@ public class OrdersController {
         paraMap.put("orderSeq", StringUtils.isEmpty(orderSeq) ? null : orderSeq);
         paraMap.put("deptId", StringUtils.isEmpty(deptId) ? null : deptId);
         paraMap.put("orderType", StringUtils.isEmpty(orderType) ? null : orderType);
+        paraMap.put("operatorDes", StringUtils.isEmpty(operatorDes) ? null : operatorDes);
 
         // 记录总条数
         recordCount = ordersDao.count(paraMap);
@@ -196,23 +203,186 @@ public class OrdersController {
         model.addAttribute("searchBean", bean);
         model.addAttribute("sumPrice", sumPrice);
     }
+    
+    @RequestMapping
+    public void listmanager(@ModelAttribute(Constant.SESSION_USER) User user, Integer page,
+    		ModelMap model, @ModelAttribute OrderSearchBean bean) {
+    	int recordCount = 0;
+    	// 每页数据数
+    	Map<String, Object> paraMap = new HashMap<String, Object>();
+    	if (RoleEnumType.SALESMAN.getId() == user.getRoleId()) {
+    		paraMap.put("salesmanId", user.getUserId());
+    	} else if (RoleEnumType.MANAGER.getId() == user.getRoleId()) {
+    		paraMap.put("managerId", user.getUserId());
+    	} else if (RoleEnumType.OPERATOR.getId() == user.getRoleId()) {
+    		paraMap.put("operatorId", user.getUserId());
+    	}
+    	
+    	String seachCountryName = bean.getSeachCountryName();
+    	String customerName = bean.getSeachCustomerName();
+    	String companyName = bean.getSeachCustomerCompany();
+    	String nameList = bean.getSeachNameList();
+    	String startDate = bean.getStartDate();
+    	String endDate = bean.getEndDate();
+    	String yfhkStatus =  "3" ;//bean.getSeachYfhkStatus();
+    	bean.setSeachYfhkStatus("3");
+    	String yshkStatus =  "3" ;//bean.getSeachYshkStatus();
+    	bean.setSeachYshkStatus("3");
+    	String salesman = bean.getSalesman();
+    	String operator = bean.getOperator();
+    	String orderSeq = bean.getOrderSeq();
+    	String deptId = bean.getDeptId();
+    	String orderType = bean.getOrderType();
+    	String operatorDes = bean.getSeachOperatorDes();
+    	
+    	if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate)) {
+    		// 如果未选择起止日期，默认为本月一号到当日
+    		Calendar c = Calendar.getInstance();
+    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    		endDate = sdf.format(c.getTime());
+    		bean.setEndDate(endDate);
+    		c.set(Calendar.DAY_OF_MONTH, 1);
+    		startDate = sdf.format(c.getTime());
+    		bean.setStartDate(startDate);
+    	}
+    	
+    	paraMap.put("operator", "like");
+    	paraMap.put("countryName", StringUtils.isEmpty(seachCountryName) ? null : "%"
+    			+ seachCountryName + "%");
+    	paraMap.put("customerName", StringUtils.isEmpty(customerName) ? null : "%" + customerName
+    			+ "%");
+    	paraMap.put("companyName", StringUtils.isEmpty(companyName) ? null : "%" + companyName
+    			+ "%");
+    	paraMap.put("nameList", StringUtils.isEmpty(nameList) ? null : "%" + nameList + "%");
+    	paraMap.put("startDate", StringUtils.isEmpty(startDate) ? null : startDate);
+    	paraMap.put("endDate", StringUtils.isEmpty(endDate) ? null : endDate);
+    	paraMap.put("yfhkStatus", StringUtils.isEmpty(yfhkStatus) ? null : yfhkStatus);
+    	paraMap.put("yshkStatus", StringUtils.isEmpty(yshkStatus) ? null : yshkStatus);
+    	paraMap.put("salesmanForSearch", StringUtils.isEmpty(salesman) ? null : salesman);
+    	paraMap.put("operatorForSearch", StringUtils.isEmpty(operator) ? null : operator);
+    	paraMap.put("orderSeq", StringUtils.isEmpty(orderSeq) ? null : orderSeq);
+    	paraMap.put("deptId", StringUtils.isEmpty(deptId) ? null : deptId);
+    	paraMap.put("orderType", StringUtils.isEmpty(orderType) ? null : orderType);
+    	paraMap.put("operatorDes", StringUtils.isEmpty(operatorDes) ? null : operatorDes);
+    	
+    	// 记录总条数
+    	recordCount = ordersDao.count(paraMap);
+    	
+    	// 总计应收和总计应付汇总
+    	Map<String, Object> sumPrice = ordersDao.sumPrice(paraMap);
+    	if (sumPrice != null) {
+    		DecimalFormat fmt = new DecimalFormat("#,####,####,####.00");
+    		BigDecimal sumzjys = (BigDecimal) sumPrice.get("sumzjys");
+    		BigDecimal sumzjyf = (BigDecimal) sumPrice.get("sumzjyf");
+    		BigDecimal sumyshk = (BigDecimal) sumPrice.get("sumyshk");
+    		BigDecimal sumNameListSize = (BigDecimal) sumPrice.get("sumNameListSize");
+    		if (sumzjys != null && sumzjyf != null && sumyshk != null) {
+    			sumPrice.put("sumzjys", fmt.format(sumzjys));
+    			sumPrice.put("sumzjyf", fmt.format(sumzjyf));
+    			sumPrice.put("sumwshk", fmt.format(sumzjys.subtract(sumyshk)));
+    			sumPrice.put("sumlr", fmt.format(sumzjys.subtract(sumzjyf)));
+    			sumPrice.put("sumNameListSize", sumNameListSize.toString());
+    		}
+    	}
+    	
+    	int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page,
+    			Constant.PAGE_OFFSET, model);
+    	paraMap.put("begin", recordRange[0]);
+    	paraMap.put("pageCount", Constant.PAGE_COUNT);
+    	
+    	List<Orders> orderList = ordersDao.selectByPage(paraMap);
+    	
+    	model.addAttribute("orderList", orderList);
+    	List<User> salesmanList = userDao.selectByRoleId(RoleEnumType.SALESMAN.getId());
+    	List<User> tempSalesmanList = null;
+    	if (!StringUtils.isEmpty(deptId)) {
+    		tempSalesmanList = new ArrayList<User>();
+    		for (User man : salesmanList) {
+    			if (deptId.equals(man.getDeptId())) {
+    				tempSalesmanList.add(man);
+    			}
+    		}
+    	} else {
+    		tempSalesmanList = salesmanList;
+    	}
+    	model.put("salesmanList", tempSalesmanList);
+    	List<User> operatorList = userDao.selectByRoleId(RoleEnumType.OPERATOR.getId());
+    	model.put("operatorList", operatorList);
+    	List<Department> deptList = deptDao.selectAll();
+    	model.put("deptList", deptList);
+    	model.addAttribute("role", user.getRoleId());
+    	model.addAttribute("searchBean", bean);
+    	model.addAttribute("sumPrice", sumPrice);
+    }
 
+    @RequestMapping
+    @ResponseBody
+    public String ajaxSubmit(@RequestParam("vstring") String vstring, HttpServletResponse response)throws Exception{
+    	
+        if("".equals(vstring)){
+        	return "no";
+        }else{
+        	
+        	String[] orderSeq = vstring.split(",");
+        	
+        	for(String seq : orderSeq){
+        		
+        		Orders order = ordersDao.selectByOrderSeq(seq);
+        		order.setSpStatus("1");
+        		ordersDao.updateByOrderSeq(order);
+        	}
+        	return "yes";
+        }
+    	
+    }
+    
+    /**
+     * @param user user
+     * @param model model
+     */
+    @RequestMapping
+    public void note(@ModelAttribute(Constant.SESSION_USER) User user,String salename ,int page, ModelMap model) {
+
+    	List<Note> notes = null;
+    	int recordCount = 0;
+    	
+        Map<String, Object> paraMap = new HashMap<String, Object>();
+    	recordCount = noteDao.count();
+    	
+    	int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page,
+    			Constant.PAGE_OFFSET, model);
+    	paraMap.put("begin", recordRange[0]);
+    	paraMap.put("pageCount", Constant.PAGE_COUNT);
+    	
+        List<User> salesmanList = new ArrayList<User>();
+        if(null == salename || "".equals(salename)){
+        	notes = noteDao.selectAll(paraMap);
+        }else{
+        	paraMap.put("salename", salename);
+        	notes = noteDao.selectBySaleId(paraMap);
+        }
+        
+        salesmanList.addAll(userDao.selectByRoleId(RoleEnumType.OPERATOR.getId()));
+        model.put("salesmanList", salesmanList);
+    	model.put("notes", notes);
+    	model.put("salename", salename);
+    }
     /**
      * @param user user
      * @param model model
      */
     @RequestMapping
     public void add(@ModelAttribute(Constant.SESSION_USER) User user, Integer type, ModelMap model) {
-        String userId = user.getUserId();
-        List<Customer> customerList = customerDao.selectAllBySalesmanId(userId);
-        List<Area> areaList = areaDao.selectAllArea();
-        model.put("areaList", areaList);
-        model.put("customerList", customerList);
-        if (type == null) {
-            model.put("type", 0);
-        } else {
-            model.put("type", type);
-        }
+    	String userId = user.getUserId();
+    	List<Customer> customerList = customerDao.selectAllBySalesmanId(userId);
+    	List<Area> areaList = areaDao.selectAllArea();
+    	model.put("areaList", areaList);
+    	model.put("customerList", customerList);
+    	if (type == null) {
+    		model.put("type", 0);
+    	} else {
+    		model.put("type", type);
+    	}
     }
 
     /**
@@ -258,6 +428,7 @@ public class OrdersController {
         orders.setStatus(0);
         orders.setPtTime(new Date());
         int orderSeq = seqDao.select("order");
+        orders.setSpStatus("0");
         String prefix = StringUtil.paddingZeroToLeft(String.valueOf(orderSeq), 6);
         orders.setOrderSeq(prefix);
         ordersDao.insert(orders);
@@ -319,6 +490,18 @@ public class OrdersController {
         }
         model.put("page", currentPage);
         model.addAttribute("orders", orders);
+        
+        BigDecimal fukuang =  orders.getPriceYfhk();
+        BigDecimal yikuang = orders.getPriceYshk();
+        
+        if(null != fukuang && null != yikuang){
+            DecimalFormat df = new DecimalFormat("#.00");
+            double maoli = yikuang.subtract(fukuang).doubleValue();
+            model.addAttribute("maoli", df.format(maoli));
+        }else{
+        	model.addAttribute("maoli", 0);
+        }
+        
         model.addAttribute("searchBean", bean);
     }
 
@@ -380,6 +563,41 @@ public class OrdersController {
             if (updateOrders.getYfhkStatus() == PriceStatusEnum.DONE.getId()) {
                 orders.setStatus(1);
             }
+            
+            Note note = new Note();
+            String content = user.getUserName() + "把";
+            Map<Integer ,String> map = new HashMap<Integer, String>();
+            map.put(1, "未付款");
+            map.put(2, "部分付款");
+            map.put(3, "已付款");
+            
+            
+            //修改的日记信息
+            if(orders.getYfhkStatus() != updateOrders.getYfhkStatus()){
+            	content += "收款状态从‘" + map.get(orders.getYfhkStatus()) + "’改成了‘" + map.get(updateOrders.getYfhkStatus()) + ", ";
+            }
+            
+            if(orders.getPriceYfhk() == null || !orders.getPriceYfhk().equals(updateOrders.getPriceYfhk())){
+            	content += "已收货款从" + (orders.getPriceYfhk() == null?0:orders.getPriceYfhk().doubleValue()) + "改成了" + updateOrders.getPriceYfhk().doubleValue() + ",  ";
+            }
+            if(orders.getYshkStatus() != updateOrders.getYshkStatus()){
+            	content += "付款状态从‘" + map.get(orders.getYshkStatus()) + "’改成了‘" + map.get(updateOrders.getYshkStatus()) + ", ";
+            }
+            
+            if(orders.getPriceYshk() == null || !orders.getPriceYshk().equals(updateOrders.getPriceYshk())){
+            	content += "已收货款从" + (orders.getPriceYshk() == null?0:orders.getPriceYshk().doubleValue()) + "改成了" + updateOrders.getPriceYshk().doubleValue();
+            }
+            
+            if((user.getUserName() + "把").equals(content)){
+            	note = null;
+            }else{
+            	
+            	note.setContent(content);
+            	note.setOp(user.getUserName());
+            	note.setOrderSeq(orders.getOrderSeq());
+            	noteDao.insert(note);
+            }
+            
             // 财务人员录入：收款状态和已收货款
             orders.setYfhkStatus(updateOrders.getYfhkStatus());
             orders.setPriceYfhk(updateOrders.getPriceYfhk());
@@ -388,6 +606,7 @@ public class OrdersController {
             orders.setYshkStatus(updateOrders.getYshkStatus());
             orders.setPriceYshk(updateOrders.getPriceYshk());
             orders.setYshkRemark(updateOrders.getYshkRemark());
+            
             // 财务人员可以修改其他应收、其他应付
             orders.setPriceYsdj(updateOrders.getPriceYsdj());
             orders.setPriceQtzc(updateOrders.getPriceQtzc());
@@ -447,6 +666,7 @@ public class OrdersController {
         model.put("companyList", customerDao.selectCompany());
         model.put("yearList", ordersDao.selectOrderYears());
         model.put("monthList", ordersDao.selectOrderMonths());
+        model.put("departmentList", deptDao.selectAll());
     }
 
     /**
@@ -454,30 +674,34 @@ public class OrdersController {
      * @param response response
      */
     @RequestMapping
-    public void exportSubmit(HttpServletRequest request, HttpServletResponse response) {
+    public void exportSubmit(HttpServletRequest request, HttpServletResponse response){
         try {
-            String year = request.getParameter("year");
-            String month = request.getParameter("month");
+         /* String year = request.getParameter("year");
+            String month = request.getParameter("month");*/
             String salesman = request.getParameter("salesman");
             String customerId = request.getParameter("customerId");
             String company = request.getParameter("company");
             String operatorId = request.getParameter("operatorId");
             String yfhkStatus = request.getParameter("yfhkStatus");
             String yshkStatus = request.getParameter("yshkStatus");
-
-            NumberFormat formatter = NumberFormat.getNumberInstance();
+            String deptName = request.getParameter("dpsName");
+            String startDate = request.getParameter("startDate");
+            String endDate = request.getParameter("endDate");
+            
+/*          NumberFormat formatter = NumberFormat.getNumberInstance();
             formatter.setMinimumIntegerDigits(2);
             formatter.setGroupingUsed(false);
             month = formatter.format(Integer.parseInt(month));
-
+*/
+            
             // 这里还应增加一个报表时间，精确到月即可
-            String fileName = year + "-" + month;
+            String fileName = startDate.substring(5) + "|" + endDate.substring(5);
             response.reset();
             response.addHeader("Content-Disposition", "attachment;filename=" + fileName + ".xls");
             OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
             response.setContentType("application/octet-stream");
-            this.exportOrderData(toClient, year, month, salesman, yfhkStatus, yshkStatus,
-                    customerId, company, operatorId);
+            this.exportOrderData(toClient, startDate, endDate, salesman, yfhkStatus, yshkStatus,
+                    customerId, company, operatorId, deptName);
 
         } catch (IOException e) {
             logger.error(e, e);
@@ -490,9 +714,9 @@ public class OrdersController {
      * @param type type
      * @param out out
      */
-    private void exportOrderData(OutputStream out, String year, String month, String salesmanId,
+    private void exportOrderData(OutputStream out, String startDate, String endDate, String salesmanId,
             String yfhkStatus, String yshkStatus, String customerId, String company,
-            String operatorId) {
+            String operatorId, String deptName) {
         String[] titles = { "客户名称", "客户公司", "下单日期", "产品名称", "客人名单", "客人数量", "销售员", "操作员", "送签日期",
                 "送签员", "应收单价", "其它应收款", "其它应付款", "总计应收款", "总计应付款", "毛利润", "付款状态", "已付货款", "收款状态",
                 "已收货款", "备注" };
@@ -507,7 +731,8 @@ public class OrdersController {
             headerCell.setCellValue(titles[i]);
         }
         Map<String, Object> paraMap = new HashMap<String, Object>();
-        paraMap.put("date", year + "-" + month + "%");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+     /*   paraMap.put("date", year + "-" + month + "%");*/
         paraMap.put("salesmanId", StringUtils.isEmpty(salesmanId) ? null : salesmanId);
 
         paraMap.put("customerId", StringUtils.isEmpty(customerId) ? null : customerId);
@@ -516,6 +741,9 @@ public class OrdersController {
 
         paraMap.put("yfhkStatus", StringUtils.isEmpty(yfhkStatus) ? null : yfhkStatus);
         paraMap.put("yshkStatus", StringUtils.isEmpty(yshkStatus) ? null : yshkStatus);
+        paraMap.put("deptName", StringUtils.isEmpty(deptName) ? null : deptName);
+        paraMap.put("startDate", StringUtils.isEmpty(startDate) ? null : startDate);
+        paraMap.put("endDate", StringUtils.isEmpty(endDate) ? null : endDate);
         List<Orders> ordersList = ordersDao.selectAll(paraMap);
 
         if (ordersList != null && ordersList.size() > 0) {

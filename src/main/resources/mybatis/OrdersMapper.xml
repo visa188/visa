@@ -11,27 +11,51 @@
 				and orders.customerId=customer.customerId 
 				and product.countryId=country.countryId
 				and user1.userId=orders.salesmanId 
-				and orders.orderDate like #{date,jdbcType=VARCHAR}
 		<if test="salesmanId != null">and orders.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
 		<if test="customerId != null">and orders.customerId=#{customerId,jdbcType=VARCHAR}</if>
 		<if test="operatorId != null">and orders.operatorId=#{operatorId,jdbcType=VARCHAR}</if>
 		<if test="company != null">and customer.company=#{company,jdbcType=VARCHAR}</if>
 		<if test="yfhkStatus != null">and orders.yfhkStatus=#{yfhkStatus,jdbcType=VARCHAR}</if>
 		<if test="yshkStatus != null">and orders.yshkStatus=#{yshkStatus,jdbcType=VARCHAR}</if>
+		
+	    <if test="startDate != null">
+		  	<![CDATA[
+			and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
+			]]>
+	    </if>
+	    <if test="endDate != null">
+		  	<![CDATA[
+			and orders.orderDate <= #{endDate,jdbcType=VARCHAR}
+			]]>
+	    </if>
+		<if test="deptName != null">and user1.deptId=#{deptName,jdbcType=VARCHAR}</if>
+		
 		UNION
 				SELECT orders.*,orders.nameList productName,customer.customerName,customer.company,user1.userName salesmanName,orders.nameList countryName,customer.company customerCompany
 				FROM orders,customer,user user1
 				WHERE  (orders.type=1 or orders.type =2)
 					and	 orders.customerId=customer.customerId 
 					AND user1.userId=orders.salesmanId 	
-					and orders.orderDate like #{date,jdbcType=VARCHAR}
 		<if test="salesmanId != null">and orders.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
 		<if test="customerId != null">and orders.customerId=#{customerId,jdbcType=VARCHAR}</if>
 		<if test="operatorId != null">and orders.operatorId=#{operatorId,jdbcType=VARCHAR}</if>
 		<if test="company != null">and customer.company=#{company,jdbcType=VARCHAR}</if>
 		<if test="yfhkStatus != null">and orders.yfhkStatus=#{yfhkStatus,jdbcType=VARCHAR}</if>
 		<if test="yshkStatus != null">and orders.yshkStatus=#{yshkStatus,jdbcType=VARCHAR}</if>
-		) tmp1 left OUTER join user on( tmp1.operatorId = user.userId)
+		
+	    <if test="startDate != null">
+		  	<![CDATA[
+			and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
+			]]>
+	    </if>
+	    <if test="endDate != null">
+		  	<![CDATA[
+			and orders.orderDate <= #{endDate,jdbcType=VARCHAR}
+			]]>
+	    </if>
+		
+		<if test="deptName != null">and user1.deptId=#{deptName,jdbcType=VARCHAR}</if>
+		) tmp1 left OUTER join user on( tmp1.operatorId = user.userId) order by temp1.orderSeq
   </select>
   
   <select id="selectByPrimaryKey" resultType="Orders" parameterType="java.lang.Integer" >
@@ -39,6 +63,13 @@
 	from orders,customer
 	where orders.customerId=customer.customerId 
     and orderId = #{orderId,jdbcType=INTEGER} 
+  </select>
+  
+  <select id="selectByOrderSeq" resultType="Orders" parameterType="java.lang.Integer" >
+    select orders.*,customer.customerName
+	from orders,customer
+	where orders.customerId=customer.customerId 
+    and orderSeq = #{orderSeq,jdbcType=VARCHAR} 
   </select>
   
   <select id="selectByProductIdCount" resultType="java.lang.Integer">
@@ -89,6 +120,7 @@
 	  <if test="orderSeq != null">and orders.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 	  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
 	  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
+	  <if test="operatorDes != null">and orders.operatorDes=#{operatorDes,jdbcType=VARCHAR}</if>
 	  <if test="startDate != null">
 	  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 	  </if>
@@ -118,6 +150,7 @@
 	  		  <if test="orderSeq != null">and orders.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 	  		  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
 	  		  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
+	  		  <if test="operatorDes != null">and orders.operatorDes=#{operatorDes,jdbcType=VARCHAR}</if>
 	  		  <if test="startDate != null">
 			  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 			  </if>
@@ -154,6 +187,7 @@
 	  		  <if test="orderSeq != null">and orders.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 	  		  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
 	  		  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
+	  		  <if test="operatorDes != null">and orders.operatorDes=#{operatorDes,jdbcType=VARCHAR}</if>
 	  		  <if test="startDate != null">
 			  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 			  </if>
@@ -183,6 +217,7 @@
 	  		  <if test="orderSeq != null">and orders.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 	  		  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
 	  		  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
+	  		  <if test="operatorDes != null">and orders.operatorDes=#{operatorDes,jdbcType=VARCHAR}</if>
 	  		  <if test="startDate != null">
 			  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 			  </if>
@@ -269,6 +304,12 @@
       	now())
   </insert>
   
+   <update id="updateByOrderSeq" parameterType="Orders" >
+       update orders
+       set spStatus = #{spStatus,jdbcType=VARCHAR}
+       where orderId = #{orderId,jdbcType=INTEGER}
+   </update>
+  
   <update id="updateByPrimaryKey" parameterType="Orders" >
     update orders
     set 
@@ -332,6 +373,7 @@
 	  <if test="orderSeq != null">and orders.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 	  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
 	  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
+	  <if test="operatorDes != null">and orders.operatorDes=#{operatorDes,jdbcType=VARCHAR}</if>
 	  <if test="startDate != null">
 	  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 	  </if>
@@ -361,6 +403,7 @@
 	  		  <if test="orderSeq != null">and orders.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 	  		  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
 	  		  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
+	  		  <if test="operatorDes != null">and orders.operatorDes=#{operatorDes,jdbcType=VARCHAR}</if>
 	  		  <if test="startDate != null">
 			  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 			  </if>

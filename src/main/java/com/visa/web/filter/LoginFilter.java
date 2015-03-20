@@ -25,7 +25,6 @@ public class LoginFilter implements Filter {
     private String redirectJs;
     private List<String> excludeUrlList;
 
-    @Override
     public void init(FilterConfig config) throws ServletException {
         String loginUrl = config.getInitParameter("loginUrl");
         redirectJs = "<script type='text/javascript'>if (parent) {parent.location.href='" + loginUrl
@@ -36,7 +35,6 @@ public class LoginFilter implements Filter {
         }
     }
 
-    @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
             ServletException {
         HttpServletRequest httpReq = (HttpServletRequest) req;
@@ -57,7 +55,6 @@ public class LoginFilter implements Filter {
         chain.doFilter(httpReq, httpRes);
     }
 
-    @Override
     public void destroy() {
     }
 

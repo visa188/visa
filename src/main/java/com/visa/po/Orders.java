@@ -88,6 +88,8 @@ public class Orders {
     private int type = 0;
 
     private String singleProduct;
+    
+    private String spStatus;
 
     public int getType() {
         return type;
@@ -417,4 +419,11 @@ public class Orders {
         this.czdes = czdes;
     }
 
+	public String getSpStatus() {
+		return spStatus;
+	}
+
+	public void setSpStatus(String spStatus) {
+		this.spStatus = spStatus;
+	}
 }
