@@ -499,7 +499,7 @@
 						<div class="controls">
 							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="priceYshk" name="priceYshk" placeholder="已收货款" value="$!{orders.priceYshk}"></span>
 		              	</div>	
-						<label class="control_label"><span class="ico_must">*</span>毛利:</label>
+						<label class="control_label"><span class="ico_must">*</span>实际毛利:</label>
 						<div class="controls">
 							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="maoli" placeholder="毛利" value=$!{maoli}></span>
 		              	</div>	
