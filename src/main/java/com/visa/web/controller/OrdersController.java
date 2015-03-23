@@ -365,7 +365,7 @@ public class OrdersController {
         	notes = noteDao.selectBySaleId(paraMap);
         }
         
-        salesmanList.addAll(userDao.selectByRoleId(RoleEnumType.OPERATOR.getId()));
+        salesmanList.addAll(userDao.selectByRoleId(RoleEnumType.SALESMAN.getId()));
         model.put("salesmanList", salesmanList);
     	model.put("notes", notes);
     	model.put("salename", salename);
@@ -588,7 +588,7 @@ public class OrdersController {
             }
             
             if(orders.getPriceYshk() == null || !orders.getPriceYshk().equals(updateOrders.getPriceYshk())){
-            	content += "已收货款从" + (orders.getPriceYshk() == null?0:orders.getPriceYshk().doubleValue()) + "改成了" + updateOrders.getPriceYshk().doubleValue();
+            	content += "已付货款从" + (orders.getPriceYshk() == null?0:orders.getPriceYshk().doubleValue()) + "改成了" + updateOrders.getPriceYshk().doubleValue();
             }
             
             if((user.getUserName() + "把").equals(content)){
