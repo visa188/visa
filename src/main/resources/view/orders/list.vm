@@ -1,4 +1,5 @@
 #header(3,31,"订单信息管理")
+
 <script>
 	function updateOrder(formUrl){
 		jQuery("#form1").attr("action",formUrl);
@@ -7,6 +8,7 @@
 	}
 	
 </script>
+
 	<div class="miancon">
 		<div class="maincon_title">
 			<span class="ico_order_w"></span><h2>订单信息管理</h2>
@@ -95,7 +97,7 @@
 		#if($sumPrice)
 		<hr class="hr_a">
 		<div class="widget_mng_box">
-		#if($userRoleId==${fn.getSalesmanRoleId()} || ${fn.isAdminRoleId($userRoleId)})
+		#if($userRoleId==${fn.getSalesmanRoleId()} || ${fn.isAdminRoleId($userRoleId)} || ${fn.isFinanceRoleId($userRoleId)})
 			<table cellpadding="0" cellspacing="0" width="800" class="table_data tcenter" style="float:left">
 				<tbody>
 	            	<tr>
@@ -125,11 +127,15 @@
 							<th width="">订单类型</th>
 							<th width="">销售</th>
 	                        <th width="">客户姓名</th>
+	                        <th width="">客人姓名</th>
+	                        <th width="">公司名</th>
 							<th width="">客人数量</th>
 	                        <th width="">签证国家</th>
 	                        <th width="">下单日期</th>
 	                        <th width="">总计应收</th>
 	                        <th width="">总计应付</th>
+	                        <th width="">实际应收</th>
+	                        <th width="">实际应付</th>
 							#if($userRoleId!=${fn.getFinanceRoleId()})
 							<th width="">送签日期</th>
 	                        <th width="">目前状态</th>
@@ -144,7 +150,8 @@
 	                </thead>
 	                <tbody>
 						#foreach($order in $orderList)
-    	                    <tr>
+						    
+						       <tr #if($fn.isFlagColor($fn.format($!{order.orderDate},'yyyy-MM-dd'))) style="background:#FFCCCC" #end>
 								<td>$!{order.orderSeq}</td>
 								#if($!{order.type}==1)
 									<td>单项产品</td>
@@ -153,13 +160,19 @@
 								#else
 									<td>签证</td>
 								#end
-								<td>$!{order.salesmanName}</td>
+								<td>$!{order.salesmanName}</td>  
     	                        <td>$!{order.customerName}</td>
+    	                        <td><a href="javascript:(void)" class="tiptitle" title="$!{order.nameList}">$fn.showFirstCustomerName($!{order.nameList})</a></td>
+    	                        <td>
+    	                            <a href="javascript:(void)" class="tiptitle" title="$!{order.customerCompany}">$fn.splitValue($!{order.customerCompany})</a>
+    	                        </td>
 								<td>$!{order.nameListSize}人</td>
     	                        <td>#if($!{order.type}!=1)$!{order.countryName}#end</td>
     	                        <td>$fn.format($!{order.orderDate},'yyyy-MM-dd')</td>
 								<td>$!{order.priceZjys}</td>
 								<td>$!{order.priceZjyf}</td>
+								<td>$!{order.priceYshk}</td>
+								<td>$!{order.priceYfhk}</td>
 								#if($userRoleId!=${fn.getFinanceRoleId()})
 								<td>$fn.format($!{order.signDate},'yyyy-MM-dd')</td>
     	                        <td>$!{order.operatorDes}</td>
@@ -177,6 +190,7 @@
     	                        <td><a class="ico_edit_g" href="javascript:updateOrder('/orders/edit.do?orderId=$!{order.orderId}&currentPage=${page}')"></a></td>
     	                        #if(${fn.isAdminRoleId($userRoleId)})<td><a class="ico_delete_r" onclick="return confirm('是否将此订单删除?')" href="/orders/delete.do?orderId=$!{order.orderId}&page=${page}"></a></td>#end
     	                    </tr>
+
 						#end
 	                </tbody>
 	            </table>

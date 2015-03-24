@@ -1,6 +1,8 @@
 package com.visa.common.util;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -136,12 +138,39 @@ public class VelocityToolbox {
      * @param statusId statusId
      * @return role name
      */
+    public String showFirstCustomerName(String names) {
+
+    	if(null != names && !"".equals(names)){
+    		
+/*    		String[] ns1 = names.split(" ");
+    		if(ns1.length > 1){
+    			return ns1[0];
+    		}
+    		String[] ns2 = names.split(",");
+    		if(ns2.length > 2){
+    			return ns2[0];
+    		}*/
+    		
+    		String[] ns = names.split("_");
+    		if(ns.length > 0){
+    			
+    			if(ns[0].length() > 3){
+    				return ns[0].substring(0,3);
+    			}
+    			return ns[0];
+    		}else{
+    			return "";
+    		}
+    	}
+    	return "";
+    }
+    
     public String getYshkStatus(Integer statusId) {
-        if (statusId != null && statusId != 0) {
-            return YshkStatusEnum.YSHKSTATUS_MAP.get(statusId).getName();
-        } else {
-            return YshkStatusEnum.YSHKSTATUS_MAP.get(1).getName();
-        }
+    	if (statusId != null && statusId != 0) {
+    		return YshkStatusEnum.YSHKSTATUS_MAP.get(statusId).getName();
+    	} else {
+    		return YshkStatusEnum.YSHKSTATUS_MAP.get(1).getName();
+    	}
     }
 
     /**
@@ -294,6 +323,13 @@ public class VelocityToolbox {
             return true;
         }
         return false;
+    }
+    
+    public boolean isFinanceRoleId(int roleId) {
+    	if (RoleEnumType.FINANCE.getId() == roleId || roleId == Constant.SUPER_ADMIN_ROLE_ID) {
+    		return true;
+    	}
+    	return false;
     }
 
     /**
@@ -599,5 +635,37 @@ public class VelocityToolbox {
         }
         return " js_non_empty";
     }
+    
+    public boolean isFlagColor(String datetime){
+    	
+    	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    	try{
+        	Date orderTime = format.parse(datetime);
+        	
+        	Calendar now = Calendar.getInstance();
+        	Calendar c2 = Calendar.getInstance();
+        	
+        	c2.setTime(orderTime);
+        	
+        	c2.add(Calendar.DATE, 30);
+        	
+        	if(c2.after(now)) {
+        		return false;
+        	}   
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	return true;
+    }
+    
+    public String splitValue(String value){
+
+    	if(value.length() <=3){
+    		return value;
+    	}else{
+    		return value.substring(0,3);
+    	}
+    }
+    
 
 }
