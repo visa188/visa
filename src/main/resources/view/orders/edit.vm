@@ -499,17 +499,16 @@
 						<div class="controls">
 							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="priceYshk" name="priceYshk" placeholder="已收货款" value="$!{orders.priceYshk}"></span>
 		              	</div>	
-						<label class="control_label"><span class="ico_must">*</span>实际毛利:</label>
-						<div class="controls">
-							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="maoli" placeholder="毛利" value=$!{maoli}></span>
-		              	</div>	
 		        	</div>
 		        	
 	        			<label class="control_label">收款备注:</label>
 						<div class="controls">
 		               		<span class="form_item"><input type="text" class="text1" maxlength="50" size="20" id="yshkRemark" name="yshkRemark" placeholder="收款备注" value="$!{orders.yshkRemark}""></span>
 		              	</div>		
-		        	
+		        		<label class="control_label"><span class="ico_must"></span>实际毛利:</label>
+						<div class="controls">
+							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="maoli" placeholder="毛利" value=$!{maoli}></span>
+		              	</div>
 					#end
 		        	<div class="control_group">
 	        			<label class="control_label">销售备注:</label>

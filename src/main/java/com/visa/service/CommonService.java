@@ -16,6 +16,7 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.tools.ToolContext;
 import org.apache.velocity.tools.ToolManager;
 import org.apache.velocity.tools.config.XmlFactoryConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
