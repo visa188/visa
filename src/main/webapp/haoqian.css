@@ -764,7 +764,7 @@ a:hover {
 }
 .widget_mng_box {
   width: 100%;
-  overflow: hidden;
+  overflow: auto;
 }
 .table_data {
   border-top: 1px solid #DFDFDF;
