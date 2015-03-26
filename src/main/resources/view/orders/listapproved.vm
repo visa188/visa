@@ -1,4 +1,4 @@
-#header(11,38,"订单信息管理")
+#header(11,330,"订单信息管理")
 <script>
 	function updateOrder(formUrl){
 		jQuery("#form1").attr("action",formUrl);
@@ -17,7 +17,7 @@
 			#end
 		</div>
 		<div class="maincon_fluid">
-		<form id="form1" name="form1" action="/orders/listmanager.do" method="post" class="form_horizontal">
+		<form id="form1" name="form1" action="/orders/listapproved.do" method="post" class="form_horizontal">
 			<input type="hidden" id="page" name="page" value="1">
     		<div class="searchbox">
     			<label for="s_client">订单类型：<select name="orderType" id="orderType" class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
@@ -137,9 +137,7 @@
 							<th width="">付款状态</th>
 							<th width="">收款状态</th>
 							<th width="">审核状态</th>
-	                        <th width="">修改</th>
-	                        <th width=""><span id="all">全选</span><input type="checkbox" name="all"  onclick="selectAll(this)"/></th>
-	                        <th width="">审核</th>
+							<th width="">审核时间</th>
 	                    </tr>
 	                </thead>
 	                <tbody>
@@ -165,12 +163,7 @@
 								                              未审批
 								   #end
 								 </td>
-    	                        <td><a class="ico_edit_g" href="javascript:updateOrder('/orders/edit.do?orderId=$!{order.orderId}&currentPage=${page}')"></a></td>
-    	                        <td> <input type="checkbox" name="checkbox" /></td>
-    	                        
-    	                        #if($velocityCount == 1)
-    	                        <td rowSpan="20"> <input type="button" value="审核" onclick="ajaxSubmit();"/></td>
-    	                        #end
+    	                        <td> $fn.format($!{order.approvedTime_},'yyyy-MM-dd')</td>
     	                    </tr>
 						#end
 	                </tbody>

@@ -90,6 +90,8 @@ public class Orders {
     private String singleProduct;
     
     private String spStatus;
+    
+    private Date approvedTime_;
 
     public int getType() {
         return type;
@@ -426,4 +428,15 @@ public class Orders {
 	public void setSpStatus(String spStatus) {
 		this.spStatus = spStatus;
 	}
+
+	public Date getApprovedTime_() {
+		return approvedTime_;
+	}
+
+	public void setApprovedTime_(Date approvedTime_) {
+		this.approvedTime_ = approvedTime_;
+	}
+
+
+	
 }

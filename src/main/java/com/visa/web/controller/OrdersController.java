@@ -225,7 +225,8 @@ public class OrdersController {
     	String customerName = bean.getSeachCustomerName();
     	String companyName = bean.getSeachCustomerCompany();
     	String nameList = bean.getSeachNameList();
-    	String startDate = bean.getStartDate();
+    	String startDate = "2015-01-01";
+    	bean.setStartDate(startDate);
     	String endDate = bean.getEndDate();
     	String yfhkStatus =  "3" ;//bean.getSeachYfhkStatus();
     	bean.setSeachYfhkStatus("3");
@@ -238,6 +239,11 @@ public class OrdersController {
     	String orderType = bean.getOrderType();
     	String operatorDes = bean.getSeachOperatorDes();
     	
+		Calendar c = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		endDate = sdf.format(c.getTime());
+		bean.setEndDate(endDate);
+/*    	
     	if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate)) {
     		// 如果未选择起止日期，默认为本月一号到当日
     		Calendar c = Calendar.getInstance();
@@ -248,7 +254,7 @@ public class OrdersController {
     		startDate = sdf.format(c.getTime());
     		bean.setStartDate(startDate);
     	}
-    	
+    	*/
     	paraMap.put("operator", "like");
     	paraMap.put("countryName", StringUtils.isEmpty(seachCountryName) ? null : "%"
     			+ seachCountryName + "%");
@@ -267,6 +273,7 @@ public class OrdersController {
     	paraMap.put("deptId", StringUtils.isEmpty(deptId) ? null : deptId);
     	paraMap.put("orderType", StringUtils.isEmpty(orderType) ? null : orderType);
     	paraMap.put("operatorDes", StringUtils.isEmpty(operatorDes) ? null : operatorDes);
+    	paraMap.put("spStatus", 0);
     	
     	// 记录总条数
     	recordCount = ordersDao.count(paraMap);
@@ -278,6 +285,7 @@ public class OrdersController {
     		BigDecimal sumzjys = (BigDecimal) sumPrice.get("sumzjys");
     		BigDecimal sumzjyf = (BigDecimal) sumPrice.get("sumzjyf");
     		BigDecimal sumyshk = (BigDecimal) sumPrice.get("sumyshk");
+    		BigDecimal sumyfhk = (BigDecimal) sumPrice.get("sumyfhk");
     		BigDecimal sumNameListSize = (BigDecimal) sumPrice.get("sumNameListSize");
     		if (sumzjys != null && sumzjyf != null && sumyshk != null) {
     			sumPrice.put("sumzjys", fmt.format(sumzjys));
@@ -285,6 +293,127 @@ public class OrdersController {
     			sumPrice.put("sumwshk", fmt.format(sumzjys.subtract(sumyshk)));
     			sumPrice.put("sumlr", fmt.format(sumzjys.subtract(sumzjyf)));
     			sumPrice.put("sumNameListSize", sumNameListSize.toString());
+    			sumPrice.put("summaoli",  fmt.format(sumyshk.subtract(sumyfhk)));
+    		}
+    	}
+    	
+    	int[] recordRange = PagingUtil.addPagingSupport(Constant.PAGE_COUNT, recordCount, page,
+    			Constant.PAGE_OFFSET, model);
+    	paraMap.put("begin", recordRange[0]);
+    	paraMap.put("pageCount", Constant.PAGE_COUNT);
+    	
+    	List<Orders> orderList = ordersDao.selectByPage(paraMap);
+    	
+    	model.addAttribute("orderList", orderList);
+    	List<User> salesmanList = userDao.selectByRoleId(RoleEnumType.SALESMAN.getId());
+    	List<User> tempSalesmanList = null;
+    	if (!StringUtils.isEmpty(deptId)) {
+    		tempSalesmanList = new ArrayList<User>();
+    		for (User man : salesmanList) {
+    			if (deptId.equals(man.getDeptId())) {
+    				tempSalesmanList.add(man);
+    			}
+    		}
+    	} else {
+    		tempSalesmanList = salesmanList;
+    	}
+    	model.put("salesmanList", tempSalesmanList);
+    	List<User> operatorList = userDao.selectByRoleId(RoleEnumType.OPERATOR.getId());
+    	model.put("operatorList", operatorList);
+    	List<Department> deptList = deptDao.selectAll();
+    	model.put("deptList", deptList);
+    	model.addAttribute("role", user.getRoleId());
+    	model.addAttribute("searchBean", bean);
+    	model.addAttribute("sumPrice", sumPrice);
+    }
+    
+    @RequestMapping
+    public void listapproved(@ModelAttribute(Constant.SESSION_USER) User user, Integer page,
+    		ModelMap model, @ModelAttribute OrderSearchBean bean) {
+    	int recordCount = 0;
+    	// 每页数据数
+    	Map<String, Object> paraMap = new HashMap<String, Object>();
+    	if (RoleEnumType.SALESMAN.getId() == user.getRoleId()) {
+    		paraMap.put("salesmanId", user.getUserId());
+    	} else if (RoleEnumType.MANAGER.getId() == user.getRoleId()) {
+    		paraMap.put("managerId", user.getUserId());
+    	} else if (RoleEnumType.OPERATOR.getId() == user.getRoleId()) {
+    		paraMap.put("operatorId", user.getUserId());
+    	}
+    	
+    	String seachCountryName = bean.getSeachCountryName();
+    	String customerName = bean.getSeachCustomerName();
+    	String companyName = bean.getSeachCustomerCompany();
+    	String nameList = bean.getSeachNameList();
+    	String startDate = "2015-01-01";
+    	bean.setStartDate(startDate);
+    	String endDate = bean.getEndDate();
+    	String yfhkStatus =  "3" ;//bean.getSeachYfhkStatus();
+    	bean.setSeachYfhkStatus("3");
+    	String yshkStatus =  "3" ;//bean.getSeachYshkStatus();
+    	bean.setSeachYshkStatus("3");
+    	String salesman = bean.getSalesman();
+    	String operator = bean.getOperator();
+    	String orderSeq = bean.getOrderSeq();
+    	String deptId = bean.getDeptId();
+    	String orderType = bean.getOrderType();
+    	String operatorDes = bean.getSeachOperatorDes();
+    	
+    	Calendar c = Calendar.getInstance();
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	endDate = sdf.format(c.getTime());
+    	bean.setEndDate(endDate);
+    	/*    	
+    	if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate)) {
+    		// 如果未选择起止日期，默认为本月一号到当日
+    		Calendar c = Calendar.getInstance();
+    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    		endDate = sdf.format(c.getTime());
+    		bean.setEndDate(endDate);
+    		c.set(Calendar.DAY_OF_MONTH, 1);
+    		startDate = sdf.format(c.getTime());
+    		bean.setStartDate(startDate);
+    	}
+    	 */
+    	paraMap.put("operator", "like");
+    	paraMap.put("countryName", StringUtils.isEmpty(seachCountryName) ? null : "%"
+    			+ seachCountryName + "%");
+    	paraMap.put("customerName", StringUtils.isEmpty(customerName) ? null : "%" + customerName
+    			+ "%");
+    	paraMap.put("companyName", StringUtils.isEmpty(companyName) ? null : "%" + companyName
+    			+ "%");
+    	paraMap.put("nameList", StringUtils.isEmpty(nameList) ? null : "%" + nameList + "%");
+    	paraMap.put("startDate", StringUtils.isEmpty(startDate) ? null : startDate);
+    	paraMap.put("endDate", StringUtils.isEmpty(endDate) ? null : endDate);
+    	paraMap.put("yfhkStatus", StringUtils.isEmpty(yfhkStatus) ? null : yfhkStatus);
+    	paraMap.put("yshkStatus", StringUtils.isEmpty(yshkStatus) ? null : yshkStatus);
+    	paraMap.put("salesmanForSearch", StringUtils.isEmpty(salesman) ? null : salesman);
+    	paraMap.put("operatorForSearch", StringUtils.isEmpty(operator) ? null : operator);
+    	paraMap.put("orderSeq", StringUtils.isEmpty(orderSeq) ? null : orderSeq);
+    	paraMap.put("deptId", StringUtils.isEmpty(deptId) ? null : deptId);
+    	paraMap.put("orderType", StringUtils.isEmpty(orderType) ? null : orderType);
+    	paraMap.put("operatorDes", StringUtils.isEmpty(operatorDes) ? null : operatorDes);
+    	paraMap.put("spStatus", 1);
+    	
+    	// 记录总条数
+    	recordCount = ordersDao.count(paraMap);
+    	
+    	// 总计应收和总计应付汇总
+    	Map<String, Object> sumPrice = ordersDao.sumPrice(paraMap);
+    	if (sumPrice != null) {
+    		DecimalFormat fmt = new DecimalFormat("#,####,####,####.00");
+    		BigDecimal sumzjys = (BigDecimal) sumPrice.get("sumzjys");
+    		BigDecimal sumzjyf = (BigDecimal) sumPrice.get("sumzjyf");
+    		BigDecimal sumyshk = (BigDecimal) sumPrice.get("sumyshk");
+    		BigDecimal sumyfhk = (BigDecimal) sumPrice.get("sumyfhk");
+    		BigDecimal sumNameListSize = (BigDecimal) sumPrice.get("sumNameListSize");
+    		if (sumzjys != null && sumzjyf != null && sumyshk != null) {
+    			sumPrice.put("sumzjys", fmt.format(sumzjys));
+    			sumPrice.put("sumzjyf", fmt.format(sumzjyf));
+    			sumPrice.put("sumwshk", fmt.format(sumzjys.subtract(sumyshk)));
+    			sumPrice.put("sumlr", fmt.format(sumzjys.subtract(sumzjyf)));
+    			sumPrice.put("sumNameListSize", sumNameListSize.toString());
+    			sumPrice.put("summaoli",  fmt.format(sumyshk.subtract(sumyfhk)));
     		}
     	}
     	

@@ -116,6 +116,9 @@
                          <dd #if($secNav==38) class="on"#end>
                             <a href="/orders/listmanager.do?page=1">订单审核管理</a>
                          </dd>
+                         <dd #if($secNav==330) class="on"#end>
+                            <a href="/orders/listapproved.do?page=1">订单审核列表</a>
+                         </dd>
                          <dd #if($secNav==39) class="on"#end>
                             <a href="/orders/note.do?page=1">订单日记管理</a>
                          </dd>

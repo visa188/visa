@@ -326,7 +326,13 @@ public class VelocityToolbox {
     }
     
     public boolean isFinanceRoleId(int roleId) {
-    	if (RoleEnumType.FINANCE.getId() == roleId || roleId == Constant.SUPER_ADMIN_ROLE_ID) {
+    	if (RoleEnumType.FINANCE.getId() == roleId || roleId == Constant.SUPER_ADMIN_ROLE_ID || roleId == RoleEnumType.FINANCEMANAGER.getId()) {
+    		return true;
+    	}
+    	return false;
+    }
+    public boolean isFinanceManagerRoleId(int roleId) {
+    	if (roleId == RoleEnumType.FINANCEMANAGER.getId() || roleId == Constant.SUPER_ADMIN_ROLE_ID) {
     		return true;
     	}
     	return false;
@@ -636,22 +642,28 @@ public class VelocityToolbox {
         return " js_non_empty";
     }
     
-    public boolean isFlagColor(String datetime){
+    public boolean isFlagColor(String datetime, int flag){
     	
     	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     	try{
-        	Date orderTime = format.parse(datetime);
-        	
-        	Calendar now = Calendar.getInstance();
-        	Calendar c2 = Calendar.getInstance();
-        	
-        	c2.setTime(orderTime);
-        	
-        	c2.add(Calendar.DATE, 30);
-        	
-        	if(c2.after(now)) {
-        		return false;
-        	}   
+    		if(flag != 3){
+        		
+            	Date orderTime = format.parse(datetime);
+            	
+            	Calendar now = Calendar.getInstance();
+            	Calendar c2 = Calendar.getInstance();
+            	
+            	c2.setTime(orderTime);
+            	
+            	c2.add(Calendar.DATE, 30);
+            	
+            	if(c2.after(now)) {
+            		return false;
+            	}
+    		}else{
+    			return false;
+    		}
+  
     	}catch(Exception e){
     		e.printStackTrace();
     	}

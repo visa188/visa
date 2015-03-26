@@ -151,7 +151,7 @@
 	                <tbody>
 						#foreach($order in $orderList)
 						    
-						       <tr #if($fn.isFlagColor($fn.format($!{order.orderDate},'yyyy-MM-dd'))) style="background:#FFCCCC" #end>
+						       <tr #if($fn.isFlagColor($fn.format($!{order.orderDate},'yyyy-MM-dd'),$!{order.yshkStatus})) style="background:#FFCCCC" #end>
 								<td>$!{order.orderSeq}</td>
 								#if($!{order.type}==1)
 									<td>单项产品</td>

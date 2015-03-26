@@ -121,6 +121,8 @@
 	  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
 	  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
 	  <if test="operatorDes != null">and orders.operatorDes=#{operatorDes,jdbcType=VARCHAR}</if>
+	  <if test="spStatus == 0">and IFNULL(orders.spStatus,'0') != '1' </if>
+	  <if test="spStatus == 1">and IFNULL(orders.spStatus,'0') = '1' </if>
 	  <if test="startDate != null">
 	  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 	  </if>
@@ -151,6 +153,8 @@
 	  		  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
 	  		  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
 	  		  <if test="operatorDes != null">and orders.operatorDes=#{operatorDes,jdbcType=VARCHAR}</if>
+	  		  <if test="spStatus == 0">and IFNULL(orders.spStatus,'0') != '1' </if>
+	          <if test="spStatus == 1">and IFNULL(orders.spStatus,'0') = '1' </if>
 	  		  <if test="startDate != null">
 			  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 			  </if>
@@ -188,6 +192,8 @@
 	  		  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
 	  		  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
 	  		  <if test="operatorDes != null">and orders.operatorDes=#{operatorDes,jdbcType=VARCHAR}</if>
+	  		  <if test="spStatus == 0">and IFNULL(orders.spStatus,'0') != '1' </if>
+	  		  <if test="spStatus == 1">and IFNULL(orders.spStatus,'0') = '1' </if>
 	  		  <if test="startDate != null">
 			  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 			  </if>
@@ -218,6 +224,8 @@
 	  		  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
 	  		  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
 	  		  <if test="operatorDes != null">and orders.operatorDes=#{operatorDes,jdbcType=VARCHAR}</if>
+	  		  <if test="spStatus == 0">and IFNULL(orders.spStatus,'0') != '1' </if>
+	  		  <if test="spStatus == 1">and IFNULL(orders.spStatus,'0') = '1' </if>
 	  		  <if test="startDate != null">
 			  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 			  </if>
@@ -306,7 +314,7 @@
   
    <update id="updateByOrderSeq" parameterType="Orders" >
        update orders
-       set spStatus = #{spStatus,jdbcType=VARCHAR}
+       set spStatus = #{spStatus,jdbcType=VARCHAR}, approvedTime_ = now()
        where orderId = #{orderId,jdbcType=INTEGER}
    </update>
   
@@ -374,6 +382,8 @@
 	  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
 	  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
 	  <if test="operatorDes != null">and orders.operatorDes=#{operatorDes,jdbcType=VARCHAR}</if>
+	  <if test="spStatus == 0">and IFNULL(orders.spStatus,'0') != '1' </if>
+	  <if test="spStatus == 1">and IFNULL(orders.spStatus,'0') = '1' </if>
 	  <if test="startDate != null">
 	  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 	  </if>
@@ -404,6 +414,8 @@
 	  		  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
 	  		  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
 	  		  <if test="operatorDes != null">and orders.operatorDes=#{operatorDes,jdbcType=VARCHAR}</if>
+	  		  <if test="spStatus == 0">and IFNULL(orders.spStatus,'0') != '1' </if>
+	          <if test="spStatus == 1">and IFNULL(orders.spStatus,'0') = '1' </if>
 	  		  <if test="startDate != null">
 			  	and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
 			  </if>
