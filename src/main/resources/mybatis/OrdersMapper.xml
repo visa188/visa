@@ -55,7 +55,7 @@
 	    </if>
 		
 		<if test="deptName != null">and user1.deptId=#{deptName,jdbcType=VARCHAR}</if>
-		) tmp1 left OUTER join user on( tmp1.operatorId = user.userId) order by temp1.orderSeq
+		) tmp1 left OUTER join user on( tmp1.operatorId = user.userId) order by tmp1.orderSeq
   </select>
   
   <select id="selectByPrimaryKey" resultType="Orders" parameterType="java.lang.Integer" >
