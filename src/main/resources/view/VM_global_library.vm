@@ -90,7 +90,7 @@
                     </dl>                   
                 </li>
 				#end
-				#if($userRoleId&&$userRoleId<6)
+				#if($userRoleId&&($userRoleId<6 || $userRoleId == 8))
                 <li class="order_mng#if($topNav==3) open#end">
                     <a class="order_mng_tab" href="/orders/list.do?page=1"><span class="ico_order"></span><span class="sidenav_text">签证订单管理</span><span class="ico_fold"></span></a>
                     <dl>
@@ -102,7 +102,7 @@
 							<dd#if($secNav==34) class="on"#end><a href="/orders/add.do?type=2">新增机票订单</a></dd>
 							<dd#if($secNav==34) class="on"#end><a href="/orders/add.do?type=1">新增单项产品订单</a></dd>
 						#end
-						#if(${fn.isAdminRoleId($userRoleId)})
+						#if(${fn.isAdminRoleId($userRoleId)}  || $userRoleId == 8)
 							<dd#if($secNav==33) class="on"#end><a href="/orders/export.do">导出订单信息</a></dd>
 						#end
 						
