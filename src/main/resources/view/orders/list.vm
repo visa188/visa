@@ -28,7 +28,7 @@
 					</select>
    				</label>
    				</label>
-				#if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
+				#if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()} || $userRoleId == 8)
 					<label for="s_client">所属部门：<select name="deptId" id="deptId" class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
     						<option value="" selected="selected">全部</option>
     						#foreach($one in $deptList)
