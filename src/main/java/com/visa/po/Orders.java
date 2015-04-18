@@ -66,6 +66,8 @@ public class Orders {
     private String des;
 
     private String czdes;
+    
+    private String cwdes;
 
     private String operatorDes;
 
@@ -92,8 +94,18 @@ public class Orders {
     private String spStatus;
     
     private Date approvedTime_;
+    
+    private String fapiao;
 
-    public int getType() {
+    public String getFapiao() {
+		return fapiao;
+	}
+
+	public void setFapiao(String fapiao) {
+		this.fapiao = fapiao;
+	}
+
+	public int getType() {
         return type;
     }
 
@@ -437,6 +449,12 @@ public class Orders {
 		this.approvedTime_ = approvedTime_;
 	}
 
+	public String getCwdes() {
+		return cwdes;
+	}
 
+	public void setCwdes(String cwdes) {
+		this.cwdes = cwdes;
+	}
 	
 }

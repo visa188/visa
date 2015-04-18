@@ -46,6 +46,7 @@
   <select id="searchByCountryId" resultType="Product" parameterType="java.lang.String">
     select * from product 
     where countryId = #{countryId,jdbcType=INTEGER}
+    and productName not like '%保险%'
     order by postDt desc
   </select>
   

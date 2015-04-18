@@ -123,6 +123,7 @@ public class OrdersController {
         String deptId = bean.getDeptId();
         String orderType = bean.getOrderType();
         String operatorDes = bean.getSeachOperatorDes();
+        String fapiao = bean.getFapiao();
 
         if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate)) {
             // 如果未选择起止日期，默认为本月一号到当日
@@ -153,6 +154,7 @@ public class OrdersController {
         paraMap.put("deptId", StringUtils.isEmpty(deptId) ? null : deptId);
         paraMap.put("orderType", StringUtils.isEmpty(orderType) ? null : orderType);
         paraMap.put("operatorDes", StringUtils.isEmpty(operatorDes) ? null : operatorDes);
+        paraMap.put("fapiao", StringUtils.isEmpty(fapiao) ? null : fapiao);
 
         // 记录总条数
         recordCount = ordersDao.count(paraMap);
@@ -238,6 +240,7 @@ public class OrdersController {
     	String deptId = bean.getDeptId();
     	String orderType = bean.getOrderType();
     	String operatorDes = bean.getSeachOperatorDes();
+    	String fapiao = bean.getFapiao();
     	
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -273,6 +276,7 @@ public class OrdersController {
     	paraMap.put("deptId", StringUtils.isEmpty(deptId) ? null : deptId);
     	paraMap.put("orderType", StringUtils.isEmpty(orderType) ? null : orderType);
     	paraMap.put("operatorDes", StringUtils.isEmpty(operatorDes) ? null : operatorDes);
+    	paraMap.put("fapiao", StringUtils.isEmpty(fapiao) ? null : fapiao);
     	paraMap.put("spStatus", 0);
     	
     	// 记录总条数
@@ -358,6 +362,7 @@ public class OrdersController {
     	String deptId = bean.getDeptId();
     	String orderType = bean.getOrderType();
     	String operatorDes = bean.getSeachOperatorDes();
+    	String fapiao = bean.getFapiao();
     	
     	Calendar c = Calendar.getInstance();
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -393,6 +398,7 @@ public class OrdersController {
     	paraMap.put("deptId", StringUtils.isEmpty(deptId) ? null : deptId);
     	paraMap.put("orderType", StringUtils.isEmpty(orderType) ? null : orderType);
     	paraMap.put("operatorDes", StringUtils.isEmpty(operatorDes) ? null : operatorDes);
+    	paraMap.put("fapiao", StringUtils.isEmpty(fapiao) ? null : fapiao);
     	paraMap.put("spStatus", 1);
     	
     	// 记录总条数
@@ -561,6 +567,7 @@ public class OrdersController {
         orders.setPtTime(new Date());
         int orderSeq = seqDao.select("order");
         orders.setSpStatus("0");
+        orders.setFapiao("2");
         String prefix = StringUtil.paddingZeroToLeft(String.valueOf(orderSeq), 6);
         orders.setOrderSeq(prefix);
         ordersDao.insert(orders);
@@ -762,6 +769,8 @@ public class OrdersController {
 
         orders.setDes(updateOrders.getDes());
         orders.setCzdes(updateOrders.getCzdes());
+        orders.setCwdes(updateOrders.getCwdes());
+        orders.setFapiao(updateOrders.getFapiao());
         orders.setPtTime(new Date());
         ordersDao.updateByPrimaryKey(orders);
 

@@ -672,7 +672,7 @@ public class VelocityToolbox {
     
     public String splitValue(String value){
 
-    	if(value.length() <=3){
+    	if(value.length() <=5){
     		return value;
     	}else{
     		return value.substring(0,3);

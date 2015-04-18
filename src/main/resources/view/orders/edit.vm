@@ -369,13 +369,13 @@
     				</div>	
     			#end
 				##end
-				#if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()}||$userRoleId==${fn.getOperatorRoleId()})
+				#if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()}||$userRoleId==${fn.getOperatorRoleId()}||$userRoleId==8 )
 		        <div class="widget_title">
 		        	<span class="ico_static_r"></span>
 		        	<h3>费用计算</h3>
 		        </div>
 		        <div class="widget_content">
-		            #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
+		            #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()} || $userRoleId==8 )
 		        	<div class="control_group">
 	        			<label class="control_label"><span class="ico_must">*</span>应收单价:</label>
 						<div class="controls">
@@ -395,7 +395,7 @@
                        <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxyf" name="priceBxyf" placeholder="保险应付款" value="#if(${orders.priceBxyf})$!{orders.priceBxyf}#else 0.00 #end" onchange="calculate()"  #if($userRoleId!=${fn.getOperatorRoleId()}||${fn.isAdminRoleId($userRoleId)}) readonly #end></span>
                       </div>
                     </div>
-                    #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
+                    #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()} || $userRoleId==8 )
 		            <div class="control_group">
 		              <label class="control_label"><span class="ico_must">*</span>其他应收款:</label>
 		              <div class="controls">
@@ -440,7 +440,7 @@
 		        	<h3>备注信息</h3>
 		        </div>
 		        <div class="widget_content">
-					#if($userRoleId==${fn.getFinanceRoleId()}||${fn.isAdminRoleId($userRoleId)})
+					#if($userRoleId==${fn.getFinanceRoleId()}||${fn.isAdminRoleId($userRoleId)} || $userRoleId==8 )
 					<div class="control_group">
 	        			<label class="control_label"><span class="ico_must">*</span>付款状态:</label>
 						<div class="controls">
@@ -509,17 +509,31 @@
 						<div class="controls">
 							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="maoli" placeholder="毛利" value=$!{maoli}></span>
 		              	</div>
+		               <label class="control_label"><span class="ico_must"></span>发票:</label>
+						<div class="controls">
+		               		<span class="form_item"><select name="fapiao" id="fapiao" class="text2 js_non_empty" onchange="fapiao()">
+								<option value="" selected="selected">请选择</option>
+    							<option value="1" #if($orders.fapiao=='1') selected #end>已开</option>
+								<option value="2" #if($orders.fapiao=='2') selected #end>未开</option>
+							</select></span>
+		              	</div>
 					#end
 		        	<div class="control_group">
 	        			<label class="control_label">销售备注:</label>
 						<div class="controls">
-							<textarea class="text3" id="des" name="des" cols="80" rows="8" placeholder="销售备注" maxlength="300">$!{orders.des}</textarea>
+							<textarea class="text3" #if($userRoleId!=${fn.getSalesmanRoleId()}) readonly="readonly" #end id="des" name="des" cols="55" rows="8"  width="300" placeholder="销售备注" maxlength="200">$!{orders.des}</textarea>
 		              	</div>		        			
 		        	</div>
 		        	<div class="control_group">
                         <label class="control_label">操作备注:</label>
                         <div class="controls">
-                            <textarea class="text3" id="czdes" name="czdes" cols="80" rows="8" placeholder="操作备注" maxlength="300">$!{orders.czdes}</textarea>
+                            <textarea class="text3" #if($userRoleId!=${fn.getOperatorRoleId()}) readonly="readonly" #end id="czdes" name="czdes" cols="55" rows="8"  width="300"  placeholder="操作备注" maxlength="200">$!{orders.czdes}</textarea>
+                        </div>                          
+                    </div>
+		        	<div class="control_group">
+                        <label class="control_label">财务备注:</label>
+                        <div class="controls">
+                            <textarea class="text3" #if($userRoleId!=${fn.getFinanceRoleId()} && $userRoleId!=8 ) readonly="readonly" #end id="cwdes" name="cwdes"  cols="55" rows="8"   width="300" placeholder="财务备注" maxlength="200">$!{orders.cwdes}</textarea>
                         </div>                          
                     </div>
 		        </div>

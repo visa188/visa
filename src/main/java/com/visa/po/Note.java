@@ -5,21 +5,21 @@ import java.util.Date;
 
 public class Note {
 
-    private Integer nodeId;
+    private Integer noteId;
     //订单号
     private String orderSeq;
     //具体日记内容
     private String content;
     //操作人
     private String op;
+    
     private Date createDate;
-    
-    
-	public Integer getNodeId() {
-		return nodeId;
+
+	public Integer getNoteId() {
+		return noteId;
 	}
-	public void setNodeId(Integer nodeId) {
-		this.nodeId = nodeId;
+	public void setNoteId(Integer noteId) {
+		this.noteId = noteId;
 	}
 	public String getOrderSeq() {
 		return orderSeq;

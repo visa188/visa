@@ -23,8 +23,17 @@ public class OrderSearchBean implements Serializable {
     private String deptId = "";
     private String orderType = "";
     private String seachOperatorDes = "";
+    private String fapiao = "";
 
-    public String getOrderType() {
+    public String getFapiao() {
+		return fapiao;
+	}
+
+	public void setFapiao(String fapiao) {
+		this.fapiao = fapiao;
+	}
+
+	public String getOrderType() {
         return orderType;
     }
 

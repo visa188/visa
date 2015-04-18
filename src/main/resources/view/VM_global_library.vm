@@ -47,7 +47,7 @@
     <div class="sidebar">
         <div class="sidenav">
             <ul>
-				#if(${fn.isAdminRoleId($userRoleId)})
+				#if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
                 <li class="pro_mng#if($topNav==1) open#end">
                     <a class="pro_mng_tab" href="/product/list.do"><span class="ico_pro"></span><span class="sidenav_text">签证产品管理</span><span class="ico_fold"></span></a>
                     <dl>
@@ -102,7 +102,7 @@
 							<dd#if($secNav==34) class="on"#end><a href="/orders/add.do?type=2">新增机票订单</a></dd>
 							<dd#if($secNav==34) class="on"#end><a href="/orders/add.do?type=1">新增单项产品订单</a></dd>
 						#end
-						#if(${fn.isAdminRoleId($userRoleId)}  || $userRoleId == 8)
+						#if(${fn.isAdminRoleId($userRoleId)}  || $userRoleId == 8 || $userRoleId==${fn.getFinanceRoleId()})
 							<dd#if($secNav==33) class="on"#end><a href="/orders/export.do">导出订单信息</a></dd>
 						#end
 						
