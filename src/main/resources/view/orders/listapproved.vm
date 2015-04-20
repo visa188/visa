@@ -136,8 +136,8 @@
 	                        <th width="">客人姓名</th>
 	                        <th width="">下单日期</th>
 	                        <th width="">总计应收</th>
-	                        <th width="">总计应付</th>
 	                        <th width="">实际应收</th>
+	                        <th width="">总计应付</th>
 	                        <th width="">实际应付</th>
 	                        <th width="">操作员</th>
 							<th width="">付款状态</th>
@@ -156,8 +156,8 @@
     	                        <td><a href="javascript:(void)" class="tiptitle" title="$!{order.nameList}">$fn.showFirstCustomerName($!{order.nameList})</a></td>
     	                        <td>$fn.format($!{order.orderDate},'yyyy-MM-dd')</td>
 								<td>$!{order.priceZjys}</td>
-								<td>$!{order.priceZjyf}</td>
 								<td>$!{order.priceYshk}</td>
+								<td>$!{order.priceZjyf}</td>
 								<td>$!{order.priceYfhk}</td>
     	                        <td>$!{order.operatorName}</td>
     	                        <td>$fn.getPriceStatus($!{order.yfhkStatus})#if($!{order.yfhkStatus}==2) $!{order.priceYfhk}元 #end</td>

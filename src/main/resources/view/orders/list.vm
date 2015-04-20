@@ -138,9 +138,9 @@
 							<th width="3%">客人数量</th>
 	                        <th width="6%">签证国家</th>
 	                        <th width="5%">下单日期</th>
-	                        <th width="5%">总计应付</th>
 	                        <th width="5%">总计应收</th>
 	                        <th width="5%">实际应收</th>
+	                        <th width="5%">总计应付</th>
 	                        <th width="5%">实际应付</th>
 							#if($userRoleId!=${fn.getFinanceRoleId()})
 							<th width="5%">送签日期</th>
@@ -175,9 +175,9 @@
 								<td>$!{order.nameListSize}人</td>
     	                        <td>#if($!{order.type}!=1)$!{order.countryName}#end</td>
     	                        <td>$fn.format($!{order.orderDate},'yyyy-MM-dd')</td>
-								<td>$!{order.priceZjyf}</td>
 								<td>$!{order.priceZjys}</td>
 								<td>$!{order.priceYshk}</td>
+								<td>$!{order.priceZjyf}</td>
 								<td>$!{order.priceYfhk}</td>
 								#if($userRoleId!=${fn.getFinanceRoleId()})
 								<td>$fn.format($!{order.signDate},'yyyy-MM-dd')</td>
