@@ -565,7 +565,11 @@
     		jQuery("#areaId").attr("disabled", "disabled");
     		jQuery("#continentId").attr("disabled", "disabled");
     		jQuery("#countryId").attr("disabled", "disabled");
-    		jQuery("#productId").attr("disabled", "disabled");
+    		if(userRole!='5'&& userRole!='8'){
+    			jQuery("#productId").attr("disabled", "disabled");
+    		}else{
+    		}
+    		
     		jQuery("#orderDate").attr("disabled", "disabled");
     		jQuery("#nameListSize").attr("disabled", "disabled");
         	
