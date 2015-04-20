@@ -511,7 +511,7 @@
 		              	</div>
 		               <label class="control_label"><span class="ico_must"></span>发票:</label>
 						<div class="controls">
-		               		<span class="form_item"><select name="fapiao" id="fapiao" class="text2 js_non_empty" onchange="fapiao()">
+		               		<span class="form_item"><select name="fapiao" id="fapiao" class="text2" onchange="fapiao()">
 								<option value="" selected="selected">请选择</option>
     							<option value="1" #if($orders.fapiao=='1') selected #end>已开</option>
 								<option value="2" #if($orders.fapiao=='2') selected #end>未开</option>
