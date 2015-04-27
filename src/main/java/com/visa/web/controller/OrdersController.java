@@ -763,6 +763,13 @@ public class OrdersController {
         if (RoleEnumType.OPERATOR.getId() == user.getRoleId()) {
             orders.setPriceBxys(updateOrders.getPriceBxys());
             orders.setPriceBxyf(updateOrders.getPriceBxyf());
+            
+            orders.setPriceQtzc(updateOrders.getPriceQtzc());
+
+            // MODIFY：财务允许修改总计应收
+            orders.setPriceZjys(updateOrders.getPriceZjys());
+            orders.setPriceZjyf(updateOrders.getPriceZjyf());
+            orders.setGrossProfit(updateOrders.getGrossProfit());
             // orders.setPriceZjys(orders.getPriceZjys().add(updateOrders.getPriceBxys()));
             // orders.setPriceZjyf(orders.getPriceZjyf().add(updateOrders.getPriceBxyf()));
         }
@@ -771,6 +778,15 @@ public class OrdersController {
         orders.setCzdes(updateOrders.getCzdes());
         orders.setCwdes(updateOrders.getCwdes());
         orders.setFapiao(updateOrders.getFapiao());
+        orders.setBaoxian(updateOrders.getBaoxian());
+        orders.setBaoxianDay(updateOrders.getBaoxianDay());
+        orders.setBaoxianPrice(updateOrders.getBaoxianPrice());
+        orders.setRenzheng(updateOrders.getRenzheng());
+        orders.setKuaidi(updateOrders.getKuaidi());
+        orders.setTax(updateOrders.getTax());
+        orders.setFankuan(updateOrders.getFankuan());
+        orders.setQita(updateOrders.getQita());
+        orders.setQitaComments(updateOrders.getQitaComments());
         orders.setPtTime(new Date());
         ordersDao.updateByPrimaryKey(orders);
 

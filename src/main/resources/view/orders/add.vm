@@ -9,8 +9,17 @@
     }
 	function calculate(){
 		var priceYsdj=jQuery("#priceYsdj").val()==''?0:jQuery("#priceYsdj").val();
-		var priceBxys=jQuery("#priceBxys").val()==''?0:jQuery("#priceBxys").val();
-        var priceBxyf=jQuery("#priceBxyf").val()==''?0:jQuery("#priceBxyf").val();
+		var priceBxys = 0.0;
+		if(jQuery("#priceBxys").val() == undefined){
+		}else{
+			priceBxys = jQuery("#priceBxys").val()==''?0:jQuery("#priceBxys").val();
+		}
+		
+        var priceBxyf=0.0;
+        if(jQuery("#priceBxyf").val() == undefined){
+		}else{
+			priceBxyf = jQuery("#priceBxyf").val()==''?0:jQuery("#priceBxyf").val();
+		}
 		var priceQtys=jQuery("#priceQtys").val()==''?0:jQuery("#priceQtys").val();
 		var priceQtzc=jQuery("#priceQtzc").val()==''?0:jQuery("#priceQtzc").val();
 		var nameListSize=jQuery("#nameListSize").val()==''?0:jQuery("#nameListSize").val();
@@ -19,15 +28,22 @@
 		var priceZjys = 0.0;
 		var priceZjyf = 0.0;
 		var grossProfit = 0.0;
+		var tmall = 0.0;
 		
-		if(priceYsdj&&priceBxys&&priceBxyf&&priceQtys&&priceQtzc&&nameListSize){
+		if(priceYsdj&&priceQtys&&priceQtzc&&nameListSize){
 			priceZjys = Math.round(parseFloat(priceYsdj*100*nameListSize+priceQtys*100+priceBxys*nameListSize*100))/100;
 			priceZjyf = Math.round(parseFloat(productPrice*100 * nameListSize+priceQtzc*100+priceBxyf*100))/100;
 			grossProfit = Math.round(parseFloat(priceZjys*100 - priceZjyf*100))/100;
+			tmall = Math.round(parseFloat(priceZjyf*100 + priceZjys*0.02*100))/100;
 		}
-		
+				
+		var cusName =  $("#customerShowName").val();
+		if(cusName.indexOf("天猫") >= 0){
+		   jQuery("#priceZjyf").val(tmall);
+		}else{
+		   jQuery("#priceZjyf").val(priceZjyf);
+		}
 		jQuery("#priceZjys").val(priceZjys);
-		jQuery("#priceZjyf").val(priceZjyf);
 		jQuery("#grossProfit").val(grossProfit);
 	}
 	function getProductPrice(){
@@ -262,18 +278,7 @@
 		               		<span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceYsdj" name="priceYsdj" value="0" placeholder="应收单价" onchange="calculate()"></span>
 		              	</div>		        			
 		        	</div>
-		        	<div class="control_group">
-                      <label class="control_label">保险应收单价:</label>
-                      <div class="controls">
-                       <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxys" name="priceBxys" value="0" placeholder="保险应收款" onchange="setBxyf();calculate()" ></span>
-                      </div>
-                    </div>
-                    <div class="control_group">
-                        <label class="control_label">保险应付款:</label>
-                        <div class="controls">
-                            <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxyf" name="priceBxyf" value="0" placeholder="保险应付款" onchange="calculate()" ></span>
-                        </div>                          
-                    </div>
+
 		            <div class="control_group">
 		              <label class="control_label">其他应收款:</label>
 		              <div class="controls">

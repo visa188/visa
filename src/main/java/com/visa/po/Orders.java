@@ -96,8 +96,98 @@ public class Orders {
     private Date approvedTime_;
     
     private String fapiao;
+    
+    private String baoxian;
+    
+    private Integer baoxianDay;
 
-    public String getFapiao() {
+    private Double baoxianPrice;
+    
+    private Double renzheng;
+    
+    private Double kuaidi;
+    
+    private Double tax;
+    
+    private Double fankuan;
+    
+    private Double qita;
+    
+    private String qitaComments;
+    
+    public String getQitaComments() {
+		return qitaComments;
+	}
+
+	public void setQitaComments(String qitaComments) {
+		this.qitaComments = qitaComments;
+	}
+
+	public Double getBaoxianPrice() {
+		return baoxianPrice;
+	}
+
+	public void setBaoxianPrice(Double baoxianPrice) {
+		this.baoxianPrice = baoxianPrice;
+	}
+
+	public Double getRenzheng() {
+		return renzheng;
+	}
+
+	public void setRenzheng(Double renzheng) {
+		this.renzheng = renzheng;
+	}
+
+	public Double getKuaidi() {
+		return kuaidi;
+	}
+
+	public void setKuaidi(Double kuaidi) {
+		this.kuaidi = kuaidi;
+	}
+
+	public Double getTax() {
+		return tax;
+	}
+
+	public void setTax(Double tax) {
+		this.tax = tax;
+	}
+
+	public Double getFankuan() {
+		return fankuan;
+	}
+
+	public void setFankuan(Double fankuan) {
+		this.fankuan = fankuan;
+	}
+
+	public Double getQita() {
+		return qita;
+	}
+
+	public void setQita(Double qita) {
+		this.qita = qita;
+	}
+
+	public Integer getBaoxianDay() {
+		return baoxianDay;
+	}
+
+	public void setBaoxianDay(Integer baoxianDay) {
+		this.baoxianDay = baoxianDay;
+	}
+
+	public String getBaoxian() {
+		return baoxian;
+	}
+
+	public void setBaoxian(String baoxian) {
+		this.baoxian = baoxian;
+	}
+
+	public String getFapiao() {
 		return fapiao;
 	}
 

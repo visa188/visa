@@ -24,8 +24,27 @@ public class OrderSearchBean implements Serializable {
     private String orderType = "";
     private String seachOperatorDes = "";
     private String fapiao = "";
+    private String baoxian = "";
+    private String baoxianDay;
+    private String baoxianPrice;
 
-    public String getFapiao() {
+	public String getBaoxianDay() {
+		return baoxianDay;
+	}
+
+	public void setBaoxianDay(String baoxianDay) {
+		this.baoxianDay = baoxianDay;
+	}
+
+	public String getBaoxianPrice() {
+		return baoxianPrice;
+	}
+
+	public void setBaoxianPrice(String baoxianPrice) {
+		this.baoxianPrice = baoxianPrice;
+	}
+
+	public String getFapiao() {
 		return fapiao;
 	}
 
@@ -160,4 +179,11 @@ public class OrderSearchBean implements Serializable {
 		this.seachOperatorDes = seachOperatorDes;
 	}
 
+	public String getBaoxian() {
+		return baoxian;
+	}
+
+	public void setBaoxian(String baoxian) {
+		this.baoxian = baoxian;
+	}
 }

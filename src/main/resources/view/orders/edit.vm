@@ -11,8 +11,24 @@
     
 	function calculate(){
 		var priceYsdj=jQuery("#priceYsdj").val()==''?0:jQuery("#priceYsdj").val();
-		var priceBxys=jQuery("#priceBxys").val()==''?0:jQuery("#priceBxys").val();
-        var priceBxyf=jQuery("#priceBxyf").val()==''?0:jQuery("#priceBxyf").val();
+		
+	//	var priceYsdj = 0.0
+	//	if(jQuery("#priceYsdj").val() == undefined){
+	//	}else{
+	//		priceYsdj = jQuery("#priceYsdj").val()==''?0:jQuery("#priceYsdj").val();
+	//	}
+		
+		var priceBxys = 0.0
+		if(jQuery("#priceBxys").val() == undefined){
+		}else{
+			priceBxys = jQuery("#priceBxys").val()==''?0:jQuery("#priceBxys").val();
+		}
+		
+        var priceBxyf=0.0;
+        if(jQuery("#priceBxyf").val() == undefined){
+		}else{
+			priceBxyf = jQuery("#priceBxyf").val()==''?0:jQuery("#priceBxyf").val();
+		}
 		var priceQtys=jQuery("#priceQtys").val()==''?0:jQuery("#priceQtys").val();
 		var priceQtzc=jQuery("#priceQtzc").val()==''?0:jQuery("#priceQtzc").val();
 		var nameListSize=jQuery("#nameListSize").val()==''?0:jQuery("#nameListSize").val();
@@ -21,15 +37,24 @@
 		var priceZjys = 0.0;
 		var priceZjyf = 0.0;
 		var grossProfit = 0.0;
+		var tmall = 0.0;
 		
 		if(priceYsdj&&priceQtys&&priceQtzc&&nameListSize){
 			priceZjys = Math.round(parseFloat(priceYsdj*100*nameListSize+priceQtys*100+priceBxys*nameListSize*100))/100;
             priceZjyf = Math.round(parseFloat(productPrice*100 * nameListSize+priceQtzc*100+priceBxyf*100))/100;
 			grossProfit = Math.round(parseFloat(priceZjys*100 - priceZjyf*100))/100;
+			
+			tmall = Math.round(parseFloat(priceZjyf*100 + priceZjys*0.02*100))/100;
+		}
+		
+		var cusName =  $("#customerShowName").val();
+		if(cusName.indexOf("天猫") >= 0){
+		   jQuery("#priceZjyf").val(tmall);
+		}else{
+		   jQuery("#priceZjyf").val(priceZjyf);
 		}
 		
 		jQuery("#priceZjys").val(priceZjys);
-		jQuery("#priceZjyf").val(priceZjyf);
 		jQuery("#grossProfit").val(grossProfit);
 	}
 	
@@ -113,6 +138,13 @@
                 jQuery("#countryId").append(options);
            }
         });
+        
+        if("1" == continentId){
+           $("#baoxian").addClass("js_non_empty");
+        }else{
+           $("#baoxian").removeClass("js_non_empty");
+        }
+        
     }
 	
 	function changeProduct(){
@@ -229,6 +261,7 @@
 	                            </select></span>
 	                        </div>                          
 	                    </div>
+	                    
 	                    <div class="control_group">
 	                        <label class="control_label"><span class="ico_must">*</span>国家名称:</label>
 	                        <div class="controls">
@@ -375,58 +408,138 @@
 		        	<h3>费用计算</h3>
 		        </div>
 		        <div class="widget_content">
-		            #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()} || $userRoleId==8 )
-		        	<div class="control_group">
+		            #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()} || $userRoleId==8 ||$userRoleId==${fn.getOperatorRoleId()})
+		        	<div class="control_group" #if($userRoleId==${fn.getOperatorRoleId()}) style="display:none" #end  >
 	        			<label class="control_label"><span class="ico_must">*</span>应收单价:</label>
 						<div class="controls">
 		               		<span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceYsdj" name="priceYsdj" placeholder="应收单价" value="$!{orders.priceYsdj}" onchange="calculate()"></span>
 		              	</div>		        			
 		        	</div>
 		        	#end
-		        	<div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>保险应收单价:</label>
-                      <div class="controls">
-                       <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxys" name="priceBxys" placeholder="保险应收款" value="#if(${orders.priceBxys})$!{orders.priceBxys}#else 0.00 #end" onchange="setBxyf();calculate()" #if($userRoleId!=${fn.getOperatorRoleId()}||${fn.isAdminRoleId($userRoleId)}) readonly #end></span>
-                      </div>
-                    </div>
-                    <div class="control_group">
-                      <label class="control_label"><span class="ico_must">*</span>保险应付款:</label>
-                      <div class="controls">
-                       <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceBxyf" name="priceBxyf" placeholder="保险应付款" value="#if(${orders.priceBxyf})$!{orders.priceBxyf}#else 0.00 #end" onchange="calculate()"  #if($userRoleId!=${fn.getOperatorRoleId()}||${fn.isAdminRoleId($userRoleId)}) readonly #end></span>
-                      </div>
-                    </div>
-                    #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()} || $userRoleId==8 )
-		            <div class="control_group">
+
+                    #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()} || $userRoleId==8 ||$userRoleId==${fn.getOperatorRoleId()})
+		            <div class="control_group" #if($userRoleId==${fn.getOperatorRoleId()}) style="display:none" #end>
 		              <label class="control_label"><span class="ico_must">*</span>其他应收款:</label>
 		              <div class="controls">
 		               <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceQtys" name="priceQtys" placeholder="其他应收款" value="$!{orders.priceQtys}" onchange="calculate()"> <input type="text" class="text1" maxlength="100" size="20" id="priceQtysBz" name="priceQtysBz" value="$!{orders.priceQtysBz}" placeholder="其他应收款备注" ></span>
 		              </div>
 		            </div>
-					<div class="control_group">
+					<div class="control_group" #if($userRoleId==${fn.getOperatorRoleId()}) style="display:none" #end >
 		              <label class="control_label"><span class="ico_must">*</span>其他应付款:</label>
 		              <div class="controls">
-		               <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceQtzc" name="priceQtzc" placeholder="其他应付款" value="$!{orders.priceQtzc}" onchange="calculate()"> <input type="text" class="text1" maxlength="100" size="20" id="priceQtzcBz" name="priceQtzcBz" value="$!{orders.priceQtzcBz}" placeholder="其他应付款备注" ></span>
+		               <span class="form_item"><input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceQtzc" name="priceQtzc" placeholder="其他应付款" value="$!{orders.priceQtzc}" onchange="calculate()"> <input type="text" class="text1" maxlength="100" size="20" id="priceQtzcBz" name="priceQtzcBz" value="$!{orders.priceQtzcBz}" placeholder="其他应付款备注" #if($userRoleId==${fn.getOperatorRoleId()}) readOnly="readOnly" #end></span>
 		              </div>
 		            </div>
+
 					<div class="control_group">
+		               <label class="control_label"><span class="ico_must"></span>保险选项:</label>
+						<div class="controls">
+		               		<span class="form_item"><select name="baoxian" id="baoxian" class="text2" onchange="selectbaxian(this)">
+								<option value="" selected="selected">请选择</option>
+    							<option value="1" #if($orders.baoxian=='1') selected #end>张进发保险</option>
+								<option value="2" #if($orders.baoxian=='2') selected #end>吴迪保险</option>
+								<option value="3" #if($orders.baoxian=='3') selected #end>客人自备</option>
+							</select></span>
+		              	</div>		        			
+		        	</div>
+					<div class="control_group">
+		               <label class="control_label"><span class="ico_must"></span>天数:</label>
+						<div class="controls">
+		               		<span class="form_item">
+		               		    <input type="text" onchange="calculateBaoXian(this)"  class="text1" maxlength="10" size="10" id="baoxianDay" name="baoxianDay" placeholder="保险天数" value="$!{orders.baoxianDay}" >
+							</select></span>
+		              	</div>		        			
+		        	</div>
+					<div class="control_group">
+		               <label class="control_label"><span class="ico_must"></span>保险费用:</label>
+						<div class="controls">
+		               		<span class="form_item">
+		               		    <input type="text" onchange="cal()"  class="text1 cal" maxlength="10" size="10" id="baoxianPrice" name="baoxianPrice" placeholder="保险费用" value="$!{orders.baoxianPrice}" >
+							</select></span>
+		              	</div>		        			
+		        	</div>
+					<div class="control_group">
+		               <label class="control_label"><span class="ico_must"></span>认证:</label>
+						<div class="controls">
+						    <span class="form_item"><select name="renzheng" id="renzheng" class="text2"  onchange="cal()" >
+								<option value="" selected="selected">请选择</option>
+    							<option value="100" #if($orders.renzheng==100) selected #end>100</option>
+								<option value="150" #if($orders.renzheng==150) selected #end>150</option>
+								<option value="200" #if($orders.renzheng==200) selected #end>200</option>
+							</select></span>
+		              	</div>		        			
+		        	</div>
+					<div class="control_group">
+		               <label class="control_label"><span class="ico_must"></span>快递:</label>
+						<div class="controls">
+		               		<span class="form_item">
+		               		    <input type="text" class="text1" onchange="cal()" maxlength="10" size="10" id="kuaidi" name="kuaidi" placeholder="保险费用" value="$!{orders.kuaidi}" >
+							</select></span>
+		              	</div>		        			
+		        	</div>
+					<div class="control_group">
+		               <label class="control_label"><span class="ico_must"></span>多开发票税点:</label>
+						<div class="controls">
+		               		<span class="form_item">
+		               		    <input type="text" class="text1" onchange="cal()" maxlength="10" size="10" id="tax" name="tax" placeholder="多开发票税点" value="$!{orders.tax}" >
+							</select></span>
+		              	</div>		        			
+		        	</div>
+		        	
+					<div class="control_group">
+		               <label class="control_label"><span class="ico_must"></span>返款:</label>
+						<div class="controls">
+		               		<span class="form_item">
+		               		    <input type="text" class="text1" onchange="cal()" maxlength="10" size="10" id="fankuan" name="fankuan" placeholder="返款" value="$!{orders.fankuan}" >
+							</select></span>
+		              	</div>		        			
+		        	</div>
+		        	
+					<div class="control_group">
+		               <label class="control_label"><span class="ico_must"></span>其他:</label>
+						<div class="controls">
+		               		<span class="form_item">
+		               		    <input type="text" class="text1" onchange="cal()"  maxlength="10" size="10" id="qita" name="qita" placeholder="其他费用" value="$!{orders.qita}" >
+								<input type="text" class="text1" maxlength="100" size="20" id="qitaComments" name="qitaComments" value="$!{orders.qitaComments}" placeholder="其他费用备注" >
+							</select></span>
+		              	</div>		        			
+		        	</div>
+		           <div class="control_group" #if($userRoleId==${fn.getOperatorRoleId()}) style="display:none" #end >
 	        			<label class="control_label">总计应收款:</label>
 						<div class="controls">
 		               		<span class="form_item"><input type="text" class="text1" maxlength="10" size="10" id="priceZjys" name="priceZjys" placeholder="总计应收款" value="$!{orders.priceZjys}" readonly></span>
 		              	</div>		        			
 		        	</div>
-					<div class="control_group">
+					<div class="control_group" #if($userRoleId==${fn.getOperatorRoleId()}) style="display:none" #end >
 	        			<label class="control_label">总计应付款:</label>
 						<div class="controls">
 		               		<span class="form_item">
 								#if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
-									<input type="text" class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceZjyf" name="priceZjyf" placeholder="总计应付款" value="$!{orders.priceZjyf}" onchange="calculateByAdmin()">
+									<input type="text"  class="text1 js_nan js_non_empty" maxlength="10" size="10" id="priceZjyf" name="priceZjyf" placeholder="总计应付款" value="$!{orders.priceZjyf}" onchange="calculateByAdmin()">
 								#else
-									<input type="text" class="text1" maxlength="10" size="10" id="priceZjyf" name="priceZjyf" placeholder="总计应付款" value="$!{orders.priceZjyf}" readonly >
+									<input type="text"  class="text1" maxlength="10" size="10" id="priceZjyf" name="priceZjyf" placeholder="总计应付款" value="$!{orders.priceZjyf}" readonly >
 								#end
 							</span>
 		              	</div>		        			
 		        	</div>
-					<div class="control_group">
+		           <script>
+							function cal(){
+							
+							     var baoxian = parseFloat($("#baoxianPrice").val()==''?0:$("#baoxianPrice").val());
+							     var renzheng = parseFloat($("#renzheng").val()==''?0:$("#renzheng").val());
+							     var kuaidi = parseFloat($("#kuaidi").val()==''?0:$("#kuaidi").val());
+							     var tax = parseFloat($("#tax").val()==''?0:$("#tax").val());
+							     var fankuan = parseFloat($("#fankuan").val()==''?0:$("#fankuan").val());
+							     var qita = parseFloat($("#qita").val()==''?0:$("#qita").val());
+							     
+							     var total = Math.round((baoxian + renzheng + kuaidi + tax + fankuan + qita)*100)/100;
+							     $("#priceQtzc").val(total);
+							     calculate();
+							}
+							
+				  </script>
+		        	
+					<div class="control_group" #if($userRoleId==${fn.getOperatorRoleId()}) style="display:none" #end>
 	        			<label class="control_label">预计毛利:</label>
 						<div class="controls">
 		               		<span class="form_item"><input type="text" class="text1" maxlength="10" size="10" id="grossProfit" name="grossProfit" placeholder="毛利" value="$!{orders.grossProfit}" readonly></span>
@@ -545,6 +658,89 @@
 		  	</form>
 		</div>
 	</div>
+	<script>
+	    $("#baoxianDay").attr("readOnly","readOnly");
+	    $("#baoxianPrice").attr("readOnly","readOnly");
+	    
+        function calculateBaoXian(obj){
+            var btype = $("#baoxian option:selected").val();
+            
+            if("" == btype){
+                $("#baoxianDay").attr("readOnly","readOnly");
+                $("#baoxianDayPrice").attr("readOnly","readOnly");
+                return ;           
+            }else{
+                $("#baoxianDay").removeAttr("readOnly");
+	    		$("#baoxianPrice").removeAttr("readOnly");       
+            }
+               
+            var num = $("#nameListSize").val();
+            var day = parseInt(obj.value);
+            
+            if(!day){
+                return;
+            }
+            var price;
+            if(isNaN(obj.value)){
+               $(obj).val("");
+               alert("请输入正整数");
+               $(obj).focus();
+               return;
+            }
+            var ns = day - 14;
+            var dis = parseInt(day / 5);
+            var baoxiancb = 0;
+            
+            if("1" == btype){
+              
+               if(day <= 10){
+                  baoxiancb = 115;
+               }else if(day >= 11 && day <= 15){
+                  baoxiancb = 150;
+               }else if(day >=16 && day <= 20){
+               	  baoxiancb = 180;
+               }else if(day >=21 && day <= 30){
+                  baoxiancb = 230;
+               }else if(day >= 31 && day <= 60){
+               	  baoxiancb = 390;
+               }else if(day >= 61 && day <= 90){
+                  baoxiancb = 560;
+               }else if(day >= 91 && day <= 180){
+                  baoxiancb = 1090;
+               }
+               price = baoxiancb * 0.6 * num;
+          
+            }else if("2" == btype){
+                 
+                 if(ns <= 0){
+                    price = 30;
+                 }else{
+                    price = (30 + ns*2)*num;
+                 }  
+            }else{
+                price = 0.0;
+            }
+            
+            $("#baoxianPrice").val(price);
+            cal();
+        }
+        
+        function selectbaxian(obj){
+        
+             var btype = $("#baoxian option:selected").val(); 
+             
+             if("" == btype || "3" == btype){
+                $("#baoxianDay").attr("readOnly","readOnly").val("");
+                $("#baoxianPrice").attr("readOnly","readOnly").val("");
+             }else{
+                $("#baoxianDay").removeAttr("readOnly").val("");
+	    		$("#baoxianPrice").removeAttr("readOnly").val("");  
+             }
+             cal();
+        }
+        
+        
+	</script>
 	<script>
 		jQuery("#continentId").bind("blur",function(e){
             changeCountry();

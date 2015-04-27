@@ -352,6 +352,17 @@
       <if test="des != null">des = #{des,jdbcType=VARCHAR},</if>
       <if test="czdes != null">czdes = #{czdes,jdbcType=VARCHAR},</if>
       <if test="cwdes != null">cwdes = #{cwdes,jdbcType=VARCHAR},</if>
+      <if test="baoxian != null">baoxian = #{baoxian,jdbcType=VARCHAR},</if>
+      
+      <if test="renzheng != null">renzheng = #{renzheng,jdbcType=VARCHAR},</if>
+      <if test="kuaidi != null">kuaidi = #{kuaidi,jdbcType=VARCHAR},</if>
+      <if test="tax != null">tax = #{tax,jdbcType=VARCHAR},</if>
+      <if test="fankuan != null">fankuan = #{fankuan,jdbcType=VARCHAR},</if>
+      <if test="qita != null">qita = #{qita,jdbcType=VARCHAR},</if>
+      <if test="qitaComments != null">qitaComments = #{qitaComments,jdbcType=VARCHAR},</if>
+      
+      <if test="baoxianPrice != null">baoxianPrice = #{baoxianPrice,jdbcType=DECIMAL},</if>
+      <if test="baoxianDay != null">baoxianDay = #{baoxianDay,jdbcType=INTEGER},</if>
       <if test="fapiao != null">fapiao = #{fapiao,jdbcType=VARCHAR},</if>
       <if test="operatorDes != null">operatorDes = #{operatorDes,jdbcType=VARCHAR},</if>
       <if test="operatorRemark != null">operatorRemark = #{operatorRemark,jdbcType=VARCHAR},</if>

@@ -16,7 +16,7 @@
   
  <insert id="insert" parameterType="Note"  useGeneratedKeys="true" keyProperty="noteId">
     insert into note (orderSeq, content, op,createDate )
-    values (#{orderSeq,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR}, #{op,jdbcType=VARCHAR},now())
+    values (#{orderSeq,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},#{op,jdbcType=VARCHAR},now())
   </insert>
   
 </mapper>
