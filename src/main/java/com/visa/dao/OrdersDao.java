@@ -26,6 +26,8 @@ public interface OrdersDao {
     List<Orders> selectByPage(Map<String, Object> paraMap);
 
     List<Orders> selectAll(Map<String, Object> paraMap);
+   
+    List<Orders> selectByRole(Map<String, Object> paraMap);
 
     List<String> selectOrderYears();
 

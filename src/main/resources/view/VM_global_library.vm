@@ -104,6 +104,7 @@
 						#end
 						#if(${fn.isAdminRoleId($userRoleId)}  || $userRoleId == 8 || $userRoleId==${fn.getFinanceRoleId()})
 							<dd#if($secNav==33) class="on"#end><a href="/orders/export.do">导出订单信息</a></dd>
+							<dd#if($secNav==311) class="on"#end><a href="/orders/salecount.do">销售利润统计</a></dd>
 						#end
 						
                     </dl>

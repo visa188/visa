@@ -1,0 +1,66 @@
+#header(3,311,"订单信息管理")
+
+<script>
+	function updateOrder(formUrl){
+		jQuery("#form1").attr("action",formUrl);
+		jQuery("#form1").submit();
+		jQuery("#form1").attr("action","/orders/list.do");
+	}
+	
+</script>
+
+<div class="miancon">
+		<div class="maincon_title">
+			<span class="ico_order_w"></span><h2>订单信息管理</h2>
+			#if($userRoleId==${fn.getSalesmanRoleId()})
+				<div class="left" style="margin-left: 10px;"><a class="ico_order_add" title="新增订单信息" href="/orders/add.do">+</a></div>
+			#end
+		</div>
+		<div class="maincon_fluid">
+		<form id="form1" name="form1" action="/orders/salecount.do" method="post" class="form_horizontal">
+			<div class="searchbox">
+				<label for="s_ordertime">开始时间：<input id="startDate" name="startDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="开始时间" value="$!{searchBean.startDate}"></label>
+    			<label for="s_ordertime">结束时间：<input id="endDate" name="endDate" type="text" class="s_ordertime searchtx js_datepicker" size="10" placeholder="结束时间" value="$!{searchBean.endDate}"></label>
+				<label for="searchbtn"><input id="searchbtn" type="submit" name="" class="searchbtn" value="搜索" ></label>	
+    		</div>
+		</form>
+		<hr class="hr_a">
+			<div class="widget_mng_box">
+				<table cellpadding="0" cellspacing="0" width="100%" class="table_data tcenter">
+	                <thead>
+	                    <tr>
+							<th width="">销售姓名</th>
+							<th width="">客人数量</th>
+	                        <th width="">总计应收</th>
+	                        <th width="">实际应收</th>
+	                        <th width="">总计应付</th>
+	                        <th width="">实际应付</th>
+	                        <th width="">预计毛利</th>
+	                        <th width="">实际毛利</th>
+							<th width="">付款状态</th>
+							<th width="">收款状态</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+						#foreach($order in $dto)
+						    
+						       <tr>
+								<td>$!{order.username}</td>  
+								<td>$!{order.nums}</td>  
+								<td>$!{order.sumzjys}</td>
+								<td>$!{order.sumyshk}</td>
+								<td>$!{order.sumzjyf}</td>
+								<td>$!{order.sumyfhk}</td>
+								<td>$!{order.promaoli}</td>
+								<td>$!{order.actmaoli}</td>
+    	                        <td>$!{order.fustatus}</td>
+    	                        <td>$!{order.shoustatus}</td>
+    	                    </tr>
+
+						#end
+	                </tbody>
+	            </table>
+	        </div>
+			</div>
+	</div>
+#footer()

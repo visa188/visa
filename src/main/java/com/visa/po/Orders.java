@@ -115,7 +115,17 @@ public class Orders {
     
     private String qitaComments;
     
-    public String getQitaComments() {
+    private String renzhengRemark;
+    
+    public String getRenzhengRemark() {
+		return renzhengRemark;
+	}
+
+	public void setRenzhengRemark(String renzhengRemark) {
+		this.renzhengRemark = renzhengRemark;
+	}
+
+	public String getQitaComments() {
 		return qitaComments;
 	}
 

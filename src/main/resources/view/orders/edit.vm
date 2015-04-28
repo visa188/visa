@@ -141,8 +141,10 @@
         
         if("1" == continentId){
            $("#baoxian").addClass("js_non_empty");
+           $("#baoxianDay").addClass("js_non_empty");
         }else{
            $("#baoxian").removeClass("js_non_empty");
+           $("#baoxianDay").removeClass("js_non_empty");
         }
         
     }
@@ -461,12 +463,9 @@
 					<div class="control_group">
 		               <label class="control_label"><span class="ico_must"></span>认证:</label>
 						<div class="controls">
-						    <span class="form_item"><select name="renzheng" id="renzheng" class="text2"  onchange="cal()" >
-								<option value="" selected="selected">请选择</option>
-    							<option value="100" #if($orders.renzheng==100) selected #end>100</option>
-								<option value="150" #if($orders.renzheng==150) selected #end>150</option>
-								<option value="200" #if($orders.renzheng==200) selected #end>200</option>
-							</select></span>
+						    <span class="form_item">
+						     <input type="text" onchange="cal()"  class="text1" maxlength="10" size="10" id="renzheng" name="renzheng" placeholder="认证费用" value="$!{orders.renzheng}" >
+		                     <input type="text" class="text1" maxlength="100" size="20" id="renzhengRemark" name="renzhengRemark" value="$!{orders.renzhengRemark}" placeholder="认证费用备注" >
 		              	</div>		        			
 		        	</div>
 					<div class="control_group">
@@ -531,8 +530,9 @@
 							     var tax = parseFloat($("#tax").val()==''?0:$("#tax").val());
 							     var fankuan = parseFloat($("#fankuan").val()==''?0:$("#fankuan").val());
 							     var qita = parseFloat($("#qita").val()==''?0:$("#qita").val());
+							     var nameListSize=jQuery("#nameListSize").val()==''?0:jQuery("#nameListSize").val();
 							     
-							     var total = Math.round((baoxian + renzheng + kuaidi + tax + fankuan + qita)*100)/100;
+							     var total = Math.round((baoxian*nameListSize + renzheng*nameListSize + kuaidi + tax + fankuan + qita)*100)/100;
 							     $("#priceQtzc").val(total);
 							     calculate();
 							}
@@ -661,9 +661,18 @@
 	<script>
 	    $("#baoxianDay").attr("readOnly","readOnly");
 	    $("#baoxianPrice").attr("readOnly","readOnly");
+	    var continentId = jQuery("#continentId").val();
+	    if("1" == continentId){
+           $("#baoxian").addClass("js_non_empty");
+           $("#baoxianDay").addClass("js_non_empty");
+        }else{
+           $("#baoxian").removeClass("js_non_empty");
+           $("#baoxianDay").removeClass("js_non_empty");
+         }
 	    
         function calculateBaoXian(obj){
             var btype = $("#baoxian option:selected").val();
+            var nameListSize=jQuery("#nameListSize").val()==''?0:jQuery("#nameListSize").val();
             
             if("" == btype){
                 $("#baoxianDay").attr("readOnly","readOnly");
@@ -721,7 +730,7 @@
                 price = 0.0;
             }
             
-            $("#baoxianPrice").val(price);
+            $("#baoxianPrice").val(price*nameListSize);
             cal();
         }
         
