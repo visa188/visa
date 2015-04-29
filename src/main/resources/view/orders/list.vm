@@ -144,8 +144,8 @@
 	                        <th width="5%">实际应付</th>
 							#if($userRoleId!=${fn.getFinanceRoleId()})
 							<th width="5%">送签日期</th>
-	                        <th width="6%">目前状态</th>
 							#end
+	                        <th width="6%">目前状态</th>
 	                        <th width="2%">操作员</th>
 							<th width="5%">付款状态</th>
 							<th width="5%">收款状态</th>
@@ -181,8 +181,8 @@
 								<td>$!{order.priceYfhk}</td>
 								#if($userRoleId!=${fn.getFinanceRoleId()})
 								<td>$fn.format($!{order.signDate},'yyyy-MM-dd')</td>
+							    #end
     	                        <td>$!{order.operatorDes}</td>
-								#end
     	                        <td>$!{order.operatorName}</td>
     	                        <td>$fn.getPriceStatus($!{order.yfhkStatus})#if($!{order.yfhkStatus}==2) $!{order.priceYfhk}元 #end</td>
 								<td>$fn.getYshkStatus($!{order.yshkStatus})#if($!{order.yshkStatus}==2) $!{order.priceYshk}元 #end</td>

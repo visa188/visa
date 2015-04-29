@@ -436,7 +436,7 @@
 					<div class="control_group">
 		               <label class="control_label"><span class="ico_must"></span>保险选项:</label>
 						<div class="controls">
-		               		<span class="form_item"><select name="baoxian" id="baoxian" class="text2" onchange="selectbaxian(this)">
+		               		<span class="form_item"><select name="baoxian" id="baoxian" class="text2" onchange="selectbaxian(this)" placeholder="保险选项">
 								<option value="" selected="selected">请选择</option>
     							<option value="1" #if($orders.baoxian=='1') selected #end>张进发保险</option>
 								<option value="2" #if($orders.baoxian=='2') selected #end>吴迪保险</option>
@@ -532,7 +532,7 @@
 							     var qita = parseFloat($("#qita").val()==''?0:$("#qita").val());
 							     var nameListSize=jQuery("#nameListSize").val()==''?0:jQuery("#nameListSize").val();
 							     
-							     var total = Math.round((baoxian*nameListSize + renzheng*nameListSize + kuaidi + tax + fankuan + qita)*100)/100;
+							     var total = Math.round((baoxian*nameListSize + renzheng + kuaidi + tax + fankuan + qita)*100)/100;
 							     $("#priceQtzc").val(total);
 							     calculate();
 							}
@@ -661,10 +661,15 @@
 	<script>
 	    $("#baoxianDay").attr("readOnly","readOnly");
 	    $("#baoxianPrice").attr("readOnly","readOnly");
+	    var btype2 = $("#baoxian option:selected").val(); 
+	    
 	    var continentId = jQuery("#continentId").val();
 	    if("1" == continentId){
            $("#baoxian").addClass("js_non_empty");
            $("#baoxianDay").addClass("js_non_empty");
+           if("3" == btype2){
+              $("#baoxianDay").removeClass("js_non_empty");
+           }
         }else{
            $("#baoxian").removeClass("js_non_empty");
            $("#baoxianDay").removeClass("js_non_empty");
@@ -682,7 +687,7 @@
                 $("#baoxianDay").removeAttr("readOnly");
 	    		$("#baoxianPrice").removeAttr("readOnly");       
             }
-               
+            
             var num = $("#nameListSize").val();
             var day = parseInt(obj.value);
             
@@ -744,7 +749,12 @@
              }else{
                 $("#baoxianDay").removeAttr("readOnly").val("");
 	    		$("#baoxianPrice").removeAttr("readOnly").val("");  
+	    		$("#baoxianDay").addClass("js_non_empty");
              }
+             
+             if("3" == btype){
+                $("#baoxianDay").removeClass("js_non_empty");
+            }
              cal();
         }
         
