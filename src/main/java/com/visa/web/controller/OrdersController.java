@@ -888,6 +888,21 @@ public class OrdersController {
         orders.setQitaComments(updateOrders.getQitaComments());
         orders.setRenzhengRemark(updateOrders.getRenzhengRemark());
         orders.setPtTime(new Date());
+        
+        String infostatus = updateOrders.getInfostatus();
+        
+        if(null != infostatus && !"".equals(infostatus) && !"1".equals(infostatus) && !"4".equals(infostatus)&& !"7".equals(infostatus)){
+        	
+        	if("8".equals(infostatus) || "9".equals(infostatus)){
+        		orders.setFinaceman(user.getUserId());
+        	}else{
+        	}
+        	
+        	orders.setInfostatus(infostatus);
+        }else{
+        	orders.setInfostatus(null);
+        }
+        
         ordersDao.updateByPrimaryKey(orders);
 
         model.put("seachCountryName", bean.getSeachCountryName());

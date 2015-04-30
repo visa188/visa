@@ -396,6 +396,8 @@
       <if test="czdes != null">czdes = #{czdes,jdbcType=VARCHAR},</if>
       <if test="cwdes != null">cwdes = #{cwdes,jdbcType=VARCHAR},</if>
       <if test="baoxian != null">baoxian = #{baoxian,jdbcType=VARCHAR},</if>
+      <if test="infostatus != null">infostatus = #{infostatus,jdbcType=VARCHAR},</if>
+      <if test="finaceman != null">finaceman = #{finaceman,jdbcType=VARCHAR},</if>
       
       <if test="renzheng != null">renzheng = #{renzheng,jdbcType=VARCHAR},</if>
       <if test="kuaidi != null">kuaidi = #{kuaidi,jdbcType=VARCHAR},</if>

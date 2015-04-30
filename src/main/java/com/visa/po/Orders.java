@@ -117,7 +117,27 @@ public class Orders {
     
     private String renzhengRemark;
     
-    public String getRenzhengRemark() {
+    private String infostatus;
+ 
+    private String finaceman;
+    
+	public String getFinaceman() {
+		return finaceman;
+	}
+
+	public void setFinaceman(String finaceman) {
+		this.finaceman = finaceman;
+	}
+
+	public String getInfostatus() {
+		return infostatus;
+	}
+
+	public void setInfostatus(String infostatus) {
+		this.infostatus = infostatus;
+	}
+
+	public String getRenzhengRemark() {
 		return renzhengRemark;
 	}
 

@@ -395,6 +395,45 @@
                             </select></span>
     		              </div>
     		            </div> 
+    		            
+    		           #if($userRoleId== 2)
+	    					<div class="control_group">
+	    		              <label class="control_label"><span class="ico_must">&nbsp;</span>资料信息:</label>
+	    		              <div class="controls">
+	    		                <span class="form_item"><select name="infostatus" id="infostatus" class="text2" placeholder="资料信息">
+	                                <option value="1" selected="selected">请选择</option>
+	                                ##<option value="2" #if($!{orders.infostatus}=="2") selected #end>未获取</option>
+	                                <option value="3" #if($!{orders.infostatus}=="3") selected #end>已获取</option>
+	                            </select></span>
+	    		              </div>
+	    		            </div> 
+	    		        #end
+    		           #if($userRoleId== 4 && ${fn.judgeIsNull($!{order.finaceman})})
+	    					<div class="control_group">
+	    		              <label class="control_label"><span class="ico_must">&nbsp;</span>资料信息:</label>
+	    		              <div class="controls">
+	    		                <span class="form_item"><select name="infostatus" id="infostatus" class="text2" placeholder="资料信息">
+	                                <option value="4" selected="selected">请选择</option>
+	                               ## <option value="5" #if($!{orders.infostatus}=="5") selected #end>未获取</option>
+	                                <option value="6" #if($!{orders.infostatus}=="6") selected #end>已获取</option>
+	                            </select></span>
+	    		              </div>
+	    		            </div> 
+	    		        #end  ##|| (($userRoleId == 5 && !${fn.judgeIsNull($!{order.finaceman})}) && $!{orders.infostatus}=="9")
+	    		        
+    		           #if(($userRoleId== 5 && ${fn.judgeIsNull($!{orders.finaceman})})|| ($userRoleId == 5 && !${fn.judgeIsNull($!{orders.finaceman})} && $!{orders.infostatus}=="9") )
+	    					<div class="control_group">
+	    		              <label class="control_label"><span class="ico_must">&nbsp;</span>资料信息:</label>
+	    		              <div class="controls">
+	    		                <span class="form_item"><select name="infostatus" id="infostatus" class="text2" placeholder="资料信息">
+	                                <option value="7" selected="selected">请选择</option>
+	                                ##<option value="8" #if($!{orders.infostatus}=="8") selected #end>未获取</option>
+	                                <option value="9" #if($!{orders.infostatus}=="9") selected #end>已获取</option>
+	                            </select></span>
+	    		              </div>
+	    		            </div> 
+	    		        #end
+	    		        
     					<div class="control_group">
     		              <label class="control_label"><span class="ico_must">&nbsp;</span>送签备注:</label>
     		              <div class="controls">

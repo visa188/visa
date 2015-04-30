@@ -679,5 +679,14 @@ public class VelocityToolbox {
     	}
     }
     
+    public boolean judgeIsNull(String value){
+    	
+    	System.out.println(value);
+    	if(null == value){
+    		return true;
+    	}else{
+    		return false;
+    	}
+    }
 
 }
