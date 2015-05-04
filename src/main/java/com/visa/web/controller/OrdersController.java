@@ -890,17 +890,18 @@ public class OrdersController {
         orders.setPtTime(new Date());
         
         String infostatus = updateOrders.getInfostatus();
+        String substatus = updateOrders.getSubstatus();
         
-        if(null != infostatus && !"".equals(infostatus) && !"1".equals(infostatus) && !"4".equals(infostatus)&& !"7".equals(infostatus)){
+        if(null != infostatus && !"1".equals(infostatus)){
         	
-        	if("8".equals(infostatus) || "9".equals(infostatus)){
+        	if("5".equals(substatus) || "6".equals(substatus)){
         		orders.setFinaceman(user.getUserId());
-        	}else{
         	}
-        	
         	orders.setInfostatus(infostatus);
+        	orders.setSubstatus(substatus);
         }else{
         	orders.setInfostatus(null);
+        	orders.setSubstatus(null);
         }
         
         ordersDao.updateByPrimaryKey(orders);

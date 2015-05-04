@@ -398,6 +398,7 @@
       <if test="baoxian != null">baoxian = #{baoxian,jdbcType=VARCHAR},</if>
       <if test="infostatus != null">infostatus = #{infostatus,jdbcType=VARCHAR},</if>
       <if test="finaceman != null">finaceman = #{finaceman,jdbcType=VARCHAR},</if>
+      <if test="substatus != null">substatus = #{substatus,jdbcType=VARCHAR},</if>
       
       <if test="renzheng != null">renzheng = #{renzheng,jdbcType=VARCHAR},</if>
       <if test="kuaidi != null">kuaidi = #{kuaidi,jdbcType=VARCHAR},</if>

@@ -121,6 +121,16 @@ public class Orders {
  
     private String finaceman;
     
+    private String substatus;
+    
+	public String getSubstatus() {
+		return substatus;
+	}
+
+	public void setSubstatus(String substatus) {
+		this.substatus = substatus;
+	}
+
 	public String getFinaceman() {
 		return finaceman;
 	}
