@@ -758,7 +758,7 @@ public class OrdersController {
         Orders orders = ordersDao.selectByPrimaryKey(updateOrders.getOrderId());
 
         if (RoleEnumType.SALESMAN.getId() == user.getRoleId()
-                || RoleEnumType.ADMIN.getId() == user.getRoleId()) {
+                || RoleEnumType.ADMIN.getId() == user.getRoleId() || RoleEnumType.FINANCE.getId() == user.getRoleId()) {
             Product product = null;
             if (updateOrders.getProductId() != null) {
                 product = productDao.selectByPrimaryKey(updateOrders.getProductId());

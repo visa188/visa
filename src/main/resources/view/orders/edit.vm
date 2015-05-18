@@ -716,8 +716,8 @@
 		</div>
 	</div>
 	<script>
-	    $("#baoxianDay").attr("readOnly","readOnly");
-	    $("#baoxianPrice").attr("readOnly","readOnly");
+	 //   $("#baoxianDay").attr("readOnly","readOnly");
+	 //   $("#baoxianPrice").attr("readOnly","readOnly");
 	    var btype2 = $("#baoxian option:selected").val(); 
 	    
 	    var continentId = jQuery("#continentId").val();
@@ -801,7 +801,7 @@
              var btype = $("#baoxian option:selected").val(); 
              
              if("" == btype || "3" == btype){
-                $("#baoxianDay").attr("readOnly","readOnly").val("");
+                $("#baoxianDay").val("");
                 $("#baoxianPrice").attr("readOnly","readOnly").val("");
              }else{
                 $("#baoxianDay").removeAttr("readOnly").val("");
