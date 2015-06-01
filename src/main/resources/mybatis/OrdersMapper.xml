@@ -429,8 +429,8 @@
   </update>
 
     <select id="sumPrice" parameterType="java.util.Map" resultType="java.util.Map">
-      select sum(priceZjys) sumzjys,sum(priceZjyf) sumzjyf,sum(priceYshk1) sumyshk,sum(nameListSizeSum) sumNameListSize,sum(priceYfhk1) sumyfhk
-		from (select orders.*,IFNULL(orders.priceYshk,0) AS priceYshk1,IFNULL(orders.priceYfhk,0) AS priceYfhk1,product.productName,customer.customerName,user1.userName salesmanName,country.countryName,IFNULL(orders.nameListSize,0) nameListSizeSum
+      select sum(priceZjys) sumzjys,sum(priceZjyf) sumzjyf,sum(priceYshk1) sumyshk,sum(nameListSizeSum) sumNameListSize,sum(priceYfhk1) sumyfhk,sum(baoxians) baoxiansum
+		from (select orders.*,IFNULL(orders.priceYshk,0) AS priceYshk1,IFNULL(orders.priceYfhk,0) AS priceYfhk1,product.productName,customer.customerName,user1.userName salesmanName,country.countryName,IFNULL(orders.nameListSize,0) nameListSizeSum,IFNULL(orders.baoxianPrice,0) baoxians
 			from orders,product,customer,user user1,country
 			where (orders.type=0 or orders.type is null)
 					and	 orders.productId=product.productId 
@@ -467,7 +467,7 @@
 	  </if>
 	  <if test="countryName == null">
 	  UNION
-				SELECT orders.*,IFNULL(orders.priceYshk,0) AS priceYshk1,IFNULL(orders.priceYfhk,0) AS priceYfhk1,orders.nameList productName,customer.customerName,user1.userName salesmanName,orders.nameList countryName,IFNULL(orders.nameListSize,0) nameListSizeSum
+				SELECT orders.*,IFNULL(orders.priceYshk,0) AS priceYshk1,IFNULL(orders.priceYfhk,0) AS priceYfhk1,orders.nameList productName,customer.customerName,user1.userName salesmanName,orders.nameList countryName,IFNULL(orders.nameListSize,0) nameListSizeSum,IFNULL(orders.baoxianPrice,0) baoxians
 				FROM orders,customer,user user1
 				WHERE  (orders.type=1 or orders.type =2)
 					and	 orders.customerId=customer.customerId 

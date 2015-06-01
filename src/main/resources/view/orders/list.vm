@@ -119,6 +119,7 @@
 	            		<td>总计应付:</td><td>$!{sumPrice.sumzjyf}</td>
 	            		<td>预计毛利:</td><td>$!{sumPrice.sumlr}</td>
 	            		<td>总人数:</td><td>$!{sumPrice.sumNameListSize}</td>
+	            		<td>保险:</td><td>$!{sumPrice.baoxian}</td>
 	            	</tr>
 	            </tbody>
 			</table>
