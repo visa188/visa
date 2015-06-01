@@ -114,6 +114,7 @@
 	  <if test="nameList != null">and orders.nameList ${operator} #{nameList,jdbcType=VARCHAR}</if>
 	  <if test="status != null">and orders.status = #{status,jdbcType=INTEGER}</if>
 	  <if test="fapiao != null">and IFNULL(orders.fapiao,'2') = #{fapiao,jdbcType=VARCHAR}</if>
+	  <if test="baoxian != null">and orders.baoxian= #{baoxian,jdbcType=VARCHAR}</if>
 	  <if test="yfhkStatus != null">and orders.yfhkStatus = #{yfhkStatus,jdbcType=INTEGER}</if>
 	  <if test="yshkStatus != null">and orders.yshkStatus = #{yshkStatus,jdbcType=INTEGER}</if>
 	  <if test="salesmanForSearch != null">and orders.salesmanId=#{salesmanForSearch,jdbcType=VARCHAR}</if>
@@ -147,6 +148,7 @@
 			  <if test="nameList != null">and orders.nameList ${operator} #{nameList,jdbcType=VARCHAR}</if>
 			  <if test="status != null">and orders.status = #{status,jdbcType=INTEGER}</if>
 			  <if test="fapiao != null">and IFNULL(orders.fapiao,'2') = #{fapiao,jdbcType=VARCHAR}</if>
+			  <if test="baoxian != null">and orders.baoxian= #{baoxian,jdbcType=VARCHAR}</if>
 			  <if test="yfhkStatus != null">and orders.yfhkStatus = #{yfhkStatus,jdbcType=INTEGER}</if>
 			  <if test="yshkStatus != null">and orders.yshkStatus = #{yshkStatus,jdbcType=INTEGER}</if>
 			  <if test="salesmanForSearch != null">and orders.salesmanId=#{salesmanForSearch,jdbcType=VARCHAR}</if>
@@ -187,6 +189,7 @@
 			  <if test="nameList != null">and orders.nameList ${operator} #{nameList,jdbcType=VARCHAR}</if>
 			  <if test="status != null">and orders.status = #{status,jdbcType=INTEGER}</if>
 			  <if test="fapiao != null">and IFNULL(orders.fapiao,'2') = #{fapiao,jdbcType=VARCHAR}</if>
+			  <if test="baoxian != null">and orders.baoxian= #{baoxian,jdbcType=VARCHAR}</if>
 			  <if test="yfhkStatus != null">and orders.yfhkStatus = #{yfhkStatus,jdbcType=INTEGER}</if>
 			  <if test="yshkStatus != null">and orders.yshkStatus = #{yshkStatus,jdbcType=INTEGER}</if>
 			  <if test="salesmanForSearch != null">and orders.salesmanId=#{salesmanForSearch,jdbcType=VARCHAR}</if>
@@ -220,6 +223,7 @@
 			  <if test="nameList != null">and orders.nameList ${operator} #{nameList,jdbcType=VARCHAR}</if>
 			  <if test="status != null">and orders.status = #{status,jdbcType=INTEGER}</if>
 			  <if test="fapiao != null">and IFNULL(orders.fapiao,'2') = #{fapiao,jdbcType=VARCHAR}</if>
+			  <if test="baoxian != null">and orders.baoxian= #{baoxian,jdbcType=VARCHAR}</if>
 			  <if test="yfhkStatus != null">and orders.yfhkStatus = #{yfhkStatus,jdbcType=INTEGER}</if>
 			  <if test="yshkStatus != null">and orders.yshkStatus = #{yshkStatus,jdbcType=INTEGER}</if>
 			  <if test="salesmanForSearch != null">and orders.salesmanId=#{salesmanForSearch,jdbcType=VARCHAR}</if>
@@ -408,6 +412,9 @@
       <if test="qitaComments != null">qitaComments = #{qitaComments,jdbcType=VARCHAR},</if>
       <if test="renzhengRemark != null">renzhengRemark = #{renzhengRemark,jdbcType=VARCHAR},</if>
       
+      <if test="fkstatusdes != null">fkstatusdes = #{fkstatusdes,jdbcType=VARCHAR},</if>
+      <if test="skstatusdes != null">skstatusdes = #{skstatusdes,jdbcType=VARCHAR},</if>
+      
       <if test="baoxianPrice != null">baoxianPrice = #{baoxianPrice,jdbcType=DECIMAL},</if>
       <if test="baoxianDay != null">baoxianDay = #{baoxianDay,jdbcType=INTEGER},</if>
       <if test="fapiao != null">fapiao = #{fapiao,jdbcType=VARCHAR},</if>
@@ -444,6 +451,8 @@
 	  <if test="operatorForSearch != null">and orders.operatorId=#{operatorForSearch,jdbcType=VARCHAR}</if>
 	  <if test="orderSeq != null">and orders.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 	  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
+	  <if test="fapiao != null">and IFNULL(orders.fapiao,'2') = #{fapiao,jdbcType=VARCHAR}</if>
+	  <if test="baoxian != null">and orders.baoxian= #{baoxian,jdbcType=VARCHAR}</if>
 	  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
 	  <if test="operatorDes != null">and orders.operatorDes=#{operatorDes,jdbcType=VARCHAR}</if>
 	  <if test="spStatus == 0">and IFNULL(orders.spStatus,'0') != '1' </if>
@@ -476,6 +485,8 @@
 			  <if test="operatorForSearch != null">and orders.operatorId=#{operatorForSearch,jdbcType=VARCHAR}</if>
 	  		  <if test="orderSeq != null">and orders.orderSeq=#{orderSeq,jdbcType=VARCHAR}</if>
 	  		  <if test="deptId != null">and user1.deptId=#{deptId,jdbcType=VARCHAR}</if>
+	  		  <if test="fapiao != null">and IFNULL(orders.fapiao,'2') = #{fapiao,jdbcType=VARCHAR}</if>
+	  		  <if test="baoxian != null">and orders.baoxian= #{baoxian,jdbcType=VARCHAR}</if>
 	  		  <if test="orderType != null">and orders.type=#{orderType,jdbcType=INTEGER}</if>
 	  		  <if test="operatorDes != null">and orders.operatorDes=#{operatorDes,jdbcType=VARCHAR}</if>
 	  		  <if test="spStatus == 0">and IFNULL(orders.spStatus,'0') != '1' </if>

@@ -223,6 +223,7 @@ public class OrdersController {
     	String orderType = bean.getOrderType();
     	String operatorDes = bean.getSeachOperatorDes();
     	String fapiao = bean.getFapiao();
+    	String baoxian = bean.getBaoxian();
     	
     	if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate)) {
     		// 如果未选择起止日期，默认为本月一号到当日
@@ -254,6 +255,7 @@ public class OrdersController {
     	paraMap.put("orderType", StringUtils.isEmpty(orderType) ? null : orderType);
     	paraMap.put("operatorDes", StringUtils.isEmpty(operatorDes) ? null : operatorDes);
     	paraMap.put("fapiao", StringUtils.isEmpty(fapiao) ? null : fapiao);
+    	paraMap.put("baoxian", StringUtils.isEmpty(baoxian) ? null : baoxian);
     	
     	// 记录总条数
     	recordCount = ordersDao.count(paraMap);
@@ -340,6 +342,7 @@ public class OrdersController {
     	String orderType = bean.getOrderType();
     	String operatorDes = bean.getSeachOperatorDes();
     	String fapiao = bean.getFapiao();
+    	String baoxian = bean.getBaoxian();
     	
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -376,6 +379,7 @@ public class OrdersController {
     	paraMap.put("orderType", StringUtils.isEmpty(orderType) ? null : orderType);
     	paraMap.put("operatorDes", StringUtils.isEmpty(operatorDes) ? null : operatorDes);
     	paraMap.put("fapiao", StringUtils.isEmpty(fapiao) ? null : fapiao);
+    	paraMap.put("baoxian", StringUtils.isEmpty(baoxian) ? null : baoxian);
     	paraMap.put("spStatus", 0);
     	
     	// 记录总条数
@@ -888,6 +892,8 @@ public class OrdersController {
         orders.setQitaComments(updateOrders.getQitaComments());
         orders.setRenzhengRemark(updateOrders.getRenzhengRemark());
         orders.setPtTime(new Date());
+        orders.setFkstatusdes(updateOrders.getFkstatusdes());
+        orders.setSkstatusdes(updateOrders.getSkstatusdes());
         
         String infostatus = updateOrders.getInfostatus();
         String substatus = updateOrders.getSubstatus();

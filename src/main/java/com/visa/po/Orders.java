@@ -123,6 +123,26 @@ public class Orders {
     
     private String substatus;
     
+    private String fkstatusdes;
+    
+    private String skstatusdes;
+    
+	public String getFkstatusdes() {
+		return fkstatusdes;
+	}
+
+	public void setFkstatusdes(String fkstatusdes) {
+		this.fkstatusdes = fkstatusdes;
+	}
+
+	public String getSkstatusdes() {
+		return skstatusdes;
+	}
+
+	public void setSkstatusdes(String skstatusdes) {
+		this.skstatusdes = skstatusdes;
+	}
+
 	public String getSubstatus() {
 		return substatus;
 	}

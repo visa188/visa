@@ -97,6 +97,14 @@
 						<option value="2" #if(${searchBean.fapiao}==2) selected="selected" #end>未开</option>
 					</select>
 			</label>
+			
+			<label for="s_client">保险状态：<select name="baoxian" class="text2"  style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
+				<option value="" selected="selected">全部</option>
+				<option value="1" #if(${searchBean.baoxian}==1) selected="selected" #end>张进发保险</option>
+				<option value="2" #if(${searchBean.baoxian}==2) selected="selected" #end>吴迪保险</option>
+				<option value="3" #if(${searchBean.baoxian}==3) selected="selected" #end>客人自备</option>
+			    </select>
+			 </label>
 			<label for="searchbtn"><input id="searchbtn" type="submit" name="" class="searchbtn" value="搜索" ></label>	
 		</div>
 		</form>

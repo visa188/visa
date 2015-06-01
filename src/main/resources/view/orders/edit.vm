@@ -620,7 +620,12 @@
 								<option value="2" #if($orders.yfhkStatus=='2') selected #end>部分付款</option>
 								<option value="3" #if($orders.yfhkStatus=='3') selected #end>已付全款</option>
 							</select></span>
-		              	</div>		
+		              	</div>	
+		              	<label class="control_label">付款状态备注:</label>
+                        <div class="controls">
+                            <textarea class="text3" #if($userRoleId!=${fn.getFinanceRoleId()} && $userRoleId!=8 && $userRoleId!=1) readonly="readonly" #end id="cwdes" name="fkstatusdes"  cols="55" rows="8"   width="300" placeholder="付款状态备注" maxlength="200">$!{orders.fkstatusdes}</textarea>
+                        </div>  
+		              		
 						<script>
 							function processYfhk(){
 								var yfhkStatus=jQuery("#yfhkStatus").val();
@@ -652,6 +657,12 @@
 								<option value="3" #if($orders.yshkStatus=='3') selected #end>已收全款</option>
 							</select></span>
 		              	</div>
+		              	
+		              	<label class="control_label">收款状态备注:</label>
+                        <div class="controls">
+                            <textarea class="text3" #if($userRoleId!=${fn.getFinanceRoleId()} && $userRoleId!=8 && $userRoleId!=1) readonly="readonly" #end id="cwdes" name="skstatusdes"  cols="55" rows="8"   width="300" placeholder="付款状态备注" maxlength="200">$!{orders.skstatusdes}</textarea>
+                        </div>  
+		              	
 						<script>
 							function processYshk(){
 								var yshkStatus=jQuery("#yshkStatus").val();
