@@ -269,8 +269,6 @@ public class OrdersController {
     		BigDecimal sumyshk = (BigDecimal) sumPrice.get("sumyshk");
     		BigDecimal sumyfhk = (BigDecimal) sumPrice.get("sumyfhk");
     		BigDecimal sumNameListSize = (BigDecimal) sumPrice.get("sumNameListSize");
-    		BigDecimal baoxians = (BigDecimal) sumPrice.get("baoxiansum");
-    		sumPrice.put("baoxian", fmt.format(baoxians));
     		
     		if (sumzjys != null && sumzjyf != null && sumyshk != null && sumyfhk != null) {
     			sumPrice.put("sumzjys", fmt.format(sumzjys));

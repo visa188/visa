@@ -620,8 +620,11 @@
 								<option value="2" #if($orders.yfhkStatus=='2') selected #end>部分付款</option>
 								<option value="3" #if($orders.yfhkStatus=='3') selected #end>已付全款</option>
 							</select></span>
-							
 		              	</div>	
+		              	<label class="control_label">付款状态备注:</label>
+                        <div class="controls">
+                            <textarea class="text3" #if($userRoleId!=${fn.getFinanceRoleId()} && $userRoleId!=8 && $userRoleId!=1) readonly="readonly" #end id="cwdes" name="fkstatusdes"  cols="55" rows="8"   width="300" placeholder="付款状态备注" maxlength="200">$!{orders.fkstatusdes}</textarea>
+                        </div>  
 		              		
 						<script>
 							function processYfhk(){
@@ -640,7 +643,6 @@
 						<label class="control_label"><span class="ico_must">*</span>已付货款:</label>
 						<div class="controls">
 							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="priceYfhk" name="priceYfhk" placeholder="已付货款" value="$!{orders.priceYfhk}"></span>
-		                    <input type="text" class="text1" maxlength="100" size="20" id="fkstatusdes" name="fkstatusdes" value="$!{orders.fkstatusdes}" placeholder="付款明细" #if($userRoleId!=${fn.getFinanceRoleId()} && $userRoleId!=8 && $userRoleId!=1) readonly="readonly" #end>
 		              	</div>	
 	        			<label class="control_label">付款备注:</label>
 						<div class="controls">
@@ -655,6 +657,11 @@
 								<option value="3" #if($orders.yshkStatus=='3') selected #end>已收全款</option>
 							</select></span>
 		              	</div>
+		              	
+		              	<label class="control_label">收款状态备注:</label>
+                        <div class="controls">
+                            <textarea class="text3" #if($userRoleId!=${fn.getFinanceRoleId()} && $userRoleId!=8 && $userRoleId!=1) readonly="readonly" #end id="cwdes" name="skstatusdes"  cols="55" rows="8"   width="300" placeholder="付款状态备注" maxlength="200">$!{orders.skstatusdes}</textarea>
+                        </div>  
 		              	
 						<script>
 							function processYshk(){
@@ -672,7 +679,6 @@
 						<label class="control_label"><span class="ico_must">*</span>已收货款:</label>
 						<div class="controls">
 							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="priceYshk" name="priceYshk" placeholder="已收货款" value="$!{orders.priceYshk}"></span>
-		              	    <input type="text" class="text1" maxlength="100" size="20" id="skstatusdes" name="skstatusdes" value="$!{orders.skstatusdes}" placeholder="收款明细" #if($userRoleId!=${fn.getFinanceRoleId()} && $userRoleId!=8 && $userRoleId!=1) readonly="readonly" #end>
 		              	</div>	
 		        	</div>
 		        	
