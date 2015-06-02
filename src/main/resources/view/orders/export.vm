@@ -11,7 +11,7 @@
                 if("" == values){
                 
                     $("#"+id).after("<font color='red' >开始时间不能为空!</font>");    
-                     return false;       
+                     return false;          
                 }            
             }
             
