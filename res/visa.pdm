@@ -1147,9 +1147,9 @@ PhysOpts=</a:ModelOptionsText>
 <a:Name>MySQL 5.0</a:Name>
 <a:Code>MYSQL50</a:Code>
 <a:CreationDate>1372729382</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372729382</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:TargetStereotype/>
 <a:TargetID>F4F16ECD-F2F1-4006-AF6F-638D5C65F35E</a:TargetID>
 <a:TargetClassID>4BA9F647-DAB1-11D1-9944-006097355D9B</a:TargetClassID>
@@ -1161,7 +1161,7 @@ PhysOpts=</a:ModelOptionsText>
 <a:Name>visa</a:Name>
 <a:Code>visa</a:Code>
 <a:CreationDate>1372729387</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372822416</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:DisplayPreferences>[DisplayPreferences]
@@ -1696,9 +1696,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>orders</a:Name>
 <a:Code>orders</a:Code>
 <a:CreationDate>1372729395</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1373018791</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:TotalSavingCurrency/>
 <c:Columns>
 <o:Column Id="o13">
@@ -1706,7 +1706,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>orderId</a:Name>
 <a:Code>orderId</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372821765</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:Comment>主键</a:Comment>
@@ -1719,9 +1719,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>orderDate</a:Name>
 <a:Code>orderDate</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819276</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>下单日期</a:Comment>
 <a:DataType>date</a:DataType>
 </o:Column>
@@ -1730,9 +1730,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>customerId</a:Name>
 <a:Code>customerId</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819276</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>客户id</a:Comment>
 <a:DataType>integer(10)</a:DataType>
 <a:Length>10</a:Length>
@@ -1742,9 +1742,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>productId</a:Name>
 <a:Code>productId</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819276</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>产品id</a:Comment>
 <a:DataType>integer(10)</a:DataType>
 <a:Length>10</a:Length>
@@ -1754,9 +1754,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>nameList</a:Name>
 <a:Code>nameList</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819276</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>客人名单</a:Comment>
 <a:DataType>varchar(200)</a:DataType>
 <a:Length>200</a:Length>
@@ -1766,9 +1766,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>nameListSize</a:Name>
 <a:Code>nameListSize</a:Code>
 <a:CreationDate>1373018517</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1373018791</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>客人数量</a:Comment>
 <a:DataType>Integer(8)</a:DataType>
 <a:Length>8</a:Length>
@@ -1778,9 +1778,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>status</a:Name>
 <a:Code>status</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1373018791</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>目前状态</a:Comment>
 <a:DataType>Integer(1)</a:DataType>
 <a:Length>1</a:Length>
@@ -1790,7 +1790,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>salesmanId</a:Name>
 <a:Code>salesmanId</a:Code>
 <a:CreationDate>1372747123</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372821463</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:Comment>销售id</a:Comment>
@@ -1802,7 +1802,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>operatorId</a:Name>
 <a:Code>operatorId</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372821463</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:Comment>操作员id</a:Comment>
@@ -1814,9 +1814,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>operatorDes</a:Name>
 <a:Code>operatorDes</a:Code>
 <a:CreationDate>1373018517</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1373018791</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>订单状态（操作员录入）</a:Comment>
 <a:DataType>varchar(100)</a:DataType>
 <a:Length>100</a:Length>
@@ -1826,9 +1826,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>signDate</a:Name>
 <a:Code>signDate</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819276</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>送签日期</a:Comment>
 <a:DataType>date</a:DataType>
 </o:Column>
@@ -1837,9 +1837,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>signOperatorName</a:Name>
 <a:Code>signOperatorName</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819276</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>送签员姓名</a:Comment>
 <a:DataType>varchar(20)</a:DataType>
 <a:Length>20</a:Length>
@@ -1849,7 +1849,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>price_ysdj</a:Name>
 <a:Code>priceYsdj</a:Code>
 <a:CreationDate>1372820033</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372821765</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:Comment>应收单价</a:Comment>
@@ -1862,7 +1862,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>price_qtys</a:Name>
 <a:Code>priceQtys</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372821765</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:Comment>其它应收款</a:Comment>
@@ -1875,7 +1875,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>price_qtzc</a:Name>
 <a:Code>priceQtzc</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372821765</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:Comment>其它支出款</a:Comment>
@@ -1888,7 +1888,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>price_zjys</a:Name>
 <a:Code>priceZjys</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372821765</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:Comment>总计应收</a:Comment>
@@ -1901,9 +1901,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>priceYfhk</a:Name>
 <a:Code>priceYfhk</a:Code>
 <a:CreationDate>1373018517</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1373018791</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>已付货款</a:Comment>
 <a:DataType>decimal(10,2)</a:DataType>
 <a:Length>10</a:Length>
@@ -1914,7 +1914,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>price_sjyf</a:Name>
 <a:Code>priceZjyf</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372821765</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:Comment>总计应付</a:Comment>
@@ -1927,9 +1927,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>grossProfit</a:Name>
 <a:Code>grossProfit</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819276</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>毛利润</a:Comment>
 <a:DataType>decimal(10,2)</a:DataType>
 <a:Length>10</a:Length>
@@ -1940,9 +1940,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>priceStatus</a:Name>
 <a:Code>priceStatus</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819276</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>付款状态</a:Comment>
 <a:DataType>varchar(100)</a:DataType>
 <a:Length>100</a:Length>
@@ -1952,9 +1952,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>des</a:Name>
 <a:Code>des</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819276</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>备注</a:Comment>
 <a:DataType>varchar(1000)</a:DataType>
 <a:Length>1000</a:Length>
@@ -1964,9 +1964,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>ptTime</a:Name>
 <a:Code>ptTime</a:Code>
 <a:CreationDate>1373018517</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1373018791</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:DataType>datetime</a:DataType>
 </o:Column>
 </c:Columns>
@@ -1976,9 +1976,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>Key_1</a:Name>
 <a:Code>Key_1</a:Code>
 <a:CreationDate>1372729409</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372741944</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <c:Key.Columns>
 <o:Column Ref="o13"/>
 </c:Key.Columns>
@@ -1993,7 +1993,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>user</a:Name>
 <a:Code>user</a:Code>
 <a:CreationDate>1372729396</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372935559</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:TotalSavingCurrency/>
@@ -2003,7 +2003,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>userId</a:Name>
 <a:Code>userId</a:Code>
 <a:CreationDate>1372744432</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372822355</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:Comment>主键</a:Comment>
@@ -2016,7 +2016,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>userName</a:Name>
 <a:Code>userName</a:Code>
 <a:CreationDate>1372744432</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372822355</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:Comment>用户名字</a:Comment>
@@ -2028,9 +2028,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>roleId</a:Name>
 <a:Code>roleId</a:Code>
 <a:CreationDate>1372744432</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819744</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>角色id</a:Comment>
 <a:DataType>integer(10)</a:DataType>
 <a:Length>10</a:Length>
@@ -2054,7 +2054,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:CreationDate>1372775899</a:CreationDate>
 <a:Creator>Administrator</a:Creator>
 <a:ModificationDate>1372819744</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>经理id</a:Comment>
 <a:DataType>integer(10)</a:DataType>
 <a:Length>10</a:Length>
@@ -2094,7 +2094,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>product</a:Name>
 <a:Code>product</a:Code>
 <a:CreationDate>1372729397</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372931910</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:TotalSavingCurrency/>
@@ -2104,9 +2104,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>productId</a:Name>
 <a:Code>productId</a:Code>
 <a:CreationDate>1372744143</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819965</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>主键</a:Comment>
 <a:DataType>integer(10)</a:DataType>
 <a:Length>10</a:Length>
@@ -2117,9 +2117,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>productName</a:Name>
 <a:Code>productName</a:Code>
 <a:CreationDate>1372744143</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819965</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>产品名称</a:Comment>
 <a:DataType>varchar(100)</a:DataType>
 <a:Length>100</a:Length>
@@ -2129,9 +2129,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>countryName</a:Name>
 <a:Code>countryName</a:Code>
 <a:CreationDate>1372748563</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819965</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>国家名称</a:Comment>
 <a:DataType>varchar(20)</a:DataType>
 <a:Length>20</a:Length>
@@ -2141,7 +2141,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>productType</a:Name>
 <a:Code>productType</a:Code>
 <a:CreationDate>1372817933</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372838424</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:Comment>产品类型</a:Comment>
@@ -2153,9 +2153,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>districtPlace</a:Name>
 <a:Code>districtPlace</a:Code>
 <a:CreationDate>1372817933</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819965</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>送签区域</a:Comment>
 <a:DataType>varchar(100)</a:DataType>
 <a:Length>100</a:Length>
@@ -2165,9 +2165,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>price</a:Name>
 <a:Code>price</a:Code>
 <a:CreationDate>1372818387</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819965</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>成本价格</a:Comment>
 <a:DataType>decimal(10,2)</a:DataType>
 <a:Length>10</a:Length>
@@ -2178,9 +2178,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>des</a:Name>
 <a:Code>des</a:Code>
 <a:CreationDate>1372744143</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819965</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>备注</a:Comment>
 <a:DataType>varchar(1000)</a:DataType>
 <a:Length>1000</a:Length>
@@ -2220,7 +2220,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>customer</a:Name>
 <a:Code>customer</a:Code>
 <a:CreationDate>1372729397</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372931870</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:TotalSavingCurrency/>
@@ -2230,9 +2230,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>customerId</a:Name>
 <a:Code>customerId</a:Code>
 <a:CreationDate>1372742150</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819671</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>主键</a:Comment>
 <a:DataType>integer(10)</a:DataType>
 <a:Length>10</a:Length>
@@ -2243,9 +2243,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>customerName</a:Name>
 <a:Code>customerName</a:Code>
 <a:CreationDate>1372742150</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819671</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>客户姓名</a:Comment>
 <a:DataType>varchar(20)</a:DataType>
 <a:Length>20</a:Length>
@@ -2255,9 +2255,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>company</a:Name>
 <a:Code>company</a:Code>
 <a:CreationDate>1372742150</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819671</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>公司</a:Comment>
 <a:DataType>varchar(100)</a:DataType>
 <a:Length>100</a:Length>
@@ -2267,9 +2267,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>telephone</a:Name>
 <a:Code>telephone</a:Code>
 <a:CreationDate>1372742150</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819671</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>电话</a:Comment>
 <a:DataType>varchar(20)</a:DataType>
 <a:Length>20</a:Length>
@@ -2279,9 +2279,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>address</a:Name>
 <a:Code>address</a:Code>
 <a:CreationDate>1372742150</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819671</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>地址</a:Comment>
 <a:DataType>varbinary(200)</a:DataType>
 <a:Length>200</a:Length>
@@ -2291,7 +2291,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>userId</a:Name>
 <a:Code>userId</a:Code>
 <a:CreationDate>1372817855</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372821404</a:ModificationDate>
 <a:Modifier>user</a:Modifier>
 <a:Comment>所属销售id</a:Comment>
@@ -2303,9 +2303,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>des</a:Name>
 <a:Code>des</a:Code>
 <a:CreationDate>1372742150</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372819671</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 <a:Comment>备注</a:Comment>
 <a:DataType>varchar(1000)</a:DataType>
 <a:Length>1000</a:Length>
@@ -2347,9 +2347,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>PUBLIC</a:Name>
 <a:Code>PUBLIC</a:Code>
 <a:CreationDate>1372729381</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372729381</a:ModificationDate>
-<a:Modifier>bjyrwang</a:Modifier>
+<a:Modifier>tom</a:Modifier>
 </o:Group>
 </c:DefaultGroups>
 <c:TargetModels>
@@ -2358,7 +2358,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Name>MySQL 5.0</a:Name>
 <a:Code>MYSQL50</a:Code>
 <a:CreationDate>1372729382</a:CreationDate>
-<a:Creator>bjyrwang</a:Creator>
+<a:Creator>tom</a:Creator>
 <a:ModificationDate>1372777205</a:ModificationDate>
 <a:Modifier>Administrator</a:Modifier>
 <a:TargetModelURL>file:///%_DBMS%/mysql50.xdb</a:TargetModelURL>
