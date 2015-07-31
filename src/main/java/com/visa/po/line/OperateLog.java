@@ -4,7 +4,7 @@ import java.util.Date;
 
 /***********************************************************************
  * Module:  OperateLog.java
- * Author:  bjyrwang
+ * Author:  
  * Purpose: Defines the Class OperateLog
  ***********************************************************************/
 

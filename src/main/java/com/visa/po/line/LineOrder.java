@@ -7,7 +7,7 @@ import com.visa.common.util.FieldDes;
 
 /***********************************************************************
  * Module:  LineOrder.java
- * Author:  bjyrwang
+ * Author:  
  * Purpose: Defines the Class LineOrder
  ***********************************************************************/
 

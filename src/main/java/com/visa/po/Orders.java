@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * @author bjyrwang
+ * @author
  */
 public class Orders {
     private Integer orderId;
