@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * @author bjyrwang
+ * @author
  */
 public class Orders {
     private Integer orderId;
@@ -66,7 +66,7 @@ public class Orders {
     private String des;
 
     private String czdes;
-    
+
     private String cwdes;
 
     private String operatorDes;
@@ -90,172 +90,172 @@ public class Orders {
     private int type = 0;
 
     private String singleProduct;
-    
+
     private String spStatus;
-    
+
     private Date approvedTime_;
-    
+
     private String fapiao;
-    
+
     private String baoxian;
-    
+
     private Integer baoxianDay;
 
     private Double baoxianPrice;
-    
+
     private Double renzheng;
-    
+
     private Double kuaidi;
-    
+
     private Double tax;
-    
+
     private Double fankuan;
-    
+
     private Double qita;
-    
+
     private String qitaComments;
-    
+
     private String renzhengRemark;
-    
+
     private String infostatus;
- 
+
     private String finaceman;
-    
+
     private String substatus;
-    
+
     private String fkstatusdes;
-    
+
     private String skstatusdes;
-    
-	public String getFkstatusdes() {
-		return fkstatusdes;
-	}
 
-	public void setFkstatusdes(String fkstatusdes) {
-		this.fkstatusdes = fkstatusdes;
-	}
+    public String getFkstatusdes() {
+        return fkstatusdes;
+    }
 
-	public String getSkstatusdes() {
-		return skstatusdes;
-	}
+    public void setFkstatusdes(String fkstatusdes) {
+        this.fkstatusdes = fkstatusdes;
+    }
 
-	public void setSkstatusdes(String skstatusdes) {
-		this.skstatusdes = skstatusdes;
-	}
+    public String getSkstatusdes() {
+        return skstatusdes;
+    }
 
-	public String getSubstatus() {
-		return substatus;
-	}
+    public void setSkstatusdes(String skstatusdes) {
+        this.skstatusdes = skstatusdes;
+    }
 
-	public void setSubstatus(String substatus) {
-		this.substatus = substatus;
-	}
+    public String getSubstatus() {
+        return substatus;
+    }
 
-	public String getFinaceman() {
-		return finaceman;
-	}
+    public void setSubstatus(String substatus) {
+        this.substatus = substatus;
+    }
 
-	public void setFinaceman(String finaceman) {
-		this.finaceman = finaceman;
-	}
+    public String getFinaceman() {
+        return finaceman;
+    }
 
-	public String getInfostatus() {
-		return infostatus;
-	}
+    public void setFinaceman(String finaceman) {
+        this.finaceman = finaceman;
+    }
 
-	public void setInfostatus(String infostatus) {
-		this.infostatus = infostatus;
-	}
+    public String getInfostatus() {
+        return infostatus;
+    }
 
-	public String getRenzhengRemark() {
-		return renzhengRemark;
-	}
+    public void setInfostatus(String infostatus) {
+        this.infostatus = infostatus;
+    }
 
-	public void setRenzhengRemark(String renzhengRemark) {
-		this.renzhengRemark = renzhengRemark;
-	}
+    public String getRenzhengRemark() {
+        return renzhengRemark;
+    }
 
-	public String getQitaComments() {
-		return qitaComments;
-	}
+    public void setRenzhengRemark(String renzhengRemark) {
+        this.renzhengRemark = renzhengRemark;
+    }
 
-	public void setQitaComments(String qitaComments) {
-		this.qitaComments = qitaComments;
-	}
+    public String getQitaComments() {
+        return qitaComments;
+    }
 
-	public Double getBaoxianPrice() {
-		return baoxianPrice;
-	}
+    public void setQitaComments(String qitaComments) {
+        this.qitaComments = qitaComments;
+    }
 
-	public void setBaoxianPrice(Double baoxianPrice) {
-		this.baoxianPrice = baoxianPrice;
-	}
+    public Double getBaoxianPrice() {
+        return baoxianPrice;
+    }
 
-	public Double getRenzheng() {
-		return renzheng;
-	}
+    public void setBaoxianPrice(Double baoxianPrice) {
+        this.baoxianPrice = baoxianPrice;
+    }
 
-	public void setRenzheng(Double renzheng) {
-		this.renzheng = renzheng;
-	}
+    public Double getRenzheng() {
+        return renzheng;
+    }
 
-	public Double getKuaidi() {
-		return kuaidi;
-	}
+    public void setRenzheng(Double renzheng) {
+        this.renzheng = renzheng;
+    }
 
-	public void setKuaidi(Double kuaidi) {
-		this.kuaidi = kuaidi;
-	}
+    public Double getKuaidi() {
+        return kuaidi;
+    }
 
-	public Double getTax() {
-		return tax;
-	}
+    public void setKuaidi(Double kuaidi) {
+        this.kuaidi = kuaidi;
+    }
 
-	public void setTax(Double tax) {
-		this.tax = tax;
-	}
+    public Double getTax() {
+        return tax;
+    }
 
-	public Double getFankuan() {
-		return fankuan;
-	}
+    public void setTax(Double tax) {
+        this.tax = tax;
+    }
 
-	public void setFankuan(Double fankuan) {
-		this.fankuan = fankuan;
-	}
+    public Double getFankuan() {
+        return fankuan;
+    }
 
-	public Double getQita() {
-		return qita;
-	}
+    public void setFankuan(Double fankuan) {
+        this.fankuan = fankuan;
+    }
 
-	public void setQita(Double qita) {
-		this.qita = qita;
-	}
+    public Double getQita() {
+        return qita;
+    }
 
-	public Integer getBaoxianDay() {
-		return baoxianDay;
-	}
+    public void setQita(Double qita) {
+        this.qita = qita;
+    }
 
-	public void setBaoxianDay(Integer baoxianDay) {
-		this.baoxianDay = baoxianDay;
-	}
+    public Integer getBaoxianDay() {
+        return baoxianDay;
+    }
 
-	public String getBaoxian() {
-		return baoxian;
-	}
+    public void setBaoxianDay(Integer baoxianDay) {
+        this.baoxianDay = baoxianDay;
+    }
 
-	public void setBaoxian(String baoxian) {
-		this.baoxian = baoxian;
-	}
+    public String getBaoxian() {
+        return baoxian;
+    }
 
-	public String getFapiao() {
-		return fapiao;
-	}
+    public void setBaoxian(String baoxian) {
+        this.baoxian = baoxian;
+    }
 
-	public void setFapiao(String fapiao) {
-		this.fapiao = fapiao;
-	}
+    public String getFapiao() {
+        return fapiao;
+    }
 
-	public int getType() {
+    public void setFapiao(String fapiao) {
+        this.fapiao = fapiao;
+    }
+
+    public int getType() {
         return type;
     }
 
@@ -583,28 +583,28 @@ public class Orders {
         this.czdes = czdes;
     }
 
-	public String getSpStatus() {
-		return spStatus;
-	}
+    public String getSpStatus() {
+        return spStatus;
+    }
 
-	public void setSpStatus(String spStatus) {
-		this.spStatus = spStatus;
-	}
+    public void setSpStatus(String spStatus) {
+        this.spStatus = spStatus;
+    }
 
-	public Date getApprovedTime_() {
-		return approvedTime_;
-	}
+    public Date getApprovedTime_() {
+        return approvedTime_;
+    }
 
-	public void setApprovedTime_(Date approvedTime_) {
-		this.approvedTime_ = approvedTime_;
-	}
+    public void setApprovedTime_(Date approvedTime_) {
+        this.approvedTime_ = approvedTime_;
+    }
 
-	public String getCwdes() {
-		return cwdes;
-	}
+    public String getCwdes() {
+        return cwdes;
+    }
 
-	public void setCwdes(String cwdes) {
-		this.cwdes = cwdes;
-	}
-	
+    public void setCwdes(String cwdes) {
+        this.cwdes = cwdes;
+    }
+
 }

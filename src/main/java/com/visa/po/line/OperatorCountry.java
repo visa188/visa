@@ -2,10 +2,9 @@ package com.visa.po.line;
 
 /***********************************************************************
  * Module:  OperatorCountry.java
- * Author:  bjyrwang
+ * Author:  
  * Purpose: Defines the Class OperatorCountry
  ***********************************************************************/
-
 
 /** @pdOid cb8bdd2d-6855-4aaf-b47b-697994fc9169 */
 public class OperatorCountry {

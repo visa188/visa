@@ -6,7 +6,7 @@ import com.visa.common.util.FieldDes;
 
 /***********************************************************************
  * Module:  LineNameList.java
- * Author:  bjyrwang
+ * Author:  
  * Purpose: Defines the Class LineNameList
  ***********************************************************************/
 
