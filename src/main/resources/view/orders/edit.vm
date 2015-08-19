@@ -633,10 +633,10 @@
 									jQuery("#priceYfhk").removeAttr("readonly");
 																   
 								    if(3 == yfhkStatus){
-								       var priceZjys = $("#priceYfhk").val("");
+								       //var priceZjys = $("#priceYfhk").val("");
 								    }
 									
-							  }
+							    }
 							}
 							
 						</script>
@@ -679,7 +679,7 @@
 							   var value = $(obj).val();
 							   
 							   if(3 == yshkStatus){
-							   
+							       alert("ddd");
 								   if((parseFloat(priceZjys)-parseFloat(value)) < 0){
 								       alert("你输入的 '已付货款' 不能大于 '总计应收款' !");
 								       $(obj).val("").focus();
