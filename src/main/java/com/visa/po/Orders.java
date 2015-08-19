@@ -126,24 +126,10 @@ public class Orders {
     private String fkstatusdes;
 
     private String skstatusdes;
-<<<<<<< HEAD
     
-    
-    
-    /**
-     * 
-     * @return
-     */
 	private String telephone;
-	
-	
-	
-	public String getFkstatusdes() {
-		return fkstatusdes;
-	}
-=======
->>>>>>> 4ef2caaa920f4ee8919f1d1b59e4d9ef668e5c60
 
+	
     public String getFkstatusdes() {
         return fkstatusdes;
     }
@@ -623,5 +609,13 @@ public class Orders {
     public void setCwdes(String cwdes) {
         this.cwdes = cwdes;
     }
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 
 }
