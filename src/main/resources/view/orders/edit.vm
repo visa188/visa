@@ -686,8 +686,23 @@
 							   if(3 == yshkStatus){
 							      
 								   if((parseFloat(priceZjys)-parseFloat(value)) < 0){
-								       alert("你输入的 '已付货款' 不能大于 '总计应收款' !");
+								       alert("你输入的 '已付货款' 不能大于 '总计应付款' !");
 								       $(obj).val("").focus();
+								   }
+							   }
+							   
+							}
+							
+					       function validateData2(obj){
+							   
+							   var yshkStatus = $("#yshkStatus").val();
+							   var priceZjys = $("#priceZjys").val();
+							   var value = $(obj).val();
+							   
+							   if(3 == yshkStatus){
+								   if((parseInt(priceZjys)-parseInt(value)) != 0){
+								       alert("你输入的 '已收货款' 和  '总计应收款' 不相等，请重新输入!");
+								       $(obj).val(priceZjys);
 								   }
 							   }
 							   
@@ -695,7 +710,7 @@
 						</script>
 						<label class="control_label"><span class="ico_must">*</span>已收货款:</label>
 						<div class="controls">
-							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="priceYshk" name="priceYshk" placeholder="已收货款" value="$!{orders.priceYshk}"></span>
+							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="priceYshk" name="priceYshk" placeholder="已收货款" value="$!{orders.priceYshk}" onchange="validateData2(this)"></span>
 		              	    <input type="text" class="text1" maxlength="100" size="20" id="skstatusdes" name="skstatusdes" value="$!{orders.skstatusdes}" placeholder="收款明细" #if($userRoleId!=${fn.getFinanceRoleId()} && $userRoleId!=8 && $userRoleId!=1) readonly="readonly" #end>
 		              	</div>	
 		        	</div>
