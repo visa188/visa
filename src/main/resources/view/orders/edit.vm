@@ -67,11 +67,6 @@
 			grossProfit = Math.round(parseFloat(priceZjys*100 - priceZjyf*100))/100;
 		}
 		jQuery("#grossProfit").val(grossProfit);
-		
-		var yfhkStatus=jQuery("#yfhkStatus").val();
-		if(3 == yfhkStatus){
-		   $("#priceYfhk").val("");
-		}
 	}
 	
 	function getProductPrice(){
@@ -636,9 +631,19 @@
 								}else{
 									jQuery("#priceYfhk").addClass('js_non_empty');
 									jQuery("#priceYfhk").removeAttr("readonly");
-																   
+													
 								    if(3 == yfhkStatus){
 								       //var priceZjys = $("#priceYfhk").val("");
+								       
+								        var priceZjys = $("#priceZjyf").val();
+								        var priceYfhk = $("#priceYfhk").val();
+								        
+								        if((parseFloat(priceZjys)-parseFloat(priceYfhk)) < 0){
+									       alert("你输入的 '已付货款' 不能大于 '总计应付款' !");
+									       $("#priceYfhk").val("").focus();
+								        }
+								        
+								        
 								    }
 									
 							    }
@@ -674,6 +679,20 @@
 								}else{
 									jQuery("#priceYshk").addClass('js_non_empty');
 									jQuery("#priceYshk").removeAttr("readonly");
+									
+							        if(3 == yshkStatus){
+								       
+								        var priceZjys = $("#priceZjys").val();
+								        var priceYfhk = $("#priceYshk").val();
+								        
+								        if((parseInt(priceZjys) != parseInt(priceYfhk))){
+									       alert("你输入的 '已收货款' 和  '总计应收款' 不相等，请重新输入!");
+									       $("#priceYshk").val(priceZjys).focus();
+								        }
+								        
+								        
+								    }
+									
 								}
 							}
 							
