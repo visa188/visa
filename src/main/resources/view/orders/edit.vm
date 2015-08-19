@@ -67,6 +67,11 @@
 			grossProfit = Math.round(parseFloat(priceZjys*100 - priceZjyf*100))/100;
 		}
 		jQuery("#grossProfit").val(grossProfit);
+		
+		var yfhkStatus=jQuery("#yfhkStatus").val();
+		if(3 == yfhkStatus){
+		   $("#priceYfhk").val("");
+		}
 	}
 	
 	function getProductPrice(){
@@ -675,7 +680,7 @@
 							function validateData(obj){
 							   
 							   var yshkStatus = $("#yfhkStatus").val();
-							   var priceZjys = $("#priceZjys").val();
+							   var priceZjys = $("#priceZjyf").val();
 							   var value = $(obj).val();
 							   
 							   if(3 == yshkStatus){
