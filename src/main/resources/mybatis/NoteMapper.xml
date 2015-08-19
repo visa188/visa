@@ -7,11 +7,11 @@
   </select>
   
   <select id="selectBySaleId" resultType="Note" parameterType="java.util.Map">
-    select * from note where op = #{saleId} limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
+    select * from note where op = #{saleId}  order by createDate desc limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
   </select>
   
   <select id="selectAll" resultType="Note" parameterType="java.util.Map">
-    select * from note limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
+    select * from note  order by createDate desc limit #{begin,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
   </select>
   
  <insert id="insert" parameterType="Note"  useGeneratedKeys="true" keyProperty="noteId">

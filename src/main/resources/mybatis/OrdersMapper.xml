@@ -58,6 +58,63 @@
 		) tmp1 left OUTER join user on( tmp1.operatorId = user.userId) order by tmp1.orderSeq
   </select>
   
+  
+  <select id="export" resultType="Orders" parameterType="java.util.Map" >
+    select tmp1.*,user.userName operatorName 
+		from (select orders.*,product.productName,customer.customerName,customer.telephone,customer.company,user1.userName salesmanName,country.countryName,customer.company customerCompany
+			from orders,product,customer,user user1,country
+			where (orders.type=0 or orders.type is null)
+					and	 orders.productId=product.productId 
+				and orders.customerId=customer.customerId 
+				and product.countryId=country.countryId
+				and user1.userId=orders.salesmanId 
+		<if test="salesmanId != null">and orders.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
+		<if test="customerId != null">and orders.customerId=#{customerId,jdbcType=VARCHAR}</if>
+		<if test="operatorId != null">and orders.operatorId=#{operatorId,jdbcType=VARCHAR}</if>
+		<if test="company != null">and customer.company=#{company,jdbcType=VARCHAR}</if>
+		<if test="yfhkStatus != null">and orders.yfhkStatus=#{yfhkStatus,jdbcType=VARCHAR}</if>
+		<if test="yshkStatus != null">and orders.yshkStatus=#{yshkStatus,jdbcType=VARCHAR}</if>
+		
+	    <if test="startDate != null">
+		  	<![CDATA[
+			and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
+			]]>
+	    </if>
+	    <if test="endDate != null">
+		  	<![CDATA[
+			and orders.orderDate <= #{endDate,jdbcType=VARCHAR}
+			]]>
+	    </if>
+		<if test="deptName != null">and user1.deptId=#{deptName,jdbcType=VARCHAR}</if>
+		
+		UNION
+				SELECT orders.*,orders.nameList productName,customer.customerName,customer.telephone,customer.company,user1.userName salesmanName,orders.nameList countryName,customer.company customerCompany
+				FROM orders,customer,user user1
+				WHERE  (orders.type=1 or orders.type =2)
+					and	 orders.customerId=customer.customerId 
+					AND user1.userId=orders.salesmanId 	
+		<if test="salesmanId != null">and orders.salesmanId=#{salesmanId,jdbcType=VARCHAR}</if>
+		<if test="customerId != null">and orders.customerId=#{customerId,jdbcType=VARCHAR}</if>
+		<if test="operatorId != null">and orders.operatorId=#{operatorId,jdbcType=VARCHAR}</if>
+		<if test="company != null">and customer.company=#{company,jdbcType=VARCHAR}</if>
+		<if test="yfhkStatus != null">and orders.yfhkStatus=#{yfhkStatus,jdbcType=VARCHAR}</if>
+		<if test="yshkStatus != null">and orders.yshkStatus=#{yshkStatus,jdbcType=VARCHAR}</if>
+		
+	    <if test="startDate != null">
+		  	<![CDATA[
+			and orders.orderDate >= #{startDate,jdbcType=VARCHAR}
+			]]>
+	    </if>
+	    <if test="endDate != null">
+		  	<![CDATA[
+			and orders.orderDate <= #{endDate,jdbcType=VARCHAR}
+			]]>
+	    </if>
+		
+		<if test="deptName != null">and user1.deptId=#{deptName,jdbcType=VARCHAR}</if>
+		) tmp1 left OUTER join user on( tmp1.operatorId = user.userId) order by tmp1.orderSeq
+  </select>
+  
   <select id="selectByPrimaryKey" resultType="Orders" parameterType="java.lang.Integer" >
     select orders.*,customer.customerName
 	from orders,customer

@@ -631,13 +631,18 @@
 								}else{
 									jQuery("#priceYfhk").addClass('js_non_empty');
 									jQuery("#priceYfhk").removeAttr("readonly");
-								}
+																   
+								    if(3 == yfhkStatus){
+								       var priceZjys = $("#priceYfhk").val("");
+								    }
+									
+							  }
 							}
 							
 						</script>
 						<label class="control_label"><span class="ico_must">*</span>已付货款:</label>
 						<div class="controls">
-							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="priceYfhk" name="priceYfhk" placeholder="已付货款" value="$!{orders.priceYfhk}"></span>
+							<span class="form_item"><input type="text" class="text1 js_nan" maxlength="10" size="10" id="priceYfhk" name="priceYfhk" placeholder="已付货款" value="$!{orders.priceYfhk}" onchange="validateData(this)"></span>
 		                    <input type="text" class="text1" maxlength="100" size="20" id="fkstatusdes" name="fkstatusdes" value="$!{orders.fkstatusdes}" placeholder="付款明细" #if($userRoleId!=${fn.getFinanceRoleId()} && $userRoleId!=8 && $userRoleId!=1) readonly="readonly" #end>
 		              	</div>	
 	        			<label class="control_label">付款备注:</label>
@@ -665,6 +670,22 @@
 									jQuery("#priceYshk").addClass('js_non_empty');
 									jQuery("#priceYshk").removeAttr("readonly");
 								}
+							}
+							
+							function validateData(obj){
+							   
+							   var yshkStatus = $("#yfhkStatus").val();
+							   var priceZjys = $("#priceZjys").val();
+							   var value = $(obj).val();
+							   
+							   if(3 == yshkStatus){
+							   
+								   if((parseFloat(priceZjys)-parseFloat(value)) < 0){
+								       alert("你输入的 '已付货款' 不能大于 '总计应收款' !");
+								       $(obj).val("").focus();
+								   }
+							   }
+							   
 							}
 						</script>
 						<label class="control_label"><span class="ico_must">*</span>已收货款:</label>

@@ -127,6 +127,16 @@ public class Orders {
     
     private String skstatusdes;
     
+    
+    
+    /**
+     * 
+     * @return
+     */
+	private String telephone;
+	
+	
+	
 	public String getFkstatusdes() {
 		return fkstatusdes;
 	}

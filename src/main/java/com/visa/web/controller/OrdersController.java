@@ -988,7 +988,7 @@ public class OrdersController {
             logger.error(e, e);
         }
     }
-
+    
     /**
      * 订单报表
      * 
@@ -1128,5 +1128,187 @@ public class OrdersController {
             logger.error("写出excel出错!", e);
         }
 
+    }
+    
+
+    @RequestMapping
+    public void export2(ModelMap model) {
+        model.put("salesmanList", userDao.selectByRoleId(RoleEnumType.SALESMAN.getId()));
+        model.put("operatorList", userDao.selectByRoleId(RoleEnumType.OPERATOR.getId()));
+        model.put("customerList", customerDao.selectAllCustomer());
+        model.put("companyList", customerDao.selectCompany());
+        model.put("yearList", ordersDao.selectOrderYears());
+        model.put("monthList", ordersDao.selectOrderMonths());
+        model.put("departmentList", deptDao.selectAll());
+    }
+    
+    @RequestMapping
+    public void exportSubmit2(HttpServletRequest request, HttpServletResponse response){
+        try {
+         /* String year = request.getParameter("year");
+            String month = request.getParameter("month");*/
+            String salesman = request.getParameter("salesman");
+            String customerId = request.getParameter("customerId");
+            String company = request.getParameter("company");
+            String operatorId = request.getParameter("operatorId");
+            String yfhkStatus = request.getParameter("yfhkStatus");
+            String yshkStatus = request.getParameter("yshkStatus");
+            String deptName = request.getParameter("dpsName");
+            String startDate = request.getParameter("startDate");
+            String endDate = request.getParameter("endDate");
+            
+/*          NumberFormat formatter = NumberFormat.getNumberInstance();
+            formatter.setMinimumIntegerDigits(2);
+            formatter.setGroupingUsed(false);
+            month = formatter.format(Integer.parseInt(month));
+*/
+            
+            // 这里还应增加一个报表时间，精确到月即可
+            String fileName = startDate.substring(5) + "|" + endDate.substring(5);
+            response.reset();
+            response.addHeader("Content-Disposition", "attachment;filename=" + fileName + ".xls");
+            OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
+            response.setContentType("application/octet-stream");
+            this.exportOrderData(toClient, startDate, endDate, salesman, yfhkStatus, yshkStatus,
+                    customerId, company, operatorId, deptName);
+
+        } catch (IOException e) {
+            logger.error(e, e);
+        }
+    }
+    
+    private void exportOrderData2(OutputStream out, String startDate, String endDate, String salesmanId,
+    		String yfhkStatus, String yshkStatus, String customerId, String company,
+    		String operatorId, String deptName) {
+    	String[] titles = { "客户名称", "客户公司", "下单日期", "产品名称", "客人名单", "客人数量", "销售员", "操作员", "送签日期",
+    			"送签员", "应收单价", "其它应收款", "其它应付款", "总计应收款", "总计应付款", "毛利润", "付款状态", "已付货款", "收款状态",
+    			"已收货款", "备注" };
+    	HSSFWorkbook wb = new HSSFWorkbook();
+    	Sheet s = wb.createSheet();
+    	// header row
+    	Row headerRow = s.createRow(0);
+    	headerRow.setHeightInPoints(40);
+    	Cell headerCell;
+    	for (int i = 0; i < titles.length; i++) {
+    		headerCell = headerRow.createCell(i);
+    		headerCell.setCellValue(titles[i]);
+    	}
+    	Map<String, Object> paraMap = new HashMap<String, Object>();
+    	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    	/*   paraMap.put("date", year + "-" + month + "%");*/
+    	paraMap.put("salesmanId", StringUtils.isEmpty(salesmanId) ? null : salesmanId);
+    	
+    	paraMap.put("customerId", StringUtils.isEmpty(customerId) ? null : customerId);
+    	paraMap.put("company", StringUtils.isEmpty(company) ? null : company);
+    	paraMap.put("operatorId", StringUtils.isEmpty(operatorId) ? null : operatorId);
+    	
+    	paraMap.put("yfhkStatus", StringUtils.isEmpty(yfhkStatus) ? null : yfhkStatus);
+    	paraMap.put("yshkStatus", StringUtils.isEmpty(yshkStatus) ? null : yshkStatus);
+    	paraMap.put("deptName", StringUtils.isEmpty(deptName) ? null : deptName);
+    	paraMap.put("startDate", StringUtils.isEmpty(startDate) ? null : startDate);
+    	paraMap.put("endDate", StringUtils.isEmpty(endDate) ? null : endDate);
+    	List<Orders> ordersList = ordersDao.selectAll(paraMap);
+    	
+    	if (ordersList != null && ordersList.size() > 0) {
+    		BigDecimal zjys = new BigDecimal(0);
+    		BigDecimal zjyf = new BigDecimal(0);
+    		BigDecimal zjProfit = new BigDecimal(0);
+    		int i = 0;
+    		for (; i < ordersList.size(); i++) {
+    			Orders p = ordersList.get(i);
+    			Row row = s.createRow(i + 1);
+    			headerCell = row.createCell(0);
+    			headerCell.setCellValue(p.getCustomerName());
+    			headerCell = row.createCell(1);
+    			headerCell.setCellValue(p.getCustomerCompany());
+    			headerCell = row.createCell(2);
+    			headerCell.setCellValue(DateUtil.format(p.getOrderDate(), DateUtil.FORMAT_DATE));
+    			headerCell = row.createCell(3);
+    			if (p.getType() == 1) {
+    				headerCell.setCellValue(p.getSingleProduct());
+    			} else {
+    				headerCell.setCellValue(p.getProductName());
+    			}
+    			headerCell = row.createCell(4);
+    			headerCell.setCellValue(p.getNameList());
+    			headerCell = row.createCell(5);
+    			headerCell.setCellValue(p.getNameListSize());
+    			headerCell = row.createCell(6);
+    			headerCell.setCellValue(p.getSalesmanName());
+    			headerCell = row.createCell(7);
+    			headerCell.setCellValue(p.getOperatorName());
+    			headerCell = row.createCell(8);
+    			headerCell.setCellValue(DateUtil.format(p.getSignDate(), DateUtil.FORMAT_DATE));
+    			headerCell = row.createCell(9);
+    			headerCell.setCellValue(p.getSignOperatorName());
+    			headerCell = row.createCell(10);
+    			headerCell.setCellValue(p.getPriceYsdj() == null ? "0" : p.getPriceYsdj()
+    					.toString());
+    			headerCell = row.createCell(11);
+    			headerCell.setCellValue(p.getPriceQtys() == null ? "0" : p.getPriceQtys()
+    					.toString());
+    			headerCell = row.createCell(12);
+    			headerCell.setCellValue(p.getPriceQtzc() == null ? "0" : p.getPriceQtzc()
+    					.toString());
+    			headerCell = row.createCell(13);
+    			headerCell.setCellValue(p.getPriceZjys() == null ? "0" : p.getPriceZjys()
+    					.toString());
+    			headerCell = row.createCell(14);
+    			headerCell.setCellValue(p.getPriceZjyf() == null ? "0" : p.getPriceZjyf()
+    					.toString());
+    			headerCell = row.createCell(15);
+    			headerCell.setCellValue(p.getGrossProfit() == null ? "0" : p.getGrossProfit()
+    					.toString());
+    			headerCell = row.createCell(16);
+    			if (PriceStatusEnum.PRICESTATUS_MAP.get(p.getYfhkStatus()) != null) {
+    				headerCell.setCellValue(PriceStatusEnum.PRICESTATUS_MAP.get(p.getYfhkStatus())
+    						.getName());
+    			} else {
+    				headerCell.setCellValue("");
+    			}
+    			headerCell = row.createCell(17);
+    			headerCell.setCellValue(p.getPriceYfhk() == null ? "0" : p.getPriceYfhk()
+    					.toString());
+    			headerCell = row.createCell(18);
+    			if (PriceStatusEnum.PRICESTATUS_MAP.get(p.getYshkStatus()) != null) {
+    				headerCell.setCellValue(YshkStatusEnum.YSHKSTATUS_MAP.get(p.getYshkStatus())
+    						.getName());
+    			} else {
+    				headerCell.setCellValue("");
+    			}
+    			headerCell = row.createCell(19);
+    			headerCell.setCellValue(p.getPriceYshk() == null ? "0" : p.getPriceYshk()
+    					.toString());
+    			headerCell = row.createCell(20);
+    			headerCell.setCellValue(p.getDes());
+    			
+    			if (p.getPriceZjys() != null) {
+    				zjys = zjys.add(p.getPriceZjys());
+    			}
+    			if (p.getPriceZjyf() != null) {
+    				zjyf = zjyf.add(p.getPriceZjyf());
+    			}
+    			if (p.getGrossProfit() != null) {
+    				zjProfit = zjProfit.add(p.getGrossProfit());
+    			}
+    		}
+    		Row row1 = s.createRow(i + 1);
+    		headerCell = row1.createCell(0);
+    		headerCell.setCellValue("本月总计应收：" + zjys.toString());
+    		Row row2 = s.createRow(i + 2);
+    		headerCell = row2.createCell(0);
+    		headerCell.setCellValue("本月总计应付：" + zjyf.toString());
+    		Row row3 = s.createRow(i + 3);
+    		headerCell = row3.createCell(0);
+    		headerCell.setCellValue("本月总计毛利：" + zjProfit.toString());
+    	}
+    	try {
+    		wb.write(out);
+    		out.flush();
+    		out.close();
+    	} catch (IOException e) {
+    		logger.error("写出excel出错!", e);
+    	}
+    	
     }
 }
