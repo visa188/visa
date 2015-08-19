@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /***********************************************************************
- * Author: bjyrwang
+ * Author:
  ***********************************************************************/
 
 public class FeeDetail {
