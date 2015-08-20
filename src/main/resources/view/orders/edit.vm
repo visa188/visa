@@ -637,10 +637,10 @@
 								       
 								        var priceZjys = $("#priceZjyf").val();
 								        var priceYfhk = $("#priceYfhk").val();
-								        
+								        $("#priceYfhk").val(priceZjys).focus();
 								        if((parseFloat(priceZjys)-parseFloat(priceYfhk)) < 0){
-									       alert("你输入的 '已付货款' 不能大于 '总计应付款' !");
-									       $("#priceYfhk").val("").focus();
+									       
+									      //$("#priceYfhk").val(priceZjys).focus();
 								        }
 								        
 								        
@@ -686,7 +686,6 @@
 								        var priceYfhk = $("#priceYshk").val();
 								        
 								        if((parseInt(priceZjys) != parseInt(priceYfhk))){
-									       alert("你输入的 '已收货款' 和  '总计应收款' 不相等，请重新输入!");
 									       $("#priceYshk").val(priceZjys).focus();
 								        }
 								        
