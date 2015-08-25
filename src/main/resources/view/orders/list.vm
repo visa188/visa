@@ -7,6 +7,12 @@
 		jQuery("#form1").attr("action","/orders/list.do");
 	}
 	
+	
+	$(function(){
+	   $("#xuhao").focus();
+	})
+	
+	
 </script>
 
 	<div class="miancon">
@@ -80,7 +86,7 @@
     			<label for="s_guest">客人姓名：<input id="seachNameList" name="seachNameList" type="text" class="s_guest searchtx" placeholder="客人姓名" value="$!{searchBean.seachNameList}"></label>
 			</div>
 			<div class="searchbox">
-			<label for="s_client">订单序号：<input type="text"  class="s_guest searchtx" name="orderSeq" value="$!{searchBean.orderSeq}"  placeholder="订单序号"/></label>	
+			<label for="s_client">订单序号：<input type="text"  class="s_guest searchtx" name="orderSeq" value="$!{searchBean.orderSeq}"  placeholder="订单序号" id="xuhao"/></label>	
 			<label for="s_client">目前状态：<select name="seachOperatorDes" id="seachOperatorDes" class="text2" style="height: 22px;width: 150px;" onchange="conditionSearch(1)">
                           <option value="" selected="selected">全部</option>
                           <option value="等待材料补充"  #if(${searchBean.seachOperatorDes}=="等待材料补充") selected #end>等待材料补充</option>
