@@ -191,10 +191,33 @@
 								<td>$!{order.nameListSize}人</td>
     	                        <td>#if($!{order.type}!=1)$!{order.countryName}#end</td>
     	                        <td>$fn.format($!{order.orderDate},'yyyy-MM-dd')</td>
-								<td>$!{order.priceZjys}</td>
-								<td>$!{order.priceYshk}</td>
-								<td>$!{order.priceZjyf}</td>
-								<td>$!{order.priceYfhk}</td>
+    	                        
+    	                        #if($!{order.yfhkStatus}==3 && $!{order.yshkStatus}==3)
+    	                            #if($!{order.priceZjys} != $!{order.priceYshk})
+										<td style="color:red">$!{order.priceZjys}</td>
+										<td style="color:red">$!{order.priceYshk}</td>
+									#else
+										<td>$!{order.priceZjys}</td>
+										<td>$!{order.priceYshk}</td>
+									#end
+								#else
+									<td>$!{order.priceZjys}</td>
+									<td>$!{order.priceYshk}</td>
+								#end
+								
+    	                        #if($!{order.yfhkStatus}==3 && $!{order.yshkStatus}==3)
+    	                            #if($!{order.priceZjyf} != $!{order.priceYfhk})
+										<td style="color:red">$!{order.priceZjyf}</td>
+										<td style="color:red">$!{order.priceYfhk}</td>
+									#else
+									<td>$!{order.priceZjyf}</td>
+									<td>$!{order.priceYfhk}</td>
+									#end
+								#else
+									<td>$!{order.priceZjyf}</td>
+									<td>$!{order.priceYfhk}</td>
+								#end
+								
 								#if($userRoleId!=${fn.getFinanceRoleId()})
 								<td>$fn.format($!{order.signDate},'yyyy-MM-dd')</td>
 							    #end
