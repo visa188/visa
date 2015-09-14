@@ -1072,11 +1072,27 @@ public class OrdersController {
                 headerCell.setCellValue(p.getPriceZjys() == null ? "0" : p.getPriceZjys()
                         .toString());
                 headerCell = row.createCell(14);
+
                 headerCell.setCellValue(p.getPriceZjyf() == null ? "0" : p.getPriceZjyf()
                         .toString());
+                
                 headerCell = row.createCell(15);
-                headerCell.setCellValue(p.getGrossProfit() == null ? "0" : p.getGrossProfit()
-                        .toString());
+               
+                BigDecimal zjys1 = null;
+                BigDecimal zjyf1 = null;
+                if(null == p.getPriceZjys()){
+                	zjys1 = new BigDecimal(0);
+                }else{
+                    zjys1 = p.getPriceZjys();	
+                }
+                
+                if(null == p.getPriceZjyf()){
+                	zjyf1 = new BigDecimal(0);
+                }else{
+                	zjyf1 = p.getPriceZjyf();	
+                }
+                headerCell.setCellValue(zjys1.subtract(zjyf1).toString());
+
                 headerCell = row.createCell(16);
                 if (PriceStatusEnum.PRICESTATUS_MAP.get(p.getYfhkStatus()) != null) {
                     headerCell.setCellValue(PriceStatusEnum.PRICESTATUS_MAP.get(p.getYfhkStatus())
@@ -1107,7 +1123,7 @@ public class OrdersController {
                     zjyf = zjyf.add(p.getPriceZjyf());
                 }
                 if (p.getGrossProfit() != null) {
-                    zjProfit = zjProfit.add(p.getGrossProfit());
+                    zjProfit = zjProfit.add(zjys1.subtract(zjyf1));
                 }
             }
             Row row1 = s.createRow(i + 1);
