@@ -433,7 +433,7 @@
 	    		            </div> 
 	    		        #end  ##|| (($userRoleId == 5 && !${fn.judgeIsNull($!{order.finaceman})}) && $!{orders.infostatus}=="9"  && ${fn.judgeIsNull($!{orders.finaceman})})|| ($userRoleId == 5 && !${fn.judgeIsNull($!{orders.finaceman})} && $!{orders.infostatus}=="9") )
 	    		        
-    		           #if($userRoleId== 5)
+    		           #if($userRoleId== 5 || $userRoleId== 8 )
 	    					<div class="control_group">
 	    		              <label class="control_label"><span class="ico_must">&nbsp;</span>护照信息:</label>
 	    		              <div class="controls">
