@@ -320,7 +320,9 @@
 													姓名:<input type="text" class="tb_text" name="tempName" value="$!{custom.name}" placeholder="客户姓名" style="width:20%;"/>
 													联系方式:<input type="text" class="tb_text" name="tempContact" value="$!{custom.contact}" placeholder="联系方式" style="width:30%;"/>
 													住址:<input type="text" class="tb_text" name="tempAddr" value="$!{custom.addr}" placeholder="住址" style="width:40%;"/>
-													<span name="delName" class="client_delete" title="删除行">-</span>
+													#if($userRoleId!=9)  
+														<span name="delName" class="client_delete" title="删除行">-</span>
+													#end
 												</td>
 											#else
 												<td>${velocityCount}</td>
@@ -362,7 +364,7 @@
     		            </div>  
 					</div>
 				#end
-				##if($userRoleId==${fn.getOperatorRoleId()}||${fn.isAdminRoleId($userRoleId)})
+				##if($userRoleId==${fn.getOperatorRoleId()}||${fn.isAdminRoleId($userRoleId)}  || $userRoleId == 9)
 				#if(${orders.type}!=1)
     				<div class="widget_title">
     		        	<span class="ico_static_r"></span>
@@ -452,6 +454,22 @@
 	    		            </div> 
 	    		        #end
 	    		        
+	    		        
+    		           #if($userRoleId== 9)
+	    					<div class="control_group">
+	    		              <label class="control_label"><span class="ico_must">&nbsp;</span>护照信息:</label>
+	    		              <div class="controls">
+	    		                <span class="form_item"><select name="infostatus" id="infostatus" class="text2" placeholder="护照信息">
+	                                <option value="1" selected="selected">请选择</option>
+	                                <option value="2" #if($!{orders.infostatus}=="2") selected #end disabled>已将护照转交至操作</option>
+	                                <option value="3" #if($!{orders.infostatus}=="3") selected #end >已将护照转交至财务</option>
+	                                <option value="4" #if($!{orders.infostatus}=="4") selected #end>已将护照转交至销售</option>
+	                            </select>
+	                            </span>
+	    		              </div>
+	    		            </div> 
+	    		        #end
+	    		        
     					<div class="control_group">
     		              <label class="control_label"><span class="ico_must">&nbsp;</span>送签备注:</label>
     		              <div class="controls">
@@ -461,13 +479,13 @@
     				</div>	
     			#end
 				##end
-				#if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()}||$userRoleId==${fn.getOperatorRoleId()}||$userRoleId==8 )
+				#if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()}||$userRoleId==${fn.getOperatorRoleId()}||$userRoleId==8  || $userRoleId == 9)
 		        <div class="widget_title">
 		        	<span class="ico_static_r"></span>
 		        	<h3>费用计算</h3>
 		        </div>
 		        <div class="widget_content">
-		            #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()} || $userRoleId==8 ||$userRoleId==${fn.getOperatorRoleId()})
+		            #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()} || $userRoleId==8 ||$userRoleId==${fn.getOperatorRoleId()}  || $userRoleId == 9)
 		        	<div class="control_group" #if($userRoleId==${fn.getOperatorRoleId()}) style="display:none" #end  >
 	        			<label class="control_label"><span class="ico_must">*</span>应收单价:</label>
 						<div class="controls">
@@ -476,7 +494,7 @@
 		        	</div>
 		        	#end
 
-                    #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()} || $userRoleId==8 ||$userRoleId==${fn.getOperatorRoleId()})
+                    #if($userRoleId==${fn.getSalesmanRoleId()}||${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()} || $userRoleId==8 ||$userRoleId==${fn.getOperatorRoleId()}  || $userRoleId == 9)
 		            <div class="control_group" #if($userRoleId==${fn.getOperatorRoleId()}) style="display:none" #end>
 		              <label class="control_label"><span class="ico_must">*</span>其他应收款:</label>
 		              <div class="controls">
@@ -610,7 +628,7 @@
 		        	<h3>备注信息</h3>
 		        </div>
 		        <div class="widget_content">
-					#if($userRoleId==${fn.getFinanceRoleId()}||${fn.isAdminRoleId($userRoleId)} || $userRoleId==8 )
+					#if($userRoleId==${fn.getFinanceRoleId()}||${fn.isAdminRoleId($userRoleId)} || $userRoleId==8  || $userRoleId == 9)
 					<div class="control_group">
 	        			<label class="control_label"><span class="ico_must">*</span>付款状态:</label>
 						<div class="controls">
@@ -770,10 +788,14 @@
                     </div>
 		        </div>
 		      </div>
-				<div class="form_actions">
-					<button type="reset" class="btn btn_reset">重置</button>
-	              	<button type="submit" class="btn btn_save">保存</button>
-	            </div>			      
+		      
+		       #if($userRoleId!=9)  
+					<div class="form_actions">
+						<button type="reset" class="btn btn_reset">重置</button>
+		              	<button type="submit" class="btn btn_save">保存</button>
+		            </div>			       
+		       #end 
+		      
 		  	</form>
 		</div>
 	</div>

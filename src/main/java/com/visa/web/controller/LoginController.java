@@ -39,7 +39,7 @@ public class LoginController {
         if (user != null && password != null && password.equals(user.getPwd())) {
             model.addAttribute(Constant.SESSION_USER, user);
             logger.info("Login successfully with userId: " + userId);
-            if (user.getRoleId() != null && (user.getRoleId() <= 5 || user.getRoleId() == 8)) {
+            if (user.getRoleId() != null && (user.getRoleId() <= 5 || user.getRoleId() == 8 || user.getRoleId() == 9)) {
                 return "redirect:/orders/list.do?page=1";
             } else {
                 return "redirect:/lineOrder/list.do?page=1&type=1";

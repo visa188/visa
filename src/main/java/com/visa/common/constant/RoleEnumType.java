@@ -33,7 +33,11 @@ public enum RoleEnumType {
     /**
      * 财务经理
      */
-    FINANCEMANAGER(8, "财务经理");
+    FINANCEMANAGER(8, "财务经理"),
+    /**
+     *只读角色（只能看不能写）
+     */
+    READONLYRole(9, "只读角色");
 
     private int id;
     private String name;
