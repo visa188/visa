@@ -19,6 +19,7 @@
     where 1=1
     <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
+    <if test="user.deptId != null and user.deptId !=  '' ">and u1.deptId = #{user.deptId,jdbcType=VARCHAR}</if>
     and  u1.enable=1
     UNION
     select u1.*,u2.userName as managerName  
@@ -27,6 +28,7 @@
     where 1=1
     <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
+    <if test="user.deptId != null and user.deptId !=  '' ">and u1.deptId = #{user.deptId,jdbcType=VARCHAR}</if>
     and  u1.enable=1
     ) temp
     order by  enable desc,postDt desc 
@@ -51,6 +53,7 @@
     <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
     <if test="user.lineRoleId != null and user.lineRoleId != 0">and u1.lineRoleId = #{user.lineRoleId,jdbcType=INTEGER}</if>
+    <if test="user.deptId != null and user.deptId !=  '' ">and u1.deptId = #{user.deptId,jdbcType=VARCHAR}</if>
     and  u1.enable=1
     order by  enable desc,postDt desc 
     limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}
@@ -73,7 +76,8 @@
     where 1=1
     <if test="user.userName != null">and u1.userName like CONCAT('%',#{user.userName,jdbcType=VARCHAR},'%')</if>
     <if test="user.roleId != null and user.roleId != 0">and u1.roleId = #{user.roleId,jdbcType=INTEGER}</if>
-     <if test="user.lineRoleId != null and user.lineRoleId != 0">and u1.lineRoleId = #{user.lineRoleId,jdbcType=INTEGER}</if>
+    <if test="user.lineRoleId != null and user.lineRoleId != 0">and u1.lineRoleId = #{user.lineRoleId,jdbcType=INTEGER}</if>
+    <if test="user.deptId != null and user.deptId !=  '' ">and u1.deptId = #{user.deptId,jdbcType=VARCHAR}</if>
      and  u1.enable=1
     order by  enable desc,postDt desc 
     limit #{start,jdbcType=INTEGER},#{pageCount,jdbcType=INTEGER}

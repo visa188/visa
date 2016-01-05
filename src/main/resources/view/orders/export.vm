@@ -1,5 +1,7 @@
 #header(3,33,"导出订单信息")
-   
+
+    <link href="/easyui.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="/jquery.easyui.min.js"></script>
     <script>
     
        function validationForm(obj){
@@ -132,8 +134,7 @@
 		        	<div class="control_group">
                         <label class="control_label"><span class="ico_must">&nbsp;</span>客户名称:</label>
                         <div class="controls">
-                            <span class="form_item"><select name="customerId" id="customerId" class="text2" placeholder="客户名称">
-                                <option value="" selected="selected">请选择</option>
+                            <span class="form_item"><select name="customerId" id="customerId" class="easyui-combobox" placeholder="客户名称" style="width: 138px;">
                                 #foreach($customer in $customerList)
                                     <option value="$!customer.customerId">$!customer.customerName</option>
                                 #end
@@ -143,8 +144,7 @@
                     <div class="control_group">
                         <label class="control_label"><span class="ico_must">&nbsp;</span>客户公司:</label>
                         <div class="controls">
-                            <span class="form_item"><select name="company" id="company" class="text2" placeholder="客户公司">
-                                <option value="" selected="selected">请选择</option>
+                            <span class="form_item"><select name="company" id="company" class="easyui-combobox" placeholder="客户公司" style="width: 285px;">
                                 #foreach($company in $companyList)
                                     <option value="$!company">$!company</option>
                                 #end

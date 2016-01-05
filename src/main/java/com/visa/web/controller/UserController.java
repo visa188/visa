@@ -54,13 +54,14 @@ public class UserController {
      */
     @RequestMapping
     public void list(@ModelAttribute(Constant.SESSION_USER) User sessionUser,
-            String searchUserName, Integer searchRoleId, Integer searchLineRoleId, Integer page,
+            String searchUserName, Integer searchRoleId, Integer searchLineRoleId, String deptId,Integer page,
             ModelMap model) {
         List<UserVo> userList = new ArrayList<UserVo>();
         User user = new User();
         user.setUserName(searchUserName);
         user.setRoleId(searchRoleId);
         user.setLineRoleId(searchLineRoleId);
+        user.setDeptId(deptId);
         if (sessionUser.getRoleId() == Constant.SUPER_ADMIN_ROLE_ID) {
             // 超级管理员
             Integer recordCount = userDao.selectAllCount(user);
@@ -80,6 +81,10 @@ public class UserController {
                     Constant.PAGE_OFFSET, model);
             userList = userDao.selectLineAll(recordRange[0], Constant.PAGE_COUNT, user);
         }
+        
+    	List<Department> deptList = deptDao.selectAll();
+    	model.put("deptList", deptList);
+    	
         model.put("userList", userList);
         model.put("user", user);
     }

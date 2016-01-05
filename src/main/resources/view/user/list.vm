@@ -27,6 +27,14 @@
 						#end
                 	</select>
                 </label>	
+				<label for="s_guest">所属部门：
+						<select name="deptId" id="deptId" class="text2"  style="height: 22px;width: 150px;">
+    						<option value="" selected="selected">全部</option>
+    						#foreach($one in $deptList)
+    							<option value="$one.name"$fn.selected(${user.deptId}, $one.name)>$one.name</option>
+                            #end
+    					</select>
+                </label>	
     			<label for="searchbtn"><input onclick="conditionSearch(1);" id="searchbtn" type="button" name="" class="searchbtn" value="搜索" ></label>	
     		</div>
 			</form>
