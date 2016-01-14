@@ -135,6 +135,7 @@
                         <label class="control_label"><span class="ico_must">&nbsp;</span>客户名称:</label>
                         <div class="controls">
                             <span class="form_item"><select name="customerId" id="customerId" class="easyui-combobox" placeholder="客户名称" style="width: 138px;">
+                                 <option></option>   
                                 #foreach($customer in $customerList)
                                     <option value="$!customer.customerId">$!customer.customerName</option>
                                 #end
@@ -145,6 +146,7 @@
                         <label class="control_label"><span class="ico_must">&nbsp;</span>客户公司:</label>
                         <div class="controls">
                             <span class="form_item"><select name="company" id="company" class="easyui-combobox" placeholder="客户公司" style="width: 285px;">
+                                <option></option>
                                 #foreach($company in $companyList)
                                     <option value="$!company">$!company</option>
                                 #end
