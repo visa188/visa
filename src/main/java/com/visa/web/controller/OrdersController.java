@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -98,12 +99,41 @@ public class OrdersController {
      */
     @RequestMapping
     public void salecount(@ModelAttribute(Constant.SESSION_USER) User user, Integer page,
-            ModelMap model, @ModelAttribute OrderSearchBean bean) {
+            ModelMap model, @ModelAttribute OrderSearchBean bean, HttpServletRequest request) {
     	
     	List<User> users = userDao.selectByRoleId(RoleEnumType.SALESMAN.getId());
+    	
+    	List<String> deptnames = new ArrayList<String>();
+    	deptnames.add("广州部");
+    	deptnames.add("沈阳部");
+    	
+    	String deptname = "";
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+	       	User loginUser = userDao.selectByPrimaryKey(user.getUserId());
+	       	if(null != loginUser){
+	       		deptname = loginUser.getDeptId();
+	       	}
+        }
+        List<User> tempSalesmanList = null;
+    	
+        if(deptnames.contains(deptname)){
+    		
+    		tempSalesmanList = new ArrayList<User>();
+    		for (User man : users) {
+    			if (deptname.equals(man.getDeptId())) {
+    				tempSalesmanList.add(man);
+    			}
+    		}
+        	model.put("salesmanList", tempSalesmanList);
+    		
+        }else{
+        	tempSalesmanList = users;
+        }
+    	
     	List<SaleDto> dtos = new ArrayList<SaleDto>();
     	
-    	for(User u : users){
+    	for(User u : tempSalesmanList){
     		
     		SaleDto dto = new SaleDto();
             Map<String, Object> paraMap = new HashMap<String, Object>();
@@ -183,9 +213,7 @@ public class OrdersController {
                     	}else{
                     		dto.setFustatus("部分付款");
                     	}
-                    	
                     }
-                    
                 }
                 dtos.add(dto);
             }
@@ -196,7 +224,14 @@ public class OrdersController {
     }
     @RequestMapping
     public void list(@ModelAttribute(Constant.SESSION_USER) User user, Integer page,
-    		ModelMap model, @ModelAttribute OrderSearchBean bean) {
+    		ModelMap model, @ModelAttribute OrderSearchBean bean, HttpServletRequest request) {
+    	
+    	List<String> deptnames = new ArrayList<String>();
+    	deptnames.add("广州部");
+    	deptnames.add("沈阳部");
+    	boolean flag = false;
+    	String sessionDeptname = "";
+    	
     	int recordCount = 0;
     	// 每页数据数
     	Map<String, Object> paraMap = new HashMap<String, Object>();
@@ -206,6 +241,27 @@ public class OrdersController {
     		paraMap.put("managerId", user.getUserId());
     	} else if (RoleEnumType.OPERATOR.getId() == user.getRoleId()) {
     		paraMap.put("operatorId", user.getUserId());
+    	} else if(RoleEnumType.FINANCE.getId() == user.getRoleId()){
+            
+            if (user.getUserId() != null) {
+            	 User loginUser = userDao.selectByPrimaryKey(user.getUserId());
+            	 if(null != loginUser){
+            		 sessionDeptname = loginUser.getDeptId();
+            	 }
+            }
+            
+            if(null == user.getDeptId() || "".equals(user.getDeptId())){
+            	user.setDeptId(sessionDeptname);
+            }
+    		
+    		String deptname = user.getDeptId();
+    		if(null != deptname && !"".equals(deptname)){
+    			if(deptnames.contains(deptname)){
+    				bean.setDeptId(deptname);
+    				flag = true;
+    			}
+    		}
+    		
     	}
     	
     	String seachCountryName = bean.getSeachCountryName();
@@ -304,8 +360,33 @@ public class OrdersController {
     	}
     	model.put("salesmanList", tempSalesmanList);
     	List<User> operatorList = userDao.selectByRoleId(RoleEnumType.OPERATOR.getId());
-    	model.put("operatorList", operatorList);
-    	List<Department> deptList = deptDao.selectAll();
+    	
+    	List<User> tempOperatorList = null;
+    	
+    	if(flag){
+    		
+        	if (!StringUtils.isEmpty(deptId)) {
+        		tempOperatorList = new ArrayList<User>();
+        		for (User man : operatorList) {
+        			if (deptId.equals(man.getDeptId())) {
+        				tempOperatorList.add(man);
+        			}
+        		}
+        	} 
+    	}else{
+    		tempOperatorList = operatorList;
+    	}
+    	
+    	model.put("operatorList", tempOperatorList);
+    	List<Department> deptList = null;
+    	if(flag){
+    		deptList = new ArrayList<Department>();
+    		Department dment = new Department();
+    		dment.setName(deptId);
+    		deptList.add(dment);
+    	}else{
+    		deptList = deptDao.selectAll();
+    	}
     	model.put("deptList", deptList);
     	model.addAttribute("role", user.getRoleId());
      	model.addAttribute("searchBean", bean);
@@ -940,14 +1021,59 @@ public class OrdersController {
     /**
      */
     @RequestMapping
-    public void export(ModelMap model) {
-        model.put("salesmanList", userDao.selectByRoleId(RoleEnumType.SALESMAN.getId()));
-        model.put("operatorList", userDao.selectByRoleId(RoleEnumType.OPERATOR.getId()));
+    public void export(ModelMap model,HttpServletRequest request) {
+    	
+    	List<String> deptnames = new ArrayList<String>();
+    	deptnames.add("广州部");
+    	deptnames.add("沈阳部");
+    	
+    	String deptname = "";
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            User user = (User) session.getAttribute(Constant.SESSION_USER);
+	       	User loginUser = userDao.selectByPrimaryKey(user.getUserId());
+	       	if(null != loginUser){
+	       		deptname = loginUser.getDeptId();
+	       	}
+        }
+        List<Department> deptList = null;
+        List<User> salesmanList = userDao.selectByRoleId(RoleEnumType.SALESMAN.getId());
+        List<User> operatorList = userDao.selectByRoleId(RoleEnumType.OPERATOR.getId());
+        List<User> tempSalesmanList = null;
+    	List<User> tempOperatorList = null;
+    	
+        if(deptnames.contains(deptname)){
+        	deptList = new ArrayList<Department>();
+    		Department dment = new Department();
+    		dment.setName(deptname);
+    		deptList.add(dment);
+    		model.put("departmentList", deptList);
+    		
+    		tempSalesmanList = new ArrayList<User>();
+    		for (User man : salesmanList) {
+    			if (deptname.equals(man.getDeptId())) {
+    				tempSalesmanList.add(man);
+    			}
+    		}
+        	model.put("salesmanList", tempSalesmanList);
+    		
+    		tempOperatorList = new ArrayList<User>();
+    		for (User man : operatorList) {
+    			if (deptname.equals(man.getDeptId())) {
+    				tempOperatorList.add(man);
+    			}
+    		}
+    		model.put("operatorList", tempOperatorList);
+    		
+        }else{
+        	model.put("departmentList", deptDao.selectAll());
+            model.put("salesmanList", salesmanList);
+            model.put("operatorList", operatorList);
+        }
         model.put("customerList", customerDao.selectAllCustomer());
         model.put("companyList", customerDao.selectCompany());
         model.put("yearList", ordersDao.selectOrderYears());
         model.put("monthList", ordersDao.selectOrderMonths());
-        model.put("departmentList", deptDao.selectAll());
     }
 
     /**
