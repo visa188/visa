@@ -513,9 +513,10 @@
 						<div class="controls">
 		               		<span class="form_item"><select name="baoxian" id="baoxian" class="text2" onchange="selectbaxian(this)" placeholder="保险选项">
 								<option value="" selected="selected">请选择</option>
-    							<option value="1" #if($orders.baoxian=='1') selected #end>张进发保险</option>
-								<option value="2" #if($orders.baoxian=='2') selected #end>吴迪保险</option>
-								<option value="3" #if($orders.baoxian=='3') selected #end>客人自备</option>
+    							<option value="1" #if($orders.baoxian=='1') selected #end>安盛天平尊贵计划</option>
+    							<option value="2" #if($orders.baoxian=='2') selected #end>安盛天平皇冠计划</option>
+								<option value="3" #if($orders.baoxian=='3') selected #end>大地保险</option>
+								<option value="4" #if($orders.baoxian=='4') selected #end>客人自备</option>
 							</select></span>
 		              	</div>		        			
 		        	</div>
@@ -847,7 +848,7 @@
             var baoxiancb = 0;
             
             if("1" == btype){
-              
+             	/** 
                if(day <= 10){
                   baoxiancb = 115;
                }else if(day >= 11 && day <= 15){
@@ -864,14 +865,75 @@
                   baoxiancb = 1090;
                }
                price = baoxiancb * 0.6 * num;
-          
+             */
+             
+               if(day <= 8){
+                  price = 55;
+               }else if(day >= 9 && day <= 13){
+                  price = 65;
+               }else if(day >=14 && day <= 18){
+               	  price = 80;
+               }else if(day >=19 && day <= 23){
+                  price = 88;
+               }else if(day >= 24 && day <= 30){
+               	  price = 105;
+               }else if(day >= 31 && day <= 45){
+                  price = 150;
+               }else if(day >= 46 && day <= 60){
+                  price = 210;
+               }else if(day >= 61 && day <= 67){
+                  price = 240;
+               }else if(day >= 68 && day <= 74){
+                  price = 270;
+               }else if(day >= 75 && day <= 81){
+                  price = 300;
+               }else if(day >= 82 && day <= 89){
+                  price = 330;
+               }else{
+                  price = 360;
+               }
             }else if("2" == btype){
-                 
+            	
+               if(day <= 8){
+                  price = 70;
+               }else if(day >= 9 && day <= 13){
+                  price = 90;
+               }else if(day >=14 && day <= 18){
+               	  price = 110;
+               }else if(day >=19 && day <= 23){
+                  price = 140;
+               }else if(day >= 24 && day <= 30){
+               	  price = 164;
+               }else if(day >= 31 && day <= 45){
+                  price = 235;
+               }else if(day >= 46 && day <= 60){
+                  price = 330;
+               }else if(day >= 61 && day <= 67){
+                  price = 380;
+               }else if(day >= 68 && day <= 74){
+                  price = 430;
+               }else if(day >= 75 && day <= 81){
+                  price = 480;
+               }else if(day >= 82 && day <= 89){
+                  price = 530;
+               }else{
+                  price = 580;
+               }
+            	
+            }else if("3" == btype){
+               /*  
                  if(ns <= 0){
                     price = 30*num;
                  }else{
                     price = (30 + ns*2)*num;
                  }  
+              */   
+                 if(ns <= 1){
+                    price = 25;
+                 }else{
+                    price = (25 + (ns-1)*2)*num;
+                 }  
+                 
             }else{
                 price = 0.0;
             }
