@@ -868,58 +868,60 @@
              */
              
                if(day <= 8){
-                  price = 55;
+                  baoxiancb = 55;
                }else if(day >= 9 && day <= 13){
-                  price = 65;
+                  baoxiancb = 65;
                }else if(day >=14 && day <= 18){
-               	  price = 80;
+               	  baoxiancb = 80;
                }else if(day >=19 && day <= 23){
-                  price = 88;
+                  baoxiancb = 88;
                }else if(day >= 24 && day <= 30){
-               	  price = 105;
+               	  baoxiancb = 105;
                }else if(day >= 31 && day <= 45){
-                  price = 150;
+                  baoxiancb = 150;
                }else if(day >= 46 && day <= 60){
-                  price = 210;
+                  baoxiancb = 210;
                }else if(day >= 61 && day <= 67){
-                  price = 240;
+                  baoxiancb = 240;
                }else if(day >= 68 && day <= 74){
-                  price = 270;
+                  baoxiancb = 270;
                }else if(day >= 75 && day <= 81){
-                  price = 300;
+                  baoxiancb = 300;
                }else if(day >= 82 && day <= 89){
-                  price = 330;
+                  baoxiancb = 330;
                }else{
-                  price = 360;
+                  baoxiancb = 360;
                }
+               price = baoxiancb* num;
+               
             }else if("2" == btype){
             	
                if(day <= 8){
-                  price = 70;
+                  baoxiancb = 70;
                }else if(day >= 9 && day <= 13){
-                  price = 90;
+                  baoxiancb = 90;
                }else if(day >=14 && day <= 18){
-               	  price = 110;
+               	  baoxiancb = 110;
                }else if(day >=19 && day <= 23){
-                  price = 140;
+                  baoxiancb = 140;
                }else if(day >= 24 && day <= 30){
-               	  price = 164;
+               	  baoxiancb = 164;
                }else if(day >= 31 && day <= 45){
-                  price = 235;
+                  baoxiancb = 235;
                }else if(day >= 46 && day <= 60){
-                  price = 330;
+                  baoxiancb = 330;
                }else if(day >= 61 && day <= 67){
-                  price = 380;
+                  baoxiancb = 380;
                }else if(day >= 68 && day <= 74){
-                  price = 430;
+                  baoxiancb = 430;
                }else if(day >= 75 && day <= 81){
-                  price = 480;
+                  baoxiancb = 480;
                }else if(day >= 82 && day <= 89){
-                  price = 530;
+                  baoxiancb = 530;
                }else{
-                  price = 580;
+                  baoxiancb = 580;
                }
-            	
+               price = baoxiancb* num;
             }else if("3" == btype){
                /*  
                  if(ns <= 0){
@@ -929,7 +931,7 @@
                  }  
               */   
                  if(ns <= 1){
-                    price = 25;
+                    price = 25*num;
                  }else{
                     price = (25 + (ns-1)*2)*num;
                  }  
