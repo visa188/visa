@@ -772,19 +772,19 @@
 		        	<div class="control_group">
 	        			<label class="control_label">销售备注:</label>
 						<div class="controls">
-							<textarea class="text3" #if($userRoleId!=${fn.getSalesmanRoleId()}) readonly="readonly" #end id="des" name="des" cols="55" rows="8"  width="300" placeholder="销售备注" maxlength="200">$!{orders.des}</textarea>
+							<textarea class="text3" #if($userRoleId!=${fn.getSalesmanRoleId()}) readonly="readonly" #end id="des" name="des" cols="55" rows="8"  width="300" placeholder="销售备注">$!{orders.des}</textarea>
 		              	</div>		        			
 		        	</div>
 		        	<div class="control_group">
                         <label class="control_label">操作备注:</label>
                         <div class="controls">
-                            <textarea class="text3" #if($userRoleId!=${fn.getOperatorRoleId()}) readonly="readonly" #end id="czdes" name="czdes" cols="55" rows="8"  width="300"  placeholder="操作备注" maxlength="200">$!{orders.czdes}</textarea>
+                            <textarea class="text3" #if($userRoleId!=${fn.getOperatorRoleId()}) readonly="readonly" #end id="czdes" name="czdes" cols="55" rows="8"  width="300"  placeholder="操作备注">$!{orders.czdes}</textarea>
                         </div>                          
                     </div>
 		        	<div class="control_group">
                         <label class="control_label">财务备注:</label>
                         <div class="controls">
-                            <textarea class="text3" #if($userRoleId!=${fn.getFinanceRoleId()} && $userRoleId!=8 && $userRoleId!=1) readonly="readonly" #end id="cwdes" name="cwdes"  cols="55" rows="8"   width="300" placeholder="财务备注" maxlength="200">$!{orders.cwdes}</textarea>
+                            <textarea class="text3" #if($userRoleId!=${fn.getFinanceRoleId()} && $userRoleId!=8 && $userRoleId!=1) readonly="readonly" #end id="cwdes" name="cwdes"  cols="55" rows="8"   width="300" placeholder="财务备注" >$!{orders.cwdes}</textarea>
                         </div>                          
                     </div>
 		        </div>
