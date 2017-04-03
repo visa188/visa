@@ -3,10 +3,14 @@ package com.visa.web.controller;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
@@ -17,6 +21,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -60,7 +65,19 @@ public class ProductController {
 	 *            model
 	 */
 	@RequestMapping
-	public void list(Product product, Integer page, ModelMap model) {
+	public void list(Product product, Integer page, ModelMap model,HttpServletRequest request) {
+		
+		if(null != product.getProductName()){
+			try {
+				System.out.println(request.getMethod());
+				if("GET".equals(request.getMethod())){
+					String pname = new String(product.getProductName().getBytes("iso8859-1"),"UTF-8");
+					product.setProductName(pname);
+				}
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
 		List<Area> areaList = areaDao.selectAllArea();
 		model.put("areaList", areaList);
 		List<Country> countryList = countryDao.selectByContinentId(product.getContinentId());
@@ -111,7 +128,7 @@ public class ProductController {
 	 * @return String
 	 */
 	@RequestMapping
-	public String edit(Integer productId, Integer page, ModelMap model) {
+	public String edit(Integer productId, Integer page, String productName,Integer countryId, Integer areaId,Integer continentId, ModelMap model) {
 		List<Area> areaList = areaDao.selectAllArea();
 		model.put("areaList", areaList);
 		Product product = productDao.selectByPrimaryKey(productId);
@@ -123,6 +140,14 @@ public class ProductController {
 		model.put("title", "修改产品信息");
 		model.put("action", "update");
 		model.put("page", page);
+		try {
+			model.put("productName_", new String(productName.getBytes("iso8859-1"),"UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		model.put("countryId", countryId);
+		model.put("areaId", areaId);
+		model.put("continentId", continentId);
 		return "product/add";
 	}
 
@@ -134,9 +159,12 @@ public class ProductController {
 	 * @return String
 	 */
 	@RequestMapping
-	public String update(Product product, Integer page) {
+	public String update(Product product, Integer page,String productName_,Model model) {
 		productDao.updateByPrimaryKey(product);
-		return "redirect:list.do?page=" + page;
+		model.addAttribute("productName", productName_);
+		String reUrl = "redirect:list.do?page=" + page +
+				"&countryId="+product.getCountryId()+"&areaId="+product.getAreaId()+"&continentId=" + product.getContinentId();
+		return reUrl;
 	}
 
 	/**

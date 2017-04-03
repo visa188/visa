@@ -14,6 +14,8 @@
                 #if("$action"=="update")
                 <input value="$!{product.productId}" type="hidden" name="productId">
                 <input value="$!{page}" type="hidden" name="page">
+                <input value="$!{productName_}" type="hidden" name="productName_">
+                
                 #end
 		        <div class="widget_content">
 		        	<div class="control_group">

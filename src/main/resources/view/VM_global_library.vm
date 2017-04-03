@@ -47,12 +47,14 @@
     <div class="sidebar">
         <div class="sidenav">
             <ul>
-				#if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
+				#if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()} || $userRoleId == 2)
                 <li class="pro_mng#if($topNav==1) open#end">
                     <a class="pro_mng_tab" href="/product/list.do"><span class="ico_pro"></span><span class="sidenav_text">签证产品管理</span><span class="ico_fold"></span></a>
                     <dl>
                         <dd#if($secNav==11) class="on"#end><a href="/product/list.do">产品信息管理</a></dd>
-                        <dd#if($secNav==12) class="on"#end><a href="/product/add.do">新增产品信息</a></dd>
+                        #if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
+                        	<dd#if($secNav==12) class="on"#end><a href="/product/add.do">新增产品信息</a></dd>
+                        #end
                     </dl>
                 </li>
 				#end

@@ -55,8 +55,10 @@
                             <th width="">公司地址</th>
                             <th width="">备注</th>
 	                        <th width="">添加日期</th>
-	                        <th width="">修改</th>
-	                        <th width="">删除</th>
+	                        #if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
+		                        <th width="">修改</th>
+		                        <th width="">删除</th>
+	                        #end
 	                    </tr>
 	                </thead>
 	                <tbody>
@@ -75,8 +77,10 @@
                             <td>$!{one.relateCompany}</td>
                             <td>$one.des</td>
 	                        <td>$fn.format($one.postDt,"yyyy-MM-dd")</td>
-	                        <td><a class="ico_edit_g" href="edit.do?productId=${one.productId}&page=$page"></a></td>
-	                        <td><a class="ico_delete_r" onclick="return confirm('是否将此产品删除?')" href="delete.do?productId=${one.productId}&page=$page"></a></td>
+	                        #if(${fn.isAdminRoleId($userRoleId)}||$userRoleId==${fn.getFinanceRoleId()})
+		                        <td><a class="ico_edit_g" proId="${one.productId}" onclick="updateProduct(this)"></a></td>
+		                        <td><a class="ico_delete_r" onclick="return confirm('是否将此产品删除?')" href="delete.do?productId=${one.productId}&page=$page"></a></td>
+	                        #end
 	                    </tr>
                         #end	 
 	                </tbody>
@@ -86,6 +90,19 @@
 		</div>
 	</div>
     <script>
+    
+    function updateProduct(obj){
+        var productId = $(obj).attr("proId");
+        var productName = $("#productName").val();
+        var countryId	= $("#countryId").val();
+        var areaId = $("#areaId").val();
+        var continentId  = $("#continentId").val();
+		var hrefs  ="http://www.ohholiday.net/product/edit.do?productId="+productId+"&page=$page&productName="+productName+"&countryId="+countryId+"&areaId="+areaId+"&continentId=" + continentId
+		window.location.href=hrefs;
+		   	
+    }
+    
+    
     jQuery("#continentId").bind("blur",function(e){
         changeCountry();
     }).bind("change",function(e){
