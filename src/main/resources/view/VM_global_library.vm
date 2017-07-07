@@ -104,8 +104,10 @@
 							<dd#if($secNav==34) class="on"#end><a href="/orders/add.do?type=2">新增机票订单</a></dd>
 							<dd#if($secNav==34) class="on"#end><a href="/orders/add.do?type=1">新增单项产品订单</a></dd>
 						#end
-						#if(${fn.isAdminRoleId($userRoleId)}  || $userRoleId == 8 || $userRoleId==${fn.getFinanceRoleId()} ||  $userRoleId == 9)
+						#if(${fn.isAdminRoleId($userRoleId)}  || $userRoleId == 8 || $userRoleId==${fn.getFinanceRoleId()} ||  $userRoleId == 9 || $userRoleId == 2)
 							<dd#if($secNav==33) class="on"#end><a href="/orders/export.do">导出订单信息</a></dd>
+						#end
+						#if(${fn.isAdminRoleId($userRoleId)}  || $userRoleId == 8 || $userRoleId==${fn.getFinanceRoleId()} ||  $userRoleId == 9)
 							<dd#if($secNav==311) class="on"#end><a href="/orders/salecount.do">销售利润统计</a></dd>
 						#end
 						
