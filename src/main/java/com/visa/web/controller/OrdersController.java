@@ -1126,7 +1126,7 @@ public class OrdersController {
             String operatorId, String deptName) {
         String[] titles = { "客户名称", "客户公司", "下单日期", "产品名称", "客人名单", "客人数量", "销售员", "操作员", "送签日期",
                 "送签员", "应收单价", "其它应收款", "其它应付款", "总计应收款", "总计应付款", "毛利润", "付款状态", "已付货款", "收款状态",
-                "已收货款", "备注" };
+                "已收货款", "备注","订单号" };
         HSSFWorkbook wb = new HSSFWorkbook();
         Sheet s = wb.createSheet();
         // header row
@@ -1251,6 +1251,8 @@ public class OrdersController {
                 if (p.getGrossProfit() != null) {
                     zjProfit = zjProfit.add(zjys1.subtract(zjyf1));
                 }
+                headerCell = row.createCell(21);
+                headerCell.setCellValue(p.getOrderSeq());
             }
             Row row1 = s.createRow(i + 1);
             headerCell = row1.createCell(0);
