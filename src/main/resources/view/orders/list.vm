@@ -173,7 +173,12 @@
 	                <tbody>
 						#foreach($order in $orderList)
 						    
-						       <tr #if($fn.isFlagColor($fn.format($!{order.orderDate},'yyyy-MM-dd'),$!{order.yshkStatus})) style="background:#FFCCCC" #end>
+						      <tr #if($fn.isFlagColor($fn.format($!{order.orderDate},'yyyy-MM-dd'),$!{order.yshkStatus})) style="background:#FFCCCC"
+						          #elseif($fn.isFlagLiRun($!{order.priceZjys},$!{order.priceZjyf},$!{order.yshkStatus},$!{order.yfhkStatus}) == 1 ) style="background:#97FFFF"
+						          #elseif($fn.isFlagLiRun($!{order.priceZjys},$!{order.priceZjyf},$!{order.yshkStatus},$!{order.yfhkStatus}) == -1 ) style="background:#FFFF00"
+						          #else 
+						          #end>
+								
 								<td>$!{order.orderSeq}</td>
 								#if($!{order.type}==1)
 									<td>单项产品</td>

@@ -670,6 +670,44 @@ public class VelocityToolbox {
     	return true;
     }
     
+    //计算总计应收-总计应付
+/*    public int isFlagLiRun(String priceZjys, String  priceZjyf,String ysStatus,String yfStatus){
+    	//状态为 已收全款和已付全款才进行比较
+    	System.out.print("================");
+    	if("3".equals(yfStatus) && "3".equals(ysStatus)){
+        	BigDecimal priceZjysFor = new BigDecimal(priceZjys);
+        	BigDecimal priceZjyfFor = new BigDecimal(priceZjyf);
+        	BigDecimal result = priceZjysFor.subtract(priceZjyfFor);
+        	BigDecimal comp = new BigDecimal(2000);
+        	if(result.compareTo(comp) > 0){
+        		return 1;
+        	}else if(result.compareTo(comp) < 0){
+        		return -1;
+        	}else{
+        		return 0;
+        	}
+    	}else{
+    		return 0;
+    	}
+    }*/
+    //计算总计应收-总计应付
+    public int isFlagLiRun(BigDecimal priceZjys, BigDecimal  priceZjyf,int ysStatus,int yfStatus){
+    	//状态为 已收全款和已付全款才进行比较
+    	if(3 == yfStatus && 3 == ysStatus){
+    		BigDecimal result = priceZjys.subtract(priceZjyf);
+    		BigDecimal comp = new BigDecimal(2000);
+    		if(result.compareTo(comp) > 0){
+    			return 1;
+    		}else if(result.compareTo(comp) < 0){
+    			return -1;
+    		}else{
+    			return 0;
+    		}
+    	}else{
+    		return 0;
+    	}
+    }
+    
     public String splitValue(String value){
 
     	if(value.length() <=5){
